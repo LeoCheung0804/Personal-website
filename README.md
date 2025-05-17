@@ -5,7 +5,7 @@
 
 This website is based on [vCard - Personal portfolio](https://github.com/codewithsadee/vcard-personal-portfolio.git)
 
-This repository was forked (then detached) by [codewithsadee](https://github.com/codewithsadee) from the [vCard - Personal portfolio](https://github.com/codewithsadee/vcard-personal-portfolio.git), which is released under the MIT License (see LICENSE.md).
+This repository was forked (then detached) from the [vCard - Personal portfolio](https://github.com/codewithsadee/vcard-personal-portfolio.git) by [codewithsadee](https://github.com/codewithsadee), which is released under the MIT License (see LICENSE.md).
 
 ## License
 
