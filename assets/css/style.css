@@ -1047,21 +1047,24 @@ main {
 }
 
 .project-content figure {
-  margin: 25px 0;
-}
-
-.project-content figure img {
+  position: relative;
+  height: 250px;
   width: 100%;
-  height: auto;
-  border-radius: 14px;
-  margin-bottom: 10px;
+  border-radius: 16px;
+  margin: 25px 0;
+  border: 1px solid var(--jet);
+  overflow: hidden;
 }
 
-.project-content figcaption {
-  color: var(--light-gray-70);
-  font-size: var(--fs-6);
-  text-align: center;
-  margin-top: 5px;
+.project-content figure iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.project-content figure {
+  height: 380px;
+  border-radius: 18px;
 }
 
 .project-content h3 {
