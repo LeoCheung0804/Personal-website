@@ -58,7 +58,7 @@ overlay.addEventListener("click", testimonialsModalFunc);
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
@@ -158,7 +158,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
-// add hash-based page activation on page load
+// add hash-based page activation on page load, and ensure Portfolio remains active
 window.addEventListener("DOMContentLoaded", () => {
   const hash = window.location.hash.substring(1).toLowerCase();
   if (hash) {
@@ -172,6 +172,6 @@ window.addEventListener("DOMContentLoaded", () => {
         navigationLinks[i].classList.remove("active");
       }
     }
-  }
+  } 
 });
 
