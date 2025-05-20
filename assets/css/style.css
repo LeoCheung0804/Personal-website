@@ -1066,20 +1066,49 @@ main {
 
 .project-content h3 {
   color: var(--white-2);
-  font-size: var(--fs-2);
-  margin: 30px 0 15px;
+  font-size: var(--fs-4);
+  font-weight: var(--fw-500);
+  margin: 30px 0 20px;
+  position: relative;
+  padding-left: 15px;
+}
+
+.project-content h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 25px;
+  background: var(--text-gradient-yellow);
+  border-radius: 2px;
 }
 
 .project-content ul {
-  list-style: disc;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  list-style: none;
+  margin-left: 10px;
+  margin-bottom: 25px;
 }
 
 .project-content ul li {
   color: var(--light-gray);
-  margin-bottom: 10px;
-  line-height: 1.6;
+  margin-bottom: 12px;
+  line-height: 1.7;
+  position: relative;
+  padding-left: 25px;
+}
+
+.project-content ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--orange-yellow-crayola);
+  border-radius: 50%;
+  box-shadow: 0 0 4px var(--vegas-gold);
 }
 
 .project-content .btn {
