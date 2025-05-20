@@ -1026,6 +1026,94 @@ main {
   font-weight: var(--fw-300);
 }
 
+.project-detail {
+  background: var(--eerie-black-2);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+
+.project-detail header {
+  margin-bottom: 25px;
+}
+
+.project-content {
+  color: var(--light-gray);
+}
+
+.project-content p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.project-content figure {
+  margin: 25px 0;
+}
+
+.project-content figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  margin-bottom: 10px;
+}
+
+.project-content figcaption {
+  color: var(--light-gray-70);
+  font-size: var(--fs-6);
+  text-align: center;
+  margin-top: 5px;
+}
+
+.project-content h3 {
+  color: var(--white-2);
+  font-size: var(--fs-2);
+  margin: 30px 0 15px;
+}
+
+.project-content ul {
+  list-style: disc;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.project-content ul li {
+  color: var(--light-gray);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.project-content .btn {
+  background: var(--border-gradient-onyx);
+  color: var(--orange-yellow-crayola);
+  padding: 10px 25px;
+  border-radius: 14px;
+  font-size: var(--fs-6);
+  font-weight: var(--fw-500);
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.project-content .btn::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--bg-gradient-jet);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.project-content .btn:hover,
+.project-content .btn:focus {
+  background: var(--bg-gradient-yellow-1);
+}
+
+.project-content .btn:hover::before,
+.project-content .btn:focus::before {
+  background: var(--bg-gradient-yellow-2);
+}
 
 /*-----------------------------------*\
   #Publications
