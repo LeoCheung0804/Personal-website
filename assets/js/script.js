@@ -157,3 +157,21 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+// add hash-based page activation on page load
+window.addEventListener("DOMContentLoaded", () => {
+  const hash = window.location.hash.substring(1).toLowerCase();
+  if (hash) {
+    for (let i = 0; i < pages.length; i++) {
+      if (pages[i].dataset.page === hash) {
+        pages[i].classList.add("active");
+        navigationLinks[i].classList.add("active");
+        window.scrollTo(0, 0);
+      } else {
+        pages[i].classList.remove("active");
+        navigationLinks[i].classList.remove("active");
+      }
+    }
+  }
+});
+
