@@ -134,6 +134,48 @@ for (let i = 0; i < formInputs.length; i++) {
   });
 }
 
+// Handle form submission with Formspree
+if (form) {
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(form);
+    const formStatus = document.getElementById('form-status');
+    const formMessage = document.getElementById('form-message');
+    
+    // Disable button during submission
+    formBtn.setAttribute("disabled", "");
+    formBtn.querySelector("span").textContent = "Sending...";
+    
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        formStatus.style.display = 'block';
+        formMessage.textContent = 'Thanks for your message! I will get back to you soon.';
+        formMessage.style.color = 'var(--orange-yellow-crayola)';
+        form.reset();
+        formBtn.querySelector("span").textContent = "Send Message";
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      formStatus.style.display = 'block';
+      formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again.';
+      formMessage.style.color = 'var(--bittersweet-shimmer)';
+      formBtn.removeAttribute("disabled");
+      formBtn.querySelector("span").textContent = "Send Message";
+    }
+  });
+}
+
+
 
 
 // page navigation variables
@@ -143,6 +185,11 @@ const pages = document.querySelectorAll("[data-page]");
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
+
+    // Don't run this logic on the blog post page
+    if (document.querySelector('.blog-post-full')) {
+      return;
+    }
 
     for (let i = 0; i < pages.length; i++) {
       if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
