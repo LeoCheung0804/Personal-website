@@ -134,7 +134,7 @@ for (let i = 0; i < formInputs.length; i++) {
   });
 }
 
-// Handle form submission with Formspree
+// Handle form submission with Formspree and reCAPTCHA
 if (form) {
   form.addEventListener("submit", async function(e) {
     e.preventDefault();
@@ -148,6 +148,14 @@ if (form) {
     formBtn.querySelector("span").textContent = "Sending...";
     
     try {
+      // Get reCAPTCHA token (v3)
+      // Note: Replace 'YOUR_RECAPTCHA_SITE_KEY' with your actual site key
+      if (typeof grecaptcha !== 'undefined' && window.recaptchaSiteKey) {
+        const token = await grecaptcha.execute(window.recaptchaSiteKey, {action: 'submit'});
+        document.getElementById('recaptchaResponse').value = token;
+        formData.set('g-recaptcha-response', token);
+      }
+      
       const response = await fetch(form.action, {
         method: 'POST',
         body: formData,
@@ -162,6 +170,11 @@ if (form) {
         formMessage.style.color = 'var(--orange-yellow-crayola)';
         form.reset();
         formBtn.querySelector("span").textContent = "Send Message";
+        
+        // Track form submission in Google Analytics
+        if (typeof trackFormSubmission === 'function') {
+          trackFormSubmission();
+        }
       } else {
         throw new Error('Form submission failed');
       }
@@ -196,6 +209,14 @@ for (let i = 0; i < navigationLinks.length; i++) {
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
         window.scrollTo(0, 0);
+        
+        // Track page view in Google Analytics
+        if (typeof gtag === 'function') {
+          gtag('config', 'G-LEBDJN7H6D', {
+            'page_title': this.innerHTML,
+            'page_path': '/#' + pages[i].dataset.page
+          });
+        }
       } else {
         pages[i].classList.remove("active");
         navigationLinks[i].classList.remove("active");
@@ -221,4 +242,18 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   } 
 });
+
+// Track project link clicks
+const projectLinks = document.querySelectorAll('.project-item a');
+projectLinks.forEach(link => {
+  link.addEventListener('click', function() {
+    const projectTitle = this.querySelector('.project-title');
+    if (projectTitle && typeof trackProjectView === 'function') {
+      trackProjectView(projectTitle.textContent);
+    }
+  });
+});
+
+// Initialize reCAPTCHA site key (replace with your actual key)
+window.recaptchaSiteKey = '6Lc8CRYsAAAAALLR-ZPucEIMyn5hXZrEmZyHKovp';
 

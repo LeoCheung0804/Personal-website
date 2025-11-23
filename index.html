@@ -15,6 +15,12 @@
     />
     <meta name="author" content="Leo Cheung" />
 
+    <!-- Google Search Console Verification -->
+    <meta
+      name="google-site-verification"
+      content="YOUR_VERIFICATION_CODE_HERE"
+    />
+
     <!-- Open Graph Meta Tags -->
     <meta
       property="og:title"
@@ -57,7 +63,28 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-      gtag("config", "G-XXXXXXXXXX");
+      gtag("config", "G-LEBDJN7H6D", {
+        page_title: "Home",
+        send_page_view: true,
+      });
+
+      // Track form submissions as conversions
+      function trackFormSubmission() {
+        gtag("event", "form_submission", {
+          event_category: "Contact",
+          event_label: "Contact Form",
+          value: 1,
+        });
+      }
+
+      // Track project views as conversions
+      function trackProjectView(projectName) {
+        gtag("event", "project_view", {
+          event_category: "Engagement",
+          event_label: projectName,
+          value: 1,
+        });
+      }
     </script>
 
     <!--
@@ -83,6 +110,9 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Google reCAPTCHA v3 -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lc8CRYsAAAAALLR-ZPucEIMyn5hXZrEmZyHKovp"></script>
   </head>
 
   <body>
@@ -1183,6 +1213,13 @@
                 data-form-input
               ></textarea>
 
+              <!-- Hidden field for reCAPTCHA token -->
+              <input
+                type="hidden"
+                name="g-recaptcha-response"
+                id="recaptchaResponse"
+              />
+
               <button class="form-btn" type="submit" disabled data-form-btn>
                 <ion-icon name="paper-plane"></ion-icon>
                 <span>Send Message</span>
@@ -1193,6 +1230,32 @@
             <div id="form-status" style="margin-top: 15px; display: none">
               <p id="form-message"></p>
             </div>
+
+            <!-- reCAPTCHA badge notice -->
+            <p
+              style="
+                margin-top: 10px;
+                font-size: 12px;
+                color: var(--light-gray-70);
+                opacity: 0.7;
+              "
+            >
+              This site is protected by reCAPTCHA and the Google
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                style="color: var(--orange-yellow-crayola)"
+                >Privacy Policy</a
+              >
+              and
+              <a
+                href="https://policies.google.com/terms"
+                target="_blank"
+                style="color: var(--orange-yellow-crayola)"
+                >Terms of Service</a
+              >
+              apply.
+            </p>
           </section>
         </article>
       </div>

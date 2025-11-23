@@ -1,0 +1,15 @@
+# robots.txt for https://leocml.com
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow specific paths (if needed)
+# Disallow: /private/
+# Disallow: /temp/
+
+# Sitemap location
+Sitemap: https://leocml.com/sitemap.xml
+
+# Crawl-delay (optional, only if needed to prevent server overload)
+# Crawl-delay: 10
