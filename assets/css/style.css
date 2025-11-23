@@ -323,11 +323,21 @@ article.active {
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 20px;
+  height: auto;
+  min-height: 100px;
+  max-height: 50vh;
+  width: 100%;
+  background-color: var(--eerie-black-1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .blog-post-full .blog-banner-box img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 50vh;
   object-fit: cover;
 }
 
