@@ -252,13 +252,18 @@
 
         if (post) {
           // Use relative path with cache busting for GitHub Pages
-          fetch(`posts/${post}.md?t=${Date.now()}`)
+          const fetchUrl = `posts/${post}.md?t=${Date.now()}`;
+          console.log("Fetching blog post from:", fetchUrl);
+
+          fetch(fetchUrl)
             .then((response) => {
               if (!response.ok) {
                 console.error(
                   "Fetch error:",
                   response.status,
-                  response.statusText
+                  response.statusText,
+                  "URL:",
+                  response.url
                 );
                 throw new Error(
                   `Network response was not ok: ${response.status}`
