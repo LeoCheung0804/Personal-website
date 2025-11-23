@@ -251,10 +251,18 @@
         const post = urlParams.get("post");
 
         if (post) {
-          fetch(`./posts/${post}.md`)
+          // Use relative path with cache busting for GitHub Pages
+          fetch(`posts/${post}.md?t=${Date.now()}`)
             .then((response) => {
               if (!response.ok) {
-                throw new Error("Network response was not ok");
+                console.error(
+                  "Fetch error:",
+                  response.status,
+                  response.statusText
+                );
+                throw new Error(
+                  `Network response was not ok: ${response.status}`
+                );
               }
               return response.text();
             })
