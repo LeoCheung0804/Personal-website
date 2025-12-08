@@ -4,7 +4,70 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Leo Cheung - Projects</title>
+    <title>YES Brick Construction Cable-Driven Robot | Leo Cheung</title>
+    <meta
+      name="description"
+      content="CU-Brick's YES project showcases a cable-driven parallel robot that autonomously lays over 5,800 bricks with millimeter accuracy."
+    />
+    <meta
+      property="og:title"
+      content="YES Brick Construction Cable-Driven Robot | Leo Cheung"
+    />
+    <meta
+      property="og:description"
+      content="Learn how the YES cable-driven parallel robot combines fiducial tracking and elevation control to build complex masonry structures."
+    />
+    <meta
+      property="og:image"
+      content="https://leocml.com/assets/images/YES_full.jpg"
+    />
+    <meta property="og:url" content="https://leocml.com/yes.html" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="YES Brick Construction Cable-Driven Robot | Leo Cheung"
+    />
+    <meta
+      name="twitter:description"
+      content="Cable-driven parallel robot that autonomously constructs the YES Pavilion with precision bricklaying."
+    />
+    <meta
+      name="twitter:image"
+      content="https://leocml.com/assets/images/YES_full.jpg"
+    />
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LEBDJN7H6D"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LEBDJN7H6D", {
+        page_title: "YES Project",
+        send_page_view: true,
+      });
+
+            function trackFormSubmission() {
+        gtag("event", "form_submission", {
+          event_category: "Contact",
+          event_label: "Contact Form",
+          value: 1,
+        });
+      }
+      function trackProjectView(projectName) {
+        gtag("event", "project_view", {
+          event_category: "Engagement",
+          event_label: projectName,
+          value: 1,
+        });
+      }
+    </script>
 
     <!--
     - favicon
@@ -212,10 +275,7 @@
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <a
-                href="index.html#about"
-                class="navbar-link active"
-                data-nav-link
+              <a href="index.html#about" class="navbar-link" data-nav-link
                 >About</a
               >
             </li>
@@ -227,13 +287,19 @@
             </li>
 
             <li class="navbar-item">
-              <a href="index.html#portfolio" class="navbar-link" data-nav-link
+              <a
+                href="index.html#portfolio"
+                class="navbar-link active"
+                data-nav-link
                 >Portfolio</a
               >
             </li>
 
             <li class="navbar-item">
-              <a href="index.html#publication" class="navbar-link" data-nav-link
+              <a
+                href="index.html#publications"
+                class="navbar-link"
+                data-nav-link
                 >Publications</a
               >
             </li>
@@ -257,6 +323,9 @@
         -->
         <article class="portfolio active" data-page="portfolio">
           <header>
+            <a href="index.html#portfolio" class="btn-back"
+              >← Back to Portfolio</a
+            >
             <h2 class="h2 article-title">Projects</h2>
           </header>
 
