@@ -615,6 +615,62 @@ main {
 .about-text p { margin-bottom: 15px; }
 
 
+/*-----------------------------------*\
+  #INTERACTIONS
+\*-----------------------------------*/
+
+.tilt-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.magnetic {
+  position: relative;
+  display: block;
+  transition: transform 0.18s ease;
+  will-change: transform;
+}
+
+.magnetic:focus-visible {
+  outline: 2px solid var(--orange-yellow-crayola);
+  outline-offset: 4px;
+}
+
+.fade-ready {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: var(--fade-delay, 0s);
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card,
+  .magnetic {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .fade-ready {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+
+
 
 /**
  * #service 
