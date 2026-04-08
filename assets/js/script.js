@@ -1,7 +1,7 @@
 'use strict';
 
 function updateThemeIcons(isLight) {
-  const switchableIcons = ["icon-design", "icon-dev", "icon-app", "icon-photo"];
+  const switchableIcons = ["icon-design", "icon-dev", "icon-app", "icon-photo", "icon-Project-Management", "icon-research"];
   const iconImages = document.querySelectorAll('.service-icon-box img');
   
   iconImages.forEach(img => {

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="128" height="128">
+  <defs>
+    <filter id="soft-shadow-pm" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#FFBC5E" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  <g fill="none" stroke="#FFDB6E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter="url(#soft-shadow-pm)">
+    <rect x="16" y="16" width="32" height="40" rx="4" />
+    <path d="M24 16 V12 C24 9.79 25.79 8 28 8 H36 C38.21 8 40 9.79 40 12 V16" />
+    <rect x="20" y="14" width="24" height="6" rx="2" />
+    <path d="M22 30 L26 34 L32 26" />
+    <line x1="36" y1="30" x2="42" y2="30" />
+    <path d="M22 42 L26 46 L32 38" />
+    <line x1="36" y1="42" x2="42" y2="42" />
+  </g>
+</svg>
