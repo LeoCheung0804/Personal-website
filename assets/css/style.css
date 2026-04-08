@@ -68,6 +68,8 @@
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
+  --bg-nav: hsla(240, 1%, 17%, 0.75);
+  --bg-overlay: hsl(0, 0%, 5%);
 
   /**
    * typography
@@ -110,6 +112,63 @@
   --transition-2: 0.5s ease-in-out;
 
 }
+
+/*-----------------------------------*\
+  #LIGHT THEME
+\*-----------------------------------*/
+
+:root.light-theme {
+  --bg-gradient-onyx: linear-gradient(
+    to bottom right, 
+    hsl(0, 0%, 100%) 3%, 
+    hsl(0, 0%, 95%) 97%
+  );
+  --bg-gradient-jet: linear-gradient(
+    to bottom right, 
+    hsla(0, 0%, 90%, 0.251) 0%, 
+    hsla(0, 0%, 100%, 0) 100%
+  ), hsl(0, 0%, 98%);
+  
+  --border-gradient-onyx: linear-gradient(
+    to bottom right, 
+    hsl(0, 0%, 80%) 0%, 
+    hsla(0, 0%, 80%, 0) 50%
+  );
+  
+  --jet: hsl(0, 0%, 85%);
+  --onyx: hsl(0, 0%, 90%);
+  --eerie-black-1: hsl(0, 0%, 95%);
+  --eerie-black-2: hsl(0, 0%, 100%);
+  --smoky-black: hsl(0, 0%, 92%);
+  --white-1: hsl(0, 0%, 15%);
+  --white-2: hsl(0, 0%, 25%);
+  --light-gray: hsl(0, 0%, 35%);
+  --light-gray-70: hsla(0, 0%, 35%, 0.7);
+  --bg-nav: hsla(0, 0%, 98%, 0.85);
+  --bg-overlay: hsla(0, 0%, 95%, 0.8);
+
+  /* Silver-grey overrides for the golden theme */
+  --orange-yellow-crayola: hsl(210, 8%, 45%);
+  --vegas-gold: hsl(210, 8%, 35%);
+  --text-gradient-yellow: linear-gradient(to right, hsl(210, 8%, 50%), hsl(210, 8%, 35%));
+  --bg-gradient-yellow-1: linear-gradient(
+    to bottom right, 
+    hsl(210, 8%, 70%) 0%, 
+    hsla(210, 8%, 70%, 0) 50%
+  );
+  --bg-gradient-yellow-2: linear-gradient(
+    135deg, 
+    hsla(210, 8%, 70%, 0.25) 0%, 
+    hsla(210, 8%, 70%, 0) 59.86%
+  ), var(--eerie-black-1);
+
+  --shadow-1: -4px 8px 24px hsla(0, 0%, 0%, 0.1);
+  --shadow-2: 0 16px 30px hsla(0, 0%, 0%, 0.1);
+  --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.1);
+  --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.05);
+  --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.1);
+}
+
 
 
 
@@ -567,7 +626,7 @@ main {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: hsla(240, 1%, 17%, 0.75);
+  background: var(--bg-nav);
   backdrop-filter: blur(10px);
   border: 1px solid var(--jet);
   border-radius: 12px 12px 0 0;
@@ -595,7 +654,9 @@ main {
 
 .navbar-link.active { color: var(--orange-yellow-crayola); }
 
-
+.navbar-link ion-icon {
+  font-size: 18px;
+}
 
 
 
@@ -805,7 +866,7 @@ main {
   left: 0;
   width: 100%;
   height: 100vh;
-  background: hsl(0, 0%, 5%);
+  background: var(--bg-overlay);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;

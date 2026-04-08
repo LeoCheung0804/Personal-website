@@ -1,6 +1,10 @@
 'use strict';
 
-
+// Theme initialization (run early to prevent flash of wrong theme and JS errors blocking it)
+const isLightTheme = localStorage.getItem("theme") === "light";
+if (isLightTheme) {
+  document.documentElement.classList.add("light-theme");
+}
 
 // element toggle function
 const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
@@ -347,4 +351,28 @@ window.addEventListener('DOMContentLoaded', () => {
   initTiltCards();
   filterFunc('all');
 });
+
+// Light/Dark Mode Toggle logic
+const themeBtn = document.querySelector("[data-theme-btn]");
+
+if (themeBtn) {
+  // initialize button icon on load if already light mode
+  if (document.documentElement.classList.contains("light-theme")) {
+    themeBtn.querySelector("ion-icon").setAttribute("name", "moon-outline");
+  }
+
+  themeBtn.addEventListener("click", function () {
+    document.documentElement.classList.toggle("light-theme");
+    const isLight = document.documentElement.classList.contains("light-theme");
+    
+    // update icon
+    if (isLight) {
+      this.querySelector("ion-icon").setAttribute("name", "moon-outline");
+      localStorage.setItem("theme", "light");
+    } else {
+      this.querySelector("ion-icon").setAttribute("name", "sunny-outline");
+      localStorage.setItem("theme", "dark");
+    }
+  });
+}
 
