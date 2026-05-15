@@ -1277,7 +1277,7 @@ main {
 
 .photo-sequence__stage {
   position: relative;
-  height: 500px;
+  height: clamp(260px, 55vw, 520px);
   border-radius: 18px;
   border: 1px solid var(--jet);
   overflow: hidden;
@@ -1299,7 +1299,12 @@ main {
 #cu-brick-3:checked ~ .photo-sequence__stage img[data-photo="3"],
 #cu-brick-4:checked ~ .photo-sequence__stage img[data-photo="4"],
 #cu-brick-5:checked ~ .photo-sequence__stage img[data-photo="5"],
-#cu-brick-6:checked ~ .photo-sequence__stage img[data-photo="6"] {
+#cu-brick-6:checked ~ .photo-sequence__stage img[data-photo="6"],
+#tapper-1:checked ~ .photo-sequence__stage img[data-photo="1"],
+#tapper-2:checked ~ .photo-sequence__stage img[data-photo="2"],
+#tapper-3:checked ~ .photo-sequence__stage img[data-photo="3"],
+#tapper-4:checked ~ .photo-sequence__stage img[data-photo="4"],
+#tapper-5:checked ~ .photo-sequence__stage img[data-photo="5"] {
   opacity: 1;
 }
 
@@ -1335,7 +1340,12 @@ main {
 #cu-brick-3:checked ~ .photo-sequence__thumbs label[for="cu-brick-3"],
 #cu-brick-4:checked ~ .photo-sequence__thumbs label[for="cu-brick-4"],
 #cu-brick-5:checked ~ .photo-sequence__thumbs label[for="cu-brick-5"],
-#cu-brick-6:checked ~ .photo-sequence__thumbs label[for="cu-brick-6"] {
+#cu-brick-6:checked ~ .photo-sequence__thumbs label[for="cu-brick-6"],
+#tapper-1:checked ~ .photo-sequence__thumbs label[for="tapper-1"],
+#tapper-2:checked ~ .photo-sequence__thumbs label[for="tapper-2"],
+#tapper-3:checked ~ .photo-sequence__thumbs label[for="tapper-3"],
+#tapper-4:checked ~ .photo-sequence__thumbs label[for="tapper-4"],
+#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"] {
   border-color: var(--orange-yellow-crayola);
   box-shadow: 0 0 0 1px var(--orange-yellow-crayola);
   transform: translateY(-2px);
@@ -1346,27 +1356,58 @@ main {
 #cu-brick-3:checked ~ .photo-sequence__thumbs label[for="cu-brick-3"] img,
 #cu-brick-4:checked ~ .photo-sequence__thumbs label[for="cu-brick-4"] img,
 #cu-brick-5:checked ~ .photo-sequence__thumbs label[for="cu-brick-5"] img,
-#cu-brick-6:checked ~ .photo-sequence__thumbs label[for="cu-brick-6"] img {
+#cu-brick-6:checked ~ .photo-sequence__thumbs label[for="cu-brick-6"] img,
+#tapper-1:checked ~ .photo-sequence__thumbs label[for="tapper-1"] img,
+#tapper-2:checked ~ .photo-sequence__thumbs label[for="tapper-2"] img,
+#tapper-3:checked ~ .photo-sequence__thumbs label[for="tapper-3"] img,
+#tapper-4:checked ~ .photo-sequence__thumbs label[for="tapper-4"] img,
+#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"] img {
   opacity: 1;
 }
 
 @media (max-width: 720px) {
   .photo-sequence {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .photo-sequence__thumbs {
     flex-direction: row;
     overflow-x: auto;
     padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .photo-sequence__thumb {
-    flex: 0 0 120px;
+    flex: 0 0 110px;
   }
 
   .photo-sequence__thumb img {
-    height: 64px;
+    height: 62px;
+  }
+}
+
+@media (max-width: 520px) {
+  .photo-sequence {
+    gap: 10px;
+  }
+
+  .photo-sequence__stage {
+    height: clamp(220px, 70vw, 380px);
+    border-radius: 14px;
+  }
+
+  .photo-sequence__thumbs {
+    gap: 10px;
+  }
+
+  .photo-sequence__thumb {
+    flex: 0 0 96px;
+    border-radius: 10px;
+  }
+
+  .photo-sequence__thumb img {
+    height: 58px;
   }
 }
 
