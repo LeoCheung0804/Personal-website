@@ -1294,6 +1294,16 @@ main {
   transition: opacity 0.35s ease;
 }
 
+.photo-sequence__stage iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
 #cu-brick-1:checked ~ .photo-sequence__stage img[data-photo="1"],
 #cu-brick-2:checked ~ .photo-sequence__stage img[data-photo="2"],
 #cu-brick-3:checked ~ .photo-sequence__stage img[data-photo="3"],
@@ -1304,7 +1314,30 @@ main {
 #tapper-2:checked ~ .photo-sequence__stage img[data-photo="2"],
 #tapper-3:checked ~ .photo-sequence__stage img[data-photo="3"],
 #tapper-4:checked ~ .photo-sequence__stage img[data-photo="4"],
-#tapper-5:checked ~ .photo-sequence__stage img[data-photo="5"] {
+#tapper-5:checked ~ .photo-sequence__stage img[data-photo="5"],
+#knowtouch-1:checked ~ .photo-sequence__stage img[data-photo="1"],
+#knowtouch-2:checked ~ .photo-sequence__stage img[data-photo="2"],
+#knowtouch-3:checked ~ .photo-sequence__stage img[data-photo="3"],
+#knowtouch-4:checked ~ .photo-sequence__stage img[data-photo="4"],
+#knowtouch-5:checked ~ .photo-sequence__stage img[data-photo="5"],
+#knowtouch-6:checked ~ .photo-sequence__stage img[data-photo="6"],
+#exoskeleton-1:checked ~ .photo-sequence__stage img[data-photo="1"],
+#exoskeleton-2:checked ~ .photo-sequence__stage img[data-photo="2"],
+#exoskeleton-3:checked ~ .photo-sequence__stage img[data-photo="3"],
+#exoskeleton-4:checked ~ .photo-sequence__stage img[data-photo="4"],
+#exoskeleton-5:checked ~ .photo-sequence__stage img[data-photo="5"],
+#exoskeleton-6:checked ~ .photo-sequence__stage img[data-photo="6"],
+#borderless-1:checked ~ .photo-sequence__stage img[data-photo="1"],
+#borderless-2:checked ~ .photo-sequence__stage img[data-photo="2"],
+#borderless-3:checked ~ .photo-sequence__stage img[data-photo="3"],
+#borderless-4:checked ~ .photo-sequence__stage img[data-photo="4"],
+#borderless-5:checked ~ .photo-sequence__stage img[data-photo="5"],
+#borderless-6:checked ~ .photo-sequence__stage img[data-photo="6"] {
+  opacity: 1;
+}
+
+#exoskeleton-5:checked ~ .photo-sequence__stage iframe[data-photo="5"],
+#exoskeleton-6:checked ~ .photo-sequence__stage iframe[data-photo="6"] {
   opacity: 1;
 }
 
@@ -1345,7 +1378,25 @@ main {
 #tapper-2:checked ~ .photo-sequence__thumbs label[for="tapper-2"],
 #tapper-3:checked ~ .photo-sequence__thumbs label[for="tapper-3"],
 #tapper-4:checked ~ .photo-sequence__thumbs label[for="tapper-4"],
-#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"] {
+#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"],
+#knowtouch-1:checked ~ .photo-sequence__thumbs label[for="knowtouch-1"],
+#knowtouch-2:checked ~ .photo-sequence__thumbs label[for="knowtouch-2"],
+#knowtouch-3:checked ~ .photo-sequence__thumbs label[for="knowtouch-3"],
+#knowtouch-4:checked ~ .photo-sequence__thumbs label[for="knowtouch-4"],
+#knowtouch-5:checked ~ .photo-sequence__thumbs label[for="knowtouch-5"],
+#knowtouch-6:checked ~ .photo-sequence__thumbs label[for="knowtouch-6"],
+#exoskeleton-1:checked ~ .photo-sequence__thumbs label[for="exoskeleton-1"],
+#exoskeleton-2:checked ~ .photo-sequence__thumbs label[for="exoskeleton-2"],
+#exoskeleton-3:checked ~ .photo-sequence__thumbs label[for="exoskeleton-3"],
+#exoskeleton-4:checked ~ .photo-sequence__thumbs label[for="exoskeleton-4"],
+#exoskeleton-5:checked ~ .photo-sequence__thumbs label[for="exoskeleton-5"],
+#exoskeleton-6:checked ~ .photo-sequence__thumbs label[for="exoskeleton-6"],
+#borderless-1:checked ~ .photo-sequence__thumbs label[for="borderless-1"],
+#borderless-2:checked ~ .photo-sequence__thumbs label[for="borderless-2"],
+#borderless-3:checked ~ .photo-sequence__thumbs label[for="borderless-3"],
+#borderless-4:checked ~ .photo-sequence__thumbs label[for="borderless-4"],
+#borderless-5:checked ~ .photo-sequence__thumbs label[for="borderless-5"],
+#borderless-6:checked ~ .photo-sequence__thumbs label[for="borderless-6"] {
   border-color: var(--orange-yellow-crayola);
   box-shadow: 0 0 0 1px var(--orange-yellow-crayola);
   transform: translateY(-2px);
@@ -1361,7 +1412,25 @@ main {
 #tapper-2:checked ~ .photo-sequence__thumbs label[for="tapper-2"] img,
 #tapper-3:checked ~ .photo-sequence__thumbs label[for="tapper-3"] img,
 #tapper-4:checked ~ .photo-sequence__thumbs label[for="tapper-4"] img,
-#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"] img {
+#tapper-5:checked ~ .photo-sequence__thumbs label[for="tapper-5"] img,
+#knowtouch-1:checked ~ .photo-sequence__thumbs label[for="knowtouch-1"] img,
+#knowtouch-2:checked ~ .photo-sequence__thumbs label[for="knowtouch-2"] img,
+#knowtouch-3:checked ~ .photo-sequence__thumbs label[for="knowtouch-3"] img,
+#knowtouch-4:checked ~ .photo-sequence__thumbs label[for="knowtouch-4"] img,
+#knowtouch-5:checked ~ .photo-sequence__thumbs label[for="knowtouch-5"] img,
+#knowtouch-6:checked ~ .photo-sequence__thumbs label[for="knowtouch-6"] img,
+#exoskeleton-1:checked ~ .photo-sequence__thumbs label[for="exoskeleton-1"] img,
+#exoskeleton-2:checked ~ .photo-sequence__thumbs label[for="exoskeleton-2"] img,
+#exoskeleton-3:checked ~ .photo-sequence__thumbs label[for="exoskeleton-3"] img,
+#exoskeleton-4:checked ~ .photo-sequence__thumbs label[for="exoskeleton-4"] img,
+#exoskeleton-5:checked ~ .photo-sequence__thumbs label[for="exoskeleton-5"] img,
+#exoskeleton-6:checked ~ .photo-sequence__thumbs label[for="exoskeleton-6"] img,
+#borderless-1:checked ~ .photo-sequence__thumbs label[for="borderless-1"] img,
+#borderless-2:checked ~ .photo-sequence__thumbs label[for="borderless-2"] img,
+#borderless-3:checked ~ .photo-sequence__thumbs label[for="borderless-3"] img,
+#borderless-4:checked ~ .photo-sequence__thumbs label[for="borderless-4"] img,
+#borderless-5:checked ~ .photo-sequence__thumbs label[for="borderless-5"] img,
+#borderless-6:checked ~ .photo-sequence__thumbs label[for="borderless-6"] img {
   opacity: 1;
 }
 
