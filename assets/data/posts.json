@@ -1,0 +1,34 @@
+[
+  {
+    "filename": "OSH_2026",
+    "title": "CU-Brick Wins Merit Award at OSH Innovation and Technology Award 2026",
+    "date": "2026-06-04",
+    "category": "Competition",
+    "image": "./assets/images/osh_award.JPG",
+    "summary": "Honoured that CU-Brick received the Merit Award in the Open Category of the OSH Innovation and Technology Award. This recognition highlights our effor..."
+  },
+  {
+    "filename": "2nd_runner_up",
+    "title": "Won the 2nd Runner Up for YPEC 2025",
+    "date": "2025-11-02",
+    "category": "Competition",
+    "image": "./assets/images/IMG_0129.JPG",
+    "summary": "Honoured that our team won 2nd Runner Up in the Open Section of the Young Professionals Exhibition & Competition 2025 with our CU-Brick Brick Laying C..."
+  },
+  {
+    "filename": "ypec-2025",
+    "title": "Young Professionals Exhibition & Competition 2025",
+    "date": "2025-11-02",
+    "category": "Competition",
+    "image": "./assets/images/blog-2.jpeg",
+    "summary": "Proud to have participated in the Young Professionals Exhibition & Competition 2025 today at City University of Hong Kong! We showcased our project at..."
+  },
+  {
+    "filename": "cablecon-2025",
+    "title": "Presenting at CableCon2025 in Hong Kong",
+    "date": "2025-07-02",
+    "category": "Conference",
+    "image": "./assets/images/cablecon_pre.jpeg",
+    "summary": "Thrilled to have presented our paper \"Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project\" at the 7th Intern..."
+  }
+]

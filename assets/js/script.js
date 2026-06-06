@@ -400,3 +400,44 @@ if (themeBtn) {
   });
 }
 
+
+// --- Dynamic Blog Loading ---
+document.addEventListener('DOMContentLoaded', async () => {
+  const blogList = document.getElementById('dynamic-blog-list');
+  if (!blogList) return;
+
+  try {
+    const fetchUrl = `./assets/data/posts.json?t=${Date.now()}`;
+    const response = await fetch(fetchUrl);
+    if (!response.ok) throw new Error('Network response was not ok');
+    const posts = await response.json();
+
+    blogList.innerHTML = ''; // Clear layout if any
+
+    posts.forEach(post => {
+      const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : '';
+      
+      const li = document.createElement('li');
+      li.className = 'blog-post-item tilt-card fade-seed';
+      
+      li.innerHTML = `
+        <a href="blog-post.html?post=${post.filename}" class="magnetic" data-magnetic>
+          ${post.image ? `<figure class="blog-banner-box"><img src="${post.image}" alt="${post.title || post.filename}" loading="lazy"></figure>` : ''}
+          <div class="blog-content">
+            <div class="blog-meta">
+              ${post.category ? `<p class="blog-category">${post.category}</p><span class="dot"></span>` : ''}
+              ${post.date ? `<time datetime="${post.date}">${dateStr}</time>` : ''}
+            </div>
+            <h3 class="h3 blog-item-title">${post.title || post.filename}</h3>
+            <p class="blog-text">${post.summary || ''}</p>
+          </div>
+        </a>
+      `;
+      blogList.appendChild(li);
+    });
+
+  } catch (error) {
+    console.error('Error loading blog posts:', error);
+    blogList.innerHTML = '<li><p>Failed to load posts.</p></li>';
+  }
+});
