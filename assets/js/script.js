@@ -222,6 +222,9 @@ const publicationSelectItems = document.querySelectorAll("[data-publication-sele
 const publicationSelectValue = document.querySelector("[data-publication-select-value]");
 const publicationFilterBtn = document.querySelectorAll("[data-publication-filter-btn]");
 const publicationFilterItems = document.querySelectorAll("[data-publication-filter-item]");
+const getPublicationFilterValue = function (elem) {
+  return elem.textContent.trim().toLowerCase();
+}
 
 if (publicationSelect) {
   publicationSelect.addEventListener("click", function () { elementToggleFunc(this); });
@@ -249,8 +252,8 @@ if (publicationSelectItems.length > 0) {
   for (let i = 0; i < publicationSelectItems.length; i++) {
     publicationSelectItems[i].addEventListener("click", function () {
 
-      let selectedValue = this.innerText.toLowerCase();
-      publicationSelectValue.innerText = this.innerText;
+      let selectedValue = getPublicationFilterValue(this);
+      publicationSelectValue.innerText = this.textContent.trim();
       elementToggleFunc(publicationSelect);
       publicationFilterFunc(selectedValue);
 
@@ -265,8 +268,8 @@ if (publicationFilterBtn.length > 0) {
 
     publicationFilterBtn[i].addEventListener("click", function () {
 
-      let selectedValue = this.innerText.toLowerCase();
-      publicationSelectValue.innerText = this.innerText;
+      let selectedValue = getPublicationFilterValue(this);
+      publicationSelectValue.innerText = this.textContent.trim();
       publicationFilterFunc(selectedValue);
 
       lastClickedPublicationBtn.classList.remove("active");
