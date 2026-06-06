@@ -216,6 +216,68 @@ if (filterBtn.length > 0) {
   }
 }
 
+// publications filter variables
+const publicationSelect = document.querySelector("[data-publication-select]");
+const publicationSelectItems = document.querySelectorAll("[data-publication-select-item]");
+const publicationSelectValue = document.querySelector("[data-publication-select-value]");
+const publicationFilterBtn = document.querySelectorAll("[data-publication-filter-btn]");
+const publicationFilterItems = document.querySelectorAll("[data-publication-filter-item]");
+
+if (publicationSelect) {
+  publicationSelect.addEventListener("click", function () { elementToggleFunc(this); });
+}
+
+const publicationFilterFunc = function (selectedValue) {
+
+  for (let i = 0; i < publicationFilterItems.length; i++) {
+
+    if (selectedValue === "all") {
+      publicationFilterItems[i].classList.add("active");
+    } else if (selectedValue === publicationFilterItems[i].dataset.publicationCategory) {
+      publicationFilterItems[i].classList.add("active");
+    } else {
+      publicationFilterItems[i].classList.remove("active");
+    }
+
+  }
+
+  refreshFadeAnimations();
+
+}
+
+if (publicationSelectItems.length > 0) {
+  for (let i = 0; i < publicationSelectItems.length; i++) {
+    publicationSelectItems[i].addEventListener("click", function () {
+
+      let selectedValue = this.innerText.toLowerCase();
+      publicationSelectValue.innerText = this.innerText;
+      elementToggleFunc(publicationSelect);
+      publicationFilterFunc(selectedValue);
+
+    });
+  }
+}
+
+let lastClickedPublicationBtn = publicationFilterBtn[0];
+
+if (publicationFilterBtn.length > 0) {
+  for (let i = 0; i < publicationFilterBtn.length; i++) {
+
+    publicationFilterBtn[i].addEventListener("click", function () {
+
+      let selectedValue = this.innerText.toLowerCase();
+      publicationSelectValue.innerText = this.innerText;
+      publicationFilterFunc(selectedValue);
+
+      lastClickedPublicationBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedPublicationBtn = this;
+
+    });
+
+  }
+}
+
 
 
 // contact form variables

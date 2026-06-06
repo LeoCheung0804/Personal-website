@@ -1626,6 +1626,7 @@ main {
 }
 
 .publications .publication-item {
+  display: none;
   padding: 15px;
   border: 1px solid var(--jet);
   border-radius: 14px;
@@ -1633,6 +1634,10 @@ main {
   margin-bottom: 20px;
   box-shadow: var(--shadow-1);
   transition: var(--transition-1);
+}
+
+.publications .publication-item.active {
+  display: block;
 }
 
 .publications .publication-item:hover {

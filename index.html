@@ -1172,14 +1172,60 @@
         <!--
         - #Publications
       -->
-
         <article class="publications" data-page="publications">
           <header>
             <h2 class="h2 article-title">Publications</h2>
           </header>
 
+          <section class="publication-filters">
+            <ul class="filter-list" data-publication-filter-list>
+              <li class="filter-item">
+                <button class="active" data-publication-filter-btn>All</button>
+              </li>
+
+              <li class="filter-item">
+                <button data-publication-filter-btn>Conference papers</button>
+              </li>
+
+              <li class="filter-item">
+                <button data-publication-filter-btn>Journal papers</button>
+              </li>
+            </ul>
+
+            <div class="filter-select-box" data-publication-select-box>
+              <button class="filter-select" data-publication-select>
+                <div class="select-value" data-publication-select-value>
+                  Select category
+                </div>
+
+                <div class="select-icon">
+                  <ion-icon name="chevron-down"></ion-icon>
+                </div>
+              </button>
+
+              <ul class="select-list">
+                <li class="select-item">
+                  <button data-publication-select-item>All</button>
+                </li>
+
+                <li class="select-item">
+                  <button data-publication-select-item>
+                    Conference papers
+                  </button>
+                </li>
+
+                <li class="select-item">
+                  <button data-publication-select-item>Journal papers</button>
+                </li>
+              </ul>
+            </div>
+          </section>
           <ul class="publication-list">
-            <li class="publication-item tilt-card fade-seed">
+            <li
+              class="publication-item tilt-card fade-seed active"
+              data-publication-filter-item
+              data-publication-category="conference papers"
+            >
               <a
                 href="https://doi.org/10.1007/978-3-031-94608-0_28"
                 class="magnetic"
