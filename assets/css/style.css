@@ -651,13 +651,24 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  gap: 0 8px;
   padding: 0 10px;
+}
+
+.navbar-item:not(.navbar-action-item) {
+  flex: 1 1 auto;
+  min-width: max-content;
+}
+
+.navbar-action-item {
+  flex: 0 0 auto;
 }
 
 .navbar-link {
   color: var(--light-gray);
   font-size: var(--fs-8);
-  padding: 20px 4px;
+  min-height: 56px;
+  padding: 14px 4px;
   transition: color var(--transition-1);
 }
 
@@ -671,8 +682,9 @@ main {
 }
 
 .lang-btn {
-  min-width: 34px;
+  min-width: 44px;
   text-align: center;
+  padding-inline: 2px;
 }
 
 .lang-btn span {

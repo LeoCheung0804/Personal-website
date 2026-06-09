@@ -544,12 +544,6 @@ function applySharedShellTranslations(language = currentLanguage) {
   setText(".contacts-list .contact-item:nth-child(2) address", "contact.hongKong", language);
   setText(".contacts-list .contact-item:nth-child(3) .contact-title", "contact.employer", language);
   setText(".contacts-list .contact-item:nth-child(4) .contact-title", "contact.organization", language);
-  setText('.navbar-link[href="index.html#about"]', "nav.about", language);
-  setText('.navbar-link[href="index.html#resume"]', "nav.resume", language);
-  setText('.navbar-link[href="index.html#portfolio"]', "nav.projects", language);
-  setText('.navbar-link[href="index.html#publications"]', "nav.publications", language);
-  setText('.navbar-link[href="index.html#blog"]', "nav.blog", language);
-  setText('.navbar-link[href="index.html#contact"]', "nav.contact", language);
   setText(".back-to-top", "footer.backToTop", language);
 }
 
