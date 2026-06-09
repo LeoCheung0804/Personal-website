@@ -22,6 +22,11 @@
   animation-play-state: paused;
 }
 
+.project-preview-wrapper:hover .project-preview-list,
+.project-preview-wrapper:focus-within .project-preview-list {
+  animation-play-state: paused;
+}
+
 .project-preview-item {
   width: 300px;
   background: var(--border-gradient-onyx);
@@ -40,6 +45,7 @@
   background: var(--bg-gradient-jet);
   border-radius: inherit;
   z-index: 1;
+  pointer-events: none;
 }
 
 .project-preview-link {
