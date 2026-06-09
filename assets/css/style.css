@@ -648,15 +648,21 @@ main {
 
 .navbar-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
-  gap: 0 8px;
-  padding: 0 10px;
+  gap: 0 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: 0 6px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
+.navbar-list::-webkit-scrollbar { display: none; }
+
 .navbar-item:not(.navbar-action-item) {
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-width: max-content;
 }
 
@@ -665,10 +671,11 @@ main {
 }
 
 .navbar-link {
+  --fs-8: 11px;
   color: var(--light-gray);
   font-size: var(--fs-8);
   min-height: 56px;
-  padding: 14px 4px;
+  padding: 14px 3px;
   transition: color var(--transition-1);
 }
 
