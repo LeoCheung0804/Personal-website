@@ -212,7 +212,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
 
@@ -243,11 +243,11 @@
           <div class="info-content">
             <h1 class="name" title="Leo Cheung">Leo Cheung</h1>
 
-            <p class="title">Robotic Engineer</p>
+            <p class="title" data-i18n="profile.title">Robotic Engineer</p>
           </div>
 
           <button class="info_more-btn" data-sidebar-btn>
-            <span>Show Contacts</span>
+            <span data-i18n="sidebar.showContacts">Show Contacts</span>
 
             <ion-icon name="chevron-down"></ion-icon>
           </button>
@@ -263,7 +263,7 @@
                   <ion-icon name="mail-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
-                  <p class="contact-title">Email</p>
+                  <p class="contact-title" data-i18n="contact.email">Email</p>
                   <a href="mailto:leocheung0804@gmail.com" class="contact-link"
                     >leocheung0804@gmail.com</a
                   >
@@ -276,8 +276,10 @@
                 <ion-icon name="location-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">Location</p>
-                <address>Hong Kong</address>
+                <p class="contact-title" data-i18n="contact.location">
+                  Location
+                </p>
+                <address data-i18n="contact.hongKong">Hong Kong</address>
               </div>
             </li>
 
@@ -287,7 +289,9 @@
                   <ion-icon name="business-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
-                  <p class="contact-title">Employer</p>
+                  <p class="contact-title" data-i18n="contact.employer">
+                    Employer
+                  </p>
                   <a href="https://www.c3robotics.com.hk" class="contact-link"
                     >C3 Construction Robotics Limited</a
                   >
@@ -301,7 +305,9 @@
                   <ion-icon name="link-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
-                  <p class="contact-title">Organization</p>
+                  <p class="contact-title" data-i18n="contact.organization">
+                    Organization
+                  </p>
                   <a
                     href="https://c3robolab.mae.cuhk.edu.hk/"
                     class="contact-link"
@@ -402,33 +408,87 @@
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <button class="navbar-link active" data-nav-link>About</button>
+              <button
+                class="navbar-link active"
+                data-nav-link
+                data-page-target="about"
+                data-i18n="nav.about"
+              >
+                About
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Resume</button>
+              <button
+                class="navbar-link"
+                data-nav-link
+                data-page-target="resume"
+                data-i18n="nav.resume"
+              >
+                Resume
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Projects</button>
+              <button
+                class="navbar-link"
+                data-nav-link
+                data-page-target="portfolio"
+                data-i18n="nav.projects"
+              >
+                Projects
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Publications</button>
+              <button
+                class="navbar-link"
+                data-nav-link
+                data-page-target="publications"
+                data-i18n="nav.publications"
+              >
+                Publications
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Blog</button>
+              <button
+                class="navbar-link"
+                data-nav-link
+                data-page-target="blog"
+                data-i18n="nav.blog"
+              >
+                Blog
+              </button>
             </li>
 
             <li class="navbar-item">
-              <button class="navbar-link" data-nav-link>Contact</button>
+              <button
+                class="navbar-link"
+                data-nav-link
+                data-page-target="contact"
+                data-i18n="nav.contact"
+              >
+                Contact
+              </button>
+            </li>
+
+            <li class="navbar-item">
+              <button
+                class="navbar-link lang-btn"
+                aria-label="Switch language"
+                data-i18n-aria-label="language.toggle"
+                data-lang-btn
+              >
+                <span data-lang-label>繁</span>
+              </button>
             </li>
 
             <li class="navbar-item">
               <button
                 class="navbar-link theme-btn"
                 aria-label="Toggle theme"
+                data-i18n-aria-label="theme.toggle"
                 data-theme-btn
               >
                 <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
@@ -443,11 +503,11 @@
 
         <article class="about active" data-page="about">
           <header>
-            <h2 class="h2 article-title">About me</h2>
+            <h2 class="h2 article-title" data-i18n="about.title">About me</h2>
           </header>
 
           <section class="about-text">
-            <p>
+            <p data-i18n="about.paragraph1">
               I'm a mechanical engineer focused on end-to-end robotics
               development? from concept sketches and multi-body simulations to
               full-scale deployment on construction sites. At C3 Construction
@@ -456,7 +516,7 @@
               harsh realities of Hong Kong job sites.
             </p>
 
-            <p>
+            <p data-i18n="about.paragraph2">
               Recent highlights include orchestrating CU-Brick to lay 5,800
               bricks for the YES Pavilion, scaling Robo-Tapper inspections
               across high-rise facades, and presenting that work on stages like
@@ -472,7 +532,9 @@
         -->
 
           <section class="service">
-            <h3 class="h3 service-title">What i'm doing</h3>
+            <h3 class="h3 service-title" data-i18n="service.title">
+              What i'm doing
+            </h3>
 
             <ul class="service-list">
               <li class="service-item">
@@ -485,8 +547,16 @@
                 </div>
 
                 <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Software development</h4>
-                  <p class="service-item-text">
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.software.title"
+                  >
+                    Software development
+                  </h4>
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.software.text"
+                  >
                     Developed robot control, automation navigation, signal
                     processing, and UI. As well as programming for motor
                     controls and wireless communications
@@ -504,9 +574,17 @@
                 </div>
 
                 <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Hardware design</h4>
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.hardware.title"
+                  >
+                    Hardware design
+                  </h4>
 
-                  <p class="service-item-text">
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.hardware.text"
+                  >
                     Design and development of robotic systems, including
                     mechanical structures, electrical layouts, and prototyping
                     using 3D printing and CNC machining.
@@ -524,9 +602,17 @@
                 </div>
 
                 <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Project management</h4>
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.management.title"
+                  >
+                    Project management
+                  </h4>
 
-                  <p class="service-item-text">
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.management.text"
+                  >
                     Managing projects and supervising teams, and overseeing task
                     timelines, and milestones.
                   </p>
@@ -543,9 +629,17 @@
                 </div>
 
                 <div class="service-content-box">
-                  <h4 class="h4 service-item-title">Research and Publishing</h4>
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.research.title"
+                  >
+                    Research and Publishing
+                  </h4>
 
-                  <p class="service-item-text">
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.research.text"
+                  >
                     Research and academic contributions were a frequent duty, as
                     seen in publishing papers as the first author.
                   </p>
@@ -559,7 +653,13 @@
         -->
 
           <section class="project-preview">
-            <h3 class="h3 project-preview-title">Projects Preview</h3>
+            <h3
+              href="https://leocml.com/projects.html"
+              class="h3 project-preview-title"
+              data-i18n="projectPreview.title"
+            >
+              Projects Preview
+            </h3>
 
             <div class="project-preview-wrapper">
               <ul class="project-preview-list">
@@ -574,7 +674,10 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">Robo-Tapper</h4>
-                      <p class="project-preview-text">
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.tapper"
+                      >
                         Facade Inspection Robot
                       </p>
                     </div>
@@ -592,7 +695,10 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">CU-Brick</h4>
-                      <p class="project-preview-text">
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.cuBrick"
+                      >
                         Brick Construction Robot
                       </p>
                     </div>
@@ -612,7 +718,12 @@
                       <h4 class="h4 project-preview-item-title">
                         Wall Spraying
                       </h4>
-                      <p class="project-preview-text">Autonomous Robot</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.spray"
+                      >
+                        Autonomous Robot
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -628,7 +739,12 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">kNOw Touch</h4>
-                      <p class="project-preview-text">Touch-less Sensor</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.knowTouch"
+                      >
+                        Touch-less Sensor
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -644,7 +760,12 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">Exoskeleton</h4>
-                      <p class="project-preview-text">Control Device</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.exoskeleton"
+                      >
+                        Control Device
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -662,7 +783,10 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">Robo-Tapper</h4>
-                      <p class="project-preview-text">
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.tapper"
+                      >
                         Facade Inspection Robot
                       </p>
                     </div>
@@ -680,7 +804,10 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">CU Brick</h4>
-                      <p class="project-preview-text">
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.cuBrick"
+                      >
                         Brick Construction Robot
                       </p>
                     </div>
@@ -700,7 +827,12 @@
                       <h4 class="h4 project-preview-item-title">
                         Wall Spraying
                       </h4>
-                      <p class="project-preview-text">Autonomous Robot</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.spray"
+                      >
+                        Autonomous Robot
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -716,7 +848,12 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">kNOw Touch</h4>
-                      <p class="project-preview-text">Touch-less Sensor</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.knowTouch"
+                      >
+                        Touch-less Sensor
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -732,7 +869,12 @@
                     </figure>
                     <div class="project-preview-content">
                       <h4 class="h4 project-preview-item-title">Exoskeleton</h4>
-                      <p class="project-preview-text">Control Device</p>
+                      <p
+                        class="project-preview-text"
+                        data-i18n="projectPreview.exoskeleton"
+                      >
+                        Control Device
+                      </p>
                     </div>
                   </a>
                 </li>
@@ -747,7 +889,7 @@
 
         <article class="resume" data-page="resume">
           <header>
-            <h2 class="h2 article-title">Resume</h2>
+            <h2 class="h2 article-title" data-i18n="resume.title">Resume</h2>
           </header>
 
           <section class="timeline">
@@ -756,12 +898,12 @@
                 <ion-icon name="book-outline"></ion-icon>
               </div>
 
-              <h3 class="h3">Education</h3>
+              <h3 class="h3" data-i18n="resume.education">Education</h3>
             </div>
 
             <ol class="timeline-list">
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n="resume.msc.title">
                   MSc Mechanical and Automation Engineering
                 </h4>
 
@@ -769,13 +911,13 @@
                   >The Chinese University of Hong Kong, 9/2022 - 6/2023</span
                 >
 
-                <p class="timeline-text">
+                <p class="timeline-text" data-i18n="resume.msc.project">
                   MSc Project - Wireless Motorized Foot Controller for SuperLimb
                 </p>
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">
+                <h4 class="h4 timeline-item-title" data-i18n="resume.bsc.title">
                   BSc (Hons) Engineering Physics
                 </h4>
 
@@ -783,7 +925,7 @@
                   >The Hong Kong Polytechnic University, 9/2016 - 7/2020</span
                 >
 
-                <p class="timeline-text">
+                <p class="timeline-text" data-i18n="resume.bsc.project">
                   Final Year Project - Artificial lighting for Basil?�s growth
                 </p>
               </li>
@@ -796,18 +938,26 @@
                 <ion-icon name="briefcase-outline"></ion-icon>
               </div>
 
-              <h3 class="h3">Experience</h3>
+              <h3 class="h3" data-i18n="resume.experience">Experience</h3>
             </div>
 
             <ol class="timeline-list">
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">Mechanical Engineer</h4>
+                <h4
+                  class="h4 timeline-item-title"
+                  data-i18n="resume.mechanicalEngineer"
+                >
+                  Mechanical Engineer
+                </h4>
 
                 <span
                   >C3 Construction Robotics, Hong Kong, 7/2023 - Present</span
                 >
 
-                <p class="timeline-text">
+                <p
+                  class="timeline-text"
+                  data-i18n="resume.mechanicalEngineer.projects"
+                >
                   Robo-Tapper Facade Inspection Robot<br />
                   Autonomous Wall Spraying Robot <br />
                   CU Brick - Brick Construction Cable-Driven Parallel Robot
@@ -817,37 +967,63 @@
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">Project Engineer</h4>
+                <h4
+                  class="h4 timeline-item-title"
+                  data-i18n="resume.projectEngineer"
+                >
+                  Project Engineer
+                </h4>
 
                 <span
                   >Roborn Technology Limited, Hong Kong, 2/2021 - 10/2022</span
                 >
 
-                <p class="timeline-text">
+                <p
+                  class="timeline-text"
+                  data-i18n="resume.projectEngineer.projects"
+                >
                   kNOw Touch Touch-less Lift Button Sensor Bar<br />
                   Exoskeleton control device and Humanoid robot
                 </p>
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">Graduate Executive</h4>
+                <h4
+                  class="h4 timeline-item-title"
+                  data-i18n="resume.graduateExecutive"
+                >
+                  Graduate Executive
+                </h4>
 
                 <span
                   >The Hong Kong Polytechnic University, Hong Kong, 9/2020 -
                   2/2021</span
                 >
 
-                <p class="timeline-text">
+                <p
+                  class="timeline-text"
+                  data-i18n="resume.graduateExecutive.project"
+                >
                   Borderless Lab 365 - STEM Laboratories Project
                 </p>
               </li>
 
               <li class="timeline-item">
-                <h4 class="h4 timeline-item-title">Summer Internship</h4>
+                <h4
+                  class="h4 timeline-item-title"
+                  data-i18n="resume.summerInternship"
+                >
+                  Summer Internship
+                </h4>
 
                 <span>Fablab Valencia, Spain, 6/2018 - 8/2018</span>
 
-                <p class="timeline-text">Microwave Heating System Project</p>
+                <p
+                  class="timeline-text"
+                  data-i18n="resume.summerInternship.project"
+                >
+                  Microwave Heating System Project
+                </p>
               </li>
             </ol>
           </section>
@@ -910,32 +1086,61 @@
 
         <article class="portfolio" data-page="portfolio">
           <header>
-            <h2 class="h2 article-title">Projects</h2>
+            <h2 class="h2 article-title" data-i18n="projects.title">
+              Projects
+            </h2>
           </header>
 
           <section class="projects">
             <ul class="filter-list">
               <li class="filter-item">
-                <button class="active" data-filter-btn>All</button>
+                <button
+                  class="active"
+                  data-filter-btn
+                  data-filter-value="all"
+                  data-i18n="filters.all"
+                >
+                  All
+                </button>
               </li>
 
               <li class="filter-item">
-                <button data-filter-btn>Software development</button>
+                <button
+                  data-filter-btn
+                  data-filter-value="software development"
+                  data-i18n="filters.software"
+                >
+                  Software development
+                </button>
               </li>
 
               <li class="filter-item">
-                <button data-filter-btn>Hardware design</button>
+                <button
+                  data-filter-btn
+                  data-filter-value="hardware design"
+                  data-i18n="filters.hardware"
+                >
+                  Hardware design
+                </button>
               </li>
 
               <li class="filter-item">
-                <button data-filter-btn>Project management</button>
+                <button
+                  data-filter-btn
+                  data-filter-value="project management"
+                  data-i18n="filters.management"
+                >
+                  Project management
+                </button>
               </li>
             </ul>
 
             <div class="filter-select-box">
               <button class="filter-select" data-select>
                 <div class="select-value" data-selecct-value>
-                  Select category
+                  <span data-i18n="filters.selectCategory"
+                    >Select category</span
+                  >
                 </div>
 
                 <div class="select-icon">
@@ -945,19 +1150,43 @@
 
               <ul class="select-list">
                 <li class="select-item">
-                  <button data-select-item>All</button>
+                  <button
+                    data-select-item
+                    data-filter-value="all"
+                    data-i18n="filters.all"
+                  >
+                    All
+                  </button>
                 </li>
 
                 <li class="select-item">
-                  <button data-select-item>Software development</button>
+                  <button
+                    data-select-item
+                    data-filter-value="software development"
+                    data-i18n="filters.software"
+                  >
+                    Software development
+                  </button>
                 </li>
 
                 <li class="select-item">
-                  <button data-select-item>Hardware design</button>
+                  <button
+                    data-select-item
+                    data-filter-value="hardware design"
+                    data-i18n="filters.hardware"
+                  >
+                    Hardware design
+                  </button>
                 </li>
 
                 <li class="select-item">
-                  <button data-select-item>Project management</button>
+                  <button
+                    data-select-item
+                    data-filter-value="project management"
+                    data-i18n="filters.management"
+                  >
+                    Project management
+                  </button>
                 </li>
               </ul>
             </div>
@@ -979,10 +1208,12 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3 class="project-title" data-i18n="project.tapper.title">
                     Robo-Tapper Facade Inspection Robot
                   </h3>
-                  <p class="project-category">Project management</p>
+                  <p class="project-category" data-i18n="filters.management">
+                    Project management
+                  </p>
                 </a>
               </li>
 
@@ -1002,10 +1233,12 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3 class="project-title" data-i18n="project.cuBrick.title">
                     CU Brick - Brick Construction Cable-Driven Parallel Robot
                   </h3>
-                  <p class="project-category">Project management</p>
+                  <p class="project-category" data-i18n="filters.management">
+                    Project management
+                  </p>
                 </a>
               </li>
 
@@ -1025,8 +1258,12 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">Autonomous Wall Spraying Robot</h3>
-                  <p class="project-category">Project management</p>
+                  <h3 class="project-title" data-i18n="project.spray.title">
+                    Autonomous Wall Spraying Robot
+                  </h3>
+                  <p class="project-category" data-i18n="filters.management">
+                    Project management
+                  </p>
                 </a>
               </li>
 
@@ -1046,10 +1283,12 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3 class="project-title" data-i18n="project.knowTouch.title">
                     kNOw Touch Touch-less lift button sensor bar
                   </h3>
-                  <p class="project-category">Hardware Design</p>
+                  <p class="project-category" data-i18n="filters.hardware">
+                    Hardware Design
+                  </p>
                 </a>
               </li>
 
@@ -1069,10 +1308,15 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3
+                    class="project-title"
+                    data-i18n="project.exoskeleton.title"
+                  >
                     Exoskeleton control device and Humanoid robot
                   </h3>
-                  <p class="project-category">Project management</p>
+                  <p class="project-category" data-i18n="filters.management">
+                    Project management
+                  </p>
                 </a>
               </li>
 
@@ -1092,10 +1336,15 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3
+                    class="project-title"
+                    data-i18n="project.borderless.title"
+                  >
                     Borderless Lab 365 - STEM laboratories project
                   </h3>
-                  <p class="project-category">Software Development</p>
+                  <p class="project-category" data-i18n="filters.software">
+                    Software Development
+                  </p>
                 </a>
               </li>
 
@@ -1115,10 +1364,12 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3 class="project-title" data-i18n="project.microwave.title">
                     Microwave Heating System Project
                   </h3>
-                  <p class="project-category">Hardware Design</p>
+                  <p class="project-category" data-i18n="filters.hardware">
+                    Hardware Design
+                  </p>
                 </a>
               </li>
 
@@ -1138,8 +1389,15 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">Retractable tapper and thruster</h3>
-                  <p class="project-category">Hardware Design</p>
+                  <h3
+                    class="project-title"
+                    data-i18n="project.retractable.title"
+                  >
+                    Retractable tapper and thruster
+                  </h3>
+                  <p class="project-category" data-i18n="filters.hardware">
+                    Hardware Design
+                  </p>
                 </a>
               </li>
 
@@ -1159,10 +1417,15 @@
                       loading="lazy"
                     />
                   </figure>
-                  <h3 class="project-title">
+                  <h3
+                    class="project-title"
+                    data-i18n="project.footController.title"
+                  >
                     Wireless Motorized Foot Controller for SuperLimb
                   </h3>
-                  <p class="project-category">Hardware Design</p>
+                  <p class="project-category" data-i18n="filters.hardware">
+                    Hardware Design
+                  </p>
                 </a>
               </li>
             </ul>
@@ -1174,28 +1437,51 @@
       -->
         <article class="publications" data-page="publications">
           <header>
-            <h2 class="h2 article-title">Publications</h2>
+            <h2 class="h2 article-title" data-i18n="publications.title">
+              Publications
+            </h2>
           </header>
 
           <section class="publication-filters">
             <ul class="filter-list" data-publication-filter-list>
               <li class="filter-item">
-                <button class="active" data-publication-filter-btn>All</button>
+                <button
+                  class="active"
+                  data-publication-filter-btn
+                  data-filter-value="all"
+                  data-i18n="filters.all"
+                >
+                  All
+                </button>
               </li>
 
               <li class="filter-item">
-                <button data-publication-filter-btn>Conference papers</button>
+                <button
+                  data-publication-filter-btn
+                  data-filter-value="conference papers"
+                  data-i18n="publications.filters.conference"
+                >
+                  Conference papers
+                </button>
               </li>
 
               <li class="filter-item">
-                <button data-publication-filter-btn>Journal papers</button>
+                <button
+                  data-publication-filter-btn
+                  data-filter-value="journal papers"
+                  data-i18n="publications.filters.journal"
+                >
+                  Journal papers
+                </button>
               </li>
             </ul>
 
             <div class="filter-select-box" data-publication-select-box>
               <button class="filter-select" data-publication-select>
                 <div class="select-value" data-publication-select-value>
-                  Select category
+                  <span data-i18n="filters.selectCategory"
+                    >Select category</span
+                  >
                 </div>
 
                 <div class="select-icon">
@@ -1205,17 +1491,33 @@
 
               <ul class="select-list">
                 <li class="select-item">
-                  <button data-publication-select-item>All</button>
+                  <button
+                    data-publication-select-item
+                    data-filter-value="all"
+                    data-i18n="filters.all"
+                  >
+                    All
+                  </button>
                 </li>
 
                 <li class="select-item">
-                  <button data-publication-select-item>
+                  <button
+                    data-publication-select-item
+                    data-filter-value="conference papers"
+                    data-i18n="publications.filters.conference"
+                  >
                     Conference papers
                   </button>
                 </li>
 
                 <li class="select-item">
-                  <button data-publication-select-item>Journal papers</button>
+                  <button
+                    data-publication-select-item
+                    data-filter-value="journal papers"
+                    data-i18n="publications.filters.journal"
+                  >
+                    Journal papers
+                  </button>
                 </li>
               </ul>
             </div>
@@ -1231,15 +1533,24 @@
                 class="magnetic"
                 data-magnetic
               >
-                <h3 class="publication-title">
+                <h3
+                  class="publication-title"
+                  data-i18n="publications.cuBrick.title"
+                >
                   Development of CU-Brick Brick Laying Cable-Driven Robot for a
                   Real-World Construction Project
                 </h3>
-                <p class="publication-info">
+                <p
+                  class="publication-info"
+                  data-i18n="publications.cuBrick.info"
+                >
                   Published in International Conference on Cable-Driven Parallel
                   Robots, July, 2025
                 </p>
-                <p class="publication-abstract">
+                <p
+                  class="publication-abstract"
+                  data-i18n="publications.cuBrick.abstract"
+                >
                   This paper presents CU-Brick, a cable-driven parallel robot
                   (CDPR) system developed for automated bricklaying, applied in
                   the construction of the Yard for Environmental Sustainability
@@ -1259,7 +1570,7 @@
 
         <article class="blog" data-page="blog">
           <header>
-            <h2 class="h2 article-title">Blog</h2>
+            <h2 class="h2 article-title" data-i18n="blog.title">Blog</h2>
           </header>
 
           <section class="blog-posts">
@@ -1273,7 +1584,7 @@
 
         <article class="contact" data-page="contact">
           <header>
-            <h2 class="h2 article-title">Contact</h2>
+            <h2 class="h2 article-title" data-i18n="contact.title">Contact</h2>
           </header>
 
           <section class="mapbox" data-mapbox>
@@ -1288,7 +1599,9 @@
           </section>
 
           <section class="contact-form">
-            <h3 class="h3 form-title">Contact Form</h3>
+            <h3 class="h3 form-title" data-i18n="contact.formTitle">
+              Contact Form
+            </h3>
 
             <form
               action="https://formspree.io/f/mjkzzdav"
@@ -1302,6 +1615,7 @@
                   name="fullname"
                   class="form-input"
                   placeholder="Full name"
+                  data-i18n-placeholder="contact.fullName"
                   required
                   data-form-input
                 />
@@ -1311,6 +1625,7 @@
                   name="email"
                   class="form-input"
                   placeholder="Email address"
+                  data-i18n-placeholder="contact.emailAddress"
                   required
                   data-form-input
                 />
@@ -1320,6 +1635,7 @@
                 name="message"
                 class="form-input"
                 placeholder="Your Message"
+                data-i18n-placeholder="contact.message"
                 required
                 data-form-input
               ></textarea>
@@ -1333,7 +1649,7 @@
 
               <button class="form-btn" type="submit" disabled data-form-btn>
                 <ion-icon name="paper-plane"></ion-icon>
-                <span>Send Message</span>
+                <span data-i18n="contact.sendMessage">Send Message</span>
               </button>
             </form>
 
@@ -1351,28 +1667,34 @@
                 opacity: 0.7;
               "
             >
-              This site is protected by reCAPTCHA and the Google
+              <span data-i18n="contact.recaptchaIntro"
+                >This site is protected by reCAPTCHA and the Google</span
+              >
               <a
                 href="https://policies.google.com/privacy"
                 target="_blank"
                 style="color: var(--orange-yellow-crayola)"
+                data-i18n="contact.privacyPolicy"
                 >Privacy Policy</a
               >
-              and
+              <span data-i18n="contact.and">and</span>
               <a
                 href="https://policies.google.com/terms"
                 target="_blank"
                 style="color: var(--orange-yellow-crayola)"
+                data-i18n="contact.terms"
                 >Terms of Service</a
               >
-              apply.
+              <span data-i18n="contact.apply">apply.</span>
             </p>
           </section>
         </article>
 
         <footer class="footer">
           <p class="copyright">&copy; 2025 Leo Cheung</p>
-          <a href="#" class="back-to-top">Back to Top</a>
+          <a href="#" class="back-to-top" data-i18n="footer.backToTop"
+            >Back to Top</a
+          >
         </footer>
       </div>
     </main>

@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -188,49 +188,39 @@
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <a href="index.html#about" class="navbar-link" data-nav-link
-                >About</a
-              >
+              <a href="index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">About</a>
             </li>
             <li class="navbar-item">
-              <a href="index.html#resume" class="navbar-link" data-nav-link
-                >Resume</a
-              >
+              <a href="index.html#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">Resume</a>
             </li>
             <li class="navbar-item">
-              <a href="index.html#portfolio" class="navbar-link" data-nav-link
-                >Projects</a
-              >
+              <a href="index.html#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">Projects</a>
             </li>
             <li class="navbar-item">
-              <a
-                href="index.html#publications"
-                class="navbar-link"
-                data-nav-link
-                >Publications</a
-              >
+              <a href="index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">Publications</a>
             </li>
             <li class="navbar-item">
-              <a href="index.html#blog" class="navbar-link active" data-nav-link
-                >Blog</a
-              >
+              <a href="index.html#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">Blog</a>
             </li>
             <li class="navbar-item">
-              <a href="index.html#contact" class="navbar-link" data-nav-link
-                >Contact</a
-              >
+              <a href="index.html#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">Contact</a>
             </li>
             <li class="navbar-item">
-                <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn style="display:flex; justify-content:center; align-items:center;">
-                  <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
-                </button>
-              </li>
-            </ul>
-          </nav>
+              <button class="navbar-link lang-btn" aria-label="Switch language" data-i18n-aria-label="language.toggle" data-lang-btn>
+                <span data-lang-label>繁</span>
+              </button>
+            </li>
+            <li class="navbar-item">
+              <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
+                <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
+              </button>
+            </li>
+          </ul>
+        </nav>
 
         <article class="blog-post-full active" data-page="blog-post">
           <header>
-            <a href="index.html#blog" class="btn-back">← Back to Blog</a>
+            <a href="index.html#blog" class="btn-back" data-i18n="blog.backToBlog">Back to Blog</a>
             <h2 class="h2 article-title" id="blog-title"></h2>
             <div class="blog-meta">
               <p class="blog-category" id="blog-category"></p>
@@ -243,6 +233,9 @@
           </figure>
           <div class="blog-content" id="blog-content">
             <!-- Markdown content will be inserted here -->
+          </div>
+          <div id="blog-error" style="display:none; margin-top: 20px;">
+            <p data-i18n="blog.loadError">Could not load the blog post. Please try again later.</p>
           </div>
         </article>
 
@@ -260,6 +253,62 @@
       document.addEventListener("DOMContentLoaded", () => {
         const urlParams = new URLSearchParams(window.location.search);
         const post = urlParams.get("post");
+        const getLanguage = () =>
+          localStorage.getItem("language") === "zhHant" ? "zhHant" : "en";
+        const blogState = { attributes: {}, body: "" };
+
+        const localizeField = (field) => {
+          const language = getLanguage();
+          const camelKey = `${field}${language === "zhHant" ? "ZhHant" : "En"}`;
+          const snakeKey = `${field}_${language}`;
+
+          return (
+            blogState.attributes[camelKey] ||
+            blogState.attributes[snakeKey] ||
+            blogState.attributes[field] ||
+            ""
+          );
+        };
+
+        const renderBlogPost = () => {
+          if (!blogState.body) return;
+
+          const language = getLanguage();
+          document.documentElement.lang =
+            language === "zhHant" ? "zh-Hant" : "en";
+
+          const title = localizeField("title");
+          const category = localizeField("category");
+          const image = blogState.attributes.image || "";
+          const dateValue = blogState.attributes.date || "";
+          const dateLabel = dateValue
+            ? new Date(dateValue).toLocaleDateString(
+                language === "zhHant" ? "zh-HK" : "en-US",
+                {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }
+              )
+            : "";
+
+          document.getElementById("blog-title").textContent = title;
+          document.getElementById("blog-category").textContent = category;
+
+          const blogDate = document.getElementById("blog-date");
+          blogDate.textContent = dateLabel;
+          blogDate.setAttribute("datetime", dateValue);
+
+          const blogImage = document.getElementById("blog-image");
+          blogImage.src = image;
+          blogImage.alt = title;
+
+          document.getElementById("blog-content").innerHTML = marked.parse(
+            blogState.body
+          );
+          document.getElementById("blog-error").style.display = "none";
+          document.title = title ? `${title} | Leo Cheung` : "Blog Post - Leo Cheung";
+        };
 
         if (post) {
           // Use relative path with cache busting for GitHub Pages
@@ -284,32 +333,17 @@
             })
             .then((text) => {
               const { attributes, body } = parseFrontMatter(text);
-              document.getElementById("blog-title").textContent =
-                attributes.title;
-              document.getElementById("blog-category").textContent =
-                attributes.category;
-              const blogDate = document.getElementById("blog-date");
-              blogDate.textContent = new Date(
-                attributes.date
-              ).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              });
-              blogDate.setAttribute("datetime", attributes.date);
-              const blogImage = document.getElementById("blog-image");
-              blogImage.src = attributes.image;
-              blogImage.alt = attributes.title;
-              document.getElementById("blog-content").innerHTML =
-                marked.parse(body);
-              document.title = attributes.title;
+              blogState.attributes = attributes;
+              blogState.body = body;
+              renderBlogPost();
             })
             .catch((error) => {
               console.error("Error fetching blog post:", error);
-              document.getElementById("blog-content").innerHTML =
-                "<p>Could not load the blog post. Please try again later.</p>";
+              document.getElementById("blog-error").style.display = "block";
             });
         }
+
+        window.addEventListener("site-language-change", renderBlogPost);
       });
 
       function parseFrontMatter(markdown) {

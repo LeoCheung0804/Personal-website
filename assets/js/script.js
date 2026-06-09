@@ -1,5 +1,303 @@
 'use strict';
 
+const translations = {
+  en: {
+    "profile.title": "Robotic Engineer",
+    "sidebar.showContacts": "Show Contacts",
+    "contact.email": "Email",
+    "contact.location": "Location",
+    "contact.hongKong": "Hong Kong",
+    "contact.employer": "Employer",
+    "contact.organization": "Organization",
+    "nav.about": "About",
+    "nav.resume": "Resume",
+    "nav.projects": "Projects",
+    "nav.publications": "Publications",
+    "nav.blog": "Blog",
+    "nav.contact": "Contact",
+    "language.toggle": "Switch language",
+    "theme.toggle": "Toggle theme",
+    "about.title": "About me",
+    "about.paragraph1": "I'm a mechanical engineer focused on end-to-end robotics development? from concept sketches and multi-body simulations to full-scale deployment on construction sites. At C3 Construction Robotics I lead cross-disciplinary squads that merge mechatronics, controls, and field validation so new automation ideas survive the harsh realities of Hong Kong job sites.",
+    "about.paragraph2": "Recent highlights include orchestrating CU-Brick to lay 5,800 bricks for the YES Pavilion, scaling Robo-Tapper inspections across high-rise facades, and presenting that work on stages like CableCon and YPEC 2025 (where we earned 2nd Runner Up). I thrive when a tough problem demands equal parts precision hardware, resilient software, and calm coordination between researchers and tradespeople.",
+    "service.title": "What i'm doing",
+    "service.software.title": "Software development",
+    "service.software.text": "Developed robot control, automation navigation, signal processing, and UI. As well as programming for motor controls and wireless communications",
+    "service.hardware.title": "Hardware design",
+    "service.hardware.text": "Design and development of robotic systems, including mechanical structures, electrical layouts, and prototyping using 3D printing and CNC machining.",
+    "service.management.title": "Project management",
+    "service.management.text": "Managing projects and supervising teams, and overseeing task timelines, and milestones.",
+    "service.research.title": "Research and Publishing",
+    "service.research.text": "Research and academic contributions were a frequent duty, as seen in publishing papers as the first author.",
+    "projectPreview.title": "Projects Preview",
+    "projectPreview.tapper": "Facade Inspection Robot",
+    "projectPreview.cuBrick": "Brick Construction Robot",
+    "projectPreview.spray": "Autonomous Robot",
+    "projectPreview.knowTouch": "Touch-less Sensor",
+    "projectPreview.exoskeleton": "Control Device",
+    "resume.title": "Resume",
+    "resume.education": "Education",
+    "resume.msc.title": "MSc Mechanical and Automation Engineering",
+    "resume.msc.project": "MSc Project - Wireless Motorized Foot Controller for SuperLimb",
+    "resume.bsc.title": "BSc (Hons) Engineering Physics",
+    "resume.bsc.project": "Final Year Project - Artificial lighting for Basil growth",
+    "resume.experience": "Experience",
+    "resume.mechanicalEngineer": "Mechanical Engineer",
+    "resume.mechanicalEngineer.projects": "Robo-Tapper Facade Inspection Robot<br>Autonomous Wall Spraying Robot<br>CU Brick - Brick Construction Cable-Driven Parallel Robot<br>Retractable tapper and thruster",
+    "resume.projectEngineer": "Project Engineer",
+    "resume.projectEngineer.projects": "kNOw Touch Touch-less Lift Button Sensor Bar<br>Exoskeleton control device and Humanoid robot",
+    "resume.graduateExecutive": "Graduate Executive",
+    "resume.graduateExecutive.project": "Borderless Lab 365 - STEM Laboratories Project",
+    "resume.summerInternship": "Summer Internship",
+    "resume.summerInternship.project": "Microwave Heating System Project",
+    "projects.title": "Projects",
+    "filters.all": "All",
+    "filters.software": "Software development",
+    "filters.hardware": "Hardware design",
+    "filters.management": "Project management",
+    "filters.selectCategory": "Select category",
+    "project.tapper.title": "Robo-Tapper Facade Inspection Robot",
+    "project.cuBrick.title": "CU Brick - Brick Construction Cable-Driven Parallel Robot",
+    "project.spray.title": "Autonomous Wall Spraying Robot",
+    "project.knowTouch.title": "kNOw Touch Touch-less lift button sensor bar",
+    "project.exoskeleton.title": "Exoskeleton control device and Humanoid robot",
+    "project.borderless.title": "Borderless Lab 365 - STEM laboratories project",
+    "project.microwave.title": "Microwave Heating System Project",
+    "project.retractable.title": "Retractable tapper and thruster",
+    "project.footController.title": "Wireless Motorized Foot Controller for SuperLimb",
+    "publications.title": "Publications",
+    "publications.filters.conference": "Conference papers",
+    "publications.filters.journal": "Journal papers",
+    "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
+    "publications.cuBrick.info": "Published in International Conference on Cable-Driven Parallel Robots, July, 2025",
+    "publications.cuBrick.abstract": "This paper presents CU-Brick, a cable-driven parallel robot (CDPR) system developed for automated bricklaying, applied in the construction of the Yard for Environmental Sustainability (YES) Pavilion. Within a construction area of 13 m x 9 m, CU-Brick built a brick structure reaching a total height of 2.5 m, consisting of 40 layers and over 5,800 individual bricks.",
+    "blog.title": "Blog",
+    "blog.backToBlog": "Back to Blog",
+    "blog.loadError": "Could not load the blog post. Please try again later.",
+    "contact.title": "Contact",
+    "contact.formTitle": "Contact Form",
+    "contact.fullName": "Full name",
+    "contact.emailAddress": "Email address",
+    "contact.message": "Your Message",
+    "contact.sendMessage": "Send Message",
+    "contact.sending": "Sending...",
+    "contact.success": "Thanks for your message! I will get back to you soon.",
+    "contact.error": "Oops! There was a problem submitting your form. Please try again.",
+    "contact.recaptchaIntro": "This site is protected by reCAPTCHA and the Google",
+    "contact.privacyPolicy": "Privacy Policy",
+    "contact.and": "and",
+    "contact.terms": "Terms of Service",
+    "contact.apply": "apply.",
+    "blog.failed": "Failed to load posts.",
+    "footer.backToTop": "Back to Top"
+  },
+  zhHant: {
+    "profile.title": "機械人工程師",
+    "sidebar.showContacts": "顯示聯絡資料",
+    "contact.email": "電郵",
+    "contact.location": "地點",
+    "contact.hongKong": "香港",
+    "contact.employer": "僱主",
+    "contact.organization": "機構",
+    "nav.about": "關於",
+    "nav.resume": "履歷",
+    "nav.projects": "項目",
+    "nav.publications": "出版",
+    "nav.blog": "網誌",
+    "nav.contact": "聯絡",
+    "language.toggle": "切換語言",
+    "theme.toggle": "切換主題",
+    "about.title": "關於我",
+    "about.paragraph1": "我是一名機械工程師，專注於端到端機械人開發，從概念草圖、多體動力學模擬，到建築工地的實際部署。在 C3 Construction Robotics，我帶領跨學科團隊結合機電整合、控制系統與現場驗證，讓新的自動化想法能經得起香港工地環境的考驗。",
+    "about.paragraph2": "近期重點包括協調 CU-Brick 為 YES Pavilion 砌築 5,800 塊磚、把 Robo-Tapper 外牆檢測擴展至高層建築，以及在 CableCon 和 YPEC 2025 等場合發表成果（並獲得亞軍）。我喜歡處理需要精密硬件、可靠軟件，以及研究人員與前線工種之間冷靜協調的複雜問題。",
+    "service.title": "我的工作",
+    "service.software.title": "軟件開發",
+    "service.software.text": "開發機械人控制、自動導航、訊號處理及使用者介面，並負責馬達控制與無線通訊程式。",
+    "service.hardware.title": "硬件設計",
+    "service.hardware.text": "設計及開發機械人系統，包括機械結構、電氣配置，以及以 3D 打印和 CNC 加工製作原型。",
+    "service.management.title": "項目管理",
+    "service.management.text": "管理項目、督導團隊，並跟進工作時程與里程碑。",
+    "service.research.title": "研究與出版",
+    "service.research.text": "研究及學術發表亦是常見職責，包括以第一作者身份發表論文。",
+    "projectPreview.title": "項目預覽",
+    "projectPreview.tapper": "外牆檢測機械人",
+    "projectPreview.cuBrick": "砌磚建造機械人",
+    "projectPreview.spray": "自主機械人",
+    "projectPreview.knowTouch": "非接觸式感應器",
+    "projectPreview.exoskeleton": "控制裝置",
+    "resume.title": "履歷",
+    "resume.education": "教育",
+    "resume.msc.title": "機械與自動化工程理學碩士",
+    "resume.msc.project": "碩士項目 - SuperLimb 無線電動腳部控制器",
+    "resume.bsc.title": "工程物理學榮譽理學士",
+    "resume.bsc.project": "畢業項目 - 羅勒生長人工照明",
+    "resume.experience": "工作經驗",
+    "resume.mechanicalEngineer": "機械工程師",
+    "resume.mechanicalEngineer.projects": "Robo-Tapper 外牆檢測機械人<br>自主牆身噴塗機械人<br>CU Brick 砌磚建造纜索驅動並聯機械人<br>可伸縮敲擊器及推進器",
+    "resume.projectEngineer": "項目工程師",
+    "resume.projectEngineer.projects": "kNOw Touch 非接觸式升降機按鈕感應器<br>外骨骼控制裝置及仿人機械人",
+    "resume.graduateExecutive": "畢業行政人員",
+    "resume.graduateExecutive.project": "Borderless Lab 365 - STEM 實驗室項目",
+    "resume.summerInternship": "暑期實習",
+    "resume.summerInternship.project": "微波加熱系統項目",
+    "projects.title": "項目",
+    "filters.all": "全部",
+    "filters.software": "軟件開發",
+    "filters.hardware": "硬件設計",
+    "filters.management": "項目管理",
+    "filters.selectCategory": "選擇分類",
+    "project.tapper.title": "Robo-Tapper 外牆檢測機械人",
+    "project.cuBrick.title": "CU Brick 砌磚建造纜索驅動並聯機械人",
+    "project.spray.title": "自主牆身噴塗機械人",
+    "project.knowTouch.title": "kNOw Touch 非接觸式升降機按鈕感應器",
+    "project.exoskeleton.title": "外骨骼控制裝置及仿人機械人",
+    "project.borderless.title": "Borderless Lab 365 - STEM 實驗室項目",
+    "project.microwave.title": "微波加熱系統項目",
+    "project.retractable.title": "可伸縮敲擊器及推進器",
+    "project.footController.title": "SuperLimb 無線電動腳部控制器",
+    "publications.title": "出版",
+    "publications.filters.conference": "會議論文",
+    "publications.filters.journal": "期刊論文",
+    "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
+    "publications.cuBrick.info": "發表於 International Conference on Cable-Driven Parallel Robots，2025 年 7 月",
+    "publications.cuBrick.abstract": "本文介紹 CU-Brick，一套為自動化砌磚而開發的纜索驅動並聯機械人系統，並應用於 Yard for Environmental Sustainability (YES) Pavilion 的建造。在 13 m x 9 m 的施工範圍內，CU-Brick 建造出總高度 2.5 m、共 40 層、超過 5,800 塊磚的磚結構。",
+    "blog.title": "網誌",
+    "blog.backToBlog": "返回網誌",
+    "blog.loadError": "無法載入網誌文章，請稍後再試。",
+    "contact.title": "聯絡",
+    "contact.formTitle": "聯絡表格",
+    "contact.fullName": "姓名",
+    "contact.emailAddress": "電郵地址",
+    "contact.message": "你的訊息",
+    "contact.sendMessage": "發送訊息",
+    "contact.sending": "發送中...",
+    "contact.success": "謝謝你的訊息！我會盡快回覆。",
+    "contact.error": "提交表格時發生問題，請稍後再試。",
+    "contact.recaptchaIntro": "本網站受 reCAPTCHA 保護，並適用 Google",
+    "contact.privacyPolicy": "私隱政策",
+    "contact.and": "及",
+    "contact.terms": "服務條款",
+    "contact.apply": "。",
+    "blog.failed": "無法載入文章。",
+    "footer.backToTop": "返回頂部"
+  }
+};
+
+const supportedLanguages = Object.keys(translations);
+const defaultLanguage = "en";
+const storedLanguage = localStorage.getItem("language");
+let currentLanguage = supportedLanguages.includes(storedLanguage) ? storedLanguage : defaultLanguage;
+let loadedBlogPosts = [];
+
+function getTranslation(key, language = currentLanguage) {
+  return translations[language]?.[key] || translations[defaultLanguage]?.[key] || key;
+}
+
+function applyTranslations(language = currentLanguage) {
+  currentLanguage = supportedLanguages.includes(language) ? language : defaultLanguage;
+
+  document.documentElement.lang = currentLanguage === "zhHant" ? "zh-Hant" : "en";
+
+  document.querySelectorAll("[data-i18n]").forEach((element) => {
+    element.innerHTML = getTranslation(element.dataset.i18n);
+  });
+
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+    element.setAttribute("placeholder", getTranslation(element.dataset.i18nPlaceholder));
+  });
+
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+    element.setAttribute("aria-label", getTranslation(element.dataset.i18nAriaLabel));
+  });
+}
+
+function getNextLanguage(language = currentLanguage) {
+  return language === "en" ? "zhHant" : "en";
+}
+
+function updateLanguageButton() {
+  const langLabel = document.querySelector("[data-lang-label]");
+  if (!langLabel) return;
+
+  langLabel.textContent = currentLanguage === "en" ? "\u7e41" : "EN";
+}
+
+function localizePostField(post, field) {
+  const languageSuffix = currentLanguage === "zhHant" ? "ZhHant" : "En";
+  const snakeSuffix = currentLanguage === "zhHant" ? "zhHant" : "en";
+
+  return post[`${field}${languageSuffix}`] || post[`${field}_${snakeSuffix}`] || post[field] || "";
+}
+
+function formatPostDate(date) {
+  if (!date) return "";
+
+  const locale = currentLanguage === "zhHant" ? "zh-HK" : "en-US";
+  return new Date(date).toLocaleDateString(locale, {
+    month: "short",
+    day: "2-digit",
+    year: "numeric"
+  });
+}
+
+function renderBlogPosts(posts = loadedBlogPosts) {
+  const blogList = document.getElementById('dynamic-blog-list');
+  if (!blogList) return;
+
+  blogList.innerHTML = '';
+
+  posts.forEach(post => {
+    const title = localizePostField(post, "title") || post.filename;
+    const category = localizePostField(post, "category");
+    const summary = localizePostField(post, "summary");
+    const dateStr = formatPostDate(post.date);
+
+    const li = document.createElement('li');
+    li.className = 'blog-post-item tilt-card fade-seed';
+
+    li.innerHTML = `
+      <a href="blog-post.html?post=${post.filename}" class="magnetic" data-magnetic>
+        ${post.image ? `<figure class="blog-banner-box"><img src="${post.image}" alt="${title}" loading="lazy"></figure>` : ''}
+        <div class="blog-content">
+          <div class="blog-meta">
+            ${category ? `<p class="blog-category">${category}</p><span class="dot"></span>` : ''}
+            ${post.date ? `<time datetime="${post.date}">${dateStr}</time>` : ''}
+          </div>
+          <h3 class="h3 blog-item-title">${title}</h3>
+          <p class="blog-text">${summary}</p>
+        </div>
+      </a>
+    `;
+    blogList.appendChild(li);
+  });
+
+  applyRandomFade();
+  initMagneticButtons();
+  initTiltCards();
+}
+
+function syncSelectLabels() {
+  const activeFilterBtn = document.querySelector("[data-filter-btn].active");
+  if (selectValue && activeFilterBtn) {
+    selectValue.textContent = activeFilterBtn.textContent.trim();
+  }
+
+  const activePublicationFilterBtn = document.querySelector("[data-publication-filter-btn].active");
+  if (publicationSelectValue && activePublicationFilterBtn) {
+    publicationSelectValue.textContent = activePublicationFilterBtn.textContent.trim();
+  }
+}
+
+function setLanguage(language) {
+  currentLanguage = supportedLanguages.includes(language) ? language : defaultLanguage;
+  localStorage.setItem("language", currentLanguage);
+  applyTranslations(currentLanguage);
+  updateLanguageButton();
+  syncSelectLabels();
+  renderBlogPosts();
+  window.dispatchEvent(new CustomEvent("site-language-change", { detail: { language: currentLanguage } }));
+}
+
 function updateThemeIcons(isLight) {
   const switchableIcons = ["icon-design", "icon-dev", "icon-app", "icon-photo", "icon-Project-Management", "icon-research"];
   const iconImages = document.querySelectorAll('.service-icon-box img');
@@ -56,6 +354,9 @@ function initMagneticButtons() {
   const magneticTargets = document.querySelectorAll('[data-magnetic]');
 
   magneticTargets.forEach((target) => {
+    if (target.dataset.magneticReady === "true") return;
+
+    target.dataset.magneticReady = "true";
     const strength = parseFloat(target.dataset.magneticStrength || '0.25');
     let rafId;
 
@@ -81,7 +382,9 @@ function initMagneticButtons() {
 
 function initTiltCards() {
   if (window.VanillaTilt && typeof window.VanillaTilt.init === 'function') {
-    VanillaTilt.init(document.querySelectorAll('.tilt-card'), {
+    const tiltCards = [...document.querySelectorAll('.tilt-card')].filter((card) => !card.vanillaTilt);
+
+    VanillaTilt.init(tiltCards, {
       max: 8,
       speed: 500,
       glare: true,
@@ -165,7 +468,7 @@ if (selectItems.length > 0) {
   for (let i = 0; i < selectItems.length; i++) {
     selectItems[i].addEventListener("click", function () {
 
-      let selectedValue = this.innerText.toLowerCase();
+      let selectedValue = this.dataset.filterValue || this.innerText.toLowerCase();
       selectValue.innerText = this.innerText;
       elementToggleFunc(select);
       filterFunc(selectedValue);
@@ -203,7 +506,7 @@ if (filterBtn.length > 0) {
 
     filterBtn[i].addEventListener("click", function () {
 
-      let selectedValue = this.innerText.toLowerCase();
+      let selectedValue = this.dataset.filterValue || this.innerText.toLowerCase();
       selectValue.innerText = this.innerText;
       filterFunc(selectedValue);
 
@@ -223,7 +526,7 @@ const publicationSelectValue = document.querySelector("[data-publication-select-
 const publicationFilterBtn = document.querySelectorAll("[data-publication-filter-btn]");
 const publicationFilterItems = document.querySelectorAll("[data-publication-filter-item]");
 const getPublicationFilterValue = function (elem) {
-  return elem.textContent.trim().toLowerCase();
+  return elem.dataset.filterValue || elem.textContent.trim().toLowerCase();
 }
 
 if (publicationSelect) {
@@ -315,7 +618,7 @@ if (form) {
     
     // Disable button during submission
     formBtn.setAttribute("disabled", "");
-    formBtn.querySelector("span").textContent = "Sending...";
+    formBtn.querySelector("span").textContent = getTranslation("contact.sending");
     
     try {
       // Get reCAPTCHA token (v3)
@@ -336,10 +639,10 @@ if (form) {
       
       if (response.ok) {
         formStatus.style.display = 'block';
-        formMessage.textContent = 'Thanks for your message! I will get back to you soon.';
+        formMessage.textContent = getTranslation("contact.success");
         formMessage.style.color = 'var(--orange-yellow-crayola)';
         form.reset();
-        formBtn.querySelector("span").textContent = "Send Message";
+        formBtn.querySelector("span").textContent = getTranslation("contact.sendMessage");
         
         // Track form submission in Google Analytics
         if (typeof trackFormSubmission === 'function') {
@@ -350,10 +653,10 @@ if (form) {
       }
     } catch (error) {
       formStatus.style.display = 'block';
-      formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again.';
+      formMessage.textContent = getTranslation("contact.error");
       formMessage.style.color = 'var(--bittersweet-shimmer)';
       formBtn.removeAttribute("disabled");
-      formBtn.querySelector("span").textContent = "Send Message";
+      formBtn.querySelector("span").textContent = getTranslation("contact.sendMessage");
     }
   });
 }
@@ -429,6 +732,12 @@ projectLinks.forEach(link => {
 // Initialize reCAPTCHA site key (replace with your actual key)
 window.recaptchaSiteKey = '6Lc8CRYsAAAAALLR-ZPucEIMyn5hXZrEmZyHKovp';
 
+window.addEventListener('DOMContentLoaded', () => {
+  applyTranslations(currentLanguage);
+  updateLanguageButton();
+  syncSelectLabels();
+});
+
 // kick off interactions after DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
   applyRandomFade();
@@ -465,6 +774,15 @@ if (themeBtn) {
   });
 }
 
+// Language Toggle logic
+const langBtn = document.querySelector("[data-lang-btn]");
+
+if (langBtn) {
+  langBtn.addEventListener("click", function () {
+    setLanguage(getNextLanguage());
+  });
+}
+
 
 // --- Dynamic Blog Loading ---
 document.addEventListener('DOMContentLoaded', async () => {
@@ -477,32 +795,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!response.ok) throw new Error('Network response was not ok');
     const posts = await response.json();
 
-    blogList.innerHTML = ''; // Clear layout if any
-
-    posts.forEach(post => {
-      const dateStr = post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }) : '';
-      
-      const li = document.createElement('li');
-      li.className = 'blog-post-item tilt-card fade-seed';
-      
-      li.innerHTML = `
-        <a href="blog-post.html?post=${post.filename}" class="magnetic" data-magnetic>
-          ${post.image ? `<figure class="blog-banner-box"><img src="${post.image}" alt="${post.title || post.filename}" loading="lazy"></figure>` : ''}
-          <div class="blog-content">
-            <div class="blog-meta">
-              ${post.category ? `<p class="blog-category">${post.category}</p><span class="dot"></span>` : ''}
-              ${post.date ? `<time datetime="${post.date}">${dateStr}</time>` : ''}
-            </div>
-            <h3 class="h3 blog-item-title">${post.title || post.filename}</h3>
-            <p class="blog-text">${post.summary || ''}</p>
-          </div>
-        </a>
-      `;
-      blogList.appendChild(li);
-    });
+    loadedBlogPosts = posts;
+    renderBlogPosts(loadedBlogPosts);
 
   } catch (error) {
     console.error('Error loading blog posts:', error);
-    blogList.innerHTML = '<li><p>Failed to load posts.</p></li>';
+    blogList.innerHTML = `<li><p>${getTranslation("blog.failed")}</p></li>`;
   }
 });
