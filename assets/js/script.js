@@ -18,7 +18,7 @@ const translations = {
     "language.toggle": "Switch language",
     "theme.toggle": "Toggle theme",
     "about.title": "About me",
-    "about.paragraph1": "I'm a mechanical engineer focused on end-to-end robotics development? from concept sketches and multi-body simulations to full-scale deployment on construction sites. At C3 Construction Robotics I lead cross-disciplinary squads that merge mechatronics, controls, and field validation so new automation ideas survive the harsh realities of Hong Kong job sites.",
+    "about.paragraph1": "I'm a mechanical engineer focused on end-to-end robotics development. From concept sketches and multi-body simulations to full-scale deployment on construction sites. At C3 Construction Robotics I lead cross-disciplinary squads that merge mechatronics, controls, and field validation so new automation ideas survive the harsh realities of Hong Kong job sites.",
     "about.paragraph2": "Recent highlights include orchestrating CU-Brick to lay 5,800 bricks for the YES Pavilion, scaling Robo-Tapper inspections across high-rise facades, and presenting that work on stages like CableCon and YPEC 2025 (where we earned 2nd Runner Up). I thrive when a tough problem demands equal parts precision hardware, resilient software, and calm coordination between researchers and tradespeople.",
     "service.title": "What i'm doing",
     "service.software.title": "Software development",
