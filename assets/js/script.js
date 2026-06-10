@@ -109,7 +109,7 @@ const translations = {
     "theme.toggle": "切換主題",
     "about.title": "關於我",
     "about.paragraph1": "我是一名機械工程師，專注於端到端機械人開發，從概念草圖、多體動力學模擬，到建築工地的實際部署。在 C3 Construction Robotics，我帶領跨學科團隊結合機電整合、控制系統與現場驗證，讓新的自動化想法能經得起香港工地環境的考驗。",
-    "about.paragraph2": "近期重點包括協調 CU-Brick 為 YES Pavilion 砌築 5,800 塊磚、把 Robo-Tapper 外牆檢測擴展至高層建築，以及在 CableCon 和 YPEC 2025 等場合發表成果（並獲得亞軍）。我喜歡處理需要精密硬件、可靠軟件，以及研究人員與前線工種之間冷靜協調的複雜問題。",
+    "about.paragraph2": "近期重點項目包括 CU-Brick 為 YES Pavilion 砌築 5,800 塊磚、把 Robo-Tapper 外牆檢測擴展至高層建築，以及在 CableCon 和 YPEC 2025, 職安健創科大獎 等場合發表成果（並獲得亞軍）。我喜歡處理需要精密硬件、可靠軟件，以及研究人員與前線工種之間冷靜協調的複雜問題。",
     "service.title": "我的工作",
     "service.software.title": "軟件開發",
     "service.software.text": "開發機械人控制、自動導航、訊號處理及使用者介面，並負責馬達控制與無線通訊程式。",
@@ -275,6 +275,8 @@ const projectPageTranslations = {
           <li>Integrated fiducial markers and high-resolution 3D spatial data for accurate calibration and localization.</li>
           <li>Designed layouts and manufactured the electrical and control boxes for the robot.</li>
           <li>Published an academic paper as first author for the project at a robotics conference.</li>
+          <li>Presented project results at industry events, including TVB News, Now News, i-CABLE News, and RTHK News.</li>
+          <li>Received recognition at the YPEC and OSH Innovation and Technology Award 2026 for the project.</li>
         </ul>`
     },
     zhHant: {
@@ -293,6 +295,8 @@ const projectPageTranslations = {
           <li>整合基準標記與高解析度 3D 空間資料，提升建造任務中的校準與定位準確度。</li>
           <li>設計並製作機械人的電氣箱及控制箱。</li>
           <li>以第一作者身份於機械人會議發表項目相關學術論文。</li>
+          <li>在業界活動中展示項目成果，包括無綫新聞、Now 新聞、有線新聞及香港電台等媒體報導。</li>
+          <li>項目獲得 青年科技專才展覽及比賽2025 及職安健創科大獎 2026 的認可。</li>
         </ul>`
     }
   },
