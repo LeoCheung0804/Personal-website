@@ -1,0 +1,42 @@
+name: Update blog index
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "posts/**/*.md"
+      - "generate-blog-index.js"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-blog-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate blog index
+        run: node generate-blog-index.js
+
+      - name: Commit generated index
+        run: |
+          if git diff --quiet -- assets/data/posts.json; then
+            echo "Blog index is already up to date."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/posts.json
+          git commit -m "chore: update blog index"
+          git push
