@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!blogList) return;
 
   try {
-    const fetchUrl = `./assets/data/posts.json?t=${Date.now()}`;
+    const fetchUrl = "./assets/data/posts.json";
     const response = await fetch(fetchUrl);
     if (!response.ok) throw new Error('Network response was not ok');
     const posts = await response.json();

@@ -332,24 +332,6 @@ function generateBlogPage(post) {
               </div>
             </li>
           </ul>
-          <div class="separator"></div>
-          <ul class="social-list">
-            <li class="social-item">
-              <a href="#" class="social-link" aria-label="Facebook">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-            <li class="social-item">
-              <a href="#" class="social-link" aria-label="Twitter">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-            <li class="social-item">
-              <a href="#" class="social-link" aria-label="Instagram">
-                <ion-icon name="logo-instagram"></ion-icon>
-              </a>
-            </li>
-          </ul>
         </div>
       </aside>
 
@@ -415,7 +397,7 @@ ${postBody}
         </article>
 
         <footer class="footer">
-          <p class="copyright">&copy; 2025 Leo Cheung</p>
+          <p class="copyright">&copy; 2026 Leo Cheung</p>
           <a href="#" class="back-to-top">Back to Top</a>
         </footer>
       </div>

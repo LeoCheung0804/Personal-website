@@ -4,6 +4,50 @@
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
+function getNavTarget(link) {
+  return link.dataset.pageTarget || (link.innerText.toLowerCase() === 'projects' ? 'portfolio' : link.innerText.toLowerCase());
+}
+
+function activatePage(targetPage, activeLink = null) {
+  let foundPage = false;
+
+  for (let i = 0; i < pages.length; i++) {
+    if (targetPage === pages[i].dataset.page) {
+      pages[i].classList.add("active");
+      foundPage = true;
+    } else {
+      pages[i].classList.remove("active");
+    }
+  }
+
+  if (!foundPage) return false;
+
+  for (let i = 0; i < navigationLinks.length; i++) {
+    const linkTarget = getNavTarget(navigationLinks[i]);
+    if (linkTarget === targetPage) {
+      navigationLinks[i].classList.add("active");
+    } else {
+      navigationLinks[i].classList.remove("active");
+    }
+  }
+
+  window.scrollTo(0, 0);
+
+  if (activeLink && typeof gtag === 'function') {
+    gtag('config', 'G-LEBDJN7H6D', {
+      'page_title': activeLink.innerHTML,
+      'page_path': '/#' + targetPage
+    });
+  }
+
+  return true;
+}
+
+function activatePageFromHash() {
+  const hash = window.location.hash.substring(1).toLowerCase();
+  if (hash) activatePage(hash);
+}
+
 // add event to all nav link
 for (let i = 0; i < navigationLinks.length; i++) {
   navigationLinks[i].addEventListener("click", function () {
@@ -13,46 +57,19 @@ for (let i = 0; i < navigationLinks.length; i++) {
       return;
     }
 
-    const targetPage = this.dataset.pageTarget || (this.innerText.toLowerCase() === 'projects' ? 'portfolio' : this.innerText.toLowerCase());
+    const targetPage = getNavTarget(this);
+    const activated = activatePage(targetPage, this);
 
-    for (let i = 0; i < pages.length; i++) {
-      if (targetPage === pages[i].dataset.page) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-        
-        // Track page view in Google Analytics
-        if (typeof gtag === 'function') {
-          gtag('config', 'G-LEBDJN7H6D', {
-            'page_title': this.innerHTML,
-            'page_path': '/#' + pages[i].dataset.page
-          });
-        }
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
+    if (activated && this.tagName.toLowerCase() === "button") {
+      history.pushState(null, "", `#${targetPage}`);
     }
 
   });
 }
 
-// add hash-based page activation on page load, and ensure Portfolio remains active
-window.addEventListener("DOMContentLoaded", () => {
-  const hash = window.location.hash.substring(1).toLowerCase();
-  if (hash) {
-    for (let i = 0; i < pages.length; i++) {
-      if (pages[i].dataset.page === hash) {
-        pages[i].classList.add("active");
-        navigationLinks[i].classList.add("active");
-        window.scrollTo(0, 0);
-      } else {
-        pages[i].classList.remove("active");
-        navigationLinks[i].classList.remove("active");
-      }
-    }
-  } 
-});
+// add hash-based page activation on page load, and support browser back/forward
+window.addEventListener("DOMContentLoaded", activatePageFromHash);
+window.addEventListener("popstate", activatePageFromHash);
 
 // Track project link clicks
 const projectLinks = document.querySelectorAll('.project-item a');

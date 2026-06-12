@@ -63,8 +63,7 @@
           <div class="separator"></div>
           <ul class="contacts-list">
             <li class="contact-item">
-              <a href="mailto:leocheung0804@gmail.com" class="contact-link">
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="mail-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -73,7 +72,6 @@
                     >leocheung0804@gmail.com</a
                   >
                 </div>
-              </a>
             </li>
             <li class="contact-item">
               <div class="icon-box">
@@ -85,8 +83,7 @@
               </div>
             </li>
             <li class="contact-item">
-              <a href="https://www.c3robotics.com.hk" class="contact-link">
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="business-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -95,11 +92,9 @@
                     >C3 Construction Robotics Limited</a
                   >
                 </div>
-              </a>
             </li>
             <li class="contact-item">
-              <a href="https://c3robolab.mae.cuhk.edu.hk/" class="contact-link">
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="link-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -110,11 +105,9 @@
                     >C3 Robotics Lab</a
                   >
                 </div>
-              </a>
             </li>
             <li class="contact-item">
-              <a href="https://github.com/LeoCheung0804" class="contact-link">
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="logo-octocat"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -125,14 +118,9 @@
                     >LeoCheung0804</a
                   >
                 </div>
-              </a>
             </li>
             <li class="contact-item">
-              <a
-                href="https://www.linkedin.com/in/leocheung0804"
-                class="contact-link"
-              >
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="logo-linkedin"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -143,14 +131,9 @@
                     >leocheung0804</a
                   >
                 </div>
-              </a>
             </li>
             <li class="contact-item">
-              <a
-                href="https://orcid.org/0009-0003-1691-6603"
-                class="contact-link"
-              >
-                <div class="icon-box">
+              <div class="icon-box">
                   <ion-icon name="book-outline"></ion-icon>
                 </div>
                 <div class="contact-info">
@@ -161,25 +144,6 @@
                     >0009-0003-1691-6603</a
                   >
                 </div>
-              </a>
-            </li>
-          </ul>
-          <div class="separator"></div>
-          <ul class="social-list">
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-facebook"></ion-icon>
-              </a>
-            </li>
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-twitter"></ion-icon>
-              </a>
-            </li>
-            <li class="social-item">
-              <a href="#" class="social-link">
-                <ion-icon name="logo-instagram"></ion-icon>
-              </a>
             </li>
           </ul>
         </div>
@@ -241,7 +205,7 @@
         </article>
 
         <footer class="footer">
-          <p class="copyright">&copy; 2025 Leo Cheung</p>
+          <p class="copyright">&copy; 2026 Leo Cheung</p>
           <a href="#" class="back-to-top">Back to Top</a>
         </footer>
 
@@ -320,9 +284,8 @@
         };
 
         if (post) {
-          // Use relative path with cache busting for GitHub Pages
-          const fetchUrl = `posts/${post}.md?t=${Date.now()}`;
-          console.log("Fetching blog post from:", fetchUrl);
+          // Legacy renderer for old shared links. New posts are generated as static pages.
+          const fetchUrl = `posts/${post}.md`;
 
           fetch(fetchUrl)
             .then((response) => {
