@@ -30,13 +30,13 @@ jobs:
 
       - name: Commit generated index
         run: |
-          if git diff --quiet -- assets/data/posts.json; then
-            echo "Blog index is already up to date."
+          if git diff --quiet -- assets/data/posts.json sitemap.xml blog && [ -z "$(git status --porcelain -- assets/data/posts.json sitemap.xml blog)" ]; then
+            echo "Blog SEO files are already up to date."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/data/posts.json
-          git commit -m "chore: update blog index"
+          git add assets/data/posts.json sitemap.xml blog
+          git commit -m "chore: update blog seo files"
           git push

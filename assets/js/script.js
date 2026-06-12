@@ -629,7 +629,7 @@ function renderBlogPosts(posts = loadedBlogPosts) {
     li.className = 'blog-post-item tilt-card fade-seed';
 
     li.innerHTML = `
-      <a href="blog-post.html?post=${post.filename}" class="magnetic" data-magnetic>
+      <a href="${post.url || `blog-post.html?post=${post.filename}`}" class="magnetic" data-magnetic>
         ${post.image ? `<figure class="blog-banner-box"><img src="${post.image}" alt="${title}" loading="lazy"></figure>` : ''}
         <div class="blog-content">
           <div class="blog-meta">

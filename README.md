@@ -28,14 +28,14 @@ summary: "Short summary of the post."
 ```
 
 How it works:
-- Run the index generator locally to produce `assets/data/posts.json` which the homepage consumes:
+- Run the index generator locally to produce `assets/data/posts.json`, static blog pages in `blog/`, and updated sitemap entries:
 
 ```bash
 node generate-blog-index.js
 ```
 
-- A GitHub Actions workflow (`.github/workflows/update-blog-index.yml`) will automatically run the generator and commit `assets/data/posts.json` whenever Markdown files under `posts/` are pushed to `main`.
+- A GitHub Actions workflow (`.github/workflows/update-blog-index.yml`) will automatically run the generator and commit generated blog SEO files whenever Markdown files under `posts/` are pushed to `main`.
 
 Notes:
 - If you add or edit posts locally, run the generator before committing (or rely on the workflow to update the index after push).
-- The homepage dynamically fetches `assets/data/posts.json` and renders the blog cards client-side.
+- The homepage dynamically fetches `assets/data/posts.json` and links each card to its generated static blog page.

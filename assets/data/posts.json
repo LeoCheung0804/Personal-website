@@ -1,6 +1,8 @@
 [
   {
     "filename": "OSH_2026",
+    "slug": "osh-2026",
+    "url": "./blog/osh-2026.html",
     "title": "CU-Brick Wins Merit Award at OSH Innovation and Technology Award 2026",
     "titleZhHant": "CU-Brick 獲頒 2026 年 OSH 創新及科技獎嘉許獎",
     "date": "2026-06-04",
@@ -12,6 +14,8 @@
   },
   {
     "filename": "2nd_runner_up",
+    "slug": "2nd-runner-up",
+    "url": "./blog/2nd-runner-up.html",
     "title": "Won the 2nd Runner Up for YPEC 2025",
     "titleZhHant": "CU-Brick 在 YPEC 2025 獲得亞軍",
     "date": "2025-11-02",
@@ -23,6 +27,8 @@
   },
   {
     "filename": "ypec-2025",
+    "slug": "ypec-2025",
+    "url": "./blog/ypec-2025.html",
     "title": "Young Professionals Exhibition & Competition 2025",
     "titleZhHant": "2025 年青年專業展覽及比賽",
     "date": "2025-11-02",
@@ -34,6 +40,8 @@
   },
   {
     "filename": "cablecon-2025",
+    "slug": "cablecon-2025",
+    "url": "./blog/cablecon-2025.html",
     "title": "Presenting at CableCon2025 in Hong Kong",
     "titleZhHant": "在香港 CableCon 2025 進行簡報",
     "date": "2025-07-02",
