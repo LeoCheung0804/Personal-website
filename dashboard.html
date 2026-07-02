@@ -1,0 +1,2393 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung</title>
+    <meta
+      name="description"
+      content="A live Hong Kong dashboard showing Hong Kong Observatory weather data and KMB bus arrivals at Sheung Tak Bus Terminus."
+    />
+    <link rel="canonical" href="https://leocml.com/dashboard.html" />
+    <link
+      rel="shortcut icon"
+      href="./assets/images/icon.ico"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css?v=20260606" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --dashboard-red: hsl(358, 76%, 66%);
+        --dashboard-red-soft: hsla(358, 76%, 66%, 0.14);
+        --dashboard-blue: hsl(202, 88%, 72%);
+        --dashboard-blue-soft: hsla(202, 88%, 72%, 0.13);
+        --dashboard-green: hsl(145, 52%, 60%);
+        --dashboard-amber-soft: hsla(45, 100%, 72%, 0.12);
+      }
+
+      body {
+        color: var(--light-gray);
+      }
+
+      img,
+      ion-icon,
+      span {
+        display: inline-block;
+      }
+
+      .dashboard-page {
+        display: block;
+        width: min(1180px, calc(100% - 24px));
+        margin: 18px auto 32px;
+        min-width: 0;
+      }
+
+      .dashboard-topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .dashboard-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        color: var(--smoky-black);
+        background: var(--text-gradient-yellow);
+        box-shadow: var(--shadow-2);
+      }
+
+      .brand-mark ion-icon {
+        font-size: 22px;
+      }
+
+      .dashboard-title-block {
+        min-width: 0;
+      }
+
+      .dashboard-kicker {
+        color: var(--light-gray-70);
+        font-size: 12px;
+        font-weight: var(--fw-500);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .dashboard-title {
+        color: var(--white-2);
+        font-size: clamp(22px, 3vw, 34px);
+        font-weight: var(--fw-600);
+        line-height: 1.15;
+      }
+
+      .dashboard-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      .icon-action,
+      .language-action,
+      .text-action {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        min-height: 42px;
+        border-radius: 12px;
+        color: var(--orange-yellow-crayola);
+        background: var(--border-gradient-onyx);
+        box-shadow: var(--shadow-1);
+        transition: var(--transition-1);
+        z-index: 1;
+      }
+
+      .icon-action {
+        width: 42px;
+      }
+
+      .text-action {
+        padding: 0 14px;
+        color: var(--white-2);
+        font-size: 13px;
+        font-weight: var(--fw-500);
+      }
+
+      .language-action {
+        min-width: 74px;
+        padding: 0 8px;
+        color: var(--white-2);
+        font-size: 12px;
+        font-weight: var(--fw-600);
+      }
+
+      .language-option {
+        display: inline-grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        color: var(--light-gray-70);
+      }
+
+      .language-option.active {
+        color: var(--smoky-black);
+        background: var(--orange-yellow-crayola);
+      }
+
+      .icon-action::before,
+      .language-action::before,
+      .text-action::before {
+        content: "";
+        position: absolute;
+        inset: 1px;
+        border-radius: inherit;
+        background: var(--bg-gradient-jet);
+        transition: var(--transition-1);
+        z-index: -1;
+      }
+
+      .icon-action:hover,
+      .language-action:hover,
+      .text-action:hover,
+      .icon-action:focus-visible,
+      .language-action:focus-visible,
+      .text-action:focus-visible {
+        background: var(--bg-gradient-yellow-1);
+      }
+
+      .icon-action:hover::before,
+      .language-action:hover::before,
+      .text-action:hover::before,
+      .icon-action:focus-visible::before,
+      .language-action:focus-visible::before,
+      .text-action:focus-visible::before {
+        background: var(--bg-gradient-yellow-2);
+      }
+
+      .dashboard-stage {
+        position: relative;
+        display: grid;
+        gap: 16px;
+        overflow: visible;
+        border-radius: 20px;
+        background:
+          radial-gradient(
+            circle at 8% 0%,
+            hsla(45, 100%, 72%, 0.12),
+            transparent 32%
+          ),
+          transparent;
+      }
+
+      .dashboard-statusbar {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr 1fr 1fr;
+        gap: 12px;
+      }
+
+      .status-cell {
+        min-width: 0;
+        padding: 12px 16px;
+        border: 1px solid var(--jet);
+        border-radius: 16px;
+        background: var(--eerie-black-1);
+        box-shadow: var(--shadow-1);
+      }
+
+      .status-label {
+        color: var(--light-gray-70);
+        font-size: 11px;
+        font-weight: var(--fw-500);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .status-value {
+        margin-top: 4px;
+        color: var(--white-2);
+        font-size: 14px;
+        font-weight: var(--fw-500);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .status-live {
+        color: var(--dashboard-green);
+      }
+
+      .location-value {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .location-value span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .detect-location-btn {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        gap: 5px;
+        min-height: 28px;
+        padding: 0 9px;
+        border: 1px solid var(--jet);
+        border-radius: 8px;
+        color: var(--orange-yellow-crayola);
+        background: var(--eerie-black-2);
+        font-size: 12px;
+        font-weight: var(--fw-500);
+      }
+
+      .detect-location-btn:disabled,
+      .text-action:disabled {
+        cursor: wait;
+        opacity: 0.72;
+      }
+
+      .detect-location-btn ion-icon {
+        font-size: 15px;
+      }
+
+      .dashboard-grid {
+        position: relative;
+        height: clamp(650px, calc(100vh - 210px), 820px);
+        min-height: 650px;
+        perspective: 1600px;
+        background: transparent;
+      }
+
+      .dashboard-flip-inner {
+        position: absolute;
+        inset: 0;
+        transform-style: preserve-3d;
+        transition: transform 0.9s cubic-bezier(0.2, 0.72, 0.2, 1);
+      }
+
+      .dashboard-grid.is-bus .dashboard-flip-inner {
+        transform: rotateY(-180deg);
+      }
+
+      .panel {
+        min-width: 0;
+        overflow: hidden;
+        border: 1px solid var(--jet);
+        border-radius: 20px;
+        background: var(--eerie-black-2);
+        box-shadow: var(--shadow-1);
+      }
+
+      .dashboard-face {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .dashboard-face[aria-hidden="true"] {
+        pointer-events: none;
+      }
+
+      .dashboard-face-bus {
+        transform: rotateY(180deg);
+      }
+
+      .rotation-dots {
+        position: absolute;
+        right: 18px;
+        bottom: 16px;
+        z-index: 4;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 9px;
+        border: 1px solid var(--jet);
+        border-radius: 999px;
+        background: hsla(240, 2%, 12%, 0.82);
+        box-shadow: var(--shadow-1);
+      }
+
+      .rotation-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--light-gray-70);
+        opacity: 0.58;
+        transition:
+          width var(--transition-1),
+          opacity var(--transition-1),
+          background var(--transition-1);
+      }
+
+      .rotation-dot.active {
+        width: 22px;
+        background: var(--orange-yellow-crayola);
+        opacity: 1;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 18px 20px 0;
+      }
+
+      .panel-title {
+        color: var(--white-2);
+        font-size: 18px;
+        font-weight: var(--fw-600);
+        line-height: 1.25;
+      }
+
+      .panel-subtitle {
+        margin-top: 4px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+      }
+
+      .weather-panel {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+
+      .weather-main {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+        display: grid;
+        align-content: center;
+        padding: 28px 20px 24px;
+        background:
+          linear-gradient(
+            165deg,
+            hsla(202, 88%, 72%, 0.18),
+            transparent 45%
+          ),
+          var(--eerie-black-2);
+      }
+
+      .weather-main::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0.34;
+        background-image: repeating-linear-gradient(
+          74deg,
+          transparent 0 25px,
+          hsla(202, 88%, 72%, 0.5) 26px 28px,
+          transparent 29px 60px
+        );
+        transform: translateY(-20%);
+        animation: dashboard-rain 12s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes dashboard-rain {
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      .weather-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .weather-high-low {
+        color: var(--light-gray);
+        font-size: clamp(20px, 2.8vw, 34px);
+        font-weight: var(--fw-500);
+        text-align: center;
+      }
+
+      .weather-temp-line {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        gap: 8px;
+        margin-top: 24px;
+        color: var(--white-2);
+      }
+
+      .weather-temp {
+        font-size: clamp(72px, 13vw, 138px);
+        font-weight: var(--fw-300);
+        line-height: 0.9;
+        letter-spacing: 0;
+      }
+
+      .weather-unit {
+        font-size: clamp(24px, 4vw, 42px);
+        font-weight: var(--fw-400);
+      }
+
+      .weather-condition {
+        margin-top: 14px;
+        color: var(--white-2);
+        font-size: clamp(20px, 2.4vw, 30px);
+        font-weight: var(--fw-500);
+        line-height: 1.2;
+        text-align: center;
+      }
+
+      .weather-meta-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .weather-icon-wrap,
+      .warning-chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        border: 1px solid var(--jet);
+        border-radius: 12px;
+        background: hsla(240, 2%, 12%, 0.72);
+      }
+
+      .weather-icon-wrap {
+        width: 54px;
+      }
+
+      .weather-icon-wrap img {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+      }
+
+      .warning-chip {
+        gap: 8px;
+        padding: 0 12px;
+        color: var(--white-2);
+        font-size: 12px;
+        font-weight: var(--fw-500);
+      }
+
+      .warning-chip.warning-active {
+        color: var(--smoky-black);
+        border-color: transparent;
+        background: var(--orange-yellow-crayola);
+      }
+
+      .warning-chip ion-icon {
+        font-size: 18px;
+      }
+
+      .forecast-strip {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(118px, 1fr));
+        gap: 1px;
+        background: var(--jet);
+      }
+
+      .forecast-day {
+        min-width: 0;
+        padding: 14px 12px 16px;
+        text-align: center;
+        background:
+          linear-gradient(
+            180deg,
+            var(--dashboard-blue-soft),
+            transparent 60%
+          ),
+          var(--eerie-black-1);
+      }
+
+      .forecast-date {
+        color: var(--white-2);
+        font-size: 13px;
+        font-weight: var(--fw-500);
+      }
+
+      .forecast-week {
+        margin-top: 3px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+      }
+
+      .forecast-day img {
+        width: 34px;
+        height: 34px;
+        margin: 10px auto;
+        object-fit: contain;
+      }
+
+      .forecast-range {
+        color: var(--white-2);
+        font-size: 14px;
+        font-weight: var(--fw-500);
+      }
+
+      .forecast-humidity {
+        margin-top: 4px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+      }
+
+      .bus-panel {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        min-height: 0;
+      }
+
+      .route-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding: 16px 20px 18px;
+      }
+
+      .route-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--jet);
+        border-radius: 10px;
+        color: var(--light-gray);
+        background: var(--eerie-black-1);
+        cursor: pointer;
+        user-select: none;
+      }
+
+      .route-toggle input {
+        width: 14px;
+        height: 14px;
+        accent-color: var(--orange-yellow-crayola);
+      }
+
+      .route-toggle span {
+        color: var(--white-2);
+        font-size: 13px;
+        font-weight: var(--fw-500);
+      }
+
+      .bus-table {
+        min-width: 0;
+        overflow: auto;
+        border-top: 1px solid var(--jet);
+      }
+
+      .bus-head,
+      .bus-row {
+        display: grid;
+        grid-template-columns: 122px minmax(220px, 1fr) 150px 176px;
+        align-items: stretch;
+      }
+
+      .bus-head {
+        min-height: 44px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+        font-weight: var(--fw-500);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        background: var(--eerie-black-1);
+      }
+
+      .bus-head > div,
+      .bus-cell {
+        min-width: 0;
+        padding: 12px 14px;
+        border-right: 1px solid var(--jet);
+      }
+
+      .bus-head > div:last-child,
+      .bus-cell:last-child {
+        border-right: 0;
+      }
+
+      .bus-row {
+        min-height: 136px;
+        border-top: 1px solid var(--jet);
+        background:
+          linear-gradient(
+            90deg,
+            hsla(358, 76%, 66%, 0.05),
+            transparent 34%
+          ),
+          var(--eerie-black-2);
+      }
+
+      .bus-row.hidden {
+        display: none;
+      }
+
+      .route-badge {
+        display: grid;
+        align-content: center;
+        gap: 6px;
+        height: 100%;
+      }
+
+      .route-number {
+        color: var(--dashboard-red);
+        font-size: 36px;
+        font-weight: var(--fw-600);
+        line-height: 0.95;
+      }
+
+      .operator-badge {
+        width: max-content;
+        padding: 3px 7px;
+        border-radius: 5px;
+        color: var(--white-2);
+        background: var(--dashboard-red);
+        font-size: 12px;
+        font-weight: var(--fw-600);
+        letter-spacing: 0.04em;
+      }
+
+      .destination-block {
+        display: grid;
+        align-content: center;
+        gap: 6px;
+      }
+
+      .dest-primary {
+        color: var(--white-2);
+        font-family: "Noto Sans TC", var(--ff-poppins);
+        font-size: clamp(21px, 2.4vw, 29px);
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .dest-stop {
+        color: var(--light-gray);
+        font-family: "Noto Sans TC", var(--ff-poppins);
+        font-size: clamp(17px, 2vw, 23px);
+        font-weight: 600;
+        line-height: 1.25;
+      }
+
+      .dest-en {
+        color: var(--light-gray-70);
+        font-size: 12px;
+        line-height: 1.35;
+      }
+
+      .following-list {
+        display: grid;
+        align-content: center;
+        gap: 8px;
+        height: 100%;
+      }
+
+      .following-time {
+        width: max-content;
+        max-width: 100%;
+        color: var(--light-gray);
+        font-size: 15px;
+        font-weight: var(--fw-600);
+        line-height: 1.1;
+        white-space: nowrap;
+      }
+
+      .next-arrival {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: var(--white-2);
+        text-align: center;
+      }
+
+      .next-arrival .minutes {
+        color: var(--white-2);
+        font-size: 58px;
+        font-weight: var(--fw-600);
+        line-height: 0.9;
+      }
+
+      .next-arrival .minutes.urgent {
+        color: var(--dashboard-red);
+      }
+
+      .next-arrival .minutes.done {
+        color: var(--dashboard-red);
+        font-family: "Noto Sans TC", var(--ff-poppins);
+        font-size: clamp(28px, 3.4vw, 44px);
+        line-height: 1;
+      }
+
+      .next-arrival .unit {
+        margin-left: 8px;
+        color: var(--light-gray);
+        font-size: 24px;
+        font-weight: var(--fw-500);
+      }
+
+      .bus-footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        padding: 12px;
+        background: var(--jet);
+      }
+
+      .bus-footer .status-cell {
+        background: var(--eerie-black-1);
+      }
+
+      .source-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 20px;
+        border: 1px solid var(--jet);
+        border-radius: 16px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+        background: var(--eerie-black-2);
+        box-shadow: var(--shadow-1);
+      }
+
+      .source-row a {
+        display: inline;
+        color: var(--orange-yellow-crayola);
+      }
+
+      .api-error {
+        color: var(--dashboard-red);
+      }
+
+      .skeleton-text {
+        color: transparent;
+        border-radius: 7px;
+        background: linear-gradient(
+          90deg,
+          var(--onyx),
+          hsla(45, 100%, 72%, 0.18),
+          var(--onyx)
+        );
+        background-size: 220% 100%;
+        animation: dashboard-shimmer 1.4s ease-in-out infinite;
+      }
+
+      @keyframes dashboard-shimmer {
+        to {
+          background-position: -220% 0;
+        }
+      }
+
+      :root.light-theme .dashboard-stage,
+      :root.light-theme .panel,
+      :root.light-theme .weather-main,
+      :root.light-theme .source-row {
+        background-color: var(--eerie-black-2);
+      }
+
+      :root.light-theme .status-cell,
+      :root.light-theme .forecast-day,
+      :root.light-theme .bus-head,
+      :root.light-theme .route-toggle,
+      :root.light-theme .weather-icon-wrap,
+      :root.light-theme .warning-chip {
+        background-color: var(--eerie-black-1);
+      }
+
+      @media (max-width: 980px) {
+        .dashboard-statusbar {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .dashboard-grid {
+          height: 760px;
+          min-height: 760px;
+        }
+
+        .weather-panel,
+        .bus-panel {
+          min-height: auto;
+        }
+
+        .forecast-strip {
+          grid-template-columns: repeat(5, minmax(130px, 1fr));
+          overflow-x: auto;
+        }
+
+        .bus-head,
+        .bus-row {
+          grid-template-columns: 104px minmax(210px, 1fr) 120px 145px;
+        }
+
+        .next-arrival .minutes {
+          font-size: 48px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .dashboard-page {
+          width: min(100% - 20px, 620px);
+          margin-top: 12px;
+          margin-bottom: 90px;
+        }
+
+        .dashboard-topbar {
+          align-items: flex-start;
+        }
+
+        .dashboard-actions {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-end;
+          width: 136px;
+        }
+
+        .language-action {
+          min-width: 84px;
+        }
+
+        .text-action {
+          width: 92px;
+          padding: 0;
+        }
+
+        .dashboard-statusbar,
+        .bus-footer {
+          grid-template-columns: 1fr;
+        }
+
+        .dashboard-grid {
+          height: 980px;
+          min-height: 980px;
+        }
+
+        .status-cell {
+          padding: 11px 13px;
+        }
+
+        .panel-header {
+          padding-inline: 15px;
+        }
+
+        .weather-main {
+          padding: 24px 15px 22px;
+        }
+
+        .forecast-strip {
+          grid-template-columns: repeat(5, minmax(118px, 1fr));
+        }
+
+        .route-controls {
+          padding-inline: 15px;
+        }
+
+        .bus-table {
+          overflow-x: visible;
+        }
+
+        .bus-head,
+        .bus-row {
+          grid-template-columns: 82px minmax(0, 1fr) 78px 88px;
+          min-width: 0;
+          width: 100%;
+        }
+
+        .bus-head > div,
+        .bus-cell {
+          padding: 10px 8px;
+        }
+
+        .bus-row {
+          min-height: 124px;
+        }
+
+        .route-number {
+          font-size: 28px;
+        }
+
+        .dest-primary {
+          font-size: 19px;
+        }
+
+        .dest-stop {
+          font-size: 15px;
+        }
+
+        .dest-en {
+          font-size: 11px;
+        }
+
+        .following-time {
+          font-size: 12px;
+          white-space: normal;
+        }
+
+        .next-arrival .minutes {
+          font-size: 36px;
+        }
+
+        .next-arrival .minutes.done {
+          font-size: 24px;
+        }
+
+        .next-arrival .unit {
+          margin-left: 4px;
+          font-size: 16px;
+        }
+
+        .source-row {
+          display: grid;
+          padding-inline: 15px;
+        }
+      }
+
+      @media (min-width: 721px) and (max-width: 860px) and (max-height: 540px) {
+        .dashboard-page {
+          display: grid;
+          grid-template-rows: auto minmax(0, 1fr);
+          gap: 8px;
+          width: calc(100% - 16px);
+          height: calc(100vh - 16px);
+          margin: 8px auto;
+          overflow: hidden;
+        }
+
+        .dashboard-topbar {
+          gap: 10px;
+          margin-bottom: 0;
+        }
+
+        .brand-mark {
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
+        }
+
+        .brand-mark ion-icon {
+          font-size: 20px;
+        }
+
+        .dashboard-kicker {
+          font-size: 10px;
+        }
+
+        .dashboard-title {
+          font-size: 24px;
+          line-height: 1.05;
+        }
+
+        .dashboard-actions {
+          gap: 6px;
+        }
+
+        .icon-action,
+        .language-action,
+        .text-action {
+          min-height: 36px;
+          border-radius: 11px;
+        }
+
+        .icon-action {
+          width: 36px;
+        }
+
+        .language-action {
+          min-width: 66px;
+          padding-inline: 7px;
+        }
+
+        .language-option {
+          width: 24px;
+          height: 24px;
+          border-radius: 7px;
+        }
+
+        .text-action {
+          padding-inline: 10px;
+          font-size: 12px;
+        }
+
+        .dashboard-stage {
+          display: grid;
+          grid-template-rows: auto minmax(0, 1fr);
+          gap: 8px;
+          min-height: 0;
+          overflow: hidden;
+        }
+
+        .dashboard-statusbar {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .status-cell {
+          padding: 8px 12px;
+          border-radius: 12px;
+        }
+
+        .status-label {
+          font-size: 10px;
+          letter-spacing: 0;
+        }
+
+        .status-value {
+          margin-top: 2px;
+          font-size: 13px;
+        }
+
+        .detect-location-btn {
+          min-height: 24px;
+          padding-inline: 7px;
+          font-size: 11px;
+        }
+
+        .dashboard-grid {
+          height: auto;
+          min-height: 0;
+        }
+
+        .panel {
+          border-radius: 16px;
+        }
+
+        .panel-header {
+          padding: 10px 14px 0;
+        }
+
+        .panel-title {
+          font-size: 17px;
+        }
+
+        .panel-subtitle {
+          font-size: 11px;
+        }
+
+        .warning-chip {
+          min-height: 36px;
+          padding-inline: 10px;
+          font-size: 11px;
+        }
+
+        .warning-chip ion-icon {
+          font-size: 16px;
+        }
+
+        .weather-main {
+          padding: 12px 14px;
+        }
+
+        .weather-high-low {
+          font-size: 20px;
+        }
+
+        .weather-temp-line {
+          margin-top: 8px;
+        }
+
+        .weather-temp {
+          font-size: 72px;
+        }
+
+        .weather-unit {
+          font-size: 24px;
+        }
+
+        .weather-condition {
+          margin-top: 6px;
+          font-size: 20px;
+        }
+
+        .weather-meta-row {
+          gap: 8px;
+          margin-top: 8px;
+        }
+
+        .weather-icon-wrap {
+          width: 42px;
+          min-height: 36px;
+        }
+
+        .weather-icon-wrap img {
+          width: 28px;
+          height: 28px;
+        }
+
+        .forecast-strip {
+          grid-template-columns: repeat(5, minmax(0, 1fr));
+          overflow: hidden;
+        }
+
+        .forecast-day {
+          padding: 8px 6px 9px;
+        }
+
+        .forecast-date {
+          font-size: 12px;
+        }
+
+        .forecast-week,
+        .forecast-humidity {
+          font-size: 11px;
+        }
+
+        .forecast-day img {
+          width: 26px;
+          height: 26px;
+          margin: 5px auto;
+        }
+
+        .forecast-range {
+          font-size: 12px;
+        }
+
+        .bus-panel {
+          grid-template-rows: auto auto minmax(0, 1fr);
+        }
+
+        .route-controls {
+          gap: 8px;
+          padding: 10px 14px 12px;
+        }
+
+        .route-toggle {
+          gap: 7px;
+          min-height: 30px;
+          padding-inline: 10px;
+        }
+
+        .bus-head,
+        .bus-row {
+          grid-template-columns: 96px minmax(190px, 1fr) 108px 128px;
+        }
+
+        .bus-head {
+          min-height: 32px;
+          font-size: 11px;
+        }
+
+        .bus-head > div,
+        .bus-cell {
+          padding: 6px 10px;
+        }
+
+        .bus-row {
+          min-height: 68px;
+        }
+
+        .route-number {
+          font-size: 24px;
+        }
+
+        .operator-badge {
+          padding: 2px 6px;
+          font-size: 10px;
+        }
+
+        .destination-block {
+          gap: 3px;
+        }
+
+        .dest-primary {
+          font-size: 18px;
+        }
+
+        .dest-stop {
+          font-size: 14px;
+        }
+
+        .dest-en {
+          display: none;
+        }
+
+        .following-time {
+          font-size: 12px;
+        }
+
+        .next-arrival .minutes {
+          font-size: 34px;
+        }
+
+        .next-arrival .minutes.done {
+          font-size: 22px;
+        }
+
+        .next-arrival .unit {
+          margin-left: 5px;
+          font-size: 16px;
+        }
+
+        .bus-footer,
+        .source-row {
+          display: none;
+        }
+
+        .rotation-dots {
+          right: 12px;
+          bottom: 10px;
+          padding: 6px 8px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .dashboard-flip-inner,
+        .rotation-dot {
+          transition: none;
+        }
+
+        .weather-main::before,
+        .skeleton-text {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <main class="dashboard-page">
+      <header class="dashboard-topbar">
+        <div class="dashboard-brand">
+          <div class="brand-mark" aria-hidden="true">
+            <ion-icon name="partly-sunny-outline"></ion-icon>
+          </div>
+          <div class="dashboard-title-block">
+            <p class="dashboard-kicker" data-i18n="dashboard.kicker">
+              Hong Kong Live Board
+            </p>
+            <h1 class="dashboard-title" data-i18n="dashboard.title">
+              Weather and KMB Arrivals
+            </h1>
+          </div>
+        </div>
+
+        <div class="dashboard-actions" aria-label="Dashboard actions">
+          <a class="icon-action" href="./index.html" aria-label="Back to home">
+            <ion-icon name="home-outline"></ion-icon>
+          </a>
+          <button class="icon-action theme-btn" data-theme-btn aria-label="Toggle theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+          </button>
+          <button
+            class="language-action"
+            type="button"
+            data-lang-btn
+            data-i18n-aria-label="language.toggle"
+            aria-label="Switch language"
+          >
+            <span class="language-option" data-lang-option="en">EN</span>
+            <span class="language-option" data-lang-option="zhHant">繁</span>
+          </button>
+          <button class="text-action" type="button" data-refresh-btn>
+            <ion-icon name="refresh-outline"></ion-icon>
+            <span data-i18n="action.refresh">Refresh</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="dashboard-stage" aria-label="Hong Kong weather and bus dashboard">
+        <div class="dashboard-statusbar">
+          <div class="status-cell">
+            <div class="status-label" data-i18n="status.stop">Stop</div>
+            <div class="status-value" data-i18n="status.stopValue">
+              Sheung Tak Bus Terminus, Tseung Kwan O
+            </div>
+          </div>
+          <div class="status-cell">
+            <div class="status-label" data-i18n="status.myLocation">
+              My Location
+            </div>
+            <div class="status-value location-value">
+              <span data-user-location data-i18n="location.notDetected">
+                Not detected
+              </span>
+              <button
+                class="detect-location-btn"
+                type="button"
+                data-location-btn
+              >
+                <ion-icon name="locate-outline"></ion-icon>
+                <span data-i18n="action.detect">Detect</span>
+              </button>
+            </div>
+          </div>
+          <div class="status-cell">
+            <div class="status-label" data-i18n="status.hkTime">Hong Kong Time</div>
+            <div class="status-value" data-hk-time>--:--:--</div>
+          </div>
+          <div class="status-cell">
+            <div class="status-label" data-i18n="status.status">Status</div>
+            <div
+              class="status-value status-live"
+              data-live-status
+              data-status-key="status.connecting"
+            >
+              Connecting
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid" data-rotator>
+          <div class="dashboard-flip-inner">
+            <section
+              class="panel dashboard-face dashboard-face-weather weather-panel"
+              aria-labelledby="weather-title"
+              data-dashboard-face="weather"
+            >
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="weather-title" data-i18n="weather.title">
+                  Hong Kong Weather
+                </h2>
+                <p class="panel-subtitle" data-weather-report-time>
+                  Updated by HKO
+                </p>
+              </div>
+              <span class="warning-chip" data-warning-chip>
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                <span data-i18n="weather.noWarnings">No active warnings</span>
+              </span>
+            </div>
+
+            <div class="weather-main">
+              <div class="weather-content">
+                <div class="weather-high-low" data-high-low>High --°C / Low --°C</div>
+                <div class="weather-temp-line">
+                  <span class="weather-temp" data-current-temp>--</span>
+                  <span class="weather-unit">°C</span>
+                </div>
+                <div class="weather-condition" data-weather-condition>
+                  Loading weather
+                </div>
+                <div class="weather-meta-row">
+                  <span class="weather-icon-wrap">
+                    <img data-weather-icon alt="Weather icon" />
+                  </span>
+                  <span class="warning-chip">
+                    <ion-icon name="water-outline"></ion-icon>
+                    <span data-humidity>Humidity --%</span>
+                  </span>
+                  <span class="warning-chip">
+                    <ion-icon name="thermometer-outline"></ion-icon>
+                    <span data-weather-station>Tseung Kwan O</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="forecast-strip" data-forecast-strip aria-label="Nine-day weather forecast">
+              <div class="forecast-day">
+                <div class="forecast-date skeleton-text">--/--</div>
+                <div class="forecast-week skeleton-text">---</div>
+                <div class="forecast-range skeleton-text">--°C- --°C</div>
+                <div class="forecast-humidity skeleton-text">--%- --%</div>
+              </div>
+            </div>
+            </section>
+
+            <section
+              class="panel dashboard-face dashboard-face-bus bus-panel"
+              aria-labelledby="bus-title"
+              aria-hidden="true"
+              data-dashboard-face="bus"
+            >
+            <div class="panel-header">
+              <div>
+                <h2 class="panel-title" id="bus-title" data-i18n="bus.title">
+                  KMB Arrivals
+                </h2>
+                <p class="panel-subtitle" data-i18n="bus.subtitle">
+                  Routes departing from Sheung Tak Bus Terminus
+                </p>
+              </div>
+              <span class="warning-chip">
+                <ion-icon name="bus-outline"></ion-icon>
+                <span data-i18n="bus.autoRefresh">Auto 60s</span>
+              </span>
+            </div>
+
+            <div class="route-controls" aria-label="Route filters">
+              <label class="route-toggle">
+                <input type="checkbox" data-route-filter value="296A" checked />
+                <span>296A</span>
+              </label>
+              <label class="route-toggle">
+                <input type="checkbox" data-route-filter value="296C" checked />
+                <span>296C</span>
+              </label>
+              <label class="route-toggle">
+                <input type="checkbox" data-route-filter value="296D" checked />
+                <span>296D</span>
+              </label>
+            </div>
+
+            <div class="bus-table" role="table" aria-label="KMB estimated arrivals">
+              <div class="bus-head" role="row">
+                <div role="columnheader" data-i18n="bus.route">Route</div>
+                <div role="columnheader" data-i18n="bus.destination">
+                  Destination
+                </div>
+                <div role="columnheader" data-i18n="bus.later">Later</div>
+                <div role="columnheader" data-i18n="bus.next">Next</div>
+              </div>
+
+              <div data-bus-rows></div>
+            </div>
+
+            <div class="bus-footer">
+              <div class="status-cell">
+                <div class="status-label" data-i18n="status.kmbData">KMB Data</div>
+                <div class="status-value" data-kmb-updated>Waiting for update</div>
+              </div>
+              <div class="status-cell">
+                <div class="status-label" data-i18n="status.weatherData">
+                  Weather Data
+                </div>
+                <div class="status-value" data-hko-updated>Waiting for update</div>
+              </div>
+            </div>
+            </section>
+          </div>
+
+          <div class="rotation-dots" aria-hidden="true">
+            <span class="rotation-dot active" data-rotation-dot="weather"></span>
+            <span class="rotation-dot" data-rotation-dot="bus"></span>
+          </div>
+        </div>
+
+        <div class="source-row">
+          <span data-source-status data-i18n="source.live">
+            Live data will refresh automatically.
+          </span>
+          <span>
+            <span data-i18n="source.sources">Sources:</span>
+            <a href="https://www.hko.gov.hk/en/weatherAPI/doc/files/HKO_Open_Data_API_Documentation.pdf" target="_blank" rel="noreferrer">HKO Open Data</a>
+            /
+            <a href="https://data.gov.hk/en-data/dataset/hk-td-tis_21-etakmb" target="_blank" rel="noreferrer">KMB ETA</a>
+          </span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      "use strict";
+
+      const HKO_ENDPOINT =
+        "https://data.weather.gov.hk/weatherAPI/opendata/weather.php";
+      const KMB_BASE = "https://data.etabus.gov.hk/v1/transport/kmb";
+      const REFRESH_MS = 60 * 1000;
+      const ROTATION_MS = 5 * 1000;
+      const WEATHER_ICON_BASE =
+        "https://www.hko.gov.hk/images/HKOWxIconOutline/pic";
+      const LANGUAGE_STORAGE_KEY = "language";
+      const SUPPORTED_LANGUAGES = ["en", "zhHant"];
+      const HKO_LANGUAGE = {
+        en: "en",
+        zhHant: "tc",
+      };
+
+      const DASHBOARD_COPY = {
+        en: {
+          "document.title":
+            "Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung",
+          "dashboard.kicker": "Hong Kong Live Board",
+          "dashboard.title": "Weather and KMB Arrivals",
+          "action.refresh": "Refresh",
+          "action.detect": "Detect",
+          "language.toggle": "Switch language",
+          "status.stop": "Stop",
+          "status.stopValue": "Sheung Tak Bus Terminus, Tseung Kwan O",
+          "status.myLocation": "My Location",
+          "status.hkTime": "Hong Kong Time",
+          "status.status": "Status",
+          "status.kmbData": "KMB Data",
+          "status.weatherData": "Weather Data",
+          "status.connecting": "Connecting",
+          "status.updating": "Updating",
+          "status.live": "Live",
+          "status.partial": "Partial data",
+          "weather.title": "Hong Kong Weather",
+          "weather.updatedByHko": "Updated by HKO",
+          "weather.updated": "Updated",
+          "weather.noWarnings": "No active warnings",
+          "weather.high": "High",
+          "weather.low": "Low",
+          "weather.loading": "Loading weather",
+          "weather.unavailable": "Weather data unavailable",
+          "weather.humidity": "Humidity",
+          "bus.title": "KMB Arrivals",
+          "bus.subtitle": "Routes departing from Sheung Tak Bus Terminus",
+          "bus.autoRefresh": "Auto 60s",
+          "bus.route": "Route",
+          "bus.destination": "Destination",
+          "bus.later": "Later",
+          "bus.next": "Next",
+          "bus.to": "To",
+          "bus.stop": "Stop",
+          "bus.minuteShort": "Min.",
+          "bus.arrived": "Arrived",
+          "bus.noServiceShort": "No service",
+          "bus.waiting": "--",
+          "bus.finalPassed": "Final bus",
+          "bus.scheduled": "Scheduled",
+          "location.notDetected": "Not detected",
+          "location.detecting": "Detecting...",
+          "location.unsupported": "Not supported",
+          "location.denied": "Permission denied",
+          "location.unavailable": "Location unavailable",
+          "location.near": "Near",
+          "location.fromStop": "from stop",
+          "location.coordinates": "Coordinates detected",
+          "source.live": "Live data will refresh automatically.",
+          "source.refreshed": "Live data refreshed at",
+          "source.partial":
+            "Some live data could not be loaded. The dashboard is keeping the latest available values.",
+          "source.sources": "Sources:",
+        },
+        zhHant: {
+          "document.title": "香港天氣及九巴到站儀表板 | Leo Cheung",
+          "dashboard.kicker": "香港即時資訊板",
+          "dashboard.title": "天氣及九巴到站",
+          "action.refresh": "更新",
+          "action.detect": "定位",
+          "language.toggle": "切換語言",
+          "status.stop": "車站",
+          "status.stopValue": "尚德總站，將軍澳",
+          "status.myLocation": "我的位置",
+          "status.hkTime": "香港時間",
+          "status.status": "狀態",
+          "status.kmbData": "九巴資料",
+          "status.weatherData": "天氣資料",
+          "status.connecting": "連線中",
+          "status.updating": "更新中",
+          "status.live": "即時",
+          "status.partial": "部分資料",
+          "weather.title": "香港天氣",
+          "weather.updatedByHko": "天文台更新",
+          "weather.updated": "更新",
+          "weather.noWarnings": "沒有生效警告",
+          "weather.high": "最高",
+          "weather.low": "最低",
+          "weather.loading": "載入天氣",
+          "weather.unavailable": "未能取得天氣資料",
+          "weather.humidity": "濕度",
+          "bus.title": "九巴到站",
+          "bus.subtitle": "尚德總站開出路線",
+          "bus.autoRefresh": "自動 60秒",
+          "bus.route": "路線",
+          "bus.destination": "目的地",
+          "bus.later": "稍後",
+          "bus.next": "即將到達",
+          "bus.to": "往",
+          "bus.stop": "車站",
+          "bus.minuteShort": "分",
+          "bus.arrived": "已到站",
+          "bus.noServiceShort": "暫無",
+          "bus.waiting": "--",
+          "bus.finalPassed": "尾班已過",
+          "bus.scheduled": "原定班次",
+          "location.notDetected": "尚未定位",
+          "location.detecting": "定位中...",
+          "location.unsupported": "不支援定位",
+          "location.denied": "未允許定位",
+          "location.unavailable": "未能取得位置",
+          "location.near": "鄰近",
+          "location.fromStop": "距離車站",
+          "location.coordinates": "已取得座標",
+          "source.live": "即時資料會自動更新。",
+          "source.refreshed": "即時資料更新於",
+          "source.partial": "部分即時資料未能載入，儀表板會保留最近可用資料。",
+          "source.sources": "資料來源：",
+        },
+      };
+
+      const LOCATION_POINTS = [
+        { nameEn: "Sheung Tak", nameTc: "尚德", lat: 22.3109, lon: 114.2591 },
+        { nameEn: "Tseung Kwan O", nameTc: "將軍澳", lat: 22.308, lon: 114.2602 },
+        { nameEn: "Hang Hau", nameTc: "坑口", lat: 22.3151, lon: 114.2649 },
+        { nameEn: "Po Lam", nameTc: "寶琳", lat: 22.3225, lon: 114.2578 },
+        { nameEn: "Kwun Tong", nameTc: "觀塘", lat: 22.312, lon: 114.2261 },
+        { nameEn: "Ngau Tau Kok", nameTc: "牛頭角", lat: 22.3154, lon: 114.2183 },
+        { nameEn: "Kowloon Bay", nameTc: "九龍灣", lat: 22.3234, lon: 114.2144 },
+        { nameEn: "Mong Kok", nameTc: "旺角", lat: 22.3193, lon: 114.1694 },
+        { nameEn: "Central", nameTc: "中環", lat: 22.2819, lon: 114.1588 },
+        { nameEn: "Sha Tin", nameTc: "沙田", lat: 22.3822, lon: 114.1913 },
+        { nameEn: "Tsuen Wan", nameTc: "荃灣", lat: 22.3717, lon: 114.1134 },
+        { nameEn: "Yuen Long", nameTc: "元朗", lat: 22.4445, lon: 114.0222 },
+      ];
+      const STOP_LOCATION = LOCATION_POINTS[0];
+
+      const BUS_ROUTES = [
+        {
+          route: "296A",
+          stop: "403881982F9E7209",
+          stopNameTc: "尚德總站",
+          stopNameEn: "Sheung Tak Bus Terminus",
+          stopCode: "TK967",
+          dir: "O",
+          seq: 1,
+          destTc: "牛頭角站(循環線)",
+          destEn: "Ngau Tau Kok Station (Circular)",
+        },
+        {
+          route: "296C",
+          stop: "5527FF8CC85CF139",
+          stopNameTc: "尚德總站",
+          stopNameEn: "Sheung Tak Bus Terminus",
+          stopCode: "TK966",
+          dir: "O",
+          seq: 1,
+          destTc: "長沙灣(海盈邨)",
+          destEn: "Cheung Sha Wan (Hoi Ying Estate)",
+        },
+        {
+          route: "296D",
+          stop: "21E3E95EAEB2048C",
+          stopNameTc: "尚德總站",
+          stopNameEn: "Sheung Tak Bus Terminus",
+          stopCode: "TK965",
+          dir: "O",
+          seq: 1,
+          destTc: "九龍站",
+          destEn: "Kowloon Station",
+        },
+      ];
+
+      const DEMO_ETA = {
+        "296A": [1, 8, 19],
+        "296C": [5, 25, 45],
+        "296D": [0, 20, 40],
+      };
+
+      const state = {
+        language: getInitialLanguage(),
+        activeFace: "weather",
+        lastUpdated: null,
+        refreshTimer: null,
+        rotationTimer: null,
+        userLocation: null,
+        weatherPayload: null,
+        busRows: BUS_ROUTES.map((route) => createDemoBusRow(route)),
+      };
+
+      const $ = (selector, root = document) => root.querySelector(selector);
+      const $$ = (selector, root = document) =>
+        Array.from(root.querySelectorAll(selector));
+
+      function getInitialLanguage() {
+        const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        return SUPPORTED_LANGUAGES.includes(storedLanguage)
+          ? storedLanguage
+          : "en";
+      }
+
+      function isZh() {
+        return state.language === "zhHant";
+      }
+
+      function t(key) {
+        return (
+          DASHBOARD_COPY[state.language]?.[key] ||
+          DASHBOARD_COPY.en[key] ||
+          key
+        );
+      }
+
+      function getLocalizedName(item) {
+        return isZh() ? item.nameTc : item.nameEn;
+      }
+
+      function setStatus(key, isError = false) {
+        const liveStatus = $("[data-live-status]");
+        if (!liveStatus) return;
+        liveStatus.dataset.statusKey = key;
+        liveStatus.textContent = t(key);
+        liveStatus.classList.toggle("api-error", isError);
+      }
+
+      function formatDateTime(value, withSeconds = false) {
+        if (!value) return "--";
+        const date = value instanceof Date ? value : new Date(value);
+        if (Number.isNaN(date.getTime())) return "--";
+        return new Intl.DateTimeFormat(isZh() ? "zh-HK" : "en-HK", {
+          timeZone: "Asia/Hong_Kong",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: withSeconds ? "2-digit" : undefined,
+          hour12: false,
+        }).format(date);
+      }
+
+      function formatTimeOnly(value) {
+        return new Intl.DateTimeFormat(isZh() ? "zh-HK" : "en-HK", {
+          timeZone: "Asia/Hong_Kong",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false,
+        }).format(value);
+      }
+
+      function parseHkoDate(yyyymmdd) {
+        if (!yyyymmdd || yyyymmdd.length !== 8) return null;
+        return new Date(
+          `${yyyymmdd.slice(0, 4)}-${yyyymmdd.slice(4, 6)}-${yyyymmdd.slice(
+            6,
+            8
+          )}T12:00:00+08:00`
+        );
+      }
+
+      function minutesUntil(eta) {
+        if (!eta) return null;
+        const etaTime = new Date(eta).getTime();
+        if (Number.isNaN(etaTime)) return null;
+        const diffMs = etaTime - Date.now();
+        if (diffMs <= 0) return 0;
+        return Math.ceil(diffMs / 60000);
+      }
+
+      function etaLabel(minutes, remark) {
+        if (minutes === null) {
+          return shortRemark(remark) || t("bus.noServiceShort");
+        }
+        if (minutes <= 0) return t("bus.arrived");
+        return `${minutes} ${t("bus.minuteShort")}`;
+      }
+
+      function shortRemark(remark) {
+        const value = (remark || "").trim();
+        if (!value) return "";
+        if (/final bus has departed|最後班次已過/i.test(value)) {
+          return t("bus.finalPassed");
+        }
+        if (/scheduled bus|原定班次/i.test(value)) return t("bus.scheduled");
+        if (/final bus|最後班次/i.test(value)) return t("bus.finalPassed");
+        return value.length > 24 ? `${value.slice(0, 21)}...` : value;
+      }
+
+      function formatHumidity(reading) {
+        if (!reading?.value) return `${t("weather.humidity")} --%`;
+        const unit = reading.unit === "percent" ? "%" : reading.unit || "%";
+        return `${t("weather.humidity")} ${reading.value}${unit}`;
+      }
+
+      function shortWeatherHeadline(text) {
+        const value = (text || "").replace(/\s+/g, " ").trim();
+        if (!value) return t("weather.unavailable");
+        const firstSentence = value.match(/^[^.!?]+[.!?]/)?.[0] || value;
+        return firstSentence.length > 72
+          ? `${firstSentence.slice(0, 69)}...`
+          : firstSentence;
+      }
+
+      function iconUrl(code) {
+        return code ? `${WEATHER_ICON_BASE}${code}.png` : "";
+      }
+
+      async function fetchJson(url) {
+        const response = await fetch(url, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      }
+
+      function hkoUrl(dataType) {
+        const params = new URLSearchParams({
+          dataType,
+          lang: HKO_LANGUAGE[state.language],
+        });
+        return `${HKO_ENDPOINT}?${params}`;
+      }
+
+      function findReading(readings, preferredPlaces) {
+        const list = Array.isArray(readings) ? readings : [];
+        for (const place of preferredPlaces) {
+          const reading = list.find((item) => item.place === place);
+          if (reading) return reading;
+        }
+        return list[0] || null;
+      }
+
+      function normaliseForecastDate(forecast) {
+        const date = parseHkoDate(forecast.forecastDate);
+        if (!date) return { dateText: "--/--", week: forecast.week || "---" };
+        return {
+          dateText: new Intl.DateTimeFormat(isZh() ? "zh-HK" : "en-HK", {
+            timeZone: "Asia/Hong_Kong",
+            month: "numeric",
+            day: "numeric",
+          }).format(date),
+          week: forecast.week || "---",
+        };
+      }
+
+      function setText(selector, value) {
+        const element = $(selector);
+        if (element) element.textContent = value;
+      }
+
+      function createDemoBusRow(config) {
+        const values = DEMO_ETA[config.route] || [];
+        return {
+          ...config,
+          destinationTc: config.destTc,
+          destinationEn: config.destEn,
+          remark: "",
+          minutes: values[0] ?? null,
+          following: values.slice(1),
+          sourceTime: null,
+          isDemo: true,
+        };
+      }
+
+      function mapEtaRows(config, payload) {
+        const rows = Array.isArray(payload.data) ? payload.data : [];
+        const matched = rows
+          .filter((row) => {
+            return (
+              row.route === config.route &&
+              String(row.service_type) === "1" &&
+              row.dir === config.dir &&
+              Number(row.seq) === config.seq
+            );
+          })
+          .sort((a, b) => {
+            if (!a.eta && !b.eta) return 0;
+            if (!a.eta) return 1;
+            if (!b.eta) return -1;
+            return new Date(a.eta) - new Date(b.eta);
+          });
+
+        const timed = matched.filter((row) => row.eta);
+        const firstRow = timed[0] || matched[0] || {};
+        const minutes = timed.length ? minutesUntil(timed[0].eta) : null;
+        const following = timed.slice(1, 3).map((row) => minutesUntil(row.eta));
+        const remark = firstRow.rmk_en || firstRow.rmk_tc || "";
+
+        return {
+          ...config,
+          destinationTc: firstRow.dest_tc || config.destTc,
+          destinationEn: firstRow.dest_en || config.destEn,
+          remark,
+          minutes,
+          following: following.filter((value) => value !== null),
+          sourceTime:
+            firstRow.data_timestamp || payload.generated_timestamp || null,
+          isDemo: false,
+        };
+      }
+
+      function renderBusRows(rows) {
+        const container = $("[data-bus-rows]");
+        if (!container) return;
+
+        container.innerHTML = rows
+          .map((row) => {
+            const followingItems = row.following.length
+              ? row.following
+                  .map((time) => {
+                    return `<span class="following-time">${etaLabel(
+                      time,
+                      ""
+                    )}</span>`;
+                  })
+                  .join("")
+              : `<span class="following-time">${
+                  shortRemark(row.remark) || t("bus.waiting")
+                }</span>`;
+
+            const isArrived = row.minutes !== null && row.minutes <= 0;
+            const isUrgent = row.minutes !== null && row.minutes <= 5;
+            const nextClass = isArrived
+              ? "minutes done"
+              : isUrgent
+                ? "minutes urgent"
+                : "minutes";
+            const nextContent =
+              row.minutes === null
+                ? `<span class="minutes done">${
+                    shortRemark(row.remark) || t("bus.noServiceShort")
+                  }</span>`
+                : isArrived
+                  ? `<span class="${nextClass}">${t("bus.arrived")}</span>`
+                  : `<span class="${nextClass}">${row.minutes}</span><span class="unit">${t("bus.minuteShort")}</span>`;
+            const destination = isZh() ? row.destinationTc : row.destinationEn;
+            const stopName = isZh() ? row.stopNameTc : row.stopNameEn;
+            const stopSubtext = isZh()
+              ? `${row.stopNameEn} (${row.stopCode})`
+              : `${row.stopNameTc} (${row.stopCode})`;
+            const stopSeparator = isZh() ? "：" : ": ";
+
+            return `
+              <div class="bus-row" data-route-row="${row.route}" role="row">
+                <div class="bus-cell">
+                  <div class="route-badge">
+                    <span class="route-number">${row.route}</span>
+                    <span class="operator-badge">KMB</span>
+                  </div>
+                </div>
+                <div class="bus-cell">
+                  <div class="destination-block">
+                    <div class="dest-primary">${t("bus.to")} ${destination}</div>
+                    <div class="dest-stop">${t("bus.stop")}${stopSeparator}${stopName}</div>
+                    <div class="dest-en">${stopSubtext}</div>
+                  </div>
+                </div>
+                <div class="bus-cell">
+                  <div class="following-list">${followingItems}</div>
+                </div>
+                <div class="bus-cell">
+                  <div class="next-arrival">${nextContent}</div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
+        applyRouteFilters();
+      }
+
+      function renderForecast(forecasts) {
+        const strip = $("[data-forecast-strip]");
+        if (!strip) return;
+
+        const days = (Array.isArray(forecasts) ? forecasts : []).slice(0, 5);
+        if (!days.length) return;
+
+        strip.innerHTML = days
+          .map((forecast) => {
+            const date = normaliseForecastDate(forecast);
+            const minTemp = forecast.forecastMintemp?.value ?? "--";
+            const maxTemp = forecast.forecastMaxtemp?.value ?? "--";
+            const minRh = forecast.forecastMinrh?.value ?? "--";
+            const maxRh = forecast.forecastMaxrh?.value ?? "--";
+            const icon = iconUrl(forecast.ForecastIcon);
+
+            return `
+              <div class="forecast-day">
+                <div class="forecast-date">${date.dateText}</div>
+                <div class="forecast-week">${date.week}</div>
+                ${
+                  icon
+                    ? `<img src="${icon}" alt="${forecast.forecastWeather || "Forecast icon"}" loading="lazy" />`
+                    : ""
+                }
+                <div class="forecast-range">${minTemp}°C-${maxTemp}°C</div>
+                <div class="forecast-humidity">${minRh}%-${maxRh}%</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderWeather({ current, forecast, localForecast, warnings }) {
+        const temperature = findReading(current.temperature?.data, [
+          "Tseung Kwan O",
+          "將軍澳",
+          "Hong Kong Observatory",
+          "香港天文台",
+          "King's Park",
+          "京士柏",
+        ]);
+        const humidity = current.humidity?.data?.[0];
+        const firstForecast = forecast.weatherForecast?.[0] || {};
+        const weatherText =
+          firstForecast.forecastWeather ||
+          localForecast.forecastDesc ||
+          t("weather.unavailable");
+        const warningValues = Object.values(warnings || {}).filter(Boolean);
+        const warningChip = $("[data-warning-chip]");
+        const icon = current.icon?.[0] || firstForecast.ForecastIcon;
+
+        setText("[data-current-temp]", temperature?.value ?? "--");
+        setText(
+          "[data-humidity]",
+          formatHumidity(humidity)
+        );
+        setText(
+          "[data-weather-station]",
+          temperature?.place || (isZh() ? "香港天文台" : "Hong Kong Observatory")
+        );
+        setText(
+          "[data-high-low]",
+          `${t("weather.high")} ${
+            firstForecast.forecastMaxtemp?.value ?? "--"
+          }°C / ${t("weather.low")} ${
+            firstForecast.forecastMintemp?.value ?? "--"
+          }°C`
+        );
+        setText(
+          "[data-weather-condition]",
+          shortWeatherHeadline(weatherText)
+        );
+        setText(
+          "[data-weather-report-time]",
+          `${t("weather.updated")} ${formatDateTime(
+            current.updateTime || forecast.updateTime
+          )}`
+        );
+
+        const iconElement = $("[data-weather-icon]");
+        if (iconElement) {
+          iconElement.src = iconUrl(icon);
+          iconElement.hidden = !icon;
+        }
+
+        if (warningChip) {
+          if (warningValues.length) {
+            warningChip.classList.add("warning-active");
+            warningChip.innerHTML = `
+              <ion-icon name="warning-outline"></ion-icon>
+              <span>${warningValues
+                .map((warning) => warning.name || warning.code)
+                .join(" / ")}</span>
+            `;
+          } else {
+            warningChip.classList.remove("warning-active");
+            warningChip.innerHTML = `
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <span>${t("weather.noWarnings")}</span>
+            `;
+          }
+        }
+
+        renderForecast(forecast.weatherForecast);
+      }
+
+      function distanceKm(a, b) {
+        const radiusKm = 6371;
+        const toRad = (deg) => (deg * Math.PI) / 180;
+        const dLat = toRad(b.lat - a.lat);
+        const dLon = toRad(b.lon - a.lon);
+        const lat1 = toRad(a.lat);
+        const lat2 = toRad(b.lat);
+        const h =
+          Math.sin(dLat / 2) ** 2 +
+          Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+        return 2 * radiusKm * Math.asin(Math.sqrt(h));
+      }
+
+      function formatDistance(km) {
+        const formatter = new Intl.NumberFormat(isZh() ? "zh-HK" : "en-HK", {
+          maximumFractionDigits: km < 10 ? 1 : 0,
+        });
+        return `${formatter.format(km)} km`;
+      }
+
+      function describeUserLocation(coords) {
+        const current = {
+          lat: coords.latitude,
+          lon: coords.longitude,
+        };
+        const nearest = LOCATION_POINTS.map((point) => ({
+          ...point,
+          distance: distanceKm(current, point),
+        })).sort((a, b) => a.distance - b.distance)[0];
+        const stopDistance = distanceKm(current, STOP_LOCATION);
+
+        if (!nearest || nearest.distance > 35) {
+          return `${t("location.coordinates")} · ${coords.latitude.toFixed(
+            3
+          )}, ${coords.longitude.toFixed(3)}`;
+        }
+
+        return `${t("location.near")} ${getLocalizedName(
+          nearest
+        )} · ${formatDistance(stopDistance)} ${t("location.fromStop")}`;
+      }
+
+      function renderUserLocation() {
+        const locationElement = $("[data-user-location]");
+        if (!locationElement) return;
+        if (!state.userLocation) {
+          locationElement.textContent = t("location.notDetected");
+          return;
+        }
+        locationElement.textContent = describeUserLocation(state.userLocation);
+        locationElement.title = `${state.userLocation.latitude.toFixed(
+          5
+        )}, ${state.userLocation.longitude.toFixed(5)}`;
+      }
+
+      function setLocationMessage(key) {
+        const locationElement = $("[data-user-location]");
+        if (locationElement) locationElement.textContent = t(key);
+      }
+
+      function detectUserLocation() {
+        const button = $("[data-location-btn]");
+        if (!navigator.geolocation) {
+          setLocationMessage("location.unsupported");
+          return;
+        }
+
+        button?.setAttribute("disabled", "true");
+        setLocationMessage("location.detecting");
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            state.userLocation = position.coords;
+            renderUserLocation();
+            button?.removeAttribute("disabled");
+          },
+          (error) => {
+            const key =
+              error.code === error.PERMISSION_DENIED
+                ? "location.denied"
+                : "location.unavailable";
+            setLocationMessage(key);
+            button?.removeAttribute("disabled");
+          },
+          {
+            enableHighAccuracy: true,
+            maximumAge: 60 * 1000,
+            timeout: 10 * 1000,
+          }
+        );
+      }
+
+      async function updateWeather() {
+        const [current, forecast, localForecast, warnings] = await Promise.all([
+          fetchJson(hkoUrl("rhrread")),
+          fetchJson(hkoUrl("fnd")),
+          fetchJson(hkoUrl("flw")),
+          fetchJson(hkoUrl("warnsum")),
+        ]);
+        state.weatherPayload = { current, forecast, localForecast, warnings };
+        renderWeather(state.weatherPayload);
+        setText(
+          "[data-hko-updated]",
+          formatDateTime(current.updateTime || forecast.updateTime)
+        );
+      }
+
+      async function updateBus() {
+        const rows = await Promise.all(
+          BUS_ROUTES.map(async (config) => {
+            const payload = await fetchJson(
+              `${KMB_BASE}/eta/${config.stop}/${config.route}/1`
+            );
+            return mapEtaRows(config, payload);
+          })
+        );
+
+        state.busRows = rows;
+        renderBusRows(rows);
+        const latest = rows
+          .map((row) => row.sourceTime)
+          .filter(Boolean)
+          .sort()
+          .at(-1);
+        setText("[data-kmb-updated]", formatDateTime(latest));
+      }
+
+      function applyRouteFilters() {
+        const enabledRoutes = new Set(
+          $$("[data-route-filter]")
+            .filter((input) => input.checked)
+            .map((input) => input.value)
+        );
+
+        $$("[data-route-row]").forEach((row) => {
+          row.classList.toggle(
+            "hidden",
+            !enabledRoutes.has(row.dataset.routeRow)
+          );
+        });
+      }
+
+      function setDashboardFace(face) {
+        state.activeFace = face === "bus" ? "bus" : "weather";
+        const rotator = $("[data-rotator]");
+        if (rotator) {
+          rotator.classList.toggle("is-bus", state.activeFace === "bus");
+        }
+
+        $$("[data-dashboard-face]").forEach((panel) => {
+          const isActive = panel.dataset.dashboardFace === state.activeFace;
+          panel.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        $$("[data-rotation-dot]").forEach((dot) => {
+          dot.classList.toggle(
+            "active",
+            dot.dataset.rotationDot === state.activeFace
+          );
+        });
+      }
+
+      function startDashboardRotation() {
+        window.clearInterval(state.rotationTimer);
+        setDashboardFace("weather");
+        state.rotationTimer = window.setInterval(() => {
+          setDashboardFace(state.activeFace === "weather" ? "bus" : "weather");
+        }, ROTATION_MS);
+      }
+
+      function updateLanguageButton() {
+        $$("[data-lang-option]").forEach((option) => {
+          option.classList.toggle(
+            "active",
+            option.dataset.langOption === state.language
+          );
+        });
+      }
+
+      function applyTranslations() {
+        document.documentElement.lang = isZh() ? "zh-Hant" : "en";
+        document.title = t("document.title");
+
+        $$("[data-i18n]").forEach((element) => {
+          element.textContent = t(element.dataset.i18n);
+        });
+
+        $$("[data-i18n-aria-label]").forEach((element) => {
+          element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel));
+        });
+
+        const activeStatusKey =
+          $("[data-live-status]")?.dataset.statusKey || "status.connecting";
+        setStatus(activeStatusKey, activeStatusKey === "status.partial");
+        updateLanguageButton();
+        renderUserLocation();
+        renderBusRows(state.busRows);
+
+        if (state.weatherPayload) {
+          renderWeather(state.weatherPayload);
+        } else {
+          setText("[data-weather-report-time]", t("weather.updatedByHko"));
+          setText("[data-weather-condition]", t("weather.loading"));
+        }
+      }
+
+      function setLanguage(language) {
+        if (!SUPPORTED_LANGUAGES.includes(language)) return;
+        state.language = language;
+        localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+        applyTranslations();
+        refreshDashboard();
+      }
+
+      function toggleLanguage() {
+        setLanguage(isZh() ? "en" : "zhHant");
+      }
+
+      async function refreshDashboard() {
+        const refreshButton = $("[data-refresh-btn]");
+        const sourceStatus = $("[data-source-status]");
+
+        refreshButton?.setAttribute("disabled", "true");
+        setStatus("status.updating");
+
+        const results = await Promise.allSettled([updateWeather(), updateBus()]);
+        const failed = results.filter((result) => result.status === "rejected");
+
+        state.lastUpdated = new Date();
+        if (failed.length) {
+          setStatus("status.partial", true);
+          if (sourceStatus) {
+            sourceStatus.textContent = t("source.partial");
+          }
+          console.error("Dashboard refresh failed", failed);
+        } else {
+          setStatus("status.live");
+          if (sourceStatus) {
+            sourceStatus.textContent = `${t("source.refreshed")} ${formatDateTime(
+              state.lastUpdated,
+              true
+            )}.`;
+          }
+        }
+
+        refreshButton?.removeAttribute("disabled");
+      }
+
+      function startClock() {
+        const tick = () => {
+          setText("[data-hk-time]", formatTimeOnly(new Date()));
+        };
+        tick();
+        setInterval(tick, 1000);
+      }
+
+      function initTheme() {
+        const isLightTheme = localStorage.getItem("theme") === "light";
+        const themeBtn = $("[data-theme-btn]");
+        if (isLightTheme) document.documentElement.classList.add("light-theme");
+        if (themeBtn && isLightTheme) {
+          themeBtn.querySelector("ion-icon")?.setAttribute("name", "moon-outline");
+        }
+
+        themeBtn?.addEventListener("click", () => {
+          document.documentElement.classList.toggle("light-theme");
+          const isLight = document.documentElement.classList.contains("light-theme");
+          themeBtn
+            .querySelector("ion-icon")
+            ?.setAttribute("name", isLight ? "moon-outline" : "sunny-outline");
+          localStorage.setItem("theme", isLight ? "light" : "dark");
+        });
+      }
+
+      function initDashboard() {
+        initTheme();
+        applyTranslations();
+        startClock();
+        renderBusRows(state.busRows);
+
+        $$("[data-route-filter]").forEach((input) => {
+          input.addEventListener("change", applyRouteFilters);
+        });
+
+        $("[data-refresh-btn]")?.addEventListener("click", refreshDashboard);
+        $("[data-lang-btn]")?.addEventListener("click", toggleLanguage);
+        $("[data-location-btn]")?.addEventListener("click", detectUserLocation);
+        startDashboardRotation();
+        refreshDashboard();
+        state.refreshTimer = setInterval(refreshDashboard, REFRESH_MS);
+      }
+
+      window.addEventListener("DOMContentLoaded", initDashboard);
+    </script>
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>
