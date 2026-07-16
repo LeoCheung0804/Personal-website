@@ -1,7 +1,20 @@
 const fs = require('fs');
 const path = require('path');
+const { commitFileTransaction } = require('./scripts/generation-transaction.js');
+const {
+  siteProfile,
+  siteProjects,
+  translations,
+  validateSiteData
+} = require('./assets/js/site-data.js');
 
-const siteUrl = 'https://leocml.com';
+validateSiteData();
+
+const profileContacts = Object.fromEntries(
+  siteProfile.contacts.map(contact => [contact.id, contact])
+);
+
+const siteUrl = siteProfile.siteUrl;
 const postsDir = path.join(__dirname, 'posts');
 const blogDir = path.join(__dirname, 'blog');
 const outputFile = path.join(__dirname, 'assets', 'data', 'posts.json');
@@ -9,15 +22,12 @@ const sitemapFile = path.join(__dirname, 'sitemap.xml');
 
 const staticSitemapPages = [
   { path: '', lastmod: '2026-05-05', changefreq: 'weekly', priority: '1.0' },
-  { path: 'tapper.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'yes.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'spray.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'knowtouch.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'exoskeleton.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'borderless.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'microwave.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'retractable.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' },
-  { path: 'footcontroller.html', lastmod: '2026-05-05', changefreq: 'monthly', priority: '0.8' }
+  ...Object.values(siteProjects).map(project => ({
+    path: project.file,
+    lastmod: project.seo.lastmod,
+    changefreq: 'monthly',
+    priority: '0.8'
+  }))
 ];
 
 function ensureDirectory(dir) {
@@ -26,7 +36,7 @@ function ensureDirectory(dir) {
   }
 }
 
-function prepareBlogDirectory() {
+function removeObsoleteBlogPages(desiredOutputPaths) {
   const resolvedBlogDir = path.resolve(blogDir);
   const resolvedWorkspace = path.resolve(__dirname);
 
@@ -36,9 +46,13 @@ function prepareBlogDirectory() {
 
   ensureDirectory(blogDir);
 
+  const desiredFiles = new Set(desiredOutputPaths.map(outputPath => path.resolve(outputPath)));
+
   fs.readdirSync(blogDir)
     .filter(file => file.endsWith('.html'))
-    .forEach(file => fs.unlinkSync(path.join(blogDir, file)));
+    .map(file => path.resolve(blogDir, file))
+    .filter(outputPath => !desiredFiles.has(outputPath))
+    .forEach(outputPath => fs.unlinkSync(outputPath));
 }
 
 function parseFrontMatter(content) {
@@ -172,12 +186,12 @@ function generateJsonLd(post) {
     dateModified: post.date || undefined,
     author: {
       '@type': 'Person',
-      name: 'Leo Cheung',
+      name: siteProfile.name,
       url: siteUrl
     },
     publisher: {
       '@type': 'Person',
-      name: 'Leo Cheung',
+      name: siteProfile.name,
       url: siteUrl
     },
     mainEntityOfPage: {
@@ -202,7 +216,7 @@ function generateBlogPage(post) {
   const imagePath = toBlogPageAssetPath(post.image);
   const dateEn = formatDate(post.date, 'en-US');
   const dateZhHant = formatDate(post.date, 'zh-HK');
-  const titleWithSite = `${title} | Leo Cheung`;
+  const titleWithSite = `${title} | ${siteProfile.name}`;
   const postBody = renderPostBody(post.body);
 
   return `<!DOCTYPE html>
@@ -213,14 +227,14 @@ function generateBlogPage(post) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(titleWithSite)}</title>
     <meta name="description" content="${escapeHtml(summary)}" />
-    <meta name="author" content="Leo Cheung" />
+    <meta name="author" content="${escapeHtml(siteProfile.name)}" />
     <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
     <meta property="og:title" content="${escapeHtml(titleWithSite)}" />
     <meta property="og:description" content="${escapeHtml(summary)}" />
     ${imageUrl ? `<meta property="og:image" content="${escapeHtml(imageUrl)}" />` : ''}
     <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="Leo Cheung Portfolio" />
+    <meta property="og:site_name" content="${escapeHtml(`${siteProfile.name} Portfolio`)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(titleWithSite)}" />
     <meta name="twitter:description" content="${escapeHtml(summary)}" />
@@ -254,81 +268,81 @@ function generateBlogPage(post) {
       <aside class="sidebar" data-sidebar>
         <div class="sidebar-info">
           <figure class="avatar-box">
-            <img src="../assets/images/profile.jpg" alt="Leo Cheung" width="80" />
+            <img src="../assets/images/profile.jpg" alt="${escapeHtml(siteProfile.name)}" width="80" />
           </figure>
           <div class="info-content">
-            <h1 class="name" title="Leo Cheung">Leo Cheung</h1>
-            <p class="title">Robotic Engineer</p>
+            <h1 class="name" title="${escapeHtml(siteProfile.name)}">${escapeHtml(siteProfile.name)}</h1>
+            <p class="title">${escapeHtml(siteProfile.role.en)}</p>
           </div>
           <button class="info_more-btn" data-sidebar-btn>
-            <span>Show Contacts</span>
+            <span>${escapeHtml(translations.en['sidebar.showContacts'])}</span>
             <ion-icon name="chevron-down"></ion-icon>
           </button>
         </div>
         <div class="sidebar-info_more">
           <div class="separator"></div>
           <ul class="contacts-list">
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.email.id)}">
               <div class="icon-box">
                 <ion-icon name="mail-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">Email</p>
-                <a href="mailto:leocheung0804@gmail.com" class="contact-link">leocheung0804@gmail.com</a>
+                <p class="contact-title">${escapeHtml(translations.en[profileContacts.email.labelKey])}</p>
+                <a href="${escapeHtml(profileContacts.email.href)}" class="contact-link">${escapeHtml(profileContacts.email.value)}</a>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.location.id)}">
               <div class="icon-box">
                 <ion-icon name="location-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">Location</p>
-                <address>Hong Kong</address>
+                <p class="contact-title">${escapeHtml(translations.en[profileContacts.location.labelKey])}</p>
+                <address>${escapeHtml(siteProfile.location.en)}</address>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.employer.id)}">
               <div class="icon-box">
                 <ion-icon name="business-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">Employer</p>
-                <a href="https://www.c3robotics.com.hk" class="contact-link">C3 Construction Robotics Limited</a>
+                <p class="contact-title">${escapeHtml(translations.en[profileContacts.employer.labelKey])}</p>
+                <a href="${escapeHtml(profileContacts.employer.href)}" class="contact-link">${escapeHtml(profileContacts.employer.value)}</a>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.organization.id)}">
               <div class="icon-box">
                 <ion-icon name="link-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">Organization</p>
-                <a href="https://c3robolab.mae.cuhk.edu.hk/" class="contact-link">C3 Robotics Lab</a>
+                <p class="contact-title">${escapeHtml(translations.en[profileContacts.organization.labelKey])}</p>
+                <a href="${escapeHtml(profileContacts.organization.href)}" class="contact-link">${escapeHtml(profileContacts.organization.value)}</a>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.github.id)}">
               <div class="icon-box">
                 <ion-icon name="logo-octocat"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">GitHub</p>
-                <a href="https://github.com/LeoCheung0804" class="contact-link">LeoCheung0804</a>
+                <p class="contact-title">${escapeHtml(profileContacts.github.label)}</p>
+                <a href="${escapeHtml(profileContacts.github.href)}" class="contact-link">${escapeHtml(profileContacts.github.value)}</a>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.linkedin.id)}">
               <div class="icon-box">
                 <ion-icon name="logo-linkedin"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">LinkedIn</p>
-                <a href="https://www.linkedin.com/in/leocheung0804" class="contact-link">leocheung0804</a>
+                <p class="contact-title">${escapeHtml(profileContacts.linkedin.label)}</p>
+                <a href="${escapeHtml(profileContacts.linkedin.href)}" class="contact-link">${escapeHtml(profileContacts.linkedin.value)}</a>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.orcid.id)}">
               <div class="icon-box">
                 <ion-icon name="book-outline"></ion-icon>
               </div>
               <div class="contact-info">
-                <p class="contact-title">ORCID</p>
-                <a href="https://orcid.org/0009-0003-1691-6603" class="contact-link">0009-0003-1691-6603</a>
+                <p class="contact-title">${escapeHtml(profileContacts.orcid.label)}</p>
+                <a href="${escapeHtml(profileContacts.orcid.href)}" class="contact-link">${escapeHtml(profileContacts.orcid.value)}</a>
               </div>
             </li>
           </ul>
@@ -339,30 +353,30 @@ function generateBlogPage(post) {
         <nav class="navbar">
           <ul class="navbar-list">
             <li class="navbar-item">
-              <a href="../index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">About</a>
+              <a href="../index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">${escapeHtml(translations.en['nav.about'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">Resume</a>
+              <a href="../index.html#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">${escapeHtml(translations.en['nav.resume'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">Projects</a>
+              <a href="../index.html#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">${escapeHtml(translations.en['nav.projects'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">Publications</a>
+              <a href="../index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">${escapeHtml(translations.en['nav.publications'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">Blog</a>
+              <a href="../index.html#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">${escapeHtml(translations.en['nav.blog'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">Contact</a>
+              <a href="../index.html#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">${escapeHtml(translations.en['nav.contact'])}</a>
             </li>
             <li class="navbar-item navbar-action-item">
-              <button class="navbar-link lang-btn" aria-label="Switch language" data-i18n-aria-label="language.toggle" data-lang-btn>
+              <button class="navbar-link lang-btn" aria-label="${escapeHtml(translations.en['language.toggle'])}" data-i18n-aria-label="language.toggle" data-lang-btn>
                 <span data-lang-label>ZH</span>
               </button>
             </li>
             <li class="navbar-item navbar-action-item">
-              <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
+              <button class="navbar-link theme-btn" aria-label="${escapeHtml(translations.en['theme.toggle'])}" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
                 <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
               </button>
             </li>
@@ -371,7 +385,7 @@ function generateBlogPage(post) {
 
         <article class="blog-post-full active" data-page="blog-post">
           <header>
-            <a href="../index.html#blog" class="btn-back" data-i18n="blog.backToBlog">Back to Blog</a>
+            <a href="../index.html#blog" class="btn-back" data-i18n="blog.backToBlog">${escapeHtml(translations.en['blog.backToBlog'])}</a>
             <h2 class="h2 article-title">
               <span data-lang="en">${escapeHtml(title)}</span>
               <span data-lang="zhHant">${escapeHtml(titleZhHant)}</span>
@@ -397,8 +411,8 @@ ${postBody}
         </article>
 
         <footer class="footer">
-          <p class="copyright">&copy; 2026 Leo Cheung</p>
-          <a href="#" class="back-to-top">Back to Top</a>
+          <p class="copyright">&copy; ${siteProfile.copyrightYear} ${escapeHtml(siteProfile.name)}</p>
+          <a href="#" class="back-to-top">${escapeHtml(translations.en['footer.backToTop'])}</a>
         </footer>
       </div>
     </main>
@@ -448,9 +462,6 @@ ${entries.map(entry => `  <url>
 `;
 }
 
-ensureDirectory(path.dirname(outputFile));
-prepareBlogDirectory();
-
 const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
 
 const posts = files.map(file => {
@@ -460,25 +471,56 @@ const posts = files.map(file => {
   const slug = slugify(filename);
   const summary = buildSummary(metadata, body);
 
-  return {
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
+    throw new Error(`Post filename "${file}" does not produce a safe, non-empty slug.`);
+  }
+
+  const post = {
     filename,
     slug,
     url: `./blog/${slug}.html`,
-    ...metadata,
+    ...metadata
+  };
+  Object.assign(post, {
+    filename,
+    slug,
+    url: `./blog/${slug}.html`,
     summary,
     body
-  };
+  });
+  return post;
 });
+
+const duplicateSlugs = posts
+  .map(post => post.slug)
+  .filter((slug, index, slugs) => slugs.indexOf(slug) !== index);
+if (duplicateSlugs.length) {
+  throw new Error(`Duplicate blog slug(s): ${[...new Set(duplicateSlugs)].join(', ')}`);
+}
 
 posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-posts.forEach(post => {
-  fs.writeFileSync(path.join(blogDir, `${post.slug}.html`), generateBlogPage(post));
-});
-
 const postIndex = posts.map(({ body, ...post }) => post);
+const resolvedBlogOutputDir = path.resolve(blogDir);
+const generatedBlogPages = posts.map(post => {
+  const outputPath = path.resolve(blogDir, `${post.slug}.html`);
+  if (!outputPath.startsWith(`${resolvedBlogOutputDir}${path.sep}`)) {
+    throw new Error(`Refusing to write blog output outside ${resolvedBlogOutputDir}.`);
+  }
+  return {
+    outputPath,
+    content: generateBlogPage(post)
+  };
+});
+const generatedPostIndex = `${JSON.stringify(postIndex, null, 2)}\n`;
+const generatedSitemap = buildSitemap(posts);
 
-fs.writeFileSync(outputFile, `${JSON.stringify(postIndex, null, 2)}\n`);
-fs.writeFileSync(sitemapFile, buildSitemap(posts));
+commitFileTransaction([
+  ...generatedBlogPages.map(({ outputPath, content }) => ({ targetPath: outputPath, content })),
+  { targetPath: outputFile, content: generatedPostIndex },
+  { targetPath: sitemapFile, content: generatedSitemap }
+]);
+
+removeObsoleteBlogPages(generatedBlogPages.map(({ outputPath }) => outputPath));
 
 console.log(`Generated index and ${posts.length} blog pages at ${blogDir}`);

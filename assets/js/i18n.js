@@ -38,18 +38,66 @@ function setText(selector, key, language = currentLanguage) {
   }
 }
 
+function getLocalizedProfileValue(value, language = currentLanguage) {
+  if (!value || typeof value !== "object") return value || "";
+  return value[language] || value[defaultLanguage] || "";
+}
+
 function applySharedShellTranslations(language = currentLanguage) {
-  setText(".info-content .title", "profile.title", language);
+  const profileName = document.querySelector(".info-content .name");
+  if (profileName) {
+    profileName.textContent = siteProfile.name;
+    profileName.setAttribute("title", siteProfile.name);
+  }
+
+  const profileTitle = document.querySelector(".info-content .title");
+  if (profileTitle) {
+    profileTitle.textContent = getLocalizedProfileValue(siteProfile.role, language);
+  }
+
   setText("[data-sidebar-btn] span", "sidebar.showContacts", language);
-  setText(".contacts-list .contact-item:nth-child(1) .contact-title", "contact.email", language);
-  setText(".contacts-list .contact-item:nth-child(2) .contact-title", "contact.location", language);
-  setText(".contacts-list .contact-item:nth-child(2) address", "contact.hongKong", language);
-  setText(".contacts-list .contact-item:nth-child(3) .contact-title", "contact.employer", language);
-  setText(".contacts-list .contact-item:nth-child(4) .contact-title", "contact.organization", language);
+
+  document.querySelectorAll(".contacts-list .contact-item").forEach((item, index) => {
+    const contact = siteProfile.contacts.find(({ id }) => id === item.dataset.contactId)
+      || siteProfile.contacts[index];
+    if (!contact) return;
+
+    const label = item.querySelector(".contact-title");
+    if (label) {
+      label.textContent = contact.labelKey
+        ? getTranslation(contact.labelKey, language)
+        : contact.label;
+    }
+
+    if (contact.id === "location") {
+      const address = item.querySelector("address");
+      if (address) {
+        address.textContent = getLocalizedProfileValue(siteProfile.location, language);
+      }
+      return;
+    }
+
+    const link = item.querySelector(".contact-link");
+    if (link) {
+      link.textContent = contact.value;
+      link.setAttribute("href", contact.href);
+    }
+  });
+
   setText(".back-to-top", "footer.backToTop", language);
+
+  const copyright = document.querySelector(".copyright");
+  if (copyright) {
+    copyright.textContent = `© ${siteProfile.copyrightYear} ${siteProfile.name}`;
+  }
 }
 
 function getCurrentProjectPageKey() {
+  const projectRoot = document.querySelector("[data-project-key]");
+  if (projectRoot?.dataset.projectKey) {
+    return projectRoot.dataset.projectKey;
+  }
+
   const pageName = window.location.pathname.split("/").pop().replace(".html", "");
   return projectPageAliases[pageName] || pageName;
 }
@@ -70,7 +118,7 @@ function applyProjectPageTranslations(language = currentLanguage) {
 
   if (pageTitle) {
     pageTitle.textContent = projectCopy.title;
-    document.title = `${projectCopy.title} | Leo Cheung`;
+    document.title = `${projectCopy.title} | ${siteProfile.name}`;
   }
 
   if (overviewTitle) {

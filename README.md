@@ -11,6 +11,27 @@ This repository was forked (then detached) from the [vCard - Personal portfolio]
 
 MIT
 
+## Site Content Sources
+
+The site remains static HTML, CSS, and JavaScript, with no package installation or frontend build framework required.
+
+Shared profile details, English and Traditional Chinese interface copy, and all bilingual project-detail content are maintained in `assets/js/site-data.js`. That file is consumed directly in the browser and by the Node.js content synchronizer, so it is the source of truth for those values.
+
+After editing shared profile data, project data, or translations in `assets/js/site-data.js`, refresh every checked-in consumer with:
+
+```powershell
+node generate-blog-index.js
+node generate-site-content.js
+```
+
+The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English detail bodies aligned with the same project registry. Do not edit generated project `.project-content` blocks directly.
+
+To verify that checked-in HTML is current without writing files:
+
+```powershell
+node generate-site-content.js --check
+```
+
 ## Automatic Blog Listing
 
 This site now supports an automatic blog listing generated from Markdown files in the `posts/` directory. Each post should include YAML front matter with metadata such as `title`, `date`, `category`, `image` and optional `summary`.
@@ -30,12 +51,13 @@ summary: "Short summary of the post."
 How it works:
 - Run the index generator locally to produce `assets/data/posts.json`, static blog pages in `blog/`, and updated sitemap entries:
 
-```bash
+```powershell
 node generate-blog-index.js
+node generate-site-content.js
 ```
 
-- A GitHub Actions workflow (`.github/workflows/update-blog-index.yml`) will automatically run the generator and commit generated blog SEO files whenever Markdown files under `posts/` are pushed to `main`.
+- A GitHub Actions workflow (`.github/workflows/update-blog-index.yml`) runs both generators and commits the generated static outputs whenever Markdown posts or canonical site content change on `main`.
 
 Notes:
-- If you add or edit posts locally, run the generator before committing (or rely on the workflow to update the index after push).
+- If you add or edit posts locally, run both generators before committing (or rely on the workflow to update the generated files after push).
 - The homepage dynamically fetches `assets/data/posts.json` and links each card to its generated static blog page.

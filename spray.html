@@ -7,7 +7,7 @@
     <title>Autonomous Wall Spraying Robot | Leo Cheung</title>
     <meta
       name="description"
-      content="Autonomous wall spraying robot that fuses AGV motion, IMU sensing, and ROS workflows to deliver consistent paint coverage."
+      content="An autonomous wall spraying prototype integrating AGV motion, IMU sensing, a linear rail, cameras, and ROS-based control for automated paint application."
     />
     <link rel="canonical" href="https://leocml.com/spray.html" />
     <meta
@@ -16,7 +16,7 @@
     />
     <meta
       property="og:description"
-      content="Discover the autonomous spraying platform integrating linear rails, machine vision, and ROS for industrial-scale finishes."
+      content="A ROS-based wall spraying platform coordinating AGV motion, sensing, linear positioning, and paint application."
     />
     <meta
       property="og:image"
@@ -31,7 +31,7 @@
     />
     <meta
       name="twitter:description"
-      content="ROS-powered wall spraying robot that automates paint application with precise coverage."
+      content="Autonomous wall spraying with AGV motion, sensor feedback, linear positioning, and ROS control."
     />
     <meta
       name="twitter:image"
@@ -46,7 +46,7 @@
         "name": "Autonomous Wall Spraying Robot",
         "url": "https://leocml.com/spray.html",
         "image": "https://leocml.com/assets/images/Spray_robot.JPG",
-        "description": "ROS-powered autonomous wall painting robot with AGV motion, IMU sensing, cameras, linear rail control, and automated paint coverage.",
+        "description": "Autonomous wall painting prototype with AGV motion, IMU sensing, cameras, linear rail positioning, and ROS control.",
         "keywords": "autonomous wall spraying robot, wall painting robot, ROS robot, AGV, IMU, machine vision, linear rail, construction robotics, industrial painting automation",
         "author": {
           "@type": "Person",
@@ -136,7 +136,7 @@
           <div class="info-content">
             <h1 class="name" title="Leo Cheung">Leo Cheung</h1>
 
-            <p class="title">Robotic Engineer</p>
+            <p class="title">Construction Robotics Engineer</p>
           </div>
 
           <button class="info_more-btn" data-sidebar-btn>
@@ -150,7 +150,7 @@
           <div class="separator"></div>
 
           <ul class="contacts-list">
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="email">
               <div class="icon-box">
                   <ion-icon name="mail-outline"></ion-icon>
                 </div>
@@ -162,7 +162,7 @@
                 </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="location">
               <div class="icon-box">
                 <ion-icon name="location-outline"></ion-icon>
               </div>
@@ -172,7 +172,7 @@
               </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="employer">
               <div class="icon-box">
                   <ion-icon name="business-outline"></ion-icon>
                 </div>
@@ -184,7 +184,7 @@
                 </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="organization">
               <div class="icon-box">
                   <ion-icon name="link-outline"></ion-icon>
                 </div>
@@ -198,7 +198,7 @@
                 </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="github">
               <div class="icon-box">
                   <ion-icon name="logo-octocat"></ion-icon>
                 </div>
@@ -212,7 +212,7 @@
                 </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="linkedin">
               <div class="icon-box">
                   <ion-icon name="logo-linkedin"></ion-icon>
                 </div>
@@ -226,7 +226,7 @@
                 </div>
             </li>
 
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="orcid">
               <div class="icon-box">
                   <ion-icon name="book-outline"></ion-icon>
                 </div>
@@ -273,7 +273,7 @@
             <li class="navbar-item">
               <a
                 href="index.html#publications"
-                class="navbar-link" data-nav-link data-i18n="nav.publications">Publications</a
+                class="navbar-link" data-nav-link data-i18n="nav.publications">Research</a
               >
             </li>
 
@@ -302,9 +302,9 @@
         <!--
         - #PAGE
         -->
-        <article class="portfolio active" data-page="portfolio">
+        <article class="portfolio active" data-page="portfolio" data-project-key="spray">
           <header>
-            <a href="index.html#portfolio" class="btn-back" data-i18n="projects.back">← Back to Projects</a
+            <a href="index.html#portfolio" class="btn-back" data-i18n="projects.back">&larr; Back to Projects</a
             >
             <h2 class="h2 article-title">Autonomous Wall Spraying Robot</h2>
           </header>
@@ -314,43 +314,15 @@
               <h3 class="h3 title" data-i18n="project.overview">Project Overview</h3>
             </header>
             <div class="project-content">
-              <p>
-                The autonomous wall spraying robot is designed to automate the
-                process of painting walls, providing a more efficient and
-                consistent solution compared to traditional methods. The robot
-                is equipped with IMU, cameras and other sensors impelmented with
-                algorithms for navigate autonomously, ensuring precise coverage
-                and minimizing paint wastage. This innovation not only saves
-                time and labor costs but also enhances the quality of the
-                finished product.
-              </p>
-              <figure>
-                <img
-                  src="./assets/images/Spray_robot.JPG"
-                  alt="Autonomous wall spraying robot"
-                  width="600"
-                />
-                <figcaption>Autonomous wall spraying robot</figcaption>
-              </figure>
-
-              <h3 data-i18n="project.responsibilities">Responsibilities</h3>
+              <!-- Generated from assets/js/site-data.js by generate-site-content.js. -->
+              <p>This autonomous wall spraying prototype coordinates an AGV platform, IMU, cameras, linear-rail motion, and a motorized sprayer through ROS. The system was developed to automate navigation and paint application while improving repeatability across large surfaces.</p>
+              <figure><img src="./assets/images/Spray_robot.JPG" alt="Autonomous wall spraying robot" width="600"><figcaption>Autonomous wall spraying robot</figcaption></figure>
+              <h3>Selected Contributions</h3>
               <ul>
-                <li>
-                  Directed a Master’s student project on the development of an
-                  autonomous wall spraying robot.
-                </li>
-                <li>
-                  Provided structural design consultancy and enhanced the
-                  mechanical design with a 4-bar linkage.
-                </li>
-                <li>
-                  Resulting opportunities for projects with TownGas HK for
-                  production plant tanks spraying.
-                </li>
-                <li>
-                  Integrated AGV, IMU, Linear rail and motorise sprayer with ROS
-                  for automatic wall painting.
-                </li>
+                <li>Guided a master's student project from early concept through integrated robot development.</li>
+                <li>Improved the mechanical architecture with a four-bar linkage and structural design reviews.</li>
+                <li>Integrated AGV motion, IMU sensing, linear positioning, and the motorized sprayer through ROS.</li>
+                <li>Developed a follow-on opportunity with Towngas Hong Kong for production-plant tank spraying.</li>
               </ul>
             </div>
           </section>

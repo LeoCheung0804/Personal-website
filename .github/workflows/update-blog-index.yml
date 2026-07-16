@@ -1,4 +1,4 @@
-name: Update blog index
+name: Update site content
 
 on:
   push:
@@ -7,13 +7,36 @@ on:
     paths:
       - "posts/**/*.md"
       - "generate-blog-index.js"
+      - "generate-site-content.js"
+      - "scripts/generation-transaction.js"
+      - "assets/js/site-data.js"
+      - "assets/data/posts.json"
+      - "sitemap.xml"
+      - "blog/**/*.html"
+      - "*.html"
+  pull_request:
+    paths:
+      - "posts/**/*.md"
+      - "generate-blog-index.js"
+      - "generate-site-content.js"
+      - "scripts/generation-transaction.js"
+      - "assets/js/site-data.js"
+      - "assets/data/posts.json"
+      - "sitemap.xml"
+      - "blog/**/*.html"
+      - "*.html"
   workflow_dispatch:
+
+concurrency:
+  group: generated-site-content-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
 
 jobs:
-  update-blog-index:
+  update-site-content:
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
@@ -28,15 +51,53 @@ jobs:
       - name: Generate blog index
         run: node generate-blog-index.js
 
-      - name: Commit generated index
+      - name: Synchronize static site content
+        run: node generate-site-content.js
+
+      - name: Verify generated site content
+        run: node generate-site-content.js --check
+
+      - name: Commit generated site content
         run: |
-          if git diff --quiet -- assets/data/posts.json sitemap.xml blog && [ -z "$(git status --porcelain -- assets/data/posts.json sitemap.xml blog)" ]; then
-            echo "Blog SEO files are already up to date."
+          mapfile -t generated_paths < <(node generate-site-content.js --list-files)
+
+          if git diff --quiet -- "${generated_paths[@]}" && [ -z "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
+            echo "Generated site content is already up to date."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/data/posts.json sitemap.xml blog
-          git commit -m "chore: update blog seo files"
+          git add -- "${generated_paths[@]}"
+          git commit -m "chore: update generated site content"
           git push
+
+  verify-generated-content:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Regenerate site artifacts
+        run: |
+          node generate-blog-index.js
+          node generate-site-content.js
+
+      - name: Verify committed artifacts are current
+        run: |
+          mapfile -t generated_paths < <(node generate-site-content.js --list-files)
+
+          if ! git diff --quiet -- "${generated_paths[@]}" || [ -n "$(git status --porcelain -- "${generated_paths[@]}")" ]; then
+            echo "Generated site content is out of date. Run both generators and commit the results."
+            git diff -- "${generated_paths[@]}"
+            exit 1
+          fi

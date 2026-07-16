@@ -7,7 +7,7 @@
     <title>Blog Post - Leo Cheung</title>
     <meta
       name="description"
-      content="Blog posts and insights from Leo Cheung, Robotic Engineer, covering robotics, automation, and engineering innovations."
+      content="Engineering notes from Leo Cheung on construction robotics, automation, field testing, conferences, and project milestones."
     />
     <meta name="author" content="Leo Cheung" />
     <meta name="robots" content="noindex, follow" />
@@ -52,7 +52,7 @@
           </figure>
           <div class="info-content">
             <h1 class="name" title="Leo Cheung">Leo Cheung</h1>
-            <p class="title">Robotic Engineer</p>
+            <p class="title">Construction Robotics Engineer</p>
           </div>
           <button class="info_more-btn" data-sidebar-btn>
             <span>Show Contacts</span>
@@ -62,7 +62,7 @@
         <div class="sidebar-info_more">
           <div class="separator"></div>
           <ul class="contacts-list">
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="email">
               <div class="icon-box">
                   <ion-icon name="mail-outline"></ion-icon>
                 </div>
@@ -73,7 +73,7 @@
                   >
                 </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="location">
               <div class="icon-box">
                 <ion-icon name="location-outline"></ion-icon>
               </div>
@@ -82,7 +82,7 @@
                 <address>Hong Kong</address>
               </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="employer">
               <div class="icon-box">
                   <ion-icon name="business-outline"></ion-icon>
                 </div>
@@ -93,7 +93,7 @@
                   >
                 </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="organization">
               <div class="icon-box">
                   <ion-icon name="link-outline"></ion-icon>
                 </div>
@@ -106,7 +106,7 @@
                   >
                 </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="github">
               <div class="icon-box">
                   <ion-icon name="logo-octocat"></ion-icon>
                 </div>
@@ -119,7 +119,7 @@
                   >
                 </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="linkedin">
               <div class="icon-box">
                   <ion-icon name="logo-linkedin"></ion-icon>
                 </div>
@@ -132,7 +132,7 @@
                   >
                 </div>
             </li>
-            <li class="contact-item">
+            <li class="contact-item" data-contact-id="orcid">
               <div class="icon-box">
                   <ion-icon name="book-outline"></ion-icon>
                 </div>
@@ -162,7 +162,7 @@
               <a href="index.html#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">Projects</a>
             </li>
             <li class="navbar-item">
-              <a href="index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">Publications</a>
+              <a href="index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">Research</a>
             </li>
             <li class="navbar-item">
               <a href="index.html#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">Blog</a>
@@ -280,7 +280,9 @@
             blogState.body
           );
           document.getElementById("blog-error").style.display = "none";
-          document.title = title ? `${title} | Leo Cheung` : "Blog Post - Leo Cheung";
+          document.title = title
+            ? `${title} | ${siteProfile.name}`
+            : `Blog Post - ${siteProfile.name}`;
         };
 
         if (post) {
