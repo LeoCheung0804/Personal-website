@@ -29,13 +29,28 @@ if (isLightTheme) {
 // Light/Dark Mode Toggle logic
 const themeBtn = document.querySelector("[data-theme-btn]");
 
+function updateThemeButton(isLight) {
+  if (!themeBtn) return;
+
+  const labelKey = isLight ? "theme.switchToDark" : "theme.switchToLight";
+  const icon = themeBtn.querySelector("ion-icon");
+
+  if (icon) {
+    icon.setAttribute("name", isLight ? "moon-outline" : "sunny-outline");
+  }
+
+  themeBtn.dataset.i18nAriaLabel = labelKey;
+  themeBtn.setAttribute("aria-pressed", String(isLight));
+  if (typeof getTranslation === "function") {
+    themeBtn.setAttribute("aria-label", getTranslation(labelKey));
+  }
+}
+
 if (themeBtn) {
   // initialize button icon on load if already light mode
   const isLightModeInit = document.documentElement.classList.contains("light-theme");
-  if (isLightModeInit) {
-    themeBtn.querySelector("ion-icon").setAttribute("name", "moon-outline");
-    updateThemeIcons(true);
-  }
+  updateThemeButton(isLightModeInit);
+  if (isLightModeInit) updateThemeIcons(true);
 
   themeBtn.addEventListener("click", function () {
     document.documentElement.classList.toggle("light-theme");
@@ -43,13 +58,11 @@ if (themeBtn) {
     
     updateThemeIcons(isLight);
     
-    // update icon
-    if (isLight) {
-      this.querySelector("ion-icon").setAttribute("name", "moon-outline");
-      localStorage.setItem("theme", "light");
-    } else {
-      this.querySelector("ion-icon").setAttribute("name", "sunny-outline");
-      localStorage.setItem("theme", "dark");
-    }
+    updateThemeButton(isLight);
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+  });
+
+  window.addEventListener("site-language-change", function () {
+    updateThemeButton(document.documentElement.classList.contains("light-theme"));
   });
 }

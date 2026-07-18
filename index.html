@@ -204,7 +204,8 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="./assets/css/custom_project_preview.css" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260718-3" />
+    <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20260717-1" />
 
     <!--
     - google font link
@@ -220,7 +221,7 @@
     <script src="https://www.google.com/recaptcha/api.js?render=6Lc8CRYsAAAAALLR-ZPucEIMyn5hXZrEmZyHKovp"></script>
   </head>
 
-  <body>
+  <body class="portfolio-site">
     <!--
     - #MAIN
   -->
@@ -360,7 +361,8 @@
       -->
 
         <nav class="navbar">
-          <ul class="navbar-list">
+          <div class="navbar-scroll">
+            <ul class="navbar-list">
             <li class="navbar-item">
               <button
                 class="navbar-link active"
@@ -415,6 +417,10 @@
               >Contact</button>
             </li>
 
+            </ul>
+          </div>
+
+          <ul class="navbar-actions" aria-label="Language and appearance" data-i18n-aria-label="nav.preferences">
             <li class="navbar-item navbar-action-item">
               <button
                 class="navbar-link lang-btn"
@@ -448,11 +454,39 @@
             <h2 class="h2 article-title" data-i18n="about.title">About me</h2>
           </header>
 
-          <section class="about-text">
-            <p data-i18n="about.paragraph1">I'm a mechanical engineer specializing in construction robotics. My work spans mechanical design, embedded electronics, ROS software, sensing, system integration, and field validation—taking machines from the first CAD model to reliable operation on site.</p>
+          <div class="about-intro-grid">
+            <section class="about-text">
+              <p data-i18n="about.paragraph1">I'm a mechanical engineer specializing in construction robotics. My work spans mechanical design, embedded electronics, ROS software, sensing, system integration, and field validation—taking machines from the first CAD model to reliable operation on site.</p>
 
-            <p data-i18n="about.paragraph2">At C3 Construction Robotics, I develop cable-driven and autonomous systems for construction and facade inspection. Highlights include CU-Brick building a 40-layer YES Pavilion structure from more than 5,800 bricks, Robo-Tapper progressing into commercial facade inspections, and presenting the CU-Brick paper at CableCon 2025. I focus on precise engineering, practical safety, and systems that solve real constraints outside the lab.</p>
-          </section>
+              <p data-i18n="about.paragraph2">At C3 Construction Robotics, I develop cable-driven and autonomous systems for construction and facade inspection. Highlights include CU-Brick building a 40-layer YES Pavilion structure from more than 5,800 bricks, Robo-Tapper progressing into commercial facade inspections, and presenting the CU-Brick paper at CableCon 2025. I focus on precise engineering, practical safety, and systems that solve real constraints outside the lab.</p>
+            </section>
+
+            <figure class="about-hero-media">
+              <picture>
+                <source
+                  media="(max-width: 700px)"
+                  srcset="./assets/images/Robotapper_hero-960.jpg"
+                />
+                <img
+                  src="./assets/images/Robotapper_hero-1600.jpg"
+                  srcset="
+                    ./assets/images/Robotapper_hero-960.jpg   960w,
+                    ./assets/images/Robotapper_hero-1600.jpg 1600w
+                  "
+                  sizes="(min-width: 1180px) 48vw, (min-width: 760px) 52vw, 100vw"
+                  alt="Robo-Tapper inspecting a building facade"
+                  width="1600"
+                  height="1200"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </picture>
+              <figcaption class="about-hero-caption">
+                <strong>Robo-Tapper</strong>
+                <span data-i18n="projectPreview.tapper">Automated facade inspection</span>
+              </figcaption>
+            </figure>
+          </div>
 
           <!--
           - service
@@ -556,18 +590,34 @@
         -->
 
           <section class="project-preview">
-            <h3
-              class="h3 project-preview-title"
-              data-i18n="projectPreview.title"
-            >Selected work</h3>
+            <div class="project-preview-heading">
+              <h3
+                class="h3 project-preview-title"
+                data-i18n="projectPreview.title"
+              >Selected work</h3>
 
-            <div class="project-preview-wrapper">
+              <button
+                class="project-preview-autoplay"
+                type="button"
+                aria-label="Pause selected work auto-scroll"
+                aria-controls="selected-work-rail"
+                data-paused="false"
+                data-project-preview-toggle
+                hidden
+              >
+                <ion-icon name="pause-outline" aria-hidden="true"></ion-icon>
+              </button>
+            </div>
+
+            <div class="project-preview-wrapper" id="selected-work-rail">
               <ul class="project-preview-list">
                 <li class="project-preview-item">
                   <a href="tapper.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/Robotapper_cropped.jpeg"
+                        src="./assets/images/Robotapper_hero-960.jpg"
+                        width="960"
+                        height="720"
                         alt="Robo-Tapper"
                         loading="lazy"
                       />
@@ -586,7 +636,9 @@
                   <a href="yes.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/YES_full.jpg"
+                        src="./assets/images/YES_preview-960.jpg"
+                        width="960"
+                        height="720"
                         alt="CU Brick"
                         loading="lazy"
                       />
@@ -660,104 +712,6 @@
                   </a>
                 </li>
 
-                <!-- DUPLICATE FOR INFINITE SCROLL -->
-
-                <li class="project-preview-item">
-                  <a href="tapper.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/Robotapper_cropped.jpeg"
-                        alt="Robo-Tapper"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">Robo-Tapper</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.tapper"
-                      >Automated facade inspection</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="yes.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/YES_full.jpg"
-                        alt="CU Brick"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">CU Brick</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.cuBrick"
-                      >5,800-brick pavilion build</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="spray.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/Spray_robot.JPG"
-                        alt="Wall Spraying"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">
-                        Wall Spraying
-                      </h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.spray"
-                      >Automated paint application</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="knowtouch.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/knowtouch_1.jpg"
-                        alt="kNOw Touch"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">kNOw Touch</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.knowTouch"
-                      >1,200+ units deployed</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="exoskeleton.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/Exoskeleton_robot.jpg"
-                        alt="Exoskeleton"
-                        loading="lazy"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">Exoskeleton</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.exoskeleton"
-                      >Wearable humanoid control</p>
-                    </div>
-                  </a>
-                </li>
               </ul>
             </div>
           </section>
@@ -1036,7 +990,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Robotapper_cropped.jpeg"
+                      src="./assets/images/Robotapper_hero-960.jpg"
+                      width="960"
+                      height="720"
                       alt="robo-tapper"
                       loading="lazy"
                     />
@@ -1057,7 +1013,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/YES_full.jpg"
+                      src="./assets/images/YES_preview-960.jpg"
+                      width="960"
+                      height="720"
                       alt="yes-brick-robot"
                       loading="lazy"
                     />
@@ -1360,6 +1318,7 @@
             <figure>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3688.106029984055!2d114.21108497685877!3d22.425034688359627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3404090cdb7e4129%3A0x81d511d16480e6ad!2z6aaZ5riv56eR5oqA5ZyS!5e0!3m2!1szh-TW!2shk!4v1747507112344!5m2!1szh-TW!2shk"
+                title="Hong Kong Science Park map"
                 width="400"
                 height="300"
                 loading="lazy"
@@ -1421,7 +1380,12 @@
             </form>
 
             <!-- Form status messages -->
-            <div id="form-status" style="margin-top: 15px; display: none">
+            <div
+              id="form-status"
+              role="status"
+              aria-live="polite"
+              style="margin-top: 15px; display: none"
+            >
               <p id="form-message"></p>
             </div>
 
@@ -1429,7 +1393,7 @@
             <p
               style="
                 margin-top: 10px;
-                font-size: 12px;
+                font-size: var(--type-small, 0.875rem);
                 color: var(--light-gray-70);
                 opacity: 0.7;
               "
@@ -1470,15 +1434,16 @@
     - custom js link
   -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
-    <script src="./assets/js/site-data.js"></script>
-    <script src="./assets/js/i18n.js"></script>
-    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/site-data.js?v=20260716-3"></script>
+    <script src="./assets/js/i18n.js?v=20260716-2"></script>
+    <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js"></script>
     <script src="./assets/js/ui-interactions.js"></script>
     <script src="./assets/js/filters.js"></script>
     <script src="./assets/js/contact-form.js"></script>
     <script src="./assets/js/navigation.js"></script>
     <script src="./assets/js/app-init.js"></script>
+    <script src="./assets/js/project-preview.js?v=20260717-1"></script>
     <!--
     - ionicon link
   -->

@@ -50,10 +50,10 @@ Object.assign(requiredIndexTranslationCounts, {
   'filters.management': 6,
   'filters.selectCategory': 2,
   'filters.software': 3,
-  'projectPreview.cuBrick': 2,
-  'projectPreview.exoskeleton': 2,
-  'projectPreview.knowTouch': 2,
-  'projectPreview.spray': 2,
+  'projectPreview.cuBrick': 1,
+  'projectPreview.exoskeleton': 1,
+  'projectPreview.knowTouch': 1,
+  'projectPreview.spray': 1,
   'projectPreview.tapper': 2,
   'publications.filters.conference': 2,
   'publications.filters.journal': 2
@@ -626,7 +626,7 @@ function syncHomepageProjectLinks(html, fileLabel) {
   });
 
   for (const project of projectPages) {
-    const expectedCount = project.previewTitle ? 3 : 1;
+    const expectedCount = project.previewTitle ? 2 : 1;
     if ((actualCounts[project.key] || 0) !== expectedCount) {
       throw new Error(`${fileLabel}: expected ${expectedCount} link(s) for project ${project.key}.`);
     }

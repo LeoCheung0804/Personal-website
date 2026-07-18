@@ -1,97 +1,196 @@
+/* Homepage project rail — four-up desktop layout with accessible autoplay. */
 
-/*-----------------------------------*\
-  #PROJECT PREVIEW
-\*-----------------------------------*/
-
-.project-preview { margin-bottom: 30px; }
-
-.project-preview-title { margin-bottom: 20px; }
-
-.project-preview-wrapper {
-  overflow: hidden;
-  width: 100%;
+.portfolio-site .project-preview {
+  --project-preview-gap: clamp(14px, 2vw, 24px);
+  margin-bottom: 0;
 }
 
-.project-preview-list {
+.portfolio-site .project-preview-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.portfolio-site .project-preview-title {
+  margin: 0;
+}
+
+.portfolio-site .project-preview-autoplay {
+  flex: 0 0 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.portfolio-site .project-preview-autoplay[hidden] {
+  display: none;
+}
+
+.portfolio-site .project-preview-autoplay ion-icon {
+  font-size: 18px;
+}
+
+.portfolio-site .project-preview-autoplay:is(:hover, :focus-visible),
+.portfolio-site .project-preview-autoplay[data-paused="true"] {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.portfolio-site .project-preview-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-inline: contain;
+  padding: 7px 7px 18px;
+  scroll-padding-inline: 7px;
+  scroll-snap-type: inline mandatory;
+  scrollbar-color: var(--orange-yellow-crayola) transparent;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.portfolio-site .project-preview-wrapper::-webkit-scrollbar {
+  height: 5px;
+}
+
+.portfolio-site .project-preview-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.portfolio-site .project-preview-wrapper::-webkit-scrollbar-thumb {
+  background: var(--orange-yellow-crayola);
+  border-radius: 99px;
+}
+
+.portfolio-site .project-preview-list {
   display: flex;
   width: max-content;
-  animation: projectScroll 25s linear infinite;
+  max-width: none;
+  gap: var(--project-preview-gap);
+  animation: none;
 }
 
-.project-preview-list:hover {
-  animation-play-state: paused;
+.portfolio-site .project-preview-item {
+  flex: 0 0 clamp(250px, 77vw, 350px);
+  width: auto;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  scroll-snap-align: start;
 }
 
-.project-preview-wrapper:hover .project-preview-list,
-.project-preview-wrapper:focus-within .project-preview-list {
-  animation-play-state: paused;
+.portfolio-site .project-preview-item::before {
+  content: none;
 }
 
-.project-preview-item {
-  width: 300px;
-  background: var(--border-gradient-onyx);
-  border-radius: 14px;
-  box-shadow: var(--shadow-2);
-  flex-shrink: 0;
-  position: relative;
-  overflow: hidden;
-  margin-right: 20px;
-}
-
-.project-preview-item::before {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  background: var(--bg-gradient-jet);
-  border-radius: inherit;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.project-preview-link {
-  position: relative;
-  z-index: 2;
-  display: block;
-  padding: 15px;
+.portfolio-site .project-preview-link {
+  display: grid;
   height: 100%;
+  padding: 0;
+  color: inherit;
+  gap: 14px;
 }
 
-.project-preview-img-box {
+.portfolio-site .project-preview-img-box {
   width: 100%;
-  height: 180px;
-  border-radius: 10px;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  margin: 0;
   overflow: hidden;
-  margin-bottom: 15px;
+  border: 1px solid var(--jet);
+  border-radius: 14px;
+  background: var(--eerie-black-1);
 }
 
-.project-preview-img-box img {
+.portfolio-site .project-preview-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: var(--transition-1);
+  transition: transform 300ms ease;
 }
 
-.project-preview-item:hover .project-preview-img-box img {
-  transform: scale(1.1);
+.portfolio-site .project-preview-item:nth-child(2) .project-preview-img-box img {
+  object-position: center 58%;
 }
 
-.project-preview-content {
-  text-align: center;
+.portfolio-site .project-preview-content {
+  display: grid;
+  gap: 4px;
+  padding-inline: 2px;
+  text-align: left;
 }
 
-.project-preview-item-title {
-  font-size: var(--fs-5);
-  margin-bottom: 5px;
+.portfolio-site .project-preview-item-title {
+  margin: 0;
   color: var(--white-2);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: var(--fw-500);
+  letter-spacing: -0.02em;
 }
 
-.project-preview-text {
-  color: var(--light-gray);
-  font-size: var(--fs-6);
-  font-weight: var(--fw-300);
+.portfolio-site .project-preview-text {
+  color: var(--light-gray-70);
+  font-family: var(--ff-mono);
+  font-size: var(--type-small, 0.875rem);
+  font-weight: var(--fw-400);
+  letter-spacing: 0.035em;
+  line-height: 1.55;
 }
 
-@keyframes projectScroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } 
+.portfolio-site .project-preview-link:is(:hover, :focus-visible) .project-preview-img-box img {
+  transform: scale(1.035);
+}
+
+.portfolio-site .project-preview-link:focus-visible {
+  outline: 2px solid var(--orange-yellow-crayola);
+  outline-offset: 5px;
+}
+
+@media (min-width: 760px) {
+  .portfolio-site .project-preview-item {
+    flex-basis: clamp(290px, 34vw, 410px);
+  }
+
+  .portfolio-site .project-preview-item:nth-child(-n + 2) {
+    flex-basis: clamp(360px, 43vw, 510px);
+  }
+}
+
+@media (min-width: 1180px) {
+  .portfolio-site .project-preview {
+    --project-preview-gap: 16px;
+  }
+
+  .portfolio-site .project-preview-list {
+    width: 100%;
+  }
+
+  .portfolio-site .project-preview-item,
+  .portfolio-site .project-preview-item:nth-child(-n + 2) {
+    flex: 0 0 calc(25% - 12px);
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-site .project-preview-wrapper {
+    scroll-behavior: auto;
+  }
+
+  .portfolio-site .project-preview-img-box img {
+    transition: none;
+  }
 }

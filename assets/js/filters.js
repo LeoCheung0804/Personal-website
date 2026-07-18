@@ -1,131 +1,126 @@
 'use strict';
 
+const getFilterValue = function (element) {
+  return element?.dataset.filterValue || element?.textContent.trim().toLowerCase() || "all";
+};
+
+const syncFilterControlGroup = function ({ buttons, selectItems, selectValue, activeValue }) {
+  const controls = [...buttons, ...selectItems];
+
+  controls.forEach((control) => {
+    control.classList.toggle("active", getFilterValue(control) === activeValue);
+  });
+
+  const labelSource = controls.find((control) => getFilterValue(control) === activeValue);
+  if (selectValue && labelSource) {
+    selectValue.textContent = labelSource.textContent.trim();
+  }
+};
+
+// project filters
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-selecct-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
+const filterItems = document.querySelectorAll("[data-filter-item]");
+let activeProjectFilterValue = getFilterValue(document.querySelector("[data-filter-btn].active"));
+
+const syncProjectFilterControls = function () {
+  syncFilterControlGroup({
+    buttons: filterBtn,
+    selectItems,
+    selectValue,
+    activeValue: activeProjectFilterValue
+  });
+};
+
+const filterFunc = function (selectedValue) {
+  activeProjectFilterValue = selectedValue;
+  syncProjectFilterControls();
+
+  for (let i = 0; i < filterItems.length; i++) {
+    if (selectedValue === "all" || selectedValue === filterItems[i].dataset.category) {
+      filterItems[i].classList.add("active");
+    } else {
+      filterItems[i].classList.remove("active");
+    }
+  }
+
+  refreshFadeAnimations();
+};
 
 if (select) {
   select.addEventListener("click", function () { elementToggleFunc(this); });
 }
 
-// add event in all select items
-if (selectItems.length > 0) {
-  for (let i = 0; i < selectItems.length; i++) {
-    selectItems[i].addEventListener("click", function () {
-
-      let selectedValue = this.dataset.filterValue || this.innerText.toLowerCase();
-      selectValue.innerText = this.innerText;
-      elementToggleFunc(select);
-      filterFunc(selectedValue);
-
-    });
-  }
+for (let i = 0; i < selectItems.length; i++) {
+  selectItems[i].addEventListener("click", function () {
+    elementToggleFunc(select);
+    filterFunc(getFilterValue(this));
+  });
 }
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
-
-const filterFunc = function (selectedValue) {
-
-  for (let i = 0; i < filterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
-    } else {
-      filterItems[i].classList.remove("active");
-    }
-
-  }
-
-  refreshFadeAnimations();
-
+for (let i = 0; i < filterBtn.length; i++) {
+  filterBtn[i].addEventListener("click", function () {
+    filterFunc(getFilterValue(this));
+  });
 }
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
-
-if (filterBtn.length > 0) {
-  for (let i = 0; i < filterBtn.length; i++) {
-
-    filterBtn[i].addEventListener("click", function () {
-
-      let selectedValue = this.dataset.filterValue || this.innerText.toLowerCase();
-      selectValue.innerText = this.innerText;
-      filterFunc(selectedValue);
-
-      lastClickedBtn.classList.remove("active");
-      this.classList.add("active");
-      lastClickedBtn = this;
-
-    });
-
-  }
-}
-
-// publications filter variables
+// publication filters
 const publicationSelect = document.querySelector("[data-publication-select]");
 const publicationSelectItems = document.querySelectorAll("[data-publication-select-item]");
 const publicationSelectValue = document.querySelector("[data-publication-select-value]");
 const publicationFilterBtn = document.querySelectorAll("[data-publication-filter-btn]");
 const publicationFilterItems = document.querySelectorAll("[data-publication-filter-item]");
-const getPublicationFilterValue = function (elem) {
-  return elem.dataset.filterValue || elem.textContent.trim().toLowerCase();
-}
+let activePublicationFilterValue = getFilterValue(
+  document.querySelector("[data-publication-filter-btn].active")
+);
+
+const syncPublicationFilterControls = function () {
+  syncFilterControlGroup({
+    buttons: publicationFilterBtn,
+    selectItems: publicationSelectItems,
+    selectValue: publicationSelectValue,
+    activeValue: activePublicationFilterValue
+  });
+};
+
+const publicationFilterFunc = function (selectedValue) {
+  activePublicationFilterValue = selectedValue;
+  syncPublicationFilterControls();
+
+  for (let i = 0; i < publicationFilterItems.length; i++) {
+    if (
+      selectedValue === "all"
+      || selectedValue === publicationFilterItems[i].dataset.publicationCategory
+    ) {
+      publicationFilterItems[i].classList.add("active");
+    } else {
+      publicationFilterItems[i].classList.remove("active");
+    }
+  }
+
+  refreshFadeAnimations();
+};
 
 if (publicationSelect) {
   publicationSelect.addEventListener("click", function () { elementToggleFunc(this); });
 }
 
-const publicationFilterFunc = function (selectedValue) {
-
-  for (let i = 0; i < publicationFilterItems.length; i++) {
-
-    if (selectedValue === "all") {
-      publicationFilterItems[i].classList.add("active");
-    } else if (selectedValue === publicationFilterItems[i].dataset.publicationCategory) {
-      publicationFilterItems[i].classList.add("active");
-    } else {
-      publicationFilterItems[i].classList.remove("active");
-    }
-
-  }
-
-  refreshFadeAnimations();
-
+for (let i = 0; i < publicationSelectItems.length; i++) {
+  publicationSelectItems[i].addEventListener("click", function () {
+    elementToggleFunc(publicationSelect);
+    publicationFilterFunc(getFilterValue(this));
+  });
 }
 
-if (publicationSelectItems.length > 0) {
-  for (let i = 0; i < publicationSelectItems.length; i++) {
-    publicationSelectItems[i].addEventListener("click", function () {
-
-      let selectedValue = getPublicationFilterValue(this);
-      publicationSelectValue.innerText = this.textContent.trim();
-      elementToggleFunc(publicationSelect);
-      publicationFilterFunc(selectedValue);
-
-    });
-  }
+for (let i = 0; i < publicationFilterBtn.length; i++) {
+  publicationFilterBtn[i].addEventListener("click", function () {
+    publicationFilterFunc(getFilterValue(this));
+  });
 }
 
-let lastClickedPublicationBtn = publicationFilterBtn[0];
-
-if (publicationFilterBtn.length > 0) {
-  for (let i = 0; i < publicationFilterBtn.length; i++) {
-
-    publicationFilterBtn[i].addEventListener("click", function () {
-
-      let selectedValue = getPublicationFilterValue(this);
-      publicationSelectValue.innerText = this.textContent.trim();
-      publicationFilterFunc(selectedValue);
-
-      lastClickedPublicationBtn.classList.remove("active");
-      this.classList.add("active");
-      lastClickedPublicationBtn = this;
-
-    });
-
-  }
+function syncFilterControls() {
+  syncProjectFilterControls();
+  syncPublicationFilterControls();
 }

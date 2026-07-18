@@ -3,49 +3,130 @@
 // page navigation variables
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
+const defaultPageTarget = document.querySelector("[data-page].active")?.dataset.page
+  || (pages[0] && pages[0].dataset.page);
 
-function getNavTarget(link) {
-  return link.dataset.pageTarget || (link.innerText.toLowerCase() === 'projects' ? 'portfolio' : link.innerText.toLowerCase());
+function normalizePageTarget(target) {
+  const value = String(target || "").replace(/^#/, "").trim();
+
+  try {
+    return decodeURIComponent(value).toLowerCase();
+  } catch (error) {
+    return value.toLowerCase();
+  }
 }
 
-function activatePage(targetPage, activeLink = null) {
-  let foundPage = false;
-
-  for (let i = 0; i < pages.length; i++) {
-    if (targetPage === pages[i].dataset.page) {
-      pages[i].classList.add("active");
-      foundPage = true;
-    } else {
-      pages[i].classList.remove("active");
-    }
+function getNavTarget(link) {
+  if (link.dataset.pageTarget) {
+    return normalizePageTarget(link.dataset.pageTarget);
   }
 
-  if (!foundPage) return false;
+  const href = link.getAttribute("href") || "";
+  const hashIndex = href.indexOf("#");
+
+  if (hashIndex >= 0 && hashIndex < href.length - 1) {
+    return normalizePageTarget(href.slice(hashIndex + 1));
+  }
+
+  const label = normalizePageTarget(link.textContent);
+  return label === "projects" ? "portfolio" : label;
+}
+
+function preparePageForFocus(page, targetPage) {
+  const title = page.querySelector(".article-title, h1, h2");
+
+  if (title) {
+    if (!title.id) title.id = `${targetPage}-page-title`;
+    page.setAttribute("aria-labelledby", title.id);
+  }
+
+  if (!page.hasAttribute("tabindex")) {
+    page.setAttribute("tabindex", "-1");
+  }
+}
+
+function focusActivePage(page) {
+  requestAnimationFrame(() => {
+    if (!page.classList.contains("active")) return;
+
+    try {
+      page.focus({ preventScroll: true });
+    } catch (error) {
+      page.focus();
+    }
+  });
+}
+
+function activatePage(targetPage, activeLink = null, options = {}) {
+  const normalizedTarget = normalizePageTarget(targetPage);
+  const activePage = [...pages].find((page) => page.dataset.page === normalizedTarget);
+  const navigationTarget = normalizedTarget === "blog-post" ? "blog" : normalizedTarget;
+
+  if (!activePage) return false;
+
+  for (let i = 0; i < pages.length; i++) {
+    const isActive = pages[i] === activePage;
+    pages[i].classList.toggle("active", isActive);
+
+    if (isActive) {
+      pages[i].removeAttribute("aria-hidden");
+      preparePageForFocus(pages[i], normalizedTarget);
+    } else {
+      pages[i].setAttribute("aria-hidden", "true");
+    }
+  }
 
   for (let i = 0; i < navigationLinks.length; i++) {
     const linkTarget = getNavTarget(navigationLinks[i]);
-    if (linkTarget === targetPage) {
-      navigationLinks[i].classList.add("active");
+    const isActive = linkTarget === navigationTarget;
+    navigationLinks[i].classList.toggle("active", isActive);
+
+    if (isActive) {
+      navigationLinks[i].setAttribute("aria-current", "page");
     } else {
-      navigationLinks[i].classList.remove("active");
+      navigationLinks[i].removeAttribute("aria-current");
     }
   }
 
-  window.scrollTo(0, 0);
+  if (options.scroll !== false) {
+    window.scrollTo(0, 0);
+  }
 
   if (activeLink && typeof gtag === 'function') {
     gtag('config', 'G-LEBDJN7H6D', {
       'page_title': activeLink.innerHTML,
-      'page_path': '/#' + targetPage
+      'page_path': '/#' + normalizedTarget
     });
   }
+
+  document.dispatchEvent(new CustomEvent("site:page-activated", {
+    detail: {
+      page: activePage,
+      targetPage: normalizedTarget
+    }
+  }));
+
+  const shouldFocus = options.focus === true || (options.focus !== false && Boolean(activeLink));
+  if (shouldFocus) focusActivePage(activePage);
 
   return true;
 }
 
-function activatePageFromHash() {
-  const hash = window.location.hash.substring(1).toLowerCase();
-  if (hash) activatePage(hash);
+function activatePageFromHash(event) {
+  const hash = normalizePageTarget(window.location.hash);
+  const currentPage = document.querySelector("[data-page].active");
+  const targetPage = hash || defaultPageTarget || (currentPage && currentPage.dataset.page);
+
+  if (!targetPage) return;
+
+  const activated = activatePage(targetPage, null, {
+    focus: Boolean(event && event.type === "popstate"),
+    scroll: Boolean(hash)
+  });
+
+  if (!activated && currentPage) {
+    activatePage(currentPage.dataset.page, null, { focus: false, scroll: false });
+  }
 }
 
 // add event to all nav link

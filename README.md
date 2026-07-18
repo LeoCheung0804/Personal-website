@@ -32,6 +32,19 @@ To verify that checked-in HTML is current without writing files:
 node generate-site-content.js --check
 ```
 
+## Visual System
+
+Portfolio pages use `assets/css/style.css` as the legacy component base and
+`assets/css/field-notes.css` as the scoped responsive design layer. The latter
+only applies inside `body.portfolio-site`, keeping `dashboard.html` isolated.
+Homepage project-rail behavior lives in
+`assets/css/custom_project_preview.css` and is user-controlled with native
+horizontal scrolling and scroll snap rather than automatic animation.
+
+When adding a new portfolio or blog template, include the `portfolio-site`
+body class and load `field-notes.css` after `style.css`. Generated blog pages
+inherit both from `generate-blog-index.js`.
+
 ## Automatic Blog Listing
 
 This site now supports an automatic blog listing generated from Markdown files in the `posts/` directory. Each post should include YAML front matter with metadata such as `title`, `date`, `category`, `image` and optional `summary`.

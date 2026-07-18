@@ -256,6 +256,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260718-3" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -263,7 +264,7 @@ function generateBlogPage(post) {
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body class="portfolio-site">
     <main>
       <aside class="sidebar" data-sidebar>
         <div class="sidebar-info">
@@ -351,7 +352,8 @@ function generateBlogPage(post) {
 
       <div class="main-content">
         <nav class="navbar">
-          <ul class="navbar-list">
+          <div class="navbar-scroll">
+            <ul class="navbar-list">
             <li class="navbar-item">
               <a href="../index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">${escapeHtml(translations.en['nav.about'])}</a>
             </li>
@@ -370,6 +372,10 @@ function generateBlogPage(post) {
             <li class="navbar-item">
               <a href="../index.html#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">${escapeHtml(translations.en['nav.contact'])}</a>
             </li>
+            </ul>
+          </div>
+
+          <ul class="navbar-actions" aria-label="${escapeHtml(translations.en['nav.preferences'])}" data-i18n-aria-label="nav.preferences">
             <li class="navbar-item navbar-action-item">
               <button class="navbar-link lang-btn" aria-label="${escapeHtml(translations.en['language.toggle'])}" data-i18n-aria-label="language.toggle" data-lang-btn>
                 <span data-lang-label>ZH</span>
@@ -417,9 +423,9 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js"></script>
-    <script src="../assets/js/i18n.js"></script>
-    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/site-data.js?v=20260716-2"></script>
+    <script src="../assets/js/i18n.js?v=20260716-2"></script>
+    <script src="../assets/js/theme.js?v=20260716-2"></script>
     <script src="../assets/js/motion.js"></script>
     <script src="../assets/js/ui-interactions.js"></script>
     <script src="../assets/js/filters.js"></script>

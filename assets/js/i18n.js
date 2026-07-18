@@ -20,7 +20,9 @@ function applyTranslations(language = currentLanguage) {
   });
 
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
-    element.setAttribute("placeholder", getTranslation(element.dataset.i18nPlaceholder));
+    const translatedPlaceholder = getTranslation(element.dataset.i18nPlaceholder);
+    element.setAttribute("placeholder", translatedPlaceholder);
+    element.setAttribute("aria-label", translatedPlaceholder);
   });
 
   document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
@@ -135,10 +137,17 @@ function getNextLanguage(language = currentLanguage) {
 }
 
 function updateLanguageButton() {
+  const langButton = document.querySelector("[data-lang-btn]");
   const langLabel = document.querySelector("[data-lang-label]");
-  if (!langLabel) return;
+  if (!langButton || !langLabel) return;
 
-  langLabel.textContent = currentLanguage === "en" ? "\u7e41" : "EN";
+  const isEnglish = currentLanguage === "en";
+  const labelKey = isEnglish ? "language.switchToZhHant" : "language.switchToEnglish";
+
+  langLabel.textContent = isEnglish ? "\u7e41" : "EN";
+  langLabel.setAttribute("lang", isEnglish ? "zh-Hant" : "en");
+  langButton.dataset.i18nAriaLabel = labelKey;
+  langButton.setAttribute("aria-label", getTranslation(labelKey));
 }
 
 function localizePostField(post, field) {
@@ -196,6 +205,11 @@ function renderBlogPosts(posts = loadedBlogPosts) {
 }
 
 function syncSelectLabels() {
+  if (typeof syncFilterControls === "function") {
+    syncFilterControls();
+    return;
+  }
+
   const activeFilterBtn = document.querySelector("[data-filter-btn].active");
   if (selectValue && activeFilterBtn) {
     selectValue.textContent = activeFilterBtn.textContent.trim();
