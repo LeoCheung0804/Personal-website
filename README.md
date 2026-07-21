@@ -24,11 +24,22 @@ node generate-blog-index.js
 node generate-site-content.js
 ```
 
+When adding or replacing a raster image, generate the responsive WebP variants and media manifest first:
+
+```powershell
+python scripts/optimize-images.py
+node generate-blog-index.js
+node generate-site-content.js
+```
+
+Original files in `assets/images` remain the archival and social-sharing sources. Page markup uses the generated variants in `assets/images/optimized`, while `assets/data/media-manifest.json` supplies intrinsic dimensions and responsive candidates. Gallery thumbnails use dedicated 240-pixel variants, and non-selected gallery media is loaded only when selected.
+
 The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English detail bodies aligned with the same project registry. Do not edit generated project `.project-content` blocks directly.
 
 To verify that checked-in HTML is current without writing files:
 
 ```powershell
+python scripts/optimize-images.py --check
 node generate-site-content.js --check
 ```
 
@@ -38,12 +49,19 @@ Portfolio pages use `assets/css/style.css` as the legacy component base and
 `assets/css/field-notes.css` as the scoped responsive design layer. The latter
 only applies inside `body.portfolio-site`, keeping `dashboard.html` isolated.
 Homepage project-rail behavior lives in
-`assets/css/custom_project_preview.css` and is user-controlled with native
-horizontal scrolling and scroll snap rather than automatic animation.
+`assets/css/custom_project_preview.css` and `assets/js/project-preview.js`. It
+automatically advances when motion is allowed, provides a pause/resume control,
+and retains native horizontal scrolling and scroll snap for direct navigation.
 
 When adding a new portfolio or blog template, include the `portfolio-site`
 body class and load `field-notes.css` after `style.css`. Generated blog pages
 inherit both from `generate-blog-index.js`.
+
+On screens up to 700 pixels wide, the primary routes collapse into a labeled
+menu while the language and theme controls remain visible. Shared pages also
+include a keyboard skip link, an announced contact-details toggle, and a
+consistent `#content-start` target. Keep these elements in new templates by
+running `generate-site-content.js` rather than copying the shell by hand.
 
 ## Automatic Blog Listing
 

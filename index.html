@@ -204,7 +204,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260718-3" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260721-1" />
     <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20260717-1" />
 
     <!--
@@ -222,6 +222,7 @@
   </head>
 
   <body class="portfolio-site">
+    <a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">Skip to main content</a>
     <!--
     - #MAIN
   -->
@@ -235,9 +236,9 @@
         <div class="sidebar-info">
           <figure class="avatar-box">
             <img
-              src="./assets/images/profile.jpg"
+              src="./assets/images/optimized/profile-jpg-960.webp"
               alt="Leo Cheung"
-              width="80"
+              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1250px) 260px, 72px" loading="eager"
             />
           </figure>
 
@@ -247,14 +248,14 @@
             <p class="title" data-i18n="profile.title">Construction Robotics Engineer</p>
           </div>
 
-          <button class="info_more-btn" data-sidebar-btn>
+          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts">
             <span data-i18n="sidebar.showContacts">Show Contacts</span>
 
             <ion-icon name="chevron-down"></ion-icon>
           </button>
         </div>
 
-        <div class="sidebar-info_more">
+        <div class="sidebar-info_more" id="sidebar-contact-details">
           <div class="separator"></div>
 
           <ul class="contacts-list">
@@ -360,8 +361,21 @@
         - #NAVBAR
       -->
 
-        <nav class="navbar">
-          <div class="navbar-scroll">
+        <nav class="navbar" data-mobile-nav="" data-i18n-aria-label="nav.primary" aria-label="Primary navigation">
+          <button
+            class="navbar-menu-btn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+            aria-label="Menu"
+            data-i18n-aria-label="nav.menu"
+            data-mobile-nav-btn=""
+          >
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            <span data-i18n="nav.menu">Menu</span>
+          </button>
+
+          <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
             <ul class="navbar-list">
             <li class="navbar-item">
               <button
@@ -445,6 +459,8 @@
           </ul>
         </nav>
 
+        <span class="content-start" id="content-start" tabindex="-1"></span>
+
         <!--
         - #ABOUT
       -->
@@ -468,17 +484,14 @@
                   srcset="./assets/images/Robotapper_hero-960.jpg"
                 />
                 <img
-                  src="./assets/images/Robotapper_hero-1600.jpg"
-                  srcset="
-                    ./assets/images/Robotapper_hero-960.jpg   960w,
-                    ./assets/images/Robotapper_hero-1600.jpg 1600w
-                  "
-                  sizes="(min-width: 1180px) 48vw, (min-width: 760px) 52vw, 100vw"
+                  src="./assets/images/optimized/robotapper_hero-1600-jpg-960.webp"
+                  srcset="./assets/images/optimized/robotapper_hero-1600-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-1600-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-1600-jpg-960.webp 960w, ./assets/images/optimized/robotapper_hero-1600-jpg-1600.webp 1600w"
+                  sizes="(min-width: 1250px) 760px, 92vw"
                   alt="Robo-Tapper inspecting a building facade"
                   width="1600"
                   height="1200"
                   loading="eager"
-                  fetchpriority="high"
+                  fetchpriority="high" data-media-source="assets/images/Robotapper_hero-1600.jpg" decoding="async"
                 />
               </picture>
               <figcaption class="about-hero-caption">
@@ -502,6 +515,7 @@
                     src="./assets/images/icon-dev.svg"
                     alt="design icon"
                     width="40"
+                    height="40"
                   />
                 </div>
 
@@ -523,6 +537,7 @@
                     src="./assets/images/icon-design.svg"
                     alt="Web development icon"
                     width="40"
+                    height="40"
                   />
                 </div>
 
@@ -545,6 +560,7 @@
                     src="./assets/images/icon-Project-Management.svg"
                     alt="mobile app icon"
                     width="40"
+                    height="40"
                   />
                 </div>
 
@@ -567,6 +583,7 @@
                     src="./assets/images/icon-research.svg"
                     alt="camera icon"
                     width="40"
+                    height="40"
                   />
                 </div>
 
@@ -615,11 +632,11 @@
                   <a href="tapper.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/Robotapper_hero-960.jpg"
+                        src="./assets/images/optimized/robotapper_hero-960-jpg-960.webp"
                         width="960"
                         height="720"
                         alt="Robo-Tapper"
-                        loading="lazy"
+                        loading="lazy" data-media-source="assets/images/Robotapper_hero-960.jpg" decoding="async" srcset="./assets/images/optimized/robotapper_hero-960-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-960-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-960-jpg-960.webp 960w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                       />
                     </figure>
                     <div class="project-preview-content">
@@ -636,11 +653,11 @@
                   <a href="yes.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/YES_preview-960.jpg"
+                        src="./assets/images/optimized/yes_preview-960-jpg-960.webp"
                         width="960"
                         height="720"
                         alt="CU Brick"
-                        loading="lazy"
+                        loading="lazy" data-media-source="assets/images/YES_preview-960.jpg" decoding="async" srcset="./assets/images/optimized/yes_preview-960-jpg-240.webp 240w, ./assets/images/optimized/yes_preview-960-jpg-480.webp 480w, ./assets/images/optimized/yes_preview-960-jpg-960.webp 960w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                       />
                     </figure>
                     <div class="project-preview-content">
@@ -657,9 +674,9 @@
                   <a href="spray.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/Spray_robot.JPG"
+                        src="./assets/images/optimized/spray_robot-jpg-633.webp"
                         alt="Wall Spraying"
-                        loading="lazy"
+                        loading="lazy" data-media-source="assets/images/Spray_robot.JPG" width="633" height="475" decoding="async" srcset="./assets/images/optimized/spray_robot-jpg-240.webp 240w, ./assets/images/optimized/spray_robot-jpg-480.webp 480w, ./assets/images/optimized/spray_robot-jpg-633.webp 633w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                       />
                     </figure>
                     <div class="project-preview-content">
@@ -678,9 +695,9 @@
                   <a href="knowtouch.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/knowtouch_1.jpg"
+                        src="./assets/images/optimized/knowtouch_1-jpg-960.webp"
                         alt="kNOw Touch"
-                        loading="lazy"
+                        loading="lazy" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" decoding="async" srcset="./assets/images/optimized/knowtouch_1-jpg-240.webp 240w, ./assets/images/optimized/knowtouch_1-jpg-480.webp 480w, ./assets/images/optimized/knowtouch_1-jpg-960.webp 960w, ./assets/images/optimized/knowtouch_1-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                       />
                     </figure>
                     <div class="project-preview-content">
@@ -697,9 +714,9 @@
                   <a href="exoskeleton.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
                       <img
-                        src="./assets/images/Exoskeleton_robot.jpg"
+                        src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp"
                         alt="Exoskeleton"
-                        loading="lazy"
+                        loading="lazy" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                       />
                     </figure>
                     <div class="project-preview-content">
@@ -990,11 +1007,11 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Robotapper_hero-960.jpg"
+                      src="./assets/images/optimized/robotapper_hero-960-jpg-960.webp"
                       width="960"
                       height="720"
                       alt="robo-tapper"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/Robotapper_hero-960.jpg" decoding="async" srcset="./assets/images/optimized/robotapper_hero-960-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-960-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-960-jpg-960.webp 960w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3 class="project-title" data-i18n="project.tapper.title">Robo-Tapper: Robotic Facade Inspection</h3>
@@ -1013,11 +1030,11 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/YES_preview-960.jpg"
+                      src="./assets/images/optimized/yes_preview-960-jpg-960.webp"
                       width="960"
                       height="720"
                       alt="yes-brick-robot"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/YES_preview-960.jpg" decoding="async" srcset="./assets/images/optimized/yes_preview-960-jpg-240.webp 240w, ./assets/images/optimized/yes_preview-960-jpg-480.webp 480w, ./assets/images/optimized/yes_preview-960-jpg-960.webp 960w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3 class="project-title" data-i18n="project.cuBrick.title">CU-Brick: Cable-Driven Bricklaying Robot</h3>
@@ -1036,9 +1053,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Spray_robot.JPG"
+                      src="./assets/images/optimized/spray_robot-jpg-633.webp"
                       alt="wall-spraying-robot"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/Spray_robot.JPG" width="633" height="475" decoding="async" srcset="./assets/images/optimized/spray_robot-jpg-240.webp 240w, ./assets/images/optimized/spray_robot-jpg-480.webp 480w, ./assets/images/optimized/spray_robot-jpg-633.webp 633w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3 class="project-title" data-i18n="project.spray.title">Autonomous Wall Spraying Robot</h3>
@@ -1057,9 +1074,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/knowtouch_1.jpg"
+                      src="./assets/images/optimized/knowtouch_1-jpg-960.webp"
                       alt="know-touch"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" decoding="async" srcset="./assets/images/optimized/knowtouch_1-jpg-240.webp 240w, ./assets/images/optimized/knowtouch_1-jpg-480.webp 480w, ./assets/images/optimized/knowtouch_1-jpg-960.webp 960w, ./assets/images/optimized/knowtouch_1-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3 class="project-title" data-i18n="project.knowTouch.title">kNOw Touch: Touchless Lift Interface</h3>
@@ -1078,9 +1095,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Exoskeleton_robot.jpg"
+                      src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp"
                       alt="exoskeleton-humanoid"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3
@@ -1102,9 +1119,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Borderless_lab.jpg"
+                      src="./assets/images/optimized/borderless_lab-jpg-530.webp"
                       alt="borderless-lab"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/Borderless_lab.jpg" width="530" height="397" decoding="async" srcset="./assets/images/optimized/borderless_lab-jpg-240.webp 240w, ./assets/images/optimized/borderless_lab-jpg-480.webp 480w, ./assets/images/optimized/borderless_lab-jpg-530.webp 530w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3
@@ -1126,9 +1143,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/Microwave.jpeg"
+                      src="./assets/images/optimized/microwave-jpeg-960.webp"
                       alt="microwave-heating"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/Microwave.jpeg" width="1200" height="900" decoding="async" srcset="./assets/images/optimized/microwave-jpeg-240.webp 240w, ./assets/images/optimized/microwave-jpeg-480.webp 480w, ./assets/images/optimized/microwave-jpeg-960.webp 960w, ./assets/images/optimized/microwave-jpeg-1200.webp 1200w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3 class="project-title" data-i18n="project.microwave.title">Microwave Heating for Construction Materials</h3>
@@ -1147,9 +1164,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/v2.0.png"
+                      src="./assets/images/optimized/v2-0-png-960.webp"
                       alt="retractable-tapper"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/v2.0.png" width="2880" height="2160" decoding="async" srcset="./assets/images/optimized/v2-0-png-240.webp 240w, ./assets/images/optimized/v2-0-png-480.webp 480w, ./assets/images/optimized/v2-0-png-960.webp 960w, ./assets/images/optimized/v2-0-png-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3
@@ -1171,9 +1188,9 @@
                       <ion-icon name="eye-outline"></ion-icon>
                     </div>
                     <img
-                      src="./assets/images/footcontroler.jpg"
+                      src="./assets/images/optimized/footcontroler-jpg-960.webp"
                       alt="foot-controller"
-                      loading="lazy"
+                      loading="lazy" data-media-source="assets/images/footcontroler.jpg" width="4032" height="3024" decoding="async" srcset="./assets/images/optimized/footcontroler-jpg-240.webp 240w, ./assets/images/optimized/footcontroler-jpg-480.webp 480w, ./assets/images/optimized/footcontroler-jpg-960.webp 960w, ./assets/images/optimized/footcontroler-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
                     />
                   </figure>
                   <h3
@@ -1336,35 +1353,49 @@
               data-form
             >
               <div class="input-wrapper">
-                <input
-                  type="text"
-                  name="fullname"
-                  class="form-input"
-                  placeholder="Full name"
-                  data-i18n-placeholder="contact.fullName"
-                  required
-                  data-form-input
-                />
+                <div class="form-field">
+                  <label class="form-label" for="contact-fullname" data-i18n="contact.fullName">Full name</label>
+                  <input
+                    id="contact-fullname"
+                    type="text"
+                    name="fullname"
+                    class="form-input"
+                    placeholder="Full name"
+                    data-i18n-placeholder="contact.fullName"
+                    autocomplete="name"
+                    required
+                    data-form-input
+                  />
+                </div>
 
-                <input
-                  type="email"
-                  name="email"
-                  class="form-input"
-                  placeholder="Email address"
-                  data-i18n-placeholder="contact.emailAddress"
-                  required
-                  data-form-input
-                />
+                <div class="form-field">
+                  <label class="form-label" for="contact-email" data-i18n="contact.emailAddress">Email address</label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    name="email"
+                    class="form-input"
+                    placeholder="Email address"
+                    data-i18n-placeholder="contact.emailAddress"
+                    autocomplete="email"
+                    required
+                    data-form-input
+                  />
+                </div>
               </div>
 
-              <textarea
-                name="message"
-                class="form-input"
-                placeholder="Your Message"
-                data-i18n-placeholder="contact.message"
-                required
-                data-form-input
-              ></textarea>
+              <div class="form-field form-field--message">
+                <label class="form-label" for="contact-message" data-i18n="contact.message">Your Message</label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  class="form-input"
+                  placeholder="Your Message"
+                  data-i18n-placeholder="contact.message"
+                  required
+                  data-form-input
+                ></textarea>
+              </div>
 
               <!-- Hidden field for reCAPTCHA token -->
               <input
@@ -1404,6 +1435,7 @@
               <a
                 href="https://policies.google.com/privacy"
                 target="_blank"
+                rel="noopener noreferrer"
                 style="color: var(--orange-yellow-crayola)"
                 data-i18n="contact.privacyPolicy"
                 >Privacy Policy</a
@@ -1412,6 +1444,7 @@
               <a
                 href="https://policies.google.com/terms"
                 target="_blank"
+                rel="noopener noreferrer"
                 style="color: var(--orange-yellow-crayola)"
                 data-i18n="contact.terms"
                 >Terms of Service</a
@@ -1434,14 +1467,14 @@
     - custom js link
   -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
-    <script src="./assets/js/site-data.js?v=20260716-3"></script>
-    <script src="./assets/js/i18n.js?v=20260716-2"></script>
+    <script src="./assets/js/site-data.js?v=20260721-1"></script>
+    <script src="./assets/js/i18n.js?v=20260721-1"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js"></script>
-    <script src="./assets/js/ui-interactions.js"></script>
+    <script src="./assets/js/ui-interactions.js?v=20260721-1"></script>
     <script src="./assets/js/filters.js"></script>
     <script src="./assets/js/contact-form.js"></script>
-    <script src="./assets/js/navigation.js"></script>
+    <script src="./assets/js/navigation.js?v=20260721-1"></script>
     <script src="./assets/js/app-init.js"></script>
     <script src="./assets/js/project-preview.js?v=20260717-1"></script>
     <!--

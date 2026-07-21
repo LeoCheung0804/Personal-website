@@ -6,6 +6,70 @@ const pages = document.querySelectorAll("[data-page]");
 const defaultPageTarget = document.querySelector("[data-page].active")?.dataset.page
   || (pages[0] && pages[0].dataset.page);
 
+function initMobileNavigation() {
+  const navigation = document.querySelector("[data-mobile-nav]");
+  const toggle = navigation?.querySelector("[data-mobile-nav-btn]");
+  const panel = navigation?.querySelector("[data-mobile-nav-panel]");
+  if (!navigation || !toggle || !panel) return;
+
+  const mobileQuery = window.matchMedia("(max-width: 700px)");
+  navigation.classList.add("mobile-nav-ready");
+
+  const setMenuOpen = (open, { restoreFocus = false } = {}) => {
+    const isMobile = mobileQuery.matches;
+    const expanded = Boolean(open && isMobile);
+    const labelKey = expanded ? "nav.closeMenu" : "nav.menu";
+    const label = typeof getTranslation === "function"
+      ? getTranslation(labelKey)
+      : expanded ? "Close menu" : "Menu";
+    const visibleLabel = toggle.querySelector("span");
+    const icon = toggle.querySelector("ion-icon");
+
+    navigation.classList.toggle("mobile-nav-open", expanded);
+    toggle.setAttribute("aria-expanded", String(expanded));
+    toggle.setAttribute("aria-label", label);
+    toggle.dataset.i18nAriaLabel = labelKey;
+
+    if (visibleLabel) {
+      visibleLabel.dataset.i18n = labelKey;
+      visibleLabel.textContent = label;
+    }
+    if (icon) icon.setAttribute("name", expanded ? "close-outline" : "menu-outline");
+
+    if (isMobile && !expanded) {
+      panel.setAttribute("inert", "");
+      panel.setAttribute("aria-hidden", "true");
+    } else {
+      panel.removeAttribute("inert");
+      panel.removeAttribute("aria-hidden");
+    }
+
+    if (restoreFocus) toggle.focus();
+  };
+
+  toggle.addEventListener("click", () => {
+    setMenuOpen(!navigation.classList.contains("mobile-nav-open"));
+  });
+
+  panel.querySelectorAll("[data-nav-link]").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  navigation.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !navigation.classList.contains("mobile-nav-open")) return;
+    event.preventDefault();
+    setMenuOpen(false, { restoreFocus: true });
+  });
+
+  mobileQuery.addEventListener("change", () => setMenuOpen(false));
+  window.addEventListener("site-language-change", () => {
+    setMenuOpen(navigation.classList.contains("mobile-nav-open"));
+  });
+  setMenuOpen(false);
+}
+
+initMobileNavigation();
+
 function normalizePageTarget(target) {
   const value = String(target || "").replace(/^#/, "").trim();
 

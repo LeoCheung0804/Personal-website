@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
+const { optimizeMediaMarkup } = require('./scripts/media-markup.js');
 const {
   siteProfile,
   siteProjects,
@@ -24,11 +25,11 @@ const projectPages = Object.entries(siteProjects).map(([key, project]) => ({
 }));
 
 const requiredIndexTranslationCounts = Object.fromEntries(`
-  about.paragraph1 about.paragraph2 about.title blog.title
+  accessibility.skipToContent about.paragraph1 about.paragraph2 about.title blog.title
   contact.and contact.apply contact.email contact.employer contact.formTitle
-  contact.hongKong contact.location contact.organization contact.privacyPolicy
+  contact.fullName contact.emailAddress contact.message contact.hongKong contact.location contact.organization contact.privacyPolicy
   contact.recaptchaIntro contact.sendMessage contact.terms contact.title
-  footer.backToTop nav.about nav.blog nav.contact nav.projects nav.publications
+  footer.backToTop nav.about nav.blog nav.contact nav.menu nav.projects nav.publications
   nav.resume profile.title project.borderless.title project.cuBrick.title
   project.exoskeleton.title project.footController.title project.knowTouch.title
   project.microwave.title project.retractable.title project.spray.title
@@ -86,6 +87,11 @@ function getAttribute(openTag, attributeName) {
   );
   const match = openTag.match(pattern);
   return match ? match[2] : null;
+}
+
+function hasAttribute(openTag, attributeName) {
+  const pattern = new RegExp(`\\s${escapeRegExp(attributeName)}(?=\\s|=|\\/?>)`, 'i');
+  return pattern.test(openTag);
 }
 
 function setAttribute(openTag, attributeName, value) {
@@ -227,6 +233,142 @@ function formatBlock(value, parentIndent, eol, generatedComment) {
   return `${eol}${body}${eol}${parentIndent}`;
 }
 
+function updateSingleOpeningTag(html, predicate, updateTag, label) {
+  const openings = findOpeningTags(html, predicate);
+  if (openings.length !== 1) {
+    throw new Error(`${label}: expected one opening tag, found ${openings.length}.`);
+  }
+
+  const opening = openings[0];
+  const updatedTag = updateTag(opening.openTag);
+  return html.slice(0, opening.openStart) + updatedTag + html.slice(opening.openEnd);
+}
+
+function ensureAccessibleShell(html, fileLabel, eol) {
+  if (!findOpeningTags(html, (openTag) => hasClass(openTag, 'skip-link')).length) {
+    const bodies = findOpeningTags(html, (openTag, tagName) => tagName.toLowerCase() === 'body');
+    if (bodies.length !== 1) {
+      throw new Error(`${fileLabel}: expected one body element.`);
+    }
+    const body = bodies[0];
+    const bodyIndent = lineIndentAt(html, body.openStart);
+    const childIndent = `${bodyIndent}  `;
+    const skipLink = `${eol}${childIndent}<a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">Skip to main content</a>`;
+    html = html.slice(0, body.openEnd) + skipLink + html.slice(body.openEnd);
+  }
+
+  html = updateSingleOpeningTag(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'nav' && hasClass(openTag, 'navbar'),
+    (openTag) => {
+      let updatedTag = setAttribute(openTag, 'data-mobile-nav', '');
+      updatedTag = setAttribute(updatedTag, 'data-i18n-aria-label', 'nav.primary');
+      return setAttribute(updatedTag, 'aria-label', translations.en['nav.primary']);
+    },
+    `${fileLabel} primary navigation`
+  );
+
+  html = updateSingleOpeningTag(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'div' && hasClass(openTag, 'navbar-scroll'),
+    (openTag) => {
+      let updatedTag = setAttribute(openTag, 'id', 'primary-navigation');
+      return setAttribute(updatedTag, 'data-mobile-nav-panel', '');
+    },
+    `${fileLabel} navigation panel`
+  );
+
+  if (!findOpeningTags(html, (openTag) => hasAttribute(openTag, 'data-mobile-nav-btn')).length) {
+    const panels = findOpeningTags(
+      html,
+      (openTag, tagName) => tagName.toLowerCase() === 'div' && hasClass(openTag, 'navbar-scroll')
+    );
+    const panel = panels[0];
+    const indent = lineIndentAt(html, panel.openStart);
+    const button = [
+      '<button',
+      `${indent}  class="navbar-menu-btn"`,
+      `${indent}  type="button"`,
+      `${indent}  aria-expanded="false"`,
+      `${indent}  aria-controls="primary-navigation"`,
+      `${indent}  aria-label="${escapeAttribute(translations.en['nav.menu'])}"`,
+      `${indent}  data-i18n-aria-label="nav.menu"`,
+      `${indent}  data-mobile-nav-btn=""`,
+      `${indent}>`,
+      `${indent}  <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>`,
+      `${indent}  <span data-i18n="nav.menu">${escapeHtml(translations.en['nav.menu'])}</span>`,
+      `${indent}</button>`,
+      '',
+      indent
+    ].join(eol);
+    html = html.slice(0, panel.openStart) + button + html.slice(panel.openStart);
+  }
+
+  html = updateSingleOpeningTag(
+    html,
+    (openTag) => hasAttribute(openTag, 'data-sidebar-btn'),
+    (openTag) => {
+      let updatedTag = setAttribute(openTag, 'aria-expanded', 'false');
+      updatedTag = setAttribute(updatedTag, 'aria-controls', 'sidebar-contact-details');
+      updatedTag = setAttribute(updatedTag, 'data-i18n-aria-label', 'sidebar.showContacts');
+      return setAttribute(updatedTag, 'aria-label', translations.en['sidebar.showContacts']);
+    },
+    `${fileLabel} sidebar toggle`
+  );
+
+  html = updateSingleOpeningTag(
+    html,
+    (openTag) => hasClass(openTag, 'sidebar-info_more'),
+    (openTag) => setAttribute(openTag, 'id', 'sidebar-contact-details'),
+    `${fileLabel} sidebar contact details`
+  );
+
+  if (!findOpeningTags(html, (openTag) => getAttribute(openTag, 'id') === 'content-start').length) {
+    const navigations = findElements(
+      html,
+      (openTag, tagName) => tagName.toLowerCase() === 'nav' && hasClass(openTag, 'navbar')
+    );
+    const navigation = navigations[0];
+    const indent = lineIndentAt(html, navigation.openStart);
+    const target = `${eol}${eol}${indent}<span class="content-start" id="content-start" tabindex="-1"></span>`;
+    html = html.slice(0, navigation.closeEnd) + target + html.slice(navigation.closeEnd);
+  }
+
+  return html;
+}
+
+function syncSafeBlankLinks(html) {
+  const openings = findOpeningTags(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'a' && getAttribute(openTag, 'target')?.toLowerCase() === '_blank'
+  );
+  let output = html;
+
+  for (let index = openings.length - 1; index >= 0; index -= 1) {
+    const opening = openings[index];
+    const updatedTag = setAttribute(opening.openTag, 'rel', 'noopener noreferrer');
+    output = output.slice(0, opening.openStart) + updatedTag + output.slice(opening.openEnd);
+  }
+
+  return output;
+}
+
+function syncTaskSixAssetVersions(html) {
+  const versionedAssets = [
+    'assets/css/field-notes.css',
+    'assets/js/site-data.js',
+    'assets/js/i18n.js',
+    'assets/js/ui-interactions.js',
+    'assets/js/navigation.js'
+  ];
+
+  return versionedAssets.reduce((output, assetPath) => {
+    const escapedPath = assetPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const pattern = new RegExp(`((?:href|src)=["'][^"']*${escapedPath})(?:\\?[^"'\\s>]*)?`, 'g');
+    return output.replace(pattern, '$1?v=20260721-1');
+  }, html);
+}
+
 function renderTranslation(value) {
   return /<\/?[A-Za-z][^>]*>/.test(value) ? value : escapeHtml(value);
 }
@@ -282,6 +424,10 @@ function validateIndexTranslationStructure(html, fileLabel) {
       'contact.message': 1
     },
     'data-i18n-aria-label': {
+      'nav.primary': 1,
+      'nav.menu': 1,
+      'nav.preferences': 1,
+      'sidebar.showContacts': 1,
       'language.toggle': 1,
       'theme.toggle': 1
     }
@@ -304,8 +450,9 @@ function validateIndexTranslationStructure(html, fileLabel) {
 
 function validateSecondaryPageStructure(html, fileLabel, pageType) {
   const requiredKeys = [
+    'accessibility.skipToContent',
     'nav.about', 'nav.resume', 'nav.projects',
-    'nav.publications', 'nav.blog', 'nav.contact'
+    'nav.publications', 'nav.blog', 'nav.contact', 'nav.menu'
   ];
 
   if (pageType === 'project') {
@@ -328,7 +475,7 @@ function validateSecondaryPageStructure(html, fileLabel, pageType) {
     }
   });
 
-  for (const key of ['language.toggle', 'theme.toggle']) {
+  for (const key of ['nav.primary', 'nav.menu', 'nav.preferences', 'sidebar.showContacts', 'language.toggle', 'theme.toggle']) {
     const count = findOpeningTags(
       html,
       (openTag) => getAttribute(openTag, 'data-i18n-aria-label') === key
@@ -405,7 +552,7 @@ function syncSharedShell(html, fileLabel) {
   html = replaceElements(
     html,
     (openTag, tagName) => {
-      const src = getAttribute(openTag, 'src') || '';
+      const src = getAttribute(openTag, 'data-media-source') || getAttribute(openTag, 'src') || '';
       return tagName.toLowerCase() === 'img' && /assets\/images\/profile\.jpg$/i.test(src);
     },
     1,
@@ -823,6 +970,8 @@ function getSharedPagePaths() {
 function getGeneratedGitPaths() {
   return [
     'assets/data/posts.json',
+    'assets/data/media-manifest.json',
+    'assets/images/optimized',
     'sitemap.xml',
     'blog',
     'index.html',
@@ -840,17 +989,19 @@ if (listMode) {
 
   for (const relativePath of getSharedPagePaths()) {
     updateFile(relativePath, (html, eol) => {
+      let output = ensureAccessibleShell(html, relativePath, eol);
+
       if (relativePath === 'index.html') {
-        validateIndexTranslationStructure(html, relativePath);
+        validateIndexTranslationStructure(output, relativePath);
       } else {
         validateSecondaryPageStructure(
-          html,
+          output,
           relativePath,
           projectByFile.has(relativePath) ? 'project' : 'blog'
         );
       }
 
-      let output = syncDataI18n(html, relativePath);
+      output = syncDataI18n(output, relativePath);
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-placeholder', 'placeholder');
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-aria-label', 'aria-label');
       output = syncSharedShell(output, relativePath);
@@ -864,7 +1015,9 @@ if (listMode) {
         output = syncProjectPage(output, project, relativePath, eol);
       }
 
-      return output;
+      output = syncTaskSixAssetVersions(output);
+      output = syncSafeBlankLinks(output);
+      return optimizeMediaMarkup(output, relativePath);
     });
   }
 

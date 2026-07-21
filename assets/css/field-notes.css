@@ -112,6 +112,40 @@ body.portfolio-site :focus-visible {
   outline-offset: 4px;
 }
 
+.portfolio-site .skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  color: var(--page-bg);
+  border-radius: 9px;
+  background: var(--accent);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transform: translateY(calc(-100% - 20px));
+  transition: transform 160ms ease;
+}
+
+.portfolio-site .skip-link:focus {
+  color: var(--page-bg);
+  transform: translateY(0);
+}
+
+.portfolio-site .content-start {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  scroll-margin-top: 82px;
+}
+
 body.portfolio-site > main {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -373,6 +407,34 @@ body.portfolio-site > main {
   box-shadow: none;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+}
+
+.portfolio-site .navbar-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 52px;
+  padding: 0 12px;
+  color: var(--ink);
+  border-radius: 10px;
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.portfolio-site .navbar-menu-btn:is(:hover, :focus-visible),
+.portfolio-site .navbar-menu-btn[aria-expanded="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.portfolio-site .navbar-menu-btn ion-icon {
+  flex: 0 0 auto;
+  font-size: 20px;
 }
 
 .portfolio-site .navbar-scroll {
@@ -1246,6 +1308,30 @@ body.portfolio-site > main {
   margin-bottom: 16px;
 }
 
+.portfolio-site .form-field {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.portfolio-site .form-label {
+  color: var(--ink-soft);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.portfolio-site .form-field > .form-input {
+  width: 100%;
+}
+
+.portfolio-site .form-field--message {
+  margin-bottom: 16px;
+}
+
 .portfolio-site .form-input {
   min-height: 50px;
   padding: 13px 15px;
@@ -1263,7 +1349,7 @@ body.portfolio-site > main {
 
 .portfolio-site textarea.form-input {
   min-height: 150px;
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .portfolio-site .form-btn {
@@ -1502,6 +1588,79 @@ body.portfolio-site > main {
   }
 }
 
+@media (max-width: 700px) {
+  .portfolio-site .navbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+    overflow: visible;
+    padding: 5px;
+  }
+
+  .portfolio-site .navbar.mobile-nav-ready .navbar-menu-btn {
+    grid-column: 1;
+    grid-row: 1;
+    display: inline-flex;
+  }
+
+  .portfolio-site .navbar-actions {
+    grid-column: 2;
+    grid-row: 1;
+    border-left: 1px solid var(--line);
+  }
+
+  .portfolio-site .navbar-scroll {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+    visibility: visible;
+    border-top: 1px solid var(--line);
+  }
+
+  .portfolio-site .navbar.mobile-nav-ready .navbar-scroll {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    border-top: 1px solid transparent;
+    transition: max-height 220ms ease, opacity 160ms ease, visibility 160ms ease, border-color 160ms ease;
+  }
+
+  .portfolio-site .navbar.mobile-nav-ready.mobile-nav-open .navbar-scroll {
+    max-height: 118px;
+    opacity: 1;
+    visibility: visible;
+    border-top-color: var(--line);
+  }
+
+  .portfolio-site .navbar-scroll::after {
+    content: none;
+  }
+
+  .portfolio-site .navbar-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    padding: 5px 0 0;
+    overflow: visible;
+  }
+
+  .portfolio-site .navbar-list .navbar-item,
+  .portfolio-site .navbar-list .navbar-item:not(.navbar-action-item) {
+    min-width: 0;
+  }
+
+  .portfolio-site .navbar-list .navbar-link {
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding-inline: 5px;
+    border-radius: 8px;
+    white-space: normal;
+  }
+}
+
 @media (max-width: 620px) {
   body.portfolio-site {
     background-attachment: scroll;
@@ -1528,11 +1687,6 @@ body.portfolio-site > main {
 
   .portfolio-site .navbar {
     padding-inline: 5px;
-  }
-
-  .portfolio-site .navbar-list {
-    padding: 0 18px 0 0;
-    scroll-padding-inline: 4px;
   }
 
   .portfolio-site .navbar-link {

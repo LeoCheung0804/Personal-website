@@ -6,13 +6,30 @@ const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 const sidebarDetails = sidebar && sidebar.querySelector(".sidebar-info_more");
 let sidebarHeightTimer;
 
+function updateSidebarButtonState(expanded) {
+  if (!sidebarBtn) return;
+
+  const labelKey = expanded ? "sidebar.hideContacts" : "sidebar.showContacts";
+  const label = typeof getTranslation === "function" ? getTranslation(labelKey) : expanded ? "Hide Contacts" : "Show Contacts";
+  const visibleLabel = sidebarBtn.querySelector("span");
+
+  sidebarBtn.setAttribute("aria-expanded", String(expanded));
+  sidebarBtn.setAttribute("aria-label", label);
+  sidebarBtn.dataset.i18nAriaLabel = labelKey;
+
+  if (visibleLabel) {
+    visibleLabel.dataset.i18n = labelKey;
+    visibleLabel.textContent = label;
+  }
+}
+
 function setSidebarExpanded(expanded) {
   if (!sidebar || !sidebarBtn) return;
 
   window.clearTimeout(sidebarHeightTimer);
   const startHeight = sidebar.getBoundingClientRect().height;
   sidebar.style.maxHeight = `${startHeight}px`;
-  sidebarBtn.setAttribute("aria-expanded", String(expanded));
+  updateSidebarButtonState(expanded);
 
   if (expanded) {
     sidebar.classList.add("active");
@@ -52,7 +69,7 @@ if (sidebar && sidebarBtn) {
     sidebarBtn.setAttribute("aria-controls", sidebarDetails.id);
   }
 
-  sidebarBtn.setAttribute("aria-expanded", String(sidebar.classList.contains("active")));
+  updateSidebarButtonState(sidebar.classList.contains("active"));
   sidebarBtn.addEventListener("click", function () {
     setSidebarExpanded(!sidebar.classList.contains("active"));
   });
@@ -74,10 +91,31 @@ if (sidebar && sidebarBtn) {
       sidebar.style.maxHeight = `${sidebar.scrollHeight}px`;
     }
   });
+
+  window.addEventListener("site-language-change", () => {
+    updateSidebarButtonState(sidebar.classList.contains("active"));
+  });
 }
 
 
 // project photo sequence keyboard and pressed-state support
+function hydratePhotoSequenceMedia(sequence, radio) {
+  if (!radio) return;
+
+  const photoNumber = radio.id.match(/-(\d+)$/)?.[1];
+  if (!photoNumber) return;
+
+  const media = sequence.querySelector(`.photo-sequence__stage [data-photo="${photoNumber}"]`);
+  if (!media || !media.dataset.src) return;
+
+  if (media.dataset.srcset) media.setAttribute("srcset", media.dataset.srcset);
+  if (media.dataset.sizes) media.setAttribute("sizes", media.dataset.sizes);
+  media.setAttribute("src", media.dataset.src);
+  delete media.dataset.src;
+  delete media.dataset.srcset;
+  delete media.dataset.sizes;
+}
+
 function syncPhotoSequenceState(sequence) {
   const thumbnails = sequence.querySelectorAll(".photo-sequence__thumb");
 
@@ -123,9 +161,13 @@ function initPhotoSequenceControls() {
         syncPhotoSequenceState(sequence);
       });
 
-      radio.addEventListener("change", () => syncPhotoSequenceState(sequence));
+      radio.addEventListener("change", () => {
+        hydratePhotoSequenceMedia(sequence, radio);
+        syncPhotoSequenceState(sequence);
+      });
     });
 
+    hydratePhotoSequenceMedia(sequence, sequence.querySelector('input[type="radio"]:checked'));
     syncPhotoSequenceState(sequence);
   });
 }

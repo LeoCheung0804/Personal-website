@@ -2,6 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
 const {
+  CARD_SIZES,
+  optimizeMediaMarkup,
+  responsiveMedia
+} = require('./scripts/media-markup.js');
+const {
   siteProfile,
   siteProjects,
   translations,
@@ -219,7 +224,7 @@ function generateBlogPage(post) {
   const titleWithSite = `${title} | ${siteProfile.name}`;
   const postBody = renderPostBody(post.body);
 
-  return `<!DOCTYPE html>
+  const html = `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -256,7 +261,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260718-3" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260721-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -265,6 +270,7 @@ function generateBlogPage(post) {
     />
   </head>
   <body class="portfolio-site">
+    <a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">${escapeHtml(translations.en['accessibility.skipToContent'])}</a>
     <main>
       <aside class="sidebar" data-sidebar>
         <div class="sidebar-info">
@@ -275,12 +281,12 @@ function generateBlogPage(post) {
             <h1 class="name" title="${escapeHtml(siteProfile.name)}">${escapeHtml(siteProfile.name)}</h1>
             <p class="title">${escapeHtml(siteProfile.role.en)}</p>
           </div>
-          <button class="info_more-btn" data-sidebar-btn>
+          <button class="info_more-btn" data-sidebar-btn="" aria-expanded="false" aria-controls="sidebar-contact-details" aria-label="${escapeHtml(translations.en['sidebar.showContacts'])}" data-i18n-aria-label="sidebar.showContacts">
             <span>${escapeHtml(translations.en['sidebar.showContacts'])}</span>
             <ion-icon name="chevron-down"></ion-icon>
           </button>
         </div>
-        <div class="sidebar-info_more">
+        <div class="sidebar-info_more" id="sidebar-contact-details">
           <div class="separator"></div>
           <ul class="contacts-list">
             <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.email.id)}">
@@ -351,8 +357,13 @@ function generateBlogPage(post) {
       </aside>
 
       <div class="main-content">
-        <nav class="navbar">
-          <div class="navbar-scroll">
+        <nav class="navbar" data-mobile-nav="" data-i18n-aria-label="nav.primary" aria-label="${escapeHtml(translations.en['nav.primary'])}">
+          <button class="navbar-menu-btn" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="${escapeHtml(translations.en['nav.menu'])}" data-i18n-aria-label="nav.menu" data-mobile-nav-btn="">
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            <span data-i18n="nav.menu">${escapeHtml(translations.en['nav.menu'])}</span>
+          </button>
+
+          <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
             <ul class="navbar-list">
             <li class="navbar-item">
               <a href="../index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">${escapeHtml(translations.en['nav.about'])}</a>
@@ -389,6 +400,8 @@ function generateBlogPage(post) {
           </ul>
         </nav>
 
+        <span class="content-start" id="content-start" tabindex="-1"></span>
+
         <article class="blog-post-full active" data-page="blog-post">
           <header>
             <a href="../index.html#blog" class="btn-back" data-i18n="blog.backToBlog">${escapeHtml(translations.en['blog.backToBlog'])}</a>
@@ -423,20 +436,22 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20260716-2"></script>
-    <script src="../assets/js/i18n.js?v=20260716-2"></script>
+    <script src="../assets/js/site-data.js?v=20260721-1"></script>
+    <script src="../assets/js/i18n.js?v=20260721-1"></script>
     <script src="../assets/js/theme.js?v=20260716-2"></script>
     <script src="../assets/js/motion.js"></script>
-    <script src="../assets/js/ui-interactions.js"></script>
+    <script src="../assets/js/ui-interactions.js?v=20260721-1"></script>
     <script src="../assets/js/filters.js"></script>
     <script src="../assets/js/contact-form.js"></script>
-    <script src="../assets/js/navigation.js"></script>
+    <script src="../assets/js/navigation.js?v=20260721-1"></script>
     <script src="../assets/js/app-init.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>
 `;
+
+  return optimizeMediaMarkup(html, `blog/${post.slug}.html`);
 }
 
 function buildSitemap(posts) {
@@ -506,7 +521,12 @@ if (duplicateSlugs.length) {
 
 posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-const postIndex = posts.map(({ body, ...post }) => post);
+const postIndex = posts.map(({ body, ...post }) => ({
+  ...post,
+  imageMedia: post.image
+    ? responsiveMedia(post.image, 'index.html', { sizes: CARD_SIZES })
+    : null
+}));
 const resolvedBlogOutputDir = path.resolve(blogDir);
 const generatedBlogPages = posts.map(post => {
   const outputPath = path.resolve(blogDir, `${post.slug}.html`);

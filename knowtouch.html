@@ -101,7 +101,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260718-3" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260721-1" />
 
     <!--
     - google font link
@@ -115,6 +115,7 @@
   </head>
 
   <body class="portfolio-site">
+    <a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">Skip to main content</a>
     <!--
     - #MAIN
   -->
@@ -128,9 +129,9 @@
         <div class="sidebar-info">
           <figure class="avatar-box">
             <img
-              src="./assets/images/profile.jpg"
+              src="./assets/images/optimized/profile-jpg-960.webp"
               alt="Leo Cheung"
-              width="80"
+              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1250px) 260px, 72px" loading="eager"
             />
           </figure>
 
@@ -140,14 +141,14 @@
             <p class="title">Construction Robotics Engineer</p>
           </div>
 
-          <button class="info_more-btn" data-sidebar-btn>
+          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts">
             <span>Show Contacts</span>
 
             <ion-icon name="chevron-down"></ion-icon>
           </button>
         </div>
 
-        <div class="sidebar-info_more">
+        <div class="sidebar-info_more" id="sidebar-contact-details">
           <div class="separator"></div>
 
           <ul class="contacts-list">
@@ -252,8 +253,21 @@
         <!--
         - #NAVBAR
       -->
-        <nav class="navbar">
-          <div class="navbar-scroll">
+        <nav class="navbar" data-mobile-nav="" data-i18n-aria-label="nav.primary" aria-label="Primary navigation">
+          <button
+            class="navbar-menu-btn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+            aria-label="Menu"
+            data-i18n-aria-label="nav.menu"
+            data-mobile-nav-btn=""
+          >
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            <span data-i18n="nav.menu">Menu</span>
+          </button>
+
+          <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
             <ul class="navbar-list">
             <li class="navbar-item">
               <a href="index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">About</a
@@ -305,6 +319,8 @@
           </ul>
           </nav>
 
+        <span class="content-start" id="content-start" tabindex="-1"></span>
+
         <!--
         - #PAGE
         -->
@@ -335,39 +351,39 @@
               <div class="photo-sequence__stage">
                 <img
                   data-photo="1"
-                  src="./assets/images/knowtouch_1.jpg"
+                  src="./assets/images/optimized/knowtouch_1-jpg-960.webp"
                   alt="kNOw Touch lift sensor bar"
-                  loading="lazy"
+                  loading="eager" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" decoding="async" srcset="./assets/images/optimized/knowtouch_1-jpg-240.webp 240w, ./assets/images/optimized/knowtouch_1-jpg-480.webp 480w, ./assets/images/optimized/knowtouch_1-jpg-960.webp 960w, ./assets/images/optimized/knowtouch_1-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 760px, 92vw"
                 />
                 <img
                   data-photo="2"
-                  src="./assets/images/knowtouch_2.jpeg"
+
                   alt="kNOw Touch installation detail"
-                  loading="lazy"
+                  loading="lazy" data-media-source="assets/images/knowtouch_2.jpeg" width="4032" height="3024" decoding="async" data-src="./assets/images/optimized/knowtouch_2-jpeg-960.webp" data-srcset="./assets/images/optimized/knowtouch_2-jpeg-240.webp 240w, ./assets/images/optimized/knowtouch_2-jpeg-480.webp 480w, ./assets/images/optimized/knowtouch_2-jpeg-960.webp 960w, ./assets/images/optimized/knowtouch_2-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
                 />
                 <img
                   data-photo="3"
-                  src="./assets/images/knowtouch_3.jpeg"
+
                   alt="kNOw Touch sensor bar close-up"
-                  loading="lazy"
+                  loading="lazy" data-media-source="assets/images/knowtouch_3.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/knowtouch_3-jpeg-960.webp" data-srcset="./assets/images/optimized/knowtouch_3-jpeg-240.webp 240w, ./assets/images/optimized/knowtouch_3-jpeg-480.webp 480w, ./assets/images/optimized/knowtouch_3-jpeg-960.webp 960w, ./assets/images/optimized/knowtouch_3-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
                 />
                 <img
                   data-photo="4"
-                  src="./assets/images/Knowtouch_1.png"
+
                   alt="kNOw Touch lift interface deployment"
-                  loading="lazy"
+                  loading="lazy" data-media-source="assets/images/Knowtouch_1.png" width="528" height="298" decoding="async" data-src="./assets/images/optimized/knowtouch_1-png-528.webp" data-srcset="./assets/images/optimized/knowtouch_1-png-240.webp 240w, ./assets/images/optimized/knowtouch_1-png-480.webp 480w, ./assets/images/optimized/knowtouch_1-png-528.webp 528w" data-sizes="(min-width: 1250px) 760px, 92vw"
                 />
                 <img
                   data-photo="5"
-                  src="./assets/images/knowtouch_2.jpeg"
+
                   alt="kNOw Touch in elevator cabin"
-                  loading="lazy"
+                  loading="lazy" data-media-source="assets/images/knowtouch_2.jpeg" width="4032" height="3024" decoding="async" data-src="./assets/images/optimized/knowtouch_2-jpeg-960.webp" data-srcset="./assets/images/optimized/knowtouch_2-jpeg-240.webp 240w, ./assets/images/optimized/knowtouch_2-jpeg-480.webp 480w, ./assets/images/optimized/knowtouch_2-jpeg-960.webp 960w, ./assets/images/optimized/knowtouch_2-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
                 />
                 <img
                   data-photo="6"
-                  src="./assets/images/knowtouch_3.jpeg"
+
                   alt="kNOw Touch deployment overview"
-                  loading="lazy"
+                  loading="lazy" data-media-source="assets/images/knowtouch_3.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/knowtouch_3-jpeg-960.webp" data-srcset="./assets/images/optimized/knowtouch_3-jpeg-240.webp 240w, ./assets/images/optimized/knowtouch_3-jpeg-480.webp 480w, ./assets/images/optimized/knowtouch_3-jpeg-960.webp 960w, ./assets/images/optimized/knowtouch_3-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
                 />
               </div>
 
@@ -378,9 +394,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/knowtouch_1.jpg"
+                    src="./assets/images/optimized/knowtouch_1-jpg-240.webp"
                     alt="kNOw Touch lift sensor bar"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
                 <label
@@ -389,9 +405,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/knowtouch_2.jpeg"
+                    src="./assets/images/optimized/knowtouch_2-jpeg-240.webp"
                     alt="kNOw Touch installation detail"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/knowtouch_2.jpeg" width="4032" height="3024" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
                 <label
@@ -400,9 +416,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/knowtouch_3.jpeg"
+                    src="./assets/images/optimized/knowtouch_3-jpeg-240.webp"
                     alt="kNOw Touch sensor bar close-up"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/knowtouch_3.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
                 <label
@@ -411,9 +427,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/Knowtouch_1.png"
+                    src="./assets/images/optimized/knowtouch_1-png-240.webp"
                     alt="kNOw Touch lift interface deployment"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/Knowtouch_1.png" width="528" height="298" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
                 <label
@@ -422,9 +438,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/knowtouch_2.jpeg"
+                    src="./assets/images/optimized/knowtouch_2-jpeg-240.webp"
                     alt="kNOw Touch in elevator cabin"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/knowtouch_2.jpeg" width="4032" height="3024" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
                 <label
@@ -433,9 +449,9 @@
                   role="listitem"
                 >
                   <img
-                    src="./assets/images/knowtouch_3.jpeg"
+                    src="./assets/images/optimized/knowtouch_3-jpeg-240.webp"
                     alt="kNOw Touch deployment overview"
-                    loading="lazy"
+                    loading="lazy" data-media-source="assets/images/knowtouch_3.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
                   />
                 </label>
               </div>
@@ -449,7 +465,7 @@
             <div class="project-content">
               <!-- Generated from assets/js/site-data.js by generate-site-content.js. -->
               <p>kNOw Touch is an infrared gesture interface that lets users activate lift controls without physical contact. Designed for new or existing control panels, the sensor bar was deployed across more than 1,200 units in Hong Kong within one year.</p>
-              <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/H5CbdbJ4yW0?si=d9xhUFhmYV5AYOlU" title="kNOw Touch project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>
+              <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/H5CbdbJ4yW0?si=d9xhUFhmYV5AYOlU" title="kNOw Touch project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe></figure>
               <h3>Selected Contributions</h3>
               <ul>
                 <li>Coordinated delivery and installation of more than 1,200 units, including deployments at Hong Kong International Airport and Pacific Place.</li>
@@ -472,14 +488,14 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20260716-2"></script>
-    <script src="./assets/js/i18n.js?v=20260716-2"></script>
+    <script src="./assets/js/site-data.js?v=20260721-1"></script>
+    <script src="./assets/js/i18n.js?v=20260721-1"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js"></script>
-    <script src="./assets/js/ui-interactions.js"></script>
+    <script src="./assets/js/ui-interactions.js?v=20260721-1"></script>
     <script src="./assets/js/filters.js"></script>
     <script src="./assets/js/contact-form.js"></script>
-    <script src="./assets/js/navigation.js"></script>
+    <script src="./assets/js/navigation.js?v=20260721-1"></script>
     <script src="./assets/js/app-init.js"></script>
     <!--
     - ionicon link

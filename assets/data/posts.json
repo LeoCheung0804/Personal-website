@@ -10,7 +10,15 @@
     "categoryZhHant": "比賽",
     "image": "./assets/images/osh_award.JPG",
     "summary": "CU-Brick received the Merit Award in the Open Category of the OSH Innovation and Technology Award, recognising our effort to apply cable-driven robotics to brick-laying safety and productivity.",
-    "summaryZhHant": "CU-Brick 在 職安健創科大獎 公開組獲得嘉許獎，肯定了我們把纜索驅動機械人應用於砌磚工序，以提升安全和效率的努力。"
+    "summaryZhHant": "CU-Brick 在 職安健創科大獎 公開組獲得嘉許獎，肯定了我們把纜索驅動機械人應用於砌磚工序，以提升安全和效率的努力。",
+    "imageMedia": {
+      "source": "assets/images/osh_award.JPG",
+      "src": "./assets/images/optimized/osh_award-jpg-960.webp",
+      "srcset": "./assets/images/optimized/osh_award-jpg-240.webp 240w, ./assets/images/optimized/osh_award-jpg-480.webp 480w, ./assets/images/optimized/osh_award-jpg-960.webp 960w, ./assets/images/optimized/osh_award-jpg-1600.webp 1600w",
+      "width": 6763,
+      "height": 5072,
+      "sizes": "(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
+    }
   },
   {
     "filename": "2nd_runner_up",
@@ -23,7 +31,15 @@
     "categoryZhHant": "比賽",
     "image": "./assets/images/IMG_0129.JPG",
     "summary": "CU-Brick was named second runner-up in the Open Section at YPEC 2025, recognising its real-world cable-driven bricklaying work.",
-    "summaryZhHant": "CU-Brick 憑實際建造項目中的纜索驅動砌磚成果，在 YPEC 2025 公開組獲得季軍。"
+    "summaryZhHant": "CU-Brick 憑實際建造項目中的纜索驅動砌磚成果，在 YPEC 2025 公開組獲得季軍。",
+    "imageMedia": {
+      "source": "assets/images/IMG_0129.JPG",
+      "src": "./assets/images/optimized/img_0129-jpg-960.webp",
+      "srcset": "./assets/images/optimized/img_0129-jpg-240.webp 240w, ./assets/images/optimized/img_0129-jpg-480.webp 480w, ./assets/images/optimized/img_0129-jpg-960.webp 960w, ./assets/images/optimized/img_0129-jpg-1600.webp 1600w",
+      "width": 6000,
+      "height": 4000,
+      "sizes": "(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
+    }
   },
   {
     "filename": "ypec-2025",
@@ -36,7 +52,15 @@
     "categoryZhHant": "比賽",
     "image": "./assets/images/blog-2.jpeg",
     "summary": "We showcased CU-Brick at YPEC 2025 at City University of Hong Kong, connecting with industry representatives and fellow engineers.",
-    "summaryZhHant": "我們在香港城市大學舉行的 YPEC 2025 展示了 CU-Brick，並與業界領袖及同行工程師交流。"
+    "summaryZhHant": "我們在香港城市大學舉行的 YPEC 2025 展示了 CU-Brick，並與業界領袖及同行工程師交流。",
+    "imageMedia": {
+      "source": "assets/images/blog-2.jpeg",
+      "src": "./assets/images/optimized/blog-2-jpeg-892.webp",
+      "srcset": "./assets/images/optimized/blog-2-jpeg-240.webp 240w, ./assets/images/optimized/blog-2-jpeg-480.webp 480w, ./assets/images/optimized/blog-2-jpeg-892.webp 892w",
+      "width": 892,
+      "height": 1600,
+      "sizes": "(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
+    }
   },
   {
     "filename": "cablecon-2025",
@@ -49,6 +73,14 @@
     "categoryZhHant": "會議",
     "image": "./assets/images/cablecon_pre.jpeg",
     "summary": "We presented the CU-Brick paper at CableCon 2025 and shared how cable-driven robots are reshaping construction workflows.",
-    "summaryZhHant": "我們在 CableCon 2025 發表了 CU-Brick 論文，分享纜索驅動機械人如何重塑建築流程。"
+    "summaryZhHant": "我們在 CableCon 2025 發表了 CU-Brick 論文，分享纜索驅動機械人如何重塑建築流程。",
+    "imageMedia": {
+      "source": "assets/images/cablecon_pre.jpeg",
+      "src": "./assets/images/optimized/cablecon_pre-jpeg-960.webp",
+      "srcset": "./assets/images/optimized/cablecon_pre-jpeg-240.webp 240w, ./assets/images/optimized/cablecon_pre-jpeg-480.webp 480w, ./assets/images/optimized/cablecon_pre-jpeg-960.webp 960w, ./assets/images/optimized/cablecon_pre-jpeg-1600.webp 1600w",
+      "width": 1600,
+      "height": 1199,
+      "sizes": "(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw"
+    }
   }
 ]

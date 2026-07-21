@@ -1,0 +1,1292 @@
+{
+  "assets/images/blog-2.jpeg": {
+    "width": 892,
+    "height": 1600,
+    "variants": [
+      {
+        "path": "assets/images/optimized/blog-2-jpeg-240.webp",
+        "width": 240,
+        "height": 430,
+        "bytes": 13770
+      },
+      {
+        "path": "assets/images/optimized/blog-2-jpeg-480.webp",
+        "width": 480,
+        "height": 861,
+        "bytes": 37800
+      },
+      {
+        "path": "assets/images/optimized/blog-2-jpeg-892.webp",
+        "width": 892,
+        "height": 1600,
+        "bytes": 93494
+      }
+    ]
+  },
+  "assets/images/borderless_2.jpeg": {
+    "width": 1776,
+    "height": 1184,
+    "variants": [
+      {
+        "path": "assets/images/optimized/borderless_2-jpeg-240.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 7056
+      },
+      {
+        "path": "assets/images/optimized/borderless_2-jpeg-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 18690
+      },
+      {
+        "path": "assets/images/optimized/borderless_2-jpeg-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 43900
+      },
+      {
+        "path": "assets/images/optimized/borderless_2-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 82344
+      }
+    ]
+  },
+  "assets/images/borderless_3.jpeg": {
+    "width": 2160,
+    "height": 3840,
+    "variants": [
+      {
+        "path": "assets/images/optimized/borderless_3-jpeg-240.webp",
+        "width": 240,
+        "height": 427,
+        "bytes": 14230
+      },
+      {
+        "path": "assets/images/optimized/borderless_3-jpeg-480.webp",
+        "width": 480,
+        "height": 853,
+        "bytes": 36570
+      },
+      {
+        "path": "assets/images/optimized/borderless_3-jpeg-960.webp",
+        "width": 960,
+        "height": 1707,
+        "bytes": 84886
+      },
+      {
+        "path": "assets/images/optimized/borderless_3-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2844,
+        "bytes": 162084
+      }
+    ]
+  },
+  "assets/images/borderless_4.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/borderless_4-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 12616
+      },
+      {
+        "path": "assets/images/optimized/borderless_4-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 33812
+      },
+      {
+        "path": "assets/images/optimized/borderless_4-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 85430
+      },
+      {
+        "path": "assets/images/optimized/borderless_4-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 171948
+      }
+    ]
+  },
+  "assets/images/Borderless_lab.jpg": {
+    "width": 530,
+    "height": 397,
+    "variants": [
+      {
+        "path": "assets/images/optimized/borderless_lab-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 7908
+      },
+      {
+        "path": "assets/images/optimized/borderless_lab-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 22566
+      },
+      {
+        "path": "assets/images/optimized/borderless_lab-jpg-530.webp",
+        "width": 530,
+        "height": 397,
+        "bytes": 27018
+      }
+    ]
+  },
+  "assets/images/cablecon_pre.jpeg": {
+    "width": 1600,
+    "height": 1199,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cablecon_pre-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5228
+      },
+      {
+        "path": "assets/images/optimized/cablecon_pre-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 13838
+      },
+      {
+        "path": "assets/images/optimized/cablecon_pre-jpeg-960.webp",
+        "width": 960,
+        "height": 719,
+        "bytes": 38952
+      },
+      {
+        "path": "assets/images/optimized/cablecon_pre-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1199,
+        "bytes": 85250
+      }
+    ]
+  },
+  "assets/images/CU-Brick_1.jpeg": {
+    "width": 1600,
+    "height": 1200,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cu-brick_1-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 2180
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_1-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 9280
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_1-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 30278
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_1-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 72126
+      }
+    ]
+  },
+  "assets/images/CU-Brick_2.JPG": {
+    "width": 5328,
+    "height": 4000,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cu-brick_2-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 10606
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_2-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 38998
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_2-jpg-960.webp",
+        "width": 960,
+        "height": 721,
+        "bytes": 129274
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_2-jpg-1600.webp",
+        "width": 1600,
+        "height": 1201,
+        "bytes": 303730
+      }
+    ]
+  },
+  "assets/images/CU-Brick_3.jpg": {
+    "width": 4343,
+    "height": 4974,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cu-brick_3-jpg-240.webp",
+        "width": 240,
+        "height": 275,
+        "bytes": 16826
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_3-jpg-480.webp",
+        "width": 480,
+        "height": 550,
+        "bytes": 59454
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_3-jpg-960.webp",
+        "width": 960,
+        "height": 1099,
+        "bytes": 203948
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_3-jpg-1600.webp",
+        "width": 1600,
+        "height": 1832,
+        "bytes": 469844
+      }
+    ]
+  },
+  "assets/images/CU-Brick_4.jpeg": {
+    "width": 2880,
+    "height": 2787,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cu-brick_4-jpeg-240.webp",
+        "width": 240,
+        "height": 232,
+        "bytes": 12464
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_4-jpeg-480.webp",
+        "width": 480,
+        "height": 464,
+        "bytes": 36026
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_4-jpeg-960.webp",
+        "width": 960,
+        "height": 929,
+        "bytes": 90448
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_4-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1548,
+        "bytes": 169550
+      }
+    ]
+  },
+  "assets/images/CU-Brick_5.jpg": {
+    "width": 4000,
+    "height": 1848,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cu-brick_5-jpg-240.webp",
+        "width": 240,
+        "height": 111,
+        "bytes": 6246
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_5-jpg-480.webp",
+        "width": 480,
+        "height": 222,
+        "bytes": 23778
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_5-jpg-960.webp",
+        "width": 960,
+        "height": 444,
+        "bytes": 82744
+      },
+      {
+        "path": "assets/images/optimized/cu-brick_5-jpg-1600.webp",
+        "width": 1600,
+        "height": 739,
+        "bytes": 194646
+      }
+    ]
+  },
+  "assets/images/Esp_sys_1.jpg": {
+    "width": 294,
+    "height": 228,
+    "variants": [
+      {
+        "path": "assets/images/optimized/esp_sys_1-jpg-240.webp",
+        "width": 240,
+        "height": 186,
+        "bytes": 3526
+      },
+      {
+        "path": "assets/images/optimized/esp_sys_1-jpg-294.webp",
+        "width": 294,
+        "height": 228,
+        "bytes": 4944
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_2.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_2-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 18748
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_2-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 58058
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_2-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 161800
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_2-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 307186
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_3.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_3-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 18870
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_3-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 60086
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_3-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 169114
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_3-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 322150
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_4.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_4-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 19388
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_4-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 67680
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_4-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 230122
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_4-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 497460
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_5.png": {
+    "width": 1920,
+    "height": 1080,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_5-png-240.webp",
+        "width": 240,
+        "height": 135,
+        "bytes": 6680
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_5-png-480.webp",
+        "width": 480,
+        "height": 270,
+        "bytes": 17892
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_5-png-960.webp",
+        "width": 960,
+        "height": 540,
+        "bytes": 47502
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_5-png-1600.webp",
+        "width": 1600,
+        "height": 900,
+        "bytes": 93926
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_6.png": {
+    "width": 848,
+    "height": 480,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_6-png-240.webp",
+        "width": 240,
+        "height": 136,
+        "bytes": 6872
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_6-png-480.webp",
+        "width": 480,
+        "height": 272,
+        "bytes": 18876
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_6-png-848.webp",
+        "width": 848,
+        "height": 480,
+        "bytes": 37658
+      }
+    ]
+  },
+  "assets/images/Exoskeleton_robot.jpg": {
+    "width": 2617,
+    "height": 1963,
+    "variants": [
+      {
+        "path": "assets/images/optimized/exoskeleton_robot-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 7786
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_robot-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 19270
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_robot-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 38934
+      },
+      {
+        "path": "assets/images/optimized/exoskeleton_robot-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 68540
+      }
+    ]
+  },
+  "assets/images/footcontroler.jpg": {
+    "width": 4032,
+    "height": 3024,
+    "variants": [
+      {
+        "path": "assets/images/optimized/footcontroler-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5804
+      },
+      {
+        "path": "assets/images/optimized/footcontroler-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 26504
+      },
+      {
+        "path": "assets/images/optimized/footcontroler-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 142074
+      },
+      {
+        "path": "assets/images/optimized/footcontroler-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 379618
+      }
+    ]
+  },
+  "assets/images/icon.png": {
+    "width": 1024,
+    "height": 1024,
+    "variants": [
+      {
+        "path": "assets/images/optimized/icon-png-240.webp",
+        "width": 240,
+        "height": 240,
+        "bytes": 4684
+      },
+      {
+        "path": "assets/images/optimized/icon-png-480.webp",
+        "width": 480,
+        "height": 480,
+        "bytes": 11430
+      },
+      {
+        "path": "assets/images/optimized/icon-png-960.webp",
+        "width": 960,
+        "height": 960,
+        "bytes": 26130
+      },
+      {
+        "path": "assets/images/optimized/icon-png-1024.webp",
+        "width": 1024,
+        "height": 1024,
+        "bytes": 28158
+      }
+    ]
+  },
+  "assets/images/IMG_0129.JPG": {
+    "width": 6000,
+    "height": 4000,
+    "variants": [
+      {
+        "path": "assets/images/optimized/img_0129-jpg-240.webp",
+        "width": 240,
+        "height": 160,
+        "bytes": 5244
+      },
+      {
+        "path": "assets/images/optimized/img_0129-jpg-480.webp",
+        "width": 480,
+        "height": 320,
+        "bytes": 14834
+      },
+      {
+        "path": "assets/images/optimized/img_0129-jpg-960.webp",
+        "width": 960,
+        "height": 640,
+        "bytes": 39678
+      },
+      {
+        "path": "assets/images/optimized/img_0129-jpg-1600.webp",
+        "width": 1600,
+        "height": 1067,
+        "bytes": 78356
+      }
+    ]
+  },
+  "assets/images/IMG_8837.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/img_8837-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 10266
+      },
+      {
+        "path": "assets/images/optimized/img_8837-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 29354
+      },
+      {
+        "path": "assets/images/optimized/img_8837-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 77530
+      },
+      {
+        "path": "assets/images/optimized/img_8837-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 171460
+      }
+    ]
+  },
+  "assets/images/IMG_9093.jpeg": {
+    "width": 1200,
+    "height": 1600,
+    "variants": [
+      {
+        "path": "assets/images/optimized/img_9093-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 5368
+      },
+      {
+        "path": "assets/images/optimized/img_9093-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 14466
+      },
+      {
+        "path": "assets/images/optimized/img_9093-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 40646
+      },
+      {
+        "path": "assets/images/optimized/img_9093-jpeg-1200.webp",
+        "width": 1200,
+        "height": 1600,
+        "bytes": 56898
+      }
+    ]
+  },
+  "assets/images/IMG_9094.jpeg": {
+    "width": 1024,
+    "height": 768,
+    "variants": [
+      {
+        "path": "assets/images/optimized/img_9094-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 3810
+      },
+      {
+        "path": "assets/images/optimized/img_9094-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 9612
+      },
+      {
+        "path": "assets/images/optimized/img_9094-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 23408
+      },
+      {
+        "path": "assets/images/optimized/img_9094-jpeg-1024.webp",
+        "width": 1024,
+        "height": 768,
+        "bytes": 25700
+      }
+    ]
+  },
+  "assets/images/IMG_9095.jpeg": {
+    "width": 768,
+    "height": 1024,
+    "variants": [
+      {
+        "path": "assets/images/optimized/img_9095-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 5160
+      },
+      {
+        "path": "assets/images/optimized/img_9095-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 14600
+      },
+      {
+        "path": "assets/images/optimized/img_9095-jpeg-768.webp",
+        "width": 768,
+        "height": 1024,
+        "bytes": 28748
+      }
+    ]
+  },
+  "assets/images/knowtouch_1.jpg": {
+    "width": 3024,
+    "height": 2268,
+    "variants": [
+      {
+        "path": "assets/images/optimized/knowtouch_1-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5458
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_1-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 16756
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_1-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 51484
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_1-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 111910
+      }
+    ]
+  },
+  "assets/images/Knowtouch_1.png": {
+    "width": 528,
+    "height": 298,
+    "variants": [
+      {
+        "path": "assets/images/optimized/knowtouch_1-png-240.webp",
+        "width": 240,
+        "height": 135,
+        "bytes": 3672
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_1-png-480.webp",
+        "width": 480,
+        "height": 271,
+        "bytes": 9636
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_1-png-528.webp",
+        "width": 528,
+        "height": 298,
+        "bytes": 11172
+      }
+    ]
+  },
+  "assets/images/knowtouch_2.jpeg": {
+    "width": 4032,
+    "height": 3024,
+    "variants": [
+      {
+        "path": "assets/images/optimized/knowtouch_2-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 7594
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_2-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 20932
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_2-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 54206
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_2-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 104406
+      }
+    ]
+  },
+  "assets/images/knowtouch_3.jpeg": {
+    "width": 3024,
+    "height": 4032,
+    "variants": [
+      {
+        "path": "assets/images/optimized/knowtouch_3-jpeg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 9068
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_3-jpeg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 28752
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_3-jpeg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 89332
+      },
+      {
+        "path": "assets/images/optimized/knowtouch_3-jpeg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 197046
+      }
+    ]
+  },
+  "assets/images/Microwave.jpeg": {
+    "width": 1200,
+    "height": 900,
+    "variants": [
+      {
+        "path": "assets/images/optimized/microwave-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5552
+      },
+      {
+        "path": "assets/images/optimized/microwave-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 21954
+      },
+      {
+        "path": "assets/images/optimized/microwave-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 77836
+      },
+      {
+        "path": "assets/images/optimized/microwave-jpeg-1200.webp",
+        "width": 1200,
+        "height": 900,
+        "bytes": 113368
+      }
+    ]
+  },
+  "assets/images/microwave_cad_1.jpeg": {
+    "width": 996,
+    "height": 747,
+    "variants": [
+      {
+        "path": "assets/images/optimized/microwave_cad_1-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 4102
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_1-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 12388
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_1-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 46156
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_1-jpeg-996.webp",
+        "width": 996,
+        "height": 747,
+        "bytes": 53510
+      }
+    ]
+  },
+  "assets/images/microwave_cad_2.jpeg": {
+    "width": 1600,
+    "height": 1200,
+    "variants": [
+      {
+        "path": "assets/images/optimized/microwave_cad_2-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5240
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_2-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 15348
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_2-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 41416
+      },
+      {
+        "path": "assets/images/optimized/microwave_cad_2-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 86530
+      }
+    ]
+  },
+  "assets/images/osh_award.JPG": {
+    "width": 6763,
+    "height": 5072,
+    "variants": [
+      {
+        "path": "assets/images/optimized/osh_award-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 9196
+      },
+      {
+        "path": "assets/images/optimized/osh_award-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 32174
+      },
+      {
+        "path": "assets/images/optimized/osh_award-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 118866
+      },
+      {
+        "path": "assets/images/optimized/osh_award-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 312942
+      }
+    ]
+  },
+  "assets/images/profile.jpg": {
+    "width": 1188,
+    "height": 1188,
+    "variants": [
+      {
+        "path": "assets/images/optimized/profile-jpg-240.webp",
+        "width": 240,
+        "height": 240,
+        "bytes": 3858
+      },
+      {
+        "path": "assets/images/optimized/profile-jpg-480.webp",
+        "width": 480,
+        "height": 480,
+        "bytes": 10320
+      },
+      {
+        "path": "assets/images/optimized/profile-jpg-960.webp",
+        "width": 960,
+        "height": 960,
+        "bytes": 34372
+      },
+      {
+        "path": "assets/images/optimized/profile-jpg-1188.webp",
+        "width": 1188,
+        "height": 1188,
+        "bytes": 109392
+      }
+    ]
+  },
+  "assets/images/Robotapper_1.JPG": {
+    "width": 8064,
+    "height": 4536,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_1-jpg-240.webp",
+        "width": 240,
+        "height": 135,
+        "bytes": 5222
+      },
+      {
+        "path": "assets/images/optimized/robotapper_1-jpg-480.webp",
+        "width": 480,
+        "height": 270,
+        "bytes": 17020
+      },
+      {
+        "path": "assets/images/optimized/robotapper_1-jpg-960.webp",
+        "width": 960,
+        "height": 540,
+        "bytes": 59668
+      },
+      {
+        "path": "assets/images/optimized/robotapper_1-jpg-1600.webp",
+        "width": 1600,
+        "height": 900,
+        "bytes": 158460
+      }
+    ]
+  },
+  "assets/images/Robotapper_2.JPG": {
+    "width": 3402,
+    "height": 4536,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_2-jpg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 10380
+      },
+      {
+        "path": "assets/images/optimized/robotapper_2-jpg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 39646
+      },
+      {
+        "path": "assets/images/optimized/robotapper_2-jpg-960.webp",
+        "width": 960,
+        "height": 1280,
+        "bytes": 153478
+      },
+      {
+        "path": "assets/images/optimized/robotapper_2-jpg-1600.webp",
+        "width": 1600,
+        "height": 2133,
+        "bytes": 374342
+      }
+    ]
+  },
+  "assets/images/Robotapper_3.JPG": {
+    "width": 3024,
+    "height": 2268,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_3-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 11208
+      },
+      {
+        "path": "assets/images/optimized/robotapper_3-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 42686
+      },
+      {
+        "path": "assets/images/optimized/robotapper_3-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 120212
+      },
+      {
+        "path": "assets/images/optimized/robotapper_3-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 213322
+      }
+    ]
+  },
+  "assets/images/Robotapper_5.jpeg": {
+    "width": 4709,
+    "height": 3532,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_5-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 7942
+      },
+      {
+        "path": "assets/images/optimized/robotapper_5-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 24280
+      },
+      {
+        "path": "assets/images/optimized/robotapper_5-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 74118
+      },
+      {
+        "path": "assets/images/optimized/robotapper_5-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 161000
+      }
+    ]
+  },
+  "assets/images/Robotapper_cropped.jpeg": {
+    "width": 6048,
+    "height": 4536,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_cropped-jpeg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 6532
+      },
+      {
+        "path": "assets/images/optimized/robotapper_cropped-jpeg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 21850
+      },
+      {
+        "path": "assets/images/optimized/robotapper_cropped-jpeg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 80710
+      },
+      {
+        "path": "assets/images/optimized/robotapper_cropped-jpeg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 211554
+      }
+    ]
+  },
+  "assets/images/Robotapper_hero-1600.jpg": {
+    "width": 1600,
+    "height": 1200,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_hero-1600-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 6622
+      },
+      {
+        "path": "assets/images/optimized/robotapper_hero-1600-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 21958
+      },
+      {
+        "path": "assets/images/optimized/robotapper_hero-1600-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 84422
+      },
+      {
+        "path": "assets/images/optimized/robotapper_hero-1600-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 220978
+      }
+    ]
+  },
+  "assets/images/Robotapper_hero-960.jpg": {
+    "width": 960,
+    "height": 720,
+    "variants": [
+      {
+        "path": "assets/images/optimized/robotapper_hero-960-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 6610
+      },
+      {
+        "path": "assets/images/optimized/robotapper_hero-960-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 22414
+      },
+      {
+        "path": "assets/images/optimized/robotapper_hero-960-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 83508
+      }
+    ]
+  },
+  "assets/images/Spray_robot.JPG": {
+    "width": 633,
+    "height": 475,
+    "variants": [
+      {
+        "path": "assets/images/optimized/spray_robot-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 6744
+      },
+      {
+        "path": "assets/images/optimized/spray_robot-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 21958
+      },
+      {
+        "path": "assets/images/optimized/spray_robot-jpg-633.webp",
+        "width": 633,
+        "height": 475,
+        "bytes": 37804
+      }
+    ]
+  },
+  "assets/images/v2.0.png": {
+    "width": 2880,
+    "height": 2160,
+    "variants": [
+      {
+        "path": "assets/images/optimized/v2-0-png-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 5614
+      },
+      {
+        "path": "assets/images/optimized/v2-0-png-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 20220
+      },
+      {
+        "path": "assets/images/optimized/v2-0-png-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 74408
+      },
+      {
+        "path": "assets/images/optimized/v2-0-png-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 162384
+      }
+    ]
+  },
+  "assets/images/YES_full.jpg": {
+    "width": 2925,
+    "height": 2194,
+    "variants": [
+      {
+        "path": "assets/images/optimized/yes_full-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 9756
+      },
+      {
+        "path": "assets/images/optimized/yes_full-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 37796
+      },
+      {
+        "path": "assets/images/optimized/yes_full-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 138188
+      },
+      {
+        "path": "assets/images/optimized/yes_full-jpg-1600.webp",
+        "width": 1600,
+        "height": 1200,
+        "bytes": 313930
+      }
+    ]
+  },
+  "assets/images/YES_preview-960.jpg": {
+    "width": 960,
+    "height": 720,
+    "variants": [
+      {
+        "path": "assets/images/optimized/yes_preview-960-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 9786
+      },
+      {
+        "path": "assets/images/optimized/yes_preview-960-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 38990
+      },
+      {
+        "path": "assets/images/optimized/yes_preview-960-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 140906
+      }
+    ]
+  }
+}

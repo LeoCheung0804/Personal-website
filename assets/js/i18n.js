@@ -57,7 +57,16 @@ function applySharedShellTranslations(language = currentLanguage) {
     profileTitle.textContent = getLocalizedProfileValue(siteProfile.role, language);
   }
 
-  setText("[data-sidebar-btn] span", "sidebar.showContacts", language);
+  const sidebarButton = document.querySelector("[data-sidebar-btn]");
+  const sidebarLabelKey = sidebarButton?.getAttribute("aria-expanded") === "true"
+    ? "sidebar.hideContacts"
+    : "sidebar.showContacts";
+  setText("[data-sidebar-btn] span", sidebarLabelKey, language);
+
+  if (sidebarButton) {
+    sidebarButton.dataset.i18nAriaLabel = sidebarLabelKey;
+    sidebarButton.setAttribute("aria-label", getTranslation(sidebarLabelKey, language));
+  }
 
   document.querySelectorAll(".contacts-list .contact-item").forEach((item, index) => {
     const contact = siteProfile.contacts.find(({ id }) => id === item.dataset.contactId)
@@ -179,13 +188,17 @@ function renderBlogPosts(posts = loadedBlogPosts) {
     const category = localizePostField(post, "category");
     const summary = localizePostField(post, "summary");
     const dateStr = formatPostDate(post.date);
+    const imageMedia = post.imageMedia;
+    const imageAttributes = imageMedia
+      ? `src="${imageMedia.src}" srcset="${imageMedia.srcset}" sizes="${imageMedia.sizes}" width="${imageMedia.width}" height="${imageMedia.height}" data-media-source="${imageMedia.source}"`
+      : `src="${post.image}"`;
 
     const li = document.createElement('li');
     li.className = 'blog-post-item tilt-card fade-seed';
 
     li.innerHTML = `
       <a href="${post.url || `blog-post.html?post=${post.filename}`}" class="magnetic" data-magnetic>
-        ${post.image ? `<figure class="blog-banner-box"><img src="${post.image}" alt="${title}" loading="lazy"></figure>` : ''}
+        ${post.image ? `<figure class="blog-banner-box"><img ${imageAttributes} alt="${title}" loading="lazy" decoding="async"></figure>` : ''}
         <div class="blog-content">
           <div class="blog-meta">
             ${category ? `<p class="blog-category">${category}</p><span class="dot"></span>` : ''}
