@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   } catch (error) {
     console.error('Error loading blog posts:', error);
-    blogList.innerHTML = `<li><p>${getTranslation("blog.failed")}</p></li>`;
+    if (!blogList.querySelector('.blog-post-item')) {
+      blogList.innerHTML = `<li><p>${getTranslation("blog.failed")}</p></li>`;
+    } else {
+      blogList.dataset.loadState = 'static-fallback';
+    }
   }
 });

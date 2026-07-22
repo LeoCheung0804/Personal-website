@@ -56,12 +56,14 @@ const siteProfile = {
   seo: {
     title: "Leo Cheung | Construction Robotics Engineer",
     schemaName: "Leo Cheung Construction Robotics Portfolio",
-    description: "Portfolio of Leo Cheung, a Hong Kong robotics engineer building cable-driven construction robots, facade inspection systems, autonomous painting platforms, and embedded mechatronics.",
+    description: "Portfolio of Leo Cheung, a Hong Kong construction robotics engineer building cable-driven robots, facade inspection systems, and autonomous machinery.",
     schemaDescription: "A field-focused robotics engineering portfolio spanning construction automation, cable-driven robots, facade inspection, autonomous painting, embedded systems, and mechanical design.",
     keywords: "construction robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
     ogDescription: "Field-focused construction robotics, facade inspection, autonomous painting, and embedded mechatronics projects by Leo Cheung.",
     twitterDescription: "Construction robotics and mechatronics projects taken from early prototypes to real-world deployment.",
     image: "/assets/images/profile.jpg",
+    imageAlt: "Leo Cheung, construction robotics engineer",
+    lastmod: "2026-07-21",
     knowsAbout: [
       "construction robotics",
       "cable-driven parallel robots",
@@ -74,6 +76,23 @@ const siteProfile = {
     ]
   },
   copyrightYear: 2026
+};
+
+const standalonePages = {
+  dashboard: {
+    file: "dashboard.html",
+    seo: {
+      title: "Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung",
+      description: "Live Hong Kong dashboard showing Observatory weather data and KMB bus arrivals at Sheung Tak Bus Terminus.",
+      ogDescription: "Live Hong Kong weather, warnings, forecasts, and KMB arrival information in one responsive dashboard.",
+      twitterDescription: "Live Hong Kong weather and KMB arrival information for Sheung Tak Bus Terminus.",
+      image: "/assets/images/profile.jpg",
+      imageAlt: "Hong Kong weather and KMB arrival dashboard by Leo Cheung",
+      schemaName: "Hong Kong Weather and KMB Arrival Dashboard",
+      schemaDescription: "A responsive web dashboard combining Hong Kong Observatory weather data with KMB arrival information for Sheung Tak Bus Terminus.",
+      lastmod: "2026-07-21"
+    }
+  }
 };
 
 const siteProjects = {
@@ -92,13 +111,13 @@ const siteProjects = {
       zhHant: "自動化外牆檢測"
     },
     seo: {
-      description: "Robo-Tapper is a cable-driven robotic system for automated high-rise facade hammer testing, combining autonomous positioning with AI-assisted impact-signal analysis.",
+      description: "Robo-Tapper is a cable-driven robot for automated high-rise facade hammer testing, autonomous positioning, and AI-assisted impact analysis.",
       ogDescription: "A field-deployed cable robot for consistent facade hammer testing, autonomous positioning, and AI-assisted defect analysis.",
       twitterDescription: "Field-deployed robotic facade inspection with automated hammer testing and AI-assisted signal analysis.",
       image: "/assets/images/Robotapper_cropped.jpeg",
       structuredDescription: "Field-deployed cable-driven robot for automated facade hammer testing, LiDAR navigation, and AI-assisted impact-signal analysis.",
       keywords: "Robo-Tapper, facade inspection robot, cable-driven robot, hammer testing robot, AI defect detection, LiDAR navigation, construction robotics, Hong Kong robotics",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   cuBrick: {
@@ -122,7 +141,7 @@ const siteProjects = {
       image: "/assets/images/YES_full.jpg",
       structuredDescription: "Architectural-scale cable-driven parallel robot for automated bricklaying, fiducial localization, 3D scanning, and construction automation.",
       keywords: "CU-Brick, bricklaying robot, cable-driven parallel robot, CDPR, construction automation, fiducial markers, 3D scanning, YES Pavilion, Hong Kong robotics",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   spray: {
@@ -146,7 +165,7 @@ const siteProjects = {
       image: "/assets/images/Spray_robot.JPG",
       structuredDescription: "Autonomous wall painting prototype with AGV motion, IMU sensing, cameras, linear rail positioning, and ROS control.",
       keywords: "autonomous wall spraying robot, wall painting robot, ROS robot, AGV, IMU, machine vision, linear rail, construction robotics, industrial painting automation",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   knowTouch: {
@@ -170,7 +189,7 @@ const siteProjects = {
       image: "/assets/images/knowtouch_1.jpg",
       structuredDescription: "Infrared gesture interface for touchless lift controls, retrofit installation, and large-scale Hong Kong deployment.",
       keywords: "kNOw Touch, touchless lift button, elevator sensor, infrared gesture sensor, lift call bar, contactless interface, Hong Kong elevators, embedded hardware",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   exoskeleton: {
@@ -194,7 +213,7 @@ const siteProjects = {
       image: "/assets/images/Exoskeleton_robot.jpg",
       structuredDescription: "Humanoid robot and wearable exoskeleton controller with haptic feedback, 48 V BLDC control, and wireless communication.",
       keywords: "exoskeleton control, humanoid robot, haptic feedback, BLDC motor control, wireless robot control, LiDAR, mechatronics, robotics engineering",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   borderless: {
@@ -214,7 +233,7 @@ const siteProjects = {
       image: "/assets/images/Borderless_lab.jpg",
       structuredDescription: "Browser-based remote STEM laboratory using Raspberry Pi, Arduino, livestream monitoring, and real-time sensor data.",
       keywords: "Borderless Lab 365, remote STEM laboratory, web-based lab platform, Raspberry Pi, Arduino, livestream experiments, real-time sensor data, STEM education",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   microwave: {
@@ -234,7 +253,7 @@ const siteProjects = {
       image: "/assets/images/Microwave.jpeg",
       structuredDescription: "Experimental microwave heating research for concrete, cement, and metal compositions using CAD-designed molds and prototypes.",
       keywords: "microwave heating system, concrete heating, cement materials, sustainable construction, CAD prototype, SolidWorks, AutoCAD, material testing",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   retractable: {
@@ -254,7 +273,7 @@ const siteProjects = {
       image: "/assets/images/v2.0.png",
       structuredDescription: "Modular retractable tapper and thruster concept for robotic facade hammer testing and protected tool transport.",
       keywords: "retractable tapper, facade inspection robot, robotic hammer testing, thruster module, modular robot tool, construction inspection, robotics hardware design",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   },
   footController: {
@@ -274,7 +293,7 @@ const siteProjects = {
       image: "/assets/images/footcontroler.jpg",
       structuredDescription: "Wearable wireless foot controller for SuperLimb with motorized pedals, haptic feedback, embedded electronics, and multi-axis input.",
       keywords: "wireless foot controller, SuperLimb, motorized pedal, wearable robot controller, haptic feedback, embedded electronics, multi-axis control, robotics hardware",
-      lastmod: "2026-05-05"
+      lastmod: "2026-07-21"
     }
   }
 };
@@ -808,12 +827,35 @@ function validateSiteData() {
 
   const requiredProfileSeoFields = [
     "title", "schemaName", "description", "schemaDescription", "keywords",
-    "ogDescription", "twitterDescription", "image"
+    "ogDescription", "twitterDescription", "image", "imageAlt", "lastmod"
   ];
   const missingProfileSeo = requiredProfileSeoFields.filter((field) => !siteProfile.seo?.[field]);
   if (missingProfileSeo.length || !siteProfile.seo?.knowsAbout?.length) {
     throw new Error(`siteProfile.seo is incomplete: ${missingProfileSeo.join(", ")}`);
   }
+  if (!/^\/assets\/images\//.test(siteProfile.seo.image)
+    || !/^\d{4}-\d{2}-\d{2}$/.test(siteProfile.seo.lastmod)) {
+    throw new Error("siteProfile.seo requires an /assets/images image and YYYY-MM-DD lastmod.");
+  }
+
+  const standaloneFiles = Object.values(standalonePages).map(({ file }) => file);
+  if (new Set(standaloneFiles).size !== standaloneFiles.length) {
+    throw new Error("standalonePages contains duplicate files.");
+  }
+  Object.entries(standalonePages).forEach(([key, page]) => {
+    const requiredSeoFields = [
+      "title", "description", "ogDescription", "twitterDescription", "image",
+      "imageAlt", "schemaName", "schemaDescription", "lastmod"
+    ];
+    const missingFields = requiredSeoFields.filter((field) => !page.seo?.[field]);
+    if (!/^[a-z0-9-]+\.html$/.test(page.file) || missingFields.length) {
+      throw new Error(`standalonePages.${key} is incomplete: ${missingFields.join(", ")}`);
+    }
+    if (!/^\/assets\/images\//.test(page.seo.image)
+      || !/^\d{4}-\d{2}-\d{2}$/.test(page.seo.lastmod)) {
+      throw new Error(`standalonePages.${key}.seo has an invalid image or lastmod.`);
+    }
+  });
 
   const contactIds = siteProfile.contacts.map(({ id }) => id);
   if (new Set(contactIds).size !== contactIds.length) {
@@ -886,6 +928,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     siteProfile,
     siteProjects,
+    standalonePages,
     translations,
     projectPageFiles,
     projectPageAliases,

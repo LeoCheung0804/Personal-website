@@ -2,67 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://leocml.com/</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://leocml.com/tapper.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/yes.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/spray.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/knowtouch.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/exoskeleton.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/borderless.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/microwave.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/retractable.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://leocml.com/footcontroller.html</loc>
-    <lastmod>2026-05-05</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://leocml.com/dashboard.html</loc>
+    <lastmod>2026-07-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://leocml.com/blog/osh-2026.html</loc>
-    <lastmod>2026-06-04</lastmod>
+    <lastmod>2026-07-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

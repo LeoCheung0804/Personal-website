@@ -11,7 +11,10 @@ on:
       - "scripts/generation-transaction.js"
       - "scripts/media-markup.js"
       - "scripts/optimize-images.py"
+      - "scripts/check-static-site.js"
       - "assets/js/site-data.js"
+      - "assets/js/**/*.js"
+      - "assets/css/**/*.css"
       - "assets/data/posts.json"
       - "assets/data/media-manifest.json"
       - "assets/images/*.jpg"
@@ -20,6 +23,8 @@ on:
       - "assets/images/*.png"
       - "assets/images/optimized/**"
       - "sitemap.xml"
+      - "robots.txt"
+      - "CNAME"
       - "blog/**/*.html"
       - "*.html"
   pull_request:
@@ -30,7 +35,10 @@ on:
       - "scripts/generation-transaction.js"
       - "scripts/media-markup.js"
       - "scripts/optimize-images.py"
+      - "scripts/check-static-site.js"
       - "assets/js/site-data.js"
+      - "assets/js/**/*.js"
+      - "assets/css/**/*.css"
       - "assets/data/posts.json"
       - "assets/data/media-manifest.json"
       - "assets/images/*.jpg"
@@ -39,6 +47,8 @@ on:
       - "assets/images/*.png"
       - "assets/images/optimized/**"
       - "sitemap.xml"
+      - "robots.txt"
+      - "CNAME"
       - "blog/**/*.html"
       - "*.html"
   workflow_dispatch:
@@ -82,7 +92,12 @@ jobs:
         run: node generate-site-content.js
 
       - name: Verify generated site content
-        run: node generate-site-content.js --check
+        run: |
+          node generate-blog-index.js --check
+          node generate-site-content.js --check
+
+      - name: Audit static reliability and SEO
+        run: node scripts/check-static-site.js
 
       - name: Commit generated site content
         run: |
@@ -127,6 +142,9 @@ jobs:
           python scripts/optimize-images.py
           node generate-blog-index.js
           node generate-site-content.js
+
+      - name: Audit static reliability and SEO
+        run: node scripts/check-static-site.js
 
       - name: Verify committed artifacts are current
         run: |

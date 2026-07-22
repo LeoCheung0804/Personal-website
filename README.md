@@ -40,8 +40,15 @@ To verify that checked-in HTML is current without writing files:
 
 ```powershell
 python scripts/optimize-images.py --check
+node generate-blog-index.js --check
 node generate-site-content.js --check
+node scripts/check-static-site.js
 ```
+
+The static-site audit verifies canonical and social metadata, JSON-LD, sitemap
+coverage and dates, case-sensitive local assets, internal links and fragments,
+unique IDs, heading structure, and the generated homepage blog fallback. The
+same audit runs in GitHub Actions before generated content can be committed.
 
 ## Visual System
 
@@ -65,17 +72,22 @@ running `generate-site-content.js` rather than copying the shell by hand.
 
 ## Automatic Blog Listing
 
-This site now supports an automatic blog listing generated from Markdown files in the `posts/` directory. Each post should include YAML front matter with metadata such as `title`, `date`, `category`, `image` and optional `summary`.
+This site supports an automatic blog listing generated from Markdown files in the `posts/` directory. Each post should include bilingual titles, categories and summaries together with `date` and `image`. Optional `seoTitle` and `updated` fields provide a shorter search title and an authoritative modification date.
 
 Example front matter:
 
 ```
 ---
 title: "My Post Title"
+titleZhHant: "文章標題"
 date: "2026-06-06"
 category: "Conference"
+categoryZhHant: "會議"
 image: "./assets/images/example.jpg"
 summary: "Short summary of the post."
+summaryZhHant: "文章摘要。"
+updated: "2026-07-21"
+seoTitle: "Short search-result title"
 ---
 ```
 
@@ -91,4 +103,5 @@ node generate-site-content.js
 
 Notes:
 - If you add or edit posts locally, run both generators before committing (or rely on the workflow to update the generated files after push).
-- The homepage dynamically fetches `assets/data/posts.json` and links each card to its generated static blog page.
+- The homepage contains checked-in blog cards for crawlers and no-JavaScript visitors, then refreshes them from `assets/data/posts.json` when JavaScript is available.
+- `404.html` provides a noindex recovery page for unknown GitHub Pages routes.

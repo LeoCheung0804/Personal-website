@@ -4,9 +4,11 @@ const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
 const { optimizeMediaMarkup } = require('./scripts/media-markup.js');
+const mediaManifest = require('./assets/data/media-manifest.json');
 const {
   siteProfile,
   siteProjects,
+  standalonePages,
   translations,
   validateSiteData
 } = require('./assets/js/site-data.js');
@@ -187,7 +189,7 @@ function replaceElements(html, predicate, expectedCount, updateElement, label) {
       inner: currentInner,
       closingTag
     });
-    const replacement = `${updated.openTag ?? element.openTag}${updated.inner ?? currentInner}${closingTag}`;
+    const replacement = `${updated.openTag ?? element.openTag}${updated.inner ?? currentInner}${updated.closingTag ?? closingTag}`;
     output = output.slice(0, element.openStart) + replacement + output.slice(element.closeEnd);
   }
 
@@ -203,6 +205,10 @@ function replaceElementsByClass(html, tagName, className, expectedCount, updateE
     updateElement,
     label
   );
+}
+
+function retagOpeningTag(openTag, tagName) {
+  return openTag.replace(/^<([A-Za-z][\w:-]*)/, `<${tagName}`);
 }
 
 function lineIndentAt(html, index) {
@@ -353,19 +359,19 @@ function syncSafeBlankLinks(html) {
   return output;
 }
 
-function syncTaskSixAssetVersions(html) {
-  const versionedAssets = [
-    'assets/css/field-notes.css',
-    'assets/js/site-data.js',
-    'assets/js/i18n.js',
-    'assets/js/ui-interactions.js',
-    'assets/js/navigation.js'
-  ];
+function syncAssetVersions(html) {
+  const versionedAssets = {
+    'assets/css/field-notes.css': '20260721-2',
+    'assets/js/site-data.js': '20260721-1',
+    'assets/js/i18n.js': '20260721-1',
+    'assets/js/ui-interactions.js': '20260721-1',
+    'assets/js/navigation.js': '20260721-1'
+  };
 
-  return versionedAssets.reduce((output, assetPath) => {
+  return Object.entries(versionedAssets).reduce((output, [assetPath, version]) => {
     const escapedPath = assetPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const pattern = new RegExp(`((?:href|src)=["'][^"']*${escapedPath})(?:\\?[^"'\\s>]*)?`, 'g');
-    return output.replace(pattern, '$1?v=20260721-1');
+    return output.replace(pattern, `$1?v=${version}`);
   }, html);
 }
 
@@ -539,6 +545,37 @@ function syncTranslatedAttribute(html, fileLabel, dataAttribute, outputAttribute
   return output;
 }
 
+function syncLanguageAttributes(html, fileLabel) {
+  const languageMap = { en: 'en', zhHant: 'zh-Hant' };
+  const openings = findOpeningTags(html, (openTag) => getAttribute(openTag, 'data-lang') !== null);
+  let output = html;
+
+  for (let index = openings.length - 1; index >= 0; index -= 1) {
+    const opening = openings[index];
+    const dataLanguage = getAttribute(opening.openTag, 'data-lang');
+    const language = languageMap[dataLanguage];
+    if (!language) {
+      throw new Error(`${fileLabel}: unsupported data-lang value ${dataLanguage}.`);
+    }
+    const updatedTag = setAttribute(opening.openTag, 'lang', language);
+    output = output.slice(0, opening.openStart) + updatedTag + output.slice(opening.openEnd);
+  }
+
+  return output;
+}
+
+function syncHomepageRouteIds(html, fileLabel) {
+  for (const route of ['about', 'resume', 'portfolio', 'publications', 'blog', 'contact']) {
+    html = updateSingleOpeningTag(
+      html,
+      (openTag, tagName) => tagName.toLowerCase() === 'article' && getAttribute(openTag, 'data-page') === route,
+      (openTag) => setAttribute(openTag, 'id', route),
+      `${fileLabel} ${route} route target`
+    );
+  }
+  return html;
+}
+
 function getContactLabel(contact) {
   return contact.labelKey ? translations.en[contact.labelKey] : contact.label;
 }
@@ -560,14 +597,16 @@ function syncSharedShell(html, fileLabel) {
     `${fileLabel} profile image`
   );
 
+  const profileNameTag = fileLabel === 'index.html' ? 'h1' : 'p';
   html = replaceElementsByClass(
     html,
-    'h1',
+    null,
     'name',
     1,
     ({ openTag }) => ({
-      openTag: setAttribute(openTag, 'title', siteProfile.name),
-      inner: escapeHtml(siteProfile.name)
+      openTag: setAttribute(retagOpeningTag(openTag, profileNameTag), 'title', siteProfile.name),
+      inner: escapeHtml(siteProfile.name),
+      closingTag: `</${profileNameTag}>`
     }),
     `${fileLabel} profile name`
   );
@@ -662,6 +701,22 @@ function syncSharedShell(html, fileLabel) {
   return html;
 }
 
+function syncHeadingStructure(html, fileLabel) {
+  if (fileLabel === 'index.html') return html;
+
+  return replaceElementsByClass(
+    html,
+    null,
+    'article-title',
+    1,
+    ({ openTag }) => ({
+      openTag: retagOpeningTag(openTag, 'h1'),
+      closingTag: '</h1>'
+    }),
+    `${fileLabel} primary content heading`
+  );
+}
+
 function replaceMetaContent(html, fileLabel, attributeName, attributeValue, content) {
   const openings = findOpeningTags(
     html,
@@ -689,6 +744,96 @@ function replaceOptionalMetaContent(html, fileLabel, attributeName, attributeVal
   const opening = openings[0];
   const updatedTag = setAttribute(opening.openTag, 'content', content);
   return html.slice(0, opening.openStart) + updatedTag + html.slice(opening.openEnd);
+}
+
+function upsertMetaContent(html, fileLabel, attributeName, attributeValue, content, eol) {
+  const openings = findOpeningTags(
+    html,
+    (openTag, tagName) =>
+      tagName.toLowerCase() === 'meta' && getAttribute(openTag, attributeName) === attributeValue
+  );
+  if (openings.length > 1) {
+    throw new Error(`${fileLabel}: expected at most one meta[${attributeName}="${attributeValue}"].`);
+  }
+  if (openings.length === 1) {
+    const opening = openings[0];
+    const updatedTag = setAttribute(opening.openTag, 'content', content);
+    return html.slice(0, opening.openStart) + updatedTag + html.slice(opening.openEnd);
+  }
+
+  const headClose = html.search(/<\/head\s*>/i);
+  if (headClose < 0) throw new Error(`${fileLabel}: missing closing head element.`);
+  const headLineStart = html.lastIndexOf('\n', headClose - 1) + 1;
+  const headIndent = html.slice(headLineStart, headClose).match(/^\s*/)[0];
+  const indent = `${headIndent}  `;
+  const tag = `<meta ${attributeName}="${escapeAttribute(attributeValue)}" content="${escapeAttribute(content)}" />`;
+  return html.slice(0, headLineStart) + `${indent}${tag}${eol}` + html.slice(headLineStart);
+}
+
+function normalizeSingleLineMetaIndentation(html) {
+  return html
+    .replace(/^[ \t]*(<meta\b[^>\r\n]*\/?>)[ \t]*$/gmi, '    $1')
+    .replace(/^[ \t]*<\/head>[ \t]*$/gmi, '  </head>');
+}
+
+function moveLateHeadMetadata(html, eol) {
+  const headOpen = html.search(/<head\b[^>]*>/i);
+  const headClose = html.search(/<\/head\s*>/i);
+  if (headOpen < 0 || headClose < 0) return html;
+  const firstScriptOrStyle = html.slice(headOpen, headClose).search(/<(?:script|style)\b/i);
+  if (firstScriptOrStyle < 0) return html;
+  const cutoff = headOpen + firstScriptOrStyle;
+  const lateMeta = findOpeningTags(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'meta'
+  ).filter((opening) => opening.openStart > cutoff && opening.openEnd < headClose)
+    .map((opening) => {
+      const lineStart = html.lastIndexOf('\n', opening.openStart - 1) + 1;
+      const lineEndIndex = html.indexOf('\n', opening.openEnd);
+      const lineEnd = lineEndIndex < 0 ? opening.openEnd : lineEndIndex + 1;
+      const line = html.slice(lineStart, lineEnd).trim();
+      return line === opening.openTag ? { ...opening, lineStart, lineEnd } : null;
+    })
+    .filter(Boolean);
+
+  if (!lateMeta.length) return html;
+  const tagsToMove = lateMeta.map(({ openTag }) => openTag.trim());
+  let output = html;
+  for (let index = lateMeta.length - 1; index >= 0; index -= 1) {
+    const meta = lateMeta[index];
+    output = output.slice(0, meta.lineStart) + output.slice(meta.lineEnd);
+  }
+
+  const updatedHeadOpen = output.search(/<head\b[^>]*>/i);
+  const updatedHeadClose = output.search(/<\/head\s*>/i);
+  const updatedCutoffOffset = output.slice(updatedHeadOpen, updatedHeadClose).search(/<(?:script|style)\b/i);
+  const updatedCutoff = updatedHeadOpen + updatedCutoffOffset;
+  const insertionStart = output.lastIndexOf('\n', updatedCutoff - 1) + 1;
+  const block = tagsToMove.map(tag => `    ${tag}`).join(eol) + eol;
+  return output.slice(0, insertionStart) + block + output.slice(insertionStart);
+}
+
+function mediaEntryFor(imagePath, fileLabel) {
+  const manifestPath = String(imagePath).replace(/^\/+/, '');
+  const entry = mediaManifest[manifestPath];
+  if (!entry) throw new Error(`${fileLabel}: social image is missing from the media manifest: ${manifestPath}`);
+  return entry;
+}
+
+function syncIndexableSocialMetadata(html, fileLabel, options, eol) {
+  const { imagePath, imageAlt, modifiedDate } = options;
+  const media = mediaEntryFor(imagePath, fileLabel);
+
+  html = upsertMetaContent(html, fileLabel, 'name', 'robots', 'index, follow, max-image-preview:large', eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:site_name', `${siteProfile.name} Portfolio`, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:image:alt', imageAlt, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:image:width', String(media.width), eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:image:height', String(media.height), eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'twitter:image:alt', imageAlt, eol);
+  if (modifiedDate) {
+    html = upsertMetaContent(html, fileLabel, 'property', 'article:modified_time', modifiedDate, eol);
+  }
+  return html;
 }
 
 function replaceLinkHref(html, fileLabel, rel, href) {
@@ -739,12 +884,20 @@ function replaceJsonLdByType(html, fileLabel, schemaType, updateData, eol) {
 
 function syncProjectJsonLd(html, fileLabel, project, eol) {
   return replaceJsonLdByType(html, fileLabel, 'CreativeWork', (data) => {
+    const canonicalUrl = absoluteSiteUrl(project.file);
+    data['@id'] = `${canonicalUrl}#creative-work`;
     data.headline = project.title.en;
     data.name = project.title.en;
-    data.url = absoluteSiteUrl(project.file);
+    data.url = canonicalUrl;
     data.image = absoluteSiteUrl(project.seo.image);
     data.description = project.seo.structuredDescription;
     data.keywords = project.seo.keywords;
+    data.dateModified = project.seo.lastmod;
+    data.inLanguage = ['en', 'zh-Hant'];
+    data.mainEntityOfPage = {
+      '@type': 'WebPage',
+      '@id': canonicalUrl
+    };
     if (data.author && typeof data.author === 'object') {
       data.author.name = siteProfile.name;
       data.author.url = `${siteProfile.siteUrl}/`;
@@ -798,6 +951,7 @@ function syncHomepageMetadata(html, fileLabel, eol) {
   const imageUrl = absoluteSiteUrl(siteProfile.seo.image);
 
   html = syncHomepageProjectLinks(html, fileLabel);
+  html = syncHomepageRouteIds(html, fileLabel);
 
   html = replaceElements(
     html,
@@ -818,11 +972,18 @@ function syncHomepageMetadata(html, fileLabel, eol) {
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:title', siteProfile.seo.title);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:description', siteProfile.seo.twitterDescription);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:image', imageUrl);
+  html = syncIndexableSocialMetadata(html, fileLabel, {
+    imagePath: siteProfile.seo.image,
+    imageAlt: siteProfile.seo.imageAlt
+  }, eol);
 
   html = replaceJsonLdByType(html, fileLabel, 'ProfilePage', (data) => {
+    data['@id'] = `${canonicalUrl}#profile-page`;
     data.name = siteProfile.seo.schemaName;
     data.url = canonicalUrl;
     data.description = siteProfile.seo.schemaDescription;
+    data.dateModified = siteProfile.seo.lastmod;
+    data.inLanguage = ['en', 'zh-Hant'];
     data.mainEntity = {
       ...(data.mainEntity || {}),
       '@type': 'Person',
@@ -857,6 +1018,57 @@ function syncHomepageMetadata(html, fileLabel, eol) {
   return html;
 }
 
+function syncDashboardMetadata(html, fileLabel, eol) {
+  const page = standalonePages.dashboard;
+  const canonicalUrl = absoluteSiteUrl(page.file);
+  const imageUrl = absoluteSiteUrl(page.seo.image);
+
+  html = replaceElements(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'title',
+    1,
+    () => ({ inner: escapeHtml(page.seo.title) }),
+    `${fileLabel} document title`
+  );
+  html = replaceMetaContent(html, fileLabel, 'name', 'description', page.seo.description);
+  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.name, eol);
+  html = replaceLinkHref(html, fileLabel, 'canonical', canonicalUrl);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:title', page.seo.title, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:description', page.seo.ogDescription, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:image', imageUrl, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:url', canonicalUrl, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:type', 'website', eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'twitter:card', 'summary_large_image', eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'twitter:title', page.seo.title, eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'twitter:description', page.seo.twitterDescription, eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'twitter:image', imageUrl, eol);
+  html = syncIndexableSocialMetadata(html, fileLabel, {
+    imagePath: page.seo.image,
+    imageAlt: page.seo.imageAlt
+  }, eol);
+
+  html = replaceJsonLdByType(html, fileLabel, 'WebApplication', (data) => {
+    data['@id'] = `${canonicalUrl}#web-application`;
+    data.name = page.seo.schemaName;
+    data.url = canonicalUrl;
+    data.description = page.seo.schemaDescription;
+    data.image = imageUrl;
+    data.applicationCategory = 'UtilitiesApplication';
+    data.operatingSystem = 'Any';
+    data.isAccessibleForFree = true;
+    data.dateModified = page.seo.lastmod;
+    data.inLanguage = ['en', 'zh-Hant'];
+    data.author = {
+      '@type': 'Person',
+      name: siteProfile.name,
+      url: `${siteProfile.siteUrl}/`
+    };
+    return data;
+  }, eol);
+
+  return html;
+}
+
 function syncProjectPage(html, project, fileLabel, eol) {
   const copy = project.copy?.en;
   if (!copy) {
@@ -879,7 +1091,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
 
   html = replaceElementsByClass(
     html,
-    'h2',
+    null,
     'article-title',
     1,
     () => ({ inner: escapeHtml(project.title.en) }),
@@ -929,6 +1141,12 @@ function syncProjectPage(html, project, fileLabel, eol) {
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:description', project.seo.twitterDescription);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:image', imageUrl);
   html = replaceLinkHref(html, fileLabel, 'canonical', canonicalUrl);
+  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.name, eol);
+  html = syncIndexableSocialMetadata(html, fileLabel, {
+    imagePath: project.seo.image,
+    imageAlt: `${project.title.en} project`,
+    modifiedDate: project.seo.lastmod
+  }, eol);
   html = syncProjectJsonLd(html, fileLabel, project, eol);
 
   return html;
@@ -976,6 +1194,7 @@ function getGeneratedGitPaths() {
     'blog',
     'index.html',
     'blog-post.html',
+    ...Object.values(standalonePages).map((page) => page.file),
     ...projectPages.map((project) => project.file)
   ];
 }
@@ -1005,6 +1224,7 @@ if (listMode) {
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-placeholder', 'placeholder');
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-aria-label', 'aria-label');
       output = syncSharedShell(output, relativePath);
+      output = syncHeadingStructure(output, relativePath);
 
       if (relativePath === 'index.html') {
         output = syncHomepageMetadata(output, relativePath, eol);
@@ -1015,9 +1235,21 @@ if (listMode) {
         output = syncProjectPage(output, project, relativePath, eol);
       }
 
-      output = syncTaskSixAssetVersions(output);
+      output = syncLanguageAttributes(output, relativePath);
+      output = syncAssetVersions(output);
       output = syncSafeBlankLinks(output);
+      output = moveLateHeadMetadata(output, eol);
+      output = normalizeSingleLineMetaIndentation(output);
       return optimizeMediaMarkup(output, relativePath);
+    });
+  }
+
+  for (const page of Object.values(standalonePages)) {
+    updateFile(page.file, (html, eol) => {
+      let output = syncDashboardMetadata(html, page.file, eol);
+      output = syncSafeBlankLinks(output);
+      output = moveLateHeadMetadata(output, eol);
+      return normalizeSingleLineMetaIndentation(output);
     });
   }
 

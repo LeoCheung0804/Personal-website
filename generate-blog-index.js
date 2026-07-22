@@ -6,9 +6,11 @@ const {
   optimizeMediaMarkup,
   responsiveMedia
 } = require('./scripts/media-markup.js');
+const mediaManifest = require('./assets/data/media-manifest.json');
 const {
   siteProfile,
   siteProjects,
+  standalonePages,
   translations,
   validateSiteData
 } = require('./assets/js/site-data.js');
@@ -24,14 +26,22 @@ const postsDir = path.join(__dirname, 'posts');
 const blogDir = path.join(__dirname, 'blog');
 const outputFile = path.join(__dirname, 'assets', 'data', 'posts.json');
 const sitemapFile = path.join(__dirname, 'sitemap.xml');
+const homepageFile = path.join(__dirname, 'index.html');
+const checkMode = process.argv.includes('--check');
 
 const staticSitemapPages = [
-  { path: '', lastmod: '2026-05-05', changefreq: 'weekly', priority: '1.0' },
+  { path: '', lastmod: siteProfile.seo.lastmod, changefreq: 'weekly', priority: '1.0' },
   ...Object.values(siteProjects).map(project => ({
     path: project.file,
     lastmod: project.seo.lastmod,
     changefreq: 'monthly',
     priority: '0.8'
+  })),
+  ...Object.values(standalonePages).map(page => ({
+    path: page.file,
+    lastmod: page.seo.lastmod,
+    changefreq: 'weekly',
+    priority: '0.6'
   }))
 ];
 
@@ -141,6 +151,16 @@ function toBlogPageAssetPath(value = '') {
   return `../${normalizeSitePath(value)}`;
 }
 
+function mediaEntryFor(value = '') {
+  return mediaManifest[normalizeSitePath(value)] || null;
+}
+
+function addLanguageAttributes(html) {
+  return String(html)
+    .replace(/(<[A-Za-z][^>]*\sdata-lang=["']en["'])(?![^>]*\slang=)/g, '$1 lang="en"')
+    .replace(/(<[A-Za-z][^>]*\sdata-lang=["']zhHant["'])(?![^>]*\slang=)/g, '$1 lang="zh-Hant"');
+}
+
 function formatDate(dateValue, locale) {
   if (!dateValue) return '';
 
@@ -153,7 +173,9 @@ function formatDate(dateValue, locale) {
 }
 
 function renderPostBody(body) {
-  if (/<[a-z][\s\S]*>/i.test(body)) return body;
+  if (/<[a-z][\s\S]*>/i.test(body)) {
+    return addLanguageAttributes(body.replace(/<(\/?)h1\b/gi, '<$1h2'));
+  }
 
   return body
     .split(/\n{2,}/)
@@ -170,7 +192,7 @@ function renderPostBody(body) {
       }
 
       if (/^#\s+/.test(trimmed)) {
-        return `<h1>${escapeHtml(trimmed.replace(/^#\s+/, ''))}</h1>`;
+        return `<h2>${escapeHtml(trimmed.replace(/^#\s+/, ''))}</h2>`;
       }
 
       return `<p>${escapeHtml(trimmed).replace(/\n/g, '<br>')}</p>`;
@@ -180,15 +202,20 @@ function renderPostBody(body) {
 }
 
 function generateJsonLd(post) {
+  const canonicalUrl = `${siteUrl}/blog/${post.slug}.html`;
+  const modifiedDate = post.updated || post.date;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
+    '@id': `${canonicalUrl}#blog-posting`,
     headline: post.title || post.filename,
     alternativeHeadline: post.titleZhHant || undefined,
     description: post.summary || undefined,
     image: post.image ? [toAbsoluteUrl(post.image)] : undefined,
     datePublished: post.date || undefined,
-    dateModified: post.date || undefined,
+    dateModified: modifiedDate || undefined,
+    inLanguage: ['en', 'zh-Hant'],
+    url: canonicalUrl,
     author: {
       '@type': 'Person',
       name: siteProfile.name,
@@ -201,7 +228,7 @@ function generateJsonLd(post) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteUrl}/blog/${post.slug}.html`
+      '@id': canonicalUrl
     }
   };
 
@@ -219,9 +246,12 @@ function generateBlogPage(post) {
   const canonicalUrl = `${siteUrl}/blog/${post.slug}.html`;
   const imageUrl = toAbsoluteUrl(post.image);
   const imagePath = toBlogPageAssetPath(post.image);
+  const imageMedia = mediaEntryFor(post.image);
+  const imageAlt = post.imageAlt || title;
+  const modifiedDate = post.updated || post.date;
   const dateEn = formatDate(post.date, 'en-US');
   const dateZhHant = formatDate(post.date, 'zh-HK');
-  const titleWithSite = `${title} | ${siteProfile.name}`;
+  const titleWithSite = `${post.seoTitle || title} | ${siteProfile.name}`;
   const postBody = renderPostBody(post.body);
 
   const html = `<!DOCTYPE html>
@@ -233,18 +263,24 @@ function generateBlogPage(post) {
     <title>${escapeHtml(titleWithSite)}</title>
     <meta name="description" content="${escapeHtml(summary)}" />
     <meta name="author" content="${escapeHtml(siteProfile.name)}" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
     <meta property="og:title" content="${escapeHtml(titleWithSite)}" />
     <meta property="og:description" content="${escapeHtml(summary)}" />
-    ${imageUrl ? `<meta property="og:image" content="${escapeHtml(imageUrl)}" />` : ''}
+    ${imageUrl ? `<meta property="og:image" content="${escapeHtml(imageUrl)}" />
+    <meta property="og:image:alt" content="${escapeHtml(imageAlt)}" />
+    <meta property="og:image:width" content="${imageMedia.width}" />
+    <meta property="og:image:height" content="${imageMedia.height}" />` : ''}
     <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="${escapeHtml(`${siteProfile.name} Portfolio`)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(titleWithSite)}" />
     <meta name="twitter:description" content="${escapeHtml(summary)}" />
-    ${imageUrl ? `<meta name="twitter:image" content="${escapeHtml(imageUrl)}" />` : ''}
+    ${imageUrl ? `<meta name="twitter:image" content="${escapeHtml(imageUrl)}" />
+    <meta name="twitter:image:alt" content="${escapeHtml(imageAlt)}" />` : ''}
     ${post.date ? `<meta property="article:published_time" content="${escapeHtml(post.date)}" />` : ''}
+    ${modifiedDate ? `<meta property="article:modified_time" content="${escapeHtml(modifiedDate)}" />` : ''}
     <script type="application/ld+json">
       ${generateJsonLd(post)}
     </script>
@@ -261,7 +297,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260721-1" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260721-2" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -278,7 +314,7 @@ function generateBlogPage(post) {
             <img src="../assets/images/profile.jpg" alt="${escapeHtml(siteProfile.name)}" width="80" />
           </figure>
           <div class="info-content">
-            <h1 class="name" title="${escapeHtml(siteProfile.name)}">${escapeHtml(siteProfile.name)}</h1>
+            <p class="name" title="${escapeHtml(siteProfile.name)}">${escapeHtml(siteProfile.name)}</p>
             <p class="title">${escapeHtml(siteProfile.role.en)}</p>
           </div>
           <button class="info_more-btn" data-sidebar-btn="" aria-expanded="false" aria-controls="sidebar-contact-details" aria-label="${escapeHtml(translations.en['sidebar.showContacts'])}" data-i18n-aria-label="sidebar.showContacts">
@@ -405,24 +441,24 @@ function generateBlogPage(post) {
         <article class="blog-post-full active" data-page="blog-post">
           <header>
             <a href="../index.html#blog" class="btn-back" data-i18n="blog.backToBlog">${escapeHtml(translations.en['blog.backToBlog'])}</a>
-            <h2 class="h2 article-title">
-              <span data-lang="en">${escapeHtml(title)}</span>
-              <span data-lang="zhHant">${escapeHtml(titleZhHant)}</span>
-            </h2>
+            <h1 class="h2 article-title">
+              <span data-lang="en" lang="en">${escapeHtml(title)}</span>
+              <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(titleZhHant)}</span>
+            </h1>
             <div class="blog-meta">
               <p class="blog-category">
-                <span data-lang="en">${escapeHtml(category)}</span>
-                <span data-lang="zhHant">${escapeHtml(categoryZhHant)}</span>
+                <span data-lang="en" lang="en">${escapeHtml(category)}</span>
+                <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(categoryZhHant)}</span>
               </p>
               <span class="dot"></span>
               <time datetime="${escapeHtml(post.date || '')}">
-                <span data-lang="en">${escapeHtml(dateEn)}</span>
-                <span data-lang="zhHant">${escapeHtml(dateZhHant)}</span>
+                <span data-lang="en" lang="en">${escapeHtml(dateEn)}</span>
+                <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(dateZhHant)}</span>
               </time>
             </div>
           </header>
           ${imagePath ? `<figure class="blog-banner-box">
-            <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(title)}" loading="eager" />
+            <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(imageAlt)}" loading="eager" />
           </figure>` : ''}
           <div class="blog-content">
 ${postBody}
@@ -454,6 +490,71 @@ ${postBody}
   return optimizeMediaMarkup(html, `blog/${post.slug}.html`);
 }
 
+function formatCardDate(dateValue, locale) {
+  if (!dateValue) return '';
+  return new Date(`${dateValue}T00:00:00Z`).toLocaleDateString(locale, {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    timeZone: 'UTC'
+  });
+}
+
+function renderHomepageBlogCard(post) {
+  const title = post.title || post.filename;
+  const titleZhHant = post.titleZhHant || title;
+  const category = post.category || '';
+  const categoryZhHant = post.categoryZhHant || category;
+  const summary = post.summary || '';
+  const summaryZhHant = post.summaryZhHant || summary;
+  const dateEn = formatCardDate(post.date, 'en-US');
+  const dateZhHant = formatCardDate(post.date, 'zh-HK');
+  const media = post.imageMedia;
+  const imageMarkup = post.image && media
+    ? `<figure class="blog-banner-box">
+                  <img src="${escapeHtml(media.src)}" srcset="${escapeHtml(media.srcset)}" sizes="${escapeHtml(media.sizes)}" width="${media.width}" height="${media.height}" data-media-source="${escapeHtml(media.source)}" alt="${escapeHtml(post.imageAlt || title)}" loading="lazy" decoding="async" />
+                </figure>`
+    : '';
+
+  return `              <li class="blog-post-item tilt-card fade-seed">
+                <a href="${escapeHtml(post.url)}" class="magnetic" data-magnetic>
+                ${imageMarkup}
+                  <div class="blog-content">
+                    <div class="blog-meta">
+                      <p class="blog-category">
+                        <span data-lang="en" lang="en">${escapeHtml(category)}</span>
+                        <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(categoryZhHant)}</span>
+                      </p>
+                      <span class="dot"></span>
+                      <time datetime="${escapeHtml(post.date || '')}">
+                        <span data-lang="en" lang="en">${escapeHtml(dateEn)}</span>
+                        <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(dateZhHant)}</span>
+                      </time>
+                    </div>
+                    <h3 class="h3 blog-item-title">
+                      <span data-lang="en" lang="en">${escapeHtml(title)}</span>
+                      <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(titleZhHant)}</span>
+                    </h3>
+                    <p class="blog-text">
+                      <span data-lang="en" lang="en">${escapeHtml(summary)}</span>
+                      <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(summaryZhHant)}</span>
+                    </p>
+                  </div>
+                </a>
+              </li>`;
+}
+
+function syncHomepageBlogCards(html, posts) {
+  const pattern = /(<ul\b[^>]*\bid=["']dynamic-blog-list["'][^>]*>)[\s\S]*?(<\/ul>)/i;
+  const matches = html.match(new RegExp(pattern.source, 'gi')) || [];
+  if (matches.length !== 1) {
+    throw new Error(`index.html: expected one dynamic-blog-list, found ${matches.length}.`);
+  }
+  const cards = posts.map(renderHomepageBlogCard).join('\n');
+  const inner = `\n              <!-- Generated from posts/*.md by generate-blog-index.js. -->\n${cards}\n            `;
+  return html.replace(pattern, `$1${inner}$2`);
+}
+
 function buildSitemap(posts) {
   const entries = staticSitemapPages.map(page => ({
     loc: `${siteUrl}/${page.path}`,
@@ -465,7 +566,7 @@ function buildSitemap(posts) {
   posts.forEach(post => {
     entries.push({
       loc: `${siteUrl}/blog/${post.slug}.html`,
-      lastmod: post.date || '2026-05-05',
+      lastmod: post.updated || post.date || siteProfile.seo.lastmod,
       changefreq: 'monthly',
       priority: '0.7'
     });
@@ -509,6 +610,28 @@ const posts = files.map(file => {
     summary,
     body
   });
+
+  const requiredFields = ['title', 'titleZhHant', 'date', 'category', 'categoryZhHant', 'image', 'summary', 'summaryZhHant'];
+  const missingFields = requiredFields.filter(field => !post[field]);
+  if (missingFields.length) {
+    throw new Error(`${file}: missing required front matter: ${missingFields.join(', ')}.`);
+  }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(post.date)
+    || (post.updated && !/^\d{4}-\d{2}-\d{2}$/.test(post.updated))) {
+    throw new Error(`${file}: date and updated must use YYYY-MM-DD.`);
+  }
+  if (post.updated && post.updated < post.date) {
+    throw new Error(`${file}: updated cannot be earlier than date.`);
+  }
+  if (!mediaEntryFor(post.image)) {
+    throw new Error(`${file}: image is missing from assets/data/media-manifest.json.`);
+  }
+  if (`${post.seoTitle || post.title} | ${siteProfile.name}`.length > 70) {
+    throw new Error(`${file}: generated SEO title exceeds 70 characters; add a shorter seoTitle.`);
+  }
+  if (post.summary.length > 160) {
+    throw new Error(`${file}: summary exceeds 160 characters.`);
+  }
   return post;
 });
 
@@ -540,13 +663,39 @@ const generatedBlogPages = posts.map(post => {
 });
 const generatedPostIndex = `${JSON.stringify(postIndex, null, 2)}\n`;
 const generatedSitemap = buildSitemap(posts);
-
-commitFileTransaction([
+const generatedHomepage = optimizeMediaMarkup(
+  syncHomepageBlogCards(fs.readFileSync(homepageFile, 'utf8'), postIndex),
+  'index.html'
+);
+const generatedWrites = [
   ...generatedBlogPages.map(({ outputPath, content }) => ({ targetPath: outputPath, content })),
   { targetPath: outputFile, content: generatedPostIndex },
-  { targetPath: sitemapFile, content: generatedSitemap }
-]);
+  { targetPath: sitemapFile, content: generatedSitemap },
+  { targetPath: homepageFile, content: generatedHomepage }
+];
 
-removeObsoleteBlogPages(generatedBlogPages.map(({ outputPath }) => outputPath));
+if (checkMode) {
+  const staleFiles = generatedWrites
+    .filter(({ targetPath, content }) => !fs.existsSync(targetPath) || fs.readFileSync(targetPath, 'utf8') !== content)
+    .map(({ targetPath }) => path.relative(__dirname, targetPath).replace(/\\/g, '/'));
+  const desiredBlogFiles = new Set(generatedBlogPages.map(({ outputPath }) => path.resolve(outputPath)));
+  const obsoleteBlogFiles = fs.existsSync(blogDir)
+    ? fs.readdirSync(blogDir)
+      .filter(file => file.endsWith('.html'))
+      .map(file => path.resolve(blogDir, file))
+      .filter(outputPath => !desiredBlogFiles.has(outputPath))
+      .map(outputPath => path.relative(__dirname, outputPath).replace(/\\/g, '/'))
+    : [];
 
-console.log(`Generated index and ${posts.length} blog pages at ${blogDir}`);
+  if (staleFiles.length || obsoleteBlogFiles.length) {
+    console.error('Generated blog content is out of date:');
+    [...staleFiles, ...obsoleteBlogFiles].forEach(file => console.error(`- ${file}`));
+    process.exitCode = 1;
+  } else {
+    console.log(`Generated blog content is current (${posts.length} posts).`);
+  }
+} else {
+  commitFileTransaction(generatedWrites);
+  removeObsoleteBlogPages(generatedBlogPages.map(({ outputPath }) => outputPath));
+  console.log(`Generated index and ${posts.length} blog pages at ${blogDir}`);
+}
