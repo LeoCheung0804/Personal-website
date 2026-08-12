@@ -4,28 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung</title>
+    <title>Hong Kong Weather and KMB Arrival Dashboard | Cheung Man Loc</title>
     <meta
       name="description"
       content="Live Hong Kong dashboard showing Observatory weather data and KMB bus arrivals at Sheung Tak Bus Terminus."
     />
     <link rel="canonical" href="https://leocml.com/dashboard.html" />
-    <meta name="author" content="Leo Cheung" />
-    <meta property="og:title" content="Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung" />
+    <meta name="author" content="Cheung Man Loc" />
+    <meta property="og:title" content="Hong Kong Weather and KMB Arrival Dashboard | Cheung Man Loc" />
     <meta property="og:description" content="Live Hong Kong weather, warnings, forecasts, and KMB arrival information in one responsive dashboard." />
     <meta property="og:image" content="https://leocml.com/assets/images/profile.jpg" />
     <meta property="og:url" content="https://leocml.com/dashboard.html" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung" />
+    <meta name="twitter:title" content="Hong Kong Weather and KMB Arrival Dashboard | Cheung Man Loc" />
     <meta name="twitter:description" content="Live Hong Kong weather and KMB arrival information for Sheung Tak Bus Terminus." />
     <meta name="twitter:image" content="https://leocml.com/assets/images/profile.jpg" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta property="og:site_name" content="Leo Cheung Portfolio" />
-    <meta property="og:image:alt" content="Hong Kong weather and KMB arrival dashboard by Leo Cheung" />
+    <meta property="og:site_name" content="Cheung Man Loc Portfolio" />
+    <meta property="og:image:alt" content="Hong Kong weather and KMB arrival dashboard by Cheung Man Loc, known as Leo Cheung" />
     <meta property="og:image:width" content="1188" />
     <meta property="og:image:height" content="1188" />
-    <meta name="twitter:image:alt" content="Hong Kong weather and KMB arrival dashboard by Leo Cheung" />
+    <meta name="twitter:image:alt" content="Hong Kong weather and KMB arrival dashboard by Cheung Man Loc, known as Leo Cheung" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -38,14 +38,21 @@
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",
         "isAccessibleForFree": true,
-        "dateModified": "2026-07-21",
+        "dateModified": "2026-08-13",
         "inLanguage": [
           "en",
           "zh-Hant"
         ],
         "author": {
           "@type": "Person",
-          "name": "Leo Cheung",
+          "@id": "https://leocml.com/#person",
+          "name": "Cheung Man Loc",
+          "alternateName": [
+            "Leo Cheung",
+            "Man Loc Cheung"
+          ],
+          "givenName": "Man Loc",
+          "familyName": "Cheung",
           "url": "https://leocml.com/"
         }
       }
@@ -136,6 +143,13 @@
         font-size: clamp(22px, 3vw, 34px);
         font-weight: var(--fw-600);
         line-height: 1.15;
+      }
+
+      .dashboard-author {
+        margin-top: 5px;
+        color: var(--light-gray-70);
+        font-size: 12px;
+        line-height: 1.4;
       }
 
       .dashboard-actions {
@@ -1324,8 +1338,11 @@
               Hong Kong Live Board
             </p>
             <h1 class="dashboard-title" data-i18n="dashboard.title">
-              Weather and KMB Arrivals
+              Hong Kong Weather and KMB Arrival Dashboard
             </h1>
+            <p class="dashboard-author" data-i18n="dashboard.author">
+              Built by Cheung Man Loc (Leo Cheung)
+            </p>
           </div>
         </div>
 
@@ -1557,9 +1574,10 @@
       const DASHBOARD_COPY = {
         en: {
           "document.title":
-            "Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung",
+            "Hong Kong Weather and KMB Arrival Dashboard | Cheung Man Loc",
           "dashboard.kicker": "Hong Kong Live Board",
-          "dashboard.title": "Weather and KMB Arrivals",
+          "dashboard.title": "Hong Kong Weather and KMB Arrival Dashboard",
+          "dashboard.author": "Built by Cheung Man Loc (Leo Cheung)",
           "action.refresh": "Refresh",
           "action.detect": "Detect",
           "language.toggle": "Switch language",
@@ -1613,9 +1631,10 @@
           "source.sources": "Sources:",
         },
         zhHant: {
-          "document.title": "香港天氣及九巴到站儀表板 | Leo Cheung",
+          "document.title": "香港天氣及九巴到站儀表板 | Cheung Man Loc",
           "dashboard.kicker": "香港即時資訊板",
-          "dashboard.title": "天氣及九巴到站",
+          "dashboard.title": "香港天氣及九巴到站儀表板",
+          "dashboard.author": "由 Cheung Man Loc（Leo Cheung）製作",
           "action.refresh": "更新",
           "action.detect": "定位",
           "language.toggle": "切換語言",

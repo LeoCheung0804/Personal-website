@@ -35,8 +35,8 @@ const requiredIndexTranslationCounts = Object.fromEntries(`
   nav.resume profile.title project.borderless.title project.cuBrick.title
   project.exoskeleton.title project.footController.title project.knowTouch.title
   project.microwave.title project.retractable.title project.spray.title
-  project.tapper.title projectPreview.title projects.title
-  publications.cuBrick.abstract publications.cuBrick.info publications.cuBrick.title
+  project.tapper.title projectPreview.title projects.dashboard projects.moreTools projects.title
+  publications.cuBrick.abstract publications.cuBrick.authors publications.cuBrick.info publications.cuBrick.title
   publications.title resume.bsc.project resume.bsc.title resume.education
   resume.experience resume.graduateExecutive resume.graduateExecutive.project
   resume.mechanicalEngineer resume.mechanicalEngineer.projects resume.msc.project
@@ -361,9 +361,9 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20260721-2',
-    'assets/js/site-data.js': '20260721-1',
-    'assets/js/i18n.js': '20260721-1',
+    'assets/css/field-notes.css': '20260813-1',
+    'assets/js/site-data.js': '20260813-1',
+    'assets/js/i18n.js': '20260813-1',
     'assets/js/ui-interactions.js': '20260721-1',
     'assets/js/navigation.js': '20260721-1'
   };
@@ -614,7 +614,7 @@ function syncSharedShell(html, fileLabel) {
       return tagName.toLowerCase() === 'img' && /assets\/images\/profile\.jpg$/i.test(src);
     },
     1,
-    ({ openTag }) => ({ openTag: setAttribute(openTag, 'alt', siteProfile.name) }),
+    ({ openTag }) => ({ openTag: setAttribute(openTag, 'alt', `${siteProfile.fullName}, known as ${siteProfile.name}`) }),
     `${fileLabel} profile image`
   );
 
@@ -625,8 +625,8 @@ function syncSharedShell(html, fileLabel) {
     'name',
     1,
     ({ openTag }) => ({
-      openTag: setAttribute(retagOpeningTag(openTag, profileNameTag), 'title', siteProfile.name),
-      inner: escapeHtml(siteProfile.name),
+      openTag: setAttribute(retagOpeningTag(openTag, profileNameTag), 'title', `${siteProfile.fullName} (${siteProfile.name})`),
+      inner: `${escapeHtml(siteProfile.name)}<span class="full-name">${escapeHtml(siteProfile.fullName)}</span>`,
       closingTag: `</${profileNameTag}>`
     }),
     `${fileLabel} profile name`
@@ -704,7 +704,7 @@ function syncSharedShell(html, fileLabel) {
     'p',
     'copyright',
     1,
-    () => ({ inner: `&copy; ${siteProfile.copyrightYear} ${escapeHtml(siteProfile.name)}` }),
+    () => ({ inner: `&copy; ${siteProfile.copyrightYear} ${escapeHtml(siteProfile.fullName)} (${escapeHtml(siteProfile.name)})` }),
     `${fileLabel} copyright`
   );
 
@@ -717,7 +717,7 @@ function syncSharedShell(html, fileLabel) {
     `${fileLabel} back-to-top link`
   );
 
-  html = replaceOptionalMetaContent(html, fileLabel, 'name', 'author', siteProfile.name);
+  html = replaceOptionalMetaContent(html, fileLabel, 'name', 'author', siteProfile.fullName);
 
   return html;
 }
@@ -846,7 +846,7 @@ function syncIndexableSocialMetadata(html, fileLabel, options, eol) {
   const media = mediaEntryFor(imagePath, fileLabel);
 
   html = upsertMetaContent(html, fileLabel, 'name', 'robots', 'index, follow, max-image-preview:large', eol);
-  html = upsertMetaContent(html, fileLabel, 'property', 'og:site_name', `${siteProfile.name} Portfolio`, eol);
+  html = upsertMetaContent(html, fileLabel, 'property', 'og:site_name', `${siteProfile.fullName} Portfolio`, eol);
   html = upsertMetaContent(html, fileLabel, 'property', 'og:image:alt', imageAlt, eol);
   html = upsertMetaContent(html, fileLabel, 'property', 'og:image:width', String(media.width), eol);
   html = upsertMetaContent(html, fileLabel, 'property', 'og:image:height', String(media.height), eol);
@@ -873,6 +873,18 @@ function replaceLinkHref(html, fileLabel, rel, href) {
 
 function absoluteSiteUrl(sitePath = '') {
   return new URL(sitePath, `${siteProfile.siteUrl}/`).toString();
+}
+
+function personSchemaReference() {
+  return {
+    '@type': 'Person',
+    '@id': `${siteProfile.siteUrl}/#person`,
+    name: siteProfile.fullName,
+    alternateName: [siteProfile.name, siteProfile.publishedName],
+    givenName: siteProfile.givenName,
+    familyName: siteProfile.familyName,
+    url: `${siteProfile.siteUrl}/`
+  };
 }
 
 function replaceJsonLdByType(html, fileLabel, schemaType, updateData, eol) {
@@ -919,10 +931,21 @@ function syncProjectJsonLd(html, fileLabel, project, eol) {
       '@type': 'WebPage',
       '@id': canonicalUrl
     };
-    if (data.author && typeof data.author === 'object') {
-      data.author.name = siteProfile.name;
-      data.author.url = `${siteProfile.siteUrl}/`;
+    data.author = personSchemaReference();
+    if (project.awards?.length) {
+      data.award = project.awards.map(({ name }) => name);
+      data.subjectOf = project.awards.map(({ name, url }) => ({
+        '@type': 'BlogPosting',
+        '@id': `${absoluteSiteUrl(url)}#blog-posting`,
+        headline: name,
+        url: absoluteSiteUrl(url)
+      }));
+    } else {
+      delete data.award;
+      delete data.subjectOf;
     }
+    if (project.citations?.length) data.citation = project.citations;
+    else delete data.citation;
     return data;
   }, eol);
 }
@@ -983,13 +1006,13 @@ function syncHomepageMetadata(html, fileLabel, eol) {
   );
   html = replaceMetaContent(html, fileLabel, 'name', 'description', siteProfile.seo.description);
   html = replaceMetaContent(html, fileLabel, 'name', 'keywords', siteProfile.seo.keywords);
-  html = replaceMetaContent(html, fileLabel, 'name', 'author', siteProfile.name);
+  html = replaceMetaContent(html, fileLabel, 'name', 'author', siteProfile.fullName);
   html = replaceLinkHref(html, fileLabel, 'canonical', canonicalUrl);
   html = replaceMetaContent(html, fileLabel, 'property', 'og:title', siteProfile.seo.title);
   html = replaceMetaContent(html, fileLabel, 'property', 'og:description', siteProfile.seo.ogDescription);
   html = replaceMetaContent(html, fileLabel, 'property', 'og:image', imageUrl);
   html = replaceMetaContent(html, fileLabel, 'property', 'og:url', canonicalUrl);
-  html = replaceMetaContent(html, fileLabel, 'property', 'og:site_name', `${siteProfile.name} Portfolio`);
+  html = replaceMetaContent(html, fileLabel, 'property', 'og:site_name', `${siteProfile.fullName} Portfolio`);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:title', siteProfile.seo.title);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:description', siteProfile.seo.twitterDescription);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:image', imageUrl);
@@ -1007,11 +1030,14 @@ function syncHomepageMetadata(html, fileLabel, eol) {
     data.inLanguage = ['en', 'zh-Hant'];
     data.mainEntity = {
       ...(data.mainEntity || {}),
-      '@type': 'Person',
-      name: siteProfile.name,
+      ...personSchemaReference(),
       jobTitle: siteProfile.role.en,
-      url: canonicalUrl,
       image: imageUrl,
+      identifier: {
+        '@type': 'PropertyValue',
+        propertyID: 'ORCID',
+        value: siteProfile.contacts.find(({ id }) => id === 'orcid')?.value
+      },
       address: {
         '@type': 'PostalAddress',
         addressLocality: siteProfile.location.en
@@ -1021,17 +1047,71 @@ function syncHomepageMetadata(html, fileLabel, eol) {
         .map(({ href }) => href),
       knowsAbout: siteProfile.seo.knowsAbout
     };
+    data.hasPart = [
+      ...projectPages.map((project) => ({
+        '@type': 'CreativeWork',
+        '@id': `${absoluteSiteUrl(project.file)}#creative-work`,
+        name: project.title.en,
+        url: absoluteSiteUrl(project.file)
+      })),
+      ...Object.values(standalonePages).map((page) => ({
+        '@type': 'WebApplication',
+        '@id': `${absoluteSiteUrl(page.file)}#web-application`,
+        name: page.seo.schemaName,
+        url: absoluteSiteUrl(page.file)
+      })),
+      ...projectPages.flatMap((project) => (project.awards || []).map(({ name, url }) => ({
+        '@type': 'BlogPosting',
+        '@id': `${absoluteSiteUrl(url)}#blog-posting`,
+        headline: name,
+        url: absoluteSiteUrl(url)
+      })))
+    ];
+    return data;
+  }, eol);
+
+  html = replaceJsonLdByType(html, fileLabel, 'WebSite', (data) => {
+    data['@context'] = 'https://schema.org';
+    data['@type'] = 'WebSite';
+    data['@id'] = `${canonicalUrl}#website`;
+    data.name = siteProfile.fullName;
+    data.alternateName = [siteProfile.name, `${siteProfile.name} Portfolio`];
+    data.url = canonicalUrl;
+    data.publisher = { '@id': `${canonicalUrl}#person` };
+    data.inLanguage = ['en', 'zh-Hant'];
     return data;
   }, eol);
 
   html = replaceJsonLdByType(html, fileLabel, 'ItemList', (data) => {
-    data.name = `Robotics and Engineering Projects by ${siteProfile.name}`;
-    data.itemListElement = projectPages.map((project, index) => ({
+    data.name = `Robotics and Engineering Projects by ${siteProfile.fullName} (${siteProfile.name})`;
+    const listedWorks = [
+      ...projectPages.map((project) => ({
+        type: 'CreativeWork',
+        id: `${absoluteSiteUrl(project.file)}#creative-work`,
+        url: absoluteSiteUrl(project.file),
+        name: project.title.en,
+        description: project.seo.structuredDescription
+      })),
+      ...Object.values(standalonePages).map((page) => ({
+        type: 'WebApplication',
+        id: `${absoluteSiteUrl(page.file)}#web-application`,
+        url: absoluteSiteUrl(page.file),
+        name: page.seo.schemaName,
+        description: page.seo.schemaDescription
+      }))
+    ];
+    data.itemListElement = listedWorks.map((work, index) => ({
       '@type': 'ListItem',
       position: index + 1,
-      url: absoluteSiteUrl(project.file),
-      name: project.title.en,
-      description: project.seo.structuredDescription
+      url: work.url,
+      name: work.name,
+      description: work.description,
+      item: {
+        '@type': work.type,
+        '@id': work.id,
+        name: work.name,
+        url: work.url
+      }
     }));
     return data;
   }, eol);
@@ -1052,7 +1132,7 @@ function syncDashboardMetadata(html, fileLabel, eol) {
     `${fileLabel} document title`
   );
   html = replaceMetaContent(html, fileLabel, 'name', 'description', page.seo.description);
-  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.name, eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.fullName, eol);
   html = replaceLinkHref(html, fileLabel, 'canonical', canonicalUrl);
   html = upsertMetaContent(html, fileLabel, 'property', 'og:title', page.seo.title, eol);
   html = upsertMetaContent(html, fileLabel, 'property', 'og:description', page.seo.ogDescription, eol);
@@ -1079,11 +1159,7 @@ function syncDashboardMetadata(html, fileLabel, eol) {
     data.isAccessibleForFree = true;
     data.dateModified = page.seo.lastmod;
     data.inLanguage = ['en', 'zh-Hant'];
-    data.author = {
-      '@type': 'Person',
-      name: siteProfile.name,
-      url: `${siteProfile.siteUrl}/`
-    };
+    data.author = personSchemaReference();
     return data;
   }, eol);
 
@@ -1143,7 +1219,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
     `${fileLabel} project content`
   );
 
-  const documentTitle = `${project.title.en} | ${siteProfile.name}`;
+  const documentTitle = `${project.title.en} | ${siteProfile.fullName}`;
   const canonicalUrl = absoluteSiteUrl(project.file);
   const imageUrl = absoluteSiteUrl(project.seo.image);
   html = replaceElements(
@@ -1162,7 +1238,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:description', project.seo.twitterDescription);
   html = replaceMetaContent(html, fileLabel, 'name', 'twitter:image', imageUrl);
   html = replaceLinkHref(html, fileLabel, 'canonical', canonicalUrl);
-  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.name, eol);
+  html = upsertMetaContent(html, fileLabel, 'name', 'author', siteProfile.fullName, eol);
   html = syncIndexableSocialMetadata(html, fileLabel, {
     imagePath: project.seo.image,
     imageAlt: `${project.title.en} project`,

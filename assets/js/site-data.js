@@ -2,6 +2,10 @@
 
 const siteProfile = {
   name: "Leo Cheung",
+  fullName: "Cheung Man Loc",
+  publishedName: "Man Loc Cheung",
+  givenName: "Man Loc",
+  familyName: "Cheung",
   siteUrl: "https://leocml.com",
   role: {
     en: "Construction Robotics Engineer",
@@ -54,17 +58,19 @@ const siteProfile = {
     }
   ],
   seo: {
-    title: "Leo Cheung | Construction Robotics Engineer",
-    schemaName: "Leo Cheung Construction Robotics Portfolio",
-    description: "Portfolio of Leo Cheung, a Hong Kong construction robotics engineer building cable-driven robots, facade inspection systems, and autonomous machinery.",
-    schemaDescription: "A field-focused robotics engineering portfolio spanning construction automation, cable-driven robots, facade inspection, autonomous painting, embedded systems, and mechanical design.",
-    keywords: "construction robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
-    ogDescription: "Field-focused construction robotics, facade inspection, autonomous painting, and embedded mechatronics projects by Leo Cheung.",
-    twitterDescription: "Construction robotics and mechatronics projects taken from early prototypes to real-world deployment.",
+    title: "Cheung Man Loc (Leo Cheung) | Construction Robotics Engineer",
+    schemaName: "Cheung Man Loc Construction Robotics Portfolio",
+    description: "Portfolio of Cheung Man Loc, known as Leo Cheung, a Hong Kong construction robotics engineer behind CU-Brick, Robo-Tapper, and automation projects.",
+    schemaDescription: "Cheung Man Loc, professionally known as Leo Cheung, shares first-hand construction robotics work spanning CU-Brick, Robo-Tapper, facade inspection, autonomous painting, embedded systems, and mechanical design.",
+    keywords: "Cheung Man Loc, Leo Cheung, CU-Brick, Robo-Tapper, construction robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
+    ogDescription: "Construction robotics projects, publications, and awards by Cheung Man Loc, professionally known as Leo Cheung.",
+    twitterDescription: "Construction robotics projects, publications, and awards by Cheung Man Loc (Leo Cheung).",
     image: "/assets/images/profile.jpg",
-    imageAlt: "Leo Cheung, construction robotics engineer",
-    lastmod: "2026-07-21",
+    imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, construction robotics engineer",
+    lastmod: "2026-08-13",
     knowsAbout: [
+      "CU-Brick cable-driven bricklaying robot",
+      "Robo-Tapper robotic facade inspection",
       "construction robotics",
       "cable-driven parallel robots",
       "facade inspection robots",
@@ -82,15 +88,15 @@ const standalonePages = {
   dashboard: {
     file: "dashboard.html",
     seo: {
-      title: "Hong Kong Weather and KMB Arrival Dashboard | Leo Cheung",
+      title: "Hong Kong Weather and KMB Arrival Dashboard | Cheung Man Loc",
       description: "Live Hong Kong dashboard showing Observatory weather data and KMB bus arrivals at Sheung Tak Bus Terminus.",
       ogDescription: "Live Hong Kong weather, warnings, forecasts, and KMB arrival information in one responsive dashboard.",
       twitterDescription: "Live Hong Kong weather and KMB arrival information for Sheung Tak Bus Terminus.",
       image: "/assets/images/profile.jpg",
-      imageAlt: "Hong Kong weather and KMB arrival dashboard by Leo Cheung",
+      imageAlt: "Hong Kong weather and KMB arrival dashboard by Cheung Man Loc, known as Leo Cheung",
       schemaName: "Hong Kong Weather and KMB Arrival Dashboard",
       schemaDescription: "A responsive web dashboard combining Hong Kong Observatory weather data with KMB arrival information for Sheung Tak Bus Terminus.",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   }
 };
@@ -117,7 +123,7 @@ const siteProjects = {
       image: "/assets/images/Robotapper_cropped.jpeg",
       structuredDescription: "Field-deployed cable-driven robot for automated facade hammer testing, LiDAR navigation, and AI-assisted impact-signal analysis.",
       keywords: "Robo-Tapper, facade inspection robot, cable-driven robot, hammer testing robot, AI defect detection, LiDAR navigation, construction robotics, Hong Kong robotics",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   cuBrick: {
@@ -141,8 +147,21 @@ const siteProjects = {
       image: "/assets/images/YES_full.jpg",
       structuredDescription: "Architectural-scale cable-driven parallel robot for automated bricklaying, fiducial localization, 3D scanning, and construction automation.",
       keywords: "CU-Brick, bricklaying robot, cable-driven parallel robot, CDPR, construction automation, fiducial markers, 3D scanning, YES Pavilion, Hong Kong robotics",
-      lastmod: "2026-07-21"
-    }
+      lastmod: "2026-08-13"
+    },
+    awards: [
+      {
+        name: "Second Runner-up, Open Section, Young Professionals Exhibition & Competition 2025",
+        url: "/blog/2nd-runner-up.html"
+      },
+      {
+        name: "Merit Award, Open Category, OSH Innovation and Technology Award 2026",
+        url: "/blog/osh-2026.html"
+      }
+    ],
+    citations: [
+      "https://doi.org/10.1007/978-3-031-94608-0_28"
+    ]
   },
   spray: {
     file: "spray.html",
@@ -165,7 +184,7 @@ const siteProjects = {
       image: "/assets/images/Spray_robot.JPG",
       structuredDescription: "Autonomous wall painting prototype with AGV motion, IMU sensing, cameras, linear rail positioning, and ROS control.",
       keywords: "autonomous wall spraying robot, wall painting robot, ROS robot, AGV, IMU, machine vision, linear rail, construction robotics, industrial painting automation",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   knowTouch: {
@@ -189,7 +208,7 @@ const siteProjects = {
       image: "/assets/images/knowtouch_1.jpg",
       structuredDescription: "Infrared gesture interface for touchless lift controls, retrofit installation, and large-scale Hong Kong deployment.",
       keywords: "kNOw Touch, touchless lift button, elevator sensor, infrared gesture sensor, lift call bar, contactless interface, Hong Kong elevators, embedded hardware",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   exoskeleton: {
@@ -213,7 +232,7 @@ const siteProjects = {
       image: "/assets/images/Exoskeleton_robot.jpg",
       structuredDescription: "Humanoid robot and wearable exoskeleton controller with haptic feedback, 48 V BLDC control, and wireless communication.",
       keywords: "exoskeleton control, humanoid robot, haptic feedback, BLDC motor control, wireless robot control, LiDAR, mechatronics, robotics engineering",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   borderless: {
@@ -233,7 +252,7 @@ const siteProjects = {
       image: "/assets/images/Borderless_lab.jpg",
       structuredDescription: "Browser-based remote STEM laboratory using Raspberry Pi, Arduino, livestream monitoring, and real-time sensor data.",
       keywords: "Borderless Lab 365, remote STEM laboratory, web-based lab platform, Raspberry Pi, Arduino, livestream experiments, real-time sensor data, STEM education",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   microwave: {
@@ -253,7 +272,7 @@ const siteProjects = {
       image: "/assets/images/Microwave.jpeg",
       structuredDescription: "Experimental microwave heating research for concrete, cement, and metal compositions using CAD-designed molds and prototypes.",
       keywords: "microwave heating system, concrete heating, cement materials, sustainable construction, CAD prototype, SolidWorks, AutoCAD, material testing",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   retractable: {
@@ -273,7 +292,7 @@ const siteProjects = {
       image: "/assets/images/v2.0.png",
       structuredDescription: "Modular retractable tapper and thruster concept for robotic facade hammer testing and protected tool transport.",
       keywords: "retractable tapper, facade inspection robot, robotic hammer testing, thruster module, modular robot tool, construction inspection, robotics hardware design",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   },
   footController: {
@@ -293,7 +312,7 @@ const siteProjects = {
       image: "/assets/images/footcontroler.jpg",
       structuredDescription: "Wearable wireless foot controller for SuperLimb with motorized pedals, haptic feedback, embedded electronics, and multi-axis input.",
       keywords: "wireless foot controller, SuperLimb, motorized pedal, wearable robot controller, haptic feedback, embedded electronics, multi-axis control, robotics hardware",
-      lastmod: "2026-07-21"
+      lastmod: "2026-08-13"
     }
   }
 };
@@ -326,8 +345,8 @@ const translations = {
     "theme.switchToLight": "Switch to light theme",
     "theme.switchToDark": "Switch to dark theme",
     "about.title": "About me",
-    "about.paragraph1": "I'm a mechanical engineer specializing in construction robotics. My work spans mechanical design, embedded electronics, ROS software, sensing, system integration, and field validation—taking machines from the first CAD model to reliable operation on site.",
-    "about.paragraph2": "At C3 Construction Robotics, I develop cable-driven and autonomous systems for construction and facade inspection. Highlights include CU-Brick building a 40-layer YES Pavilion structure from more than 5,800 bricks, Robo-Tapper progressing into commercial facade inspections, and presenting the CU-Brick paper at CableCon 2025. I focus on precise engineering, practical safety, and systems that solve real constraints outside the lab.",
+    "about.paragraph1": "I'm Cheung Man Loc, professionally known as Leo Cheung, a mechanical engineer specializing in construction robotics. My work spans mechanical design, embedded electronics, ROS software, sensing, system integration, and field validation—taking machines from the first CAD model to reliable operation on site.",
+    "about.paragraph2": "At C3 Construction Robotics, I develop cable-driven and autonomous systems for construction and facade inspection. Highlights include CU-Brick building the 5,800-brick YES Pavilion structure, earning Second Runner-up in the Open Section at YPEC 2025 and a Merit Award in the Open Category of the OSH Innovation and Technology Award 2026, Robo-Tapper progressing into commercial facade inspections, and presenting the CU-Brick paper at CableCon 2025.",
     "service.title": "What i'm doing",
     "service.software.title": "Software development",
     "service.software.text": "Build ROS-based control, navigation, signal-processing, UI, motor-control, and wireless communication software that connects cleanly to real hardware.",
@@ -361,6 +380,8 @@ const translations = {
     "resume.summerInternship": "Summer Internship",
     "resume.summerInternship.project": "Microwave Heating for Construction Materials",
     "projects.title": "Selected Projects",
+    "projects.moreTools": "More engineering tools",
+    "projects.dashboard": "Hong Kong Weather and KMB Arrival Dashboard",
     "filters.all": "All",
     "filters.software": "Software & controls",
     "filters.hardware": "Hardware & prototyping",
@@ -379,9 +400,10 @@ const translations = {
     "publications.filters.conference": "Conference papers",
     "publications.filters.journal": "Journal papers",
     "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
+    "publications.cuBrick.authors": "Co-authored and presented by Cheung Man Loc (published as Man Loc Cheung).",
     "publications.cuBrick.info": "Presented at CableCon 2025, the 7th International Conference on Cable-Driven Parallel Robots, July 2025",
     "publications.cuBrick.abstract": "This paper presents CU-Brick, a cable-driven parallel robot developed for automated bricklaying and demonstrated through construction of the Yard for Environmental Sustainability (YES) Pavilion. Across a 13 m x 9 m work area, the system built a 2.5 m-high structure with 40 layers and more than 5,800 bricks.",
-    "blog.title": "Blog",
+    "blog.title": "Awards & Project Updates",
     "blog.backToBlog": "Back to Blog",
     "blog.loadError": "Could not load the blog post. Please try again later.",
     "contact.title": "Contact",
@@ -428,8 +450,8 @@ const translations = {
     "theme.switchToLight": "切換至淺色主題",
     "theme.switchToDark": "切換至深色主題",
     "about.title": "關於我",
-    "about.paragraph1": "我是一名專注建築機械人的機械工程師，工作涵蓋機械設計、嵌入式電子、ROS 軟件、感測、系統整合與現場驗證，把機械人由首個 CAD 模型推進至工地上的可靠運作。",
-    "about.paragraph2": "我現於 C3 Construction Robotics 開發纜索驅動及自主建築系統。代表工作包括 CU-Brick 以超過 5,800 塊磚建成 40 層的 YES Pavilion 結構、推動 Robo-Tapper 進入商業外牆檢測，以及在 CableCon 2025 發表 CU-Brick 論文。我重視精準工程、實際安全，以及真正能處理實驗室以外限制的系統。",
+    "about.paragraph1": "我是 Cheung Man Loc，工作上亦稱 Leo Cheung，是一名專注建築機械人的機械工程師。工作涵蓋機械設計、嵌入式電子、ROS 軟件、感測、系統整合與現場驗證，把機械人由首個 CAD 模型推進至工地上的可靠運作。",
+    "about.paragraph2": "我現於 C3 Construction Robotics 開發纜索驅動及自主建築系統。代表工作包括 CU-Brick 建成使用超過 5,800 塊磚的 YES Pavilion 結構、在 YPEC 2025 公開組獲得季軍及於 2026 年職安健創科大獎公開組獲得嘉許獎、推動 Robo-Tapper 進入商業外牆檢測，以及在 CableCon 2025 發表 CU-Brick 論文。",
     "service.title": "我的工作",
     "service.software.title": "軟件開發",
     "service.software.text": "開發 ROS 控制、自主導航、訊號處理、操作介面、馬達控制及無線通訊軟件，讓軟硬件可靠整合。",
@@ -463,6 +485,8 @@ const translations = {
     "resume.summerInternship": "暑期實習",
     "resume.summerInternship.project": "建築材料微波加熱研究",
     "projects.title": "精選項目",
+    "projects.moreTools": "更多工程工具",
+    "projects.dashboard": "香港天氣及九巴到站儀表板",
     "filters.all": "全部",
     "filters.software": "軟件與控制",
     "filters.hardware": "硬件與原型",
@@ -481,9 +505,10 @@ const translations = {
     "publications.filters.conference": "會議論文",
     "publications.filters.journal": "期刊論文",
     "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
+    "publications.cuBrick.authors": "由 Cheung Man Loc 共同撰寫及發表（論文署名為 Man Loc Cheung）。",
     "publications.cuBrick.info": "於 2025 年 7 月在第 7 屆纜索驅動並聯機械人國際會議 CableCon 2025 發表",
     "publications.cuBrick.abstract": "本文介紹 CU-Brick，一套為自動砌磚而開發的纜索驅動並聯機械人，並透過建造 Yard for Environmental Sustainability (YES) Pavilion 作實際驗證。系統在 13 m × 9 m 的工作範圍內，建成高 2.5 m、共 40 層、使用超過 5,800 塊磚的結構。",
-    "blog.title": "網誌",
+    "blog.title": "獎項與項目動態",
     "blog.backToBlog": "返回網誌",
     "blog.loadError": "無法載入網誌文章，請稍後再試。",
     "contact.title": "聯絡",
@@ -574,6 +599,17 @@ const projectPageTranslations = {
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
         <p><a href="https://news.tvb.com/tc/local/67e04c434fe65d6c2b35ddcd?utm_source=newswebshare&utm_medium=referral" target="_blank" rel="noopener">TVB News: CU-Brick media coverage</a><br><a href="https://news.now.com/home/local/player?newsId=597899" target="_blank" rel="noopener">Now News: CU-Brick media coverage</a><br><a href="https://www.i-cable.com/%E6%96%B0%E8%81%9E%E8%B3%87%E8%A8%8A/331104/%E4%B8%AD%E5%A4%A7%E7%A0%94%E7%99%BC%E7%A0%8C%E7%A3%9A%E6%A9%9F%E6%A2%B0%E4%BA%BA-%E4%BB%A5%E7%B7%9A%E7%BA%9C%E9%A9%85%E5%8B%95-%E8%87%AA%E5%8B%95%E4%BF%AE%E6%AD%A3%E8%B7%AF%E7%B7%9A" target="_blank" rel="noopener">i-CABLE News: CU-Brick media coverage</a><br><a href="https://news.rthk.hk/rthk/ch/component/k2/1797064-20250324.htm" target="_blank" rel="noopener">RTHK News: CU-Brick media coverage</a></p>
+        <h3>Awards &amp; Recognition</h3>
+        <ul>
+          <li><a href="/blog/2nd-runner-up.html">CU-Brick: Second Runner-up, Open Section, YPEC 2025</a></li>
+          <li><a href="/blog/osh-2026.html">CU-Brick: Merit Award, Open Category, OSH Innovation and Technology Award 2026</a></li>
+        </ul>
+        <h3>Publication &amp; Project Updates</h3>
+        <ul>
+          <li><a href="https://doi.org/10.1007/978-3-031-94608-0_28" target="_blank" rel="noopener">Peer-reviewed CU-Brick paper presented at CableCon 2025</a></li>
+          <li><a href="/blog/cablecon-2025.html">CableCon 2025 presentation update</a></li>
+          <li><a href="/blog/ypec-2025.html">YPEC 2025 exhibition update</a></li>
+        </ul>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
           <li>Designed and implemented the cable-driven robot for a full-scale construction project.</li>
@@ -594,6 +630,17 @@ const projectPageTranslations = {
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
         <p><a href="https://news.tvb.com/tc/local/67e04c434fe65d6c2b35ddcd?utm_source=newswebshare&utm_medium=referral" target="_blank" rel="noopener">無綫新聞：CU-Brick 媒體報導</a><br><a href="https://news.now.com/home/local/player?newsId=597899" target="_blank" rel="noopener">Now 新聞：CU-Brick 媒體報導</a><br><a href="https://www.i-cable.com/%E6%96%B0%E8%81%9E%E8%B3%87%E8%A8%8A/331104/%E4%B8%AD%E5%A4%A7%E7%A0%94%E7%99%BC%E7%A0%8C%E7%A3%9A%E6%A9%9F%E6%A2%B0%E4%BA%BA-%E4%BB%A5%E7%B7%9A%E7%BA%9C%E9%A9%85%E5%8B%95-%E8%87%AA%E5%8B%95%E4%BF%AE%E6%AD%A3%E8%B7%AF%E7%B7%9A" target="_blank" rel="noopener">有線新聞：CU-Brick 媒體報導</a><br><a href="https://news.rthk.hk/rthk/ch/component/k2/1797064-20250324.htm" target="_blank" rel="noopener">香港電台：CU-Brick 媒體報導</a></p>
+        <h3>獎項與嘉許</h3>
+        <ul>
+          <li><a href="/blog/2nd-runner-up.html">CU-Brick：YPEC 2025 公開組季軍</a></li>
+          <li><a href="/blog/osh-2026.html">CU-Brick：2026 年職安健創科大獎公開組嘉許獎</a></li>
+        </ul>
+        <h3>論文與項目動態</h3>
+        <ul>
+          <li><a href="https://doi.org/10.1007/978-3-031-94608-0_28" target="_blank" rel="noopener">於 CableCon 2025 發表的 CU-Brick 同行評審論文</a></li>
+          <li><a href="/blog/cablecon-2025.html">CableCon 2025 發表動態</a></li>
+          <li><a href="/blog/ypec-2025.html">YPEC 2025 展覽動態</a></li>
+        </ul>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>設計並實作應用於全尺寸建造項目的砌磚纜索驅動機械人。</li>
@@ -813,8 +860,10 @@ Object.entries(siteProjects).forEach(([key, project]) => {
 });
 
 function validateSiteData() {
-  if (!siteProfile.name || !siteProfile.role?.en || !siteProfile.role?.zhHant) {
-    throw new Error("siteProfile requires a name and both localized role values.");
+  if (!siteProfile.name || !siteProfile.fullName || !siteProfile.publishedName
+    || !siteProfile.givenName || !siteProfile.familyName
+    || !siteProfile.role?.en || !siteProfile.role?.zhHant) {
+    throw new Error("siteProfile requires preferred, full, published, given and family names plus both localized role values.");
   }
   if (!siteProfile.location?.en || !siteProfile.location?.zhHant) {
     throw new Error("siteProfile requires both localized location values.");
@@ -905,6 +954,17 @@ function validateSiteData() {
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(project.seo.lastmod)) {
       throw new Error(`siteProjects.${key}.seo.lastmod must use YYYY-MM-DD.`);
+    }
+    if (project.awards) {
+      if (!Array.isArray(project.awards) || !project.awards.length
+        || project.awards.some((award) => !award.name || !/^\/blog\/[a-z0-9-]+\.html$/.test(award.url))) {
+        throw new Error(`siteProjects.${key}.awards requires named award records with safe /blog/*.html URLs.`);
+      }
+    }
+    if (project.citations
+      && (!Array.isArray(project.citations)
+        || project.citations.some((citation) => !/^https:\/\//.test(citation)))) {
+      throw new Error(`siteProjects.${key}.citations must contain HTTPS URLs.`);
     }
 
     for (const language of ["en", "zhHant"]) {

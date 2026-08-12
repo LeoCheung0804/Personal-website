@@ -146,6 +146,18 @@ function toAbsoluteUrl(value = '') {
   return `${siteUrl}/${normalizeSitePath(value)}`;
 }
 
+function personSchemaReference() {
+  return {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#person`,
+    name: siteProfile.fullName,
+    alternateName: [siteProfile.name, siteProfile.publishedName],
+    givenName: siteProfile.givenName,
+    familyName: siteProfile.familyName,
+    url: `${siteUrl}/`
+  };
+}
+
 function toBlogPageAssetPath(value = '') {
   if (!value || /^https?:\/\//i.test(value)) return value;
   return `../${normalizeSitePath(value)}`;
@@ -204,6 +216,7 @@ function renderPostBody(body) {
 function generateJsonLd(post) {
   const canonicalUrl = `${siteUrl}/blog/${post.slug}.html`;
   const modifiedDate = post.updated || post.date;
+  const project = post.project ? siteProjects[post.project] : null;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -215,17 +228,21 @@ function generateJsonLd(post) {
     datePublished: post.date || undefined,
     dateModified: modifiedDate || undefined,
     inLanguage: ['en', 'zh-Hant'],
+    articleSection: post.category || undefined,
+    keywords: post.keywords || undefined,
     url: canonicalUrl,
-    author: {
-      '@type': 'Person',
-      name: siteProfile.name,
-      url: siteUrl
-    },
-    publisher: {
-      '@type': 'Person',
-      name: siteProfile.name,
-      url: siteUrl
-    },
+    author: personSchemaReference(),
+    publisher: personSchemaReference(),
+    about: project ? {
+      '@type': 'CreativeWork',
+      '@id': `${siteUrl}/${project.file}#creative-work`,
+      name: project.title.en,
+      url: `${siteUrl}/${project.file}`
+    } : undefined,
+    mentions: post.recognition ? {
+      '@type': 'Thing',
+      name: post.recognition
+    } : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': canonicalUrl
@@ -251,7 +268,7 @@ function generateBlogPage(post) {
   const modifiedDate = post.updated || post.date;
   const dateEn = formatDate(post.date, 'en-US');
   const dateZhHant = formatDate(post.date, 'zh-HK');
-  const titleWithSite = `${post.seoTitle || title} | ${siteProfile.name}`;
+  const titleWithSite = `${post.seoTitle || title} | ${siteProfile.fullName}`;
   const postBody = renderPostBody(post.body);
 
   const html = `<!DOCTYPE html>
@@ -262,7 +279,7 @@ function generateBlogPage(post) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(titleWithSite)}</title>
     <meta name="description" content="${escapeHtml(summary)}" />
-    <meta name="author" content="${escapeHtml(siteProfile.name)}" />
+    <meta name="author" content="${escapeHtml(siteProfile.fullName)}" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
     <meta property="og:title" content="${escapeHtml(titleWithSite)}" />
@@ -273,7 +290,7 @@ function generateBlogPage(post) {
     <meta property="og:image:height" content="${imageMedia.height}" />` : ''}
     <meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
     <meta property="og:type" content="article" />
-    <meta property="og:site_name" content="${escapeHtml(`${siteProfile.name} Portfolio`)}" />
+    <meta property="og:site_name" content="${escapeHtml(`${siteProfile.fullName} Portfolio`)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(titleWithSite)}" />
     <meta name="twitter:description" content="${escapeHtml(summary)}" />
@@ -297,7 +314,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260721-2" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20260813-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -311,10 +328,10 @@ function generateBlogPage(post) {
       <aside class="sidebar" data-sidebar>
         <div class="sidebar-info">
           <figure class="avatar-box">
-            <img src="../assets/images/profile.jpg" alt="${escapeHtml(siteProfile.name)}" width="80" />
+            <img src="../assets/images/profile.jpg" alt="${escapeHtml(`${siteProfile.fullName}, known as ${siteProfile.name}`)}" width="80" />
           </figure>
           <div class="info-content">
-            <p class="name" title="${escapeHtml(siteProfile.name)}">${escapeHtml(siteProfile.name)}</p>
+            <p class="name" title="${escapeHtml(`${siteProfile.fullName} (${siteProfile.name})`)}">${escapeHtml(siteProfile.name)}<span class="full-name">${escapeHtml(siteProfile.fullName)}</span></p>
             <p class="title">${escapeHtml(siteProfile.role.en)}</p>
           </div>
           <button class="info_more-btn" data-sidebar-btn="" aria-expanded="false" aria-controls="sidebar-contact-details" aria-label="${escapeHtml(translations.en['sidebar.showContacts'])}" data-i18n-aria-label="sidebar.showContacts">
@@ -456,6 +473,10 @@ function generateBlogPage(post) {
                 <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(dateZhHant)}</span>
               </time>
             </div>
+            <p class="blog-byline">
+              <span data-lang="en" lang="en">By ${escapeHtml(siteProfile.fullName)} (${escapeHtml(siteProfile.name)})</span>
+              <span data-lang="zhHant" lang="zh-Hant">作者：${escapeHtml(siteProfile.fullName)}（${escapeHtml(siteProfile.name)}）</span>
+            </p>
           </header>
           ${imagePath ? `<figure class="blog-banner-box">
             <img src="${escapeHtml(imagePath)}" alt="${escapeHtml(imageAlt)}" loading="eager" />
@@ -466,14 +487,14 @@ ${postBody}
         </article>
 
         <footer class="footer">
-          <p class="copyright">&copy; ${siteProfile.copyrightYear} ${escapeHtml(siteProfile.name)}</p>
+          <p class="copyright">&copy; ${siteProfile.copyrightYear} ${escapeHtml(siteProfile.fullName)} (${escapeHtml(siteProfile.name)})</p>
           <a href="#" class="back-to-top">${escapeHtml(translations.en['footer.backToTop'])}</a>
         </footer>
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20260721-1"></script>
-    <script src="../assets/js/i18n.js?v=20260721-1"></script>
+    <script src="../assets/js/site-data.js?v=20260813-1"></script>
+    <script src="../assets/js/i18n.js?v=20260813-1"></script>
     <script src="../assets/js/theme.js?v=20260716-2"></script>
     <script src="../assets/js/motion.js"></script>
     <script src="../assets/js/ui-interactions.js?v=20260721-1"></script>
@@ -611,7 +632,10 @@ const posts = files.map(file => {
     body
   });
 
-  const requiredFields = ['title', 'titleZhHant', 'date', 'category', 'categoryZhHant', 'image', 'summary', 'summaryZhHant'];
+  const requiredFields = [
+    'title', 'titleZhHant', 'date', 'category', 'categoryZhHant', 'image',
+    'summary', 'summaryZhHant', 'project', 'keywords'
+  ];
   const missingFields = requiredFields.filter(field => !post[field]);
   if (missingFields.length) {
     throw new Error(`${file}: missing required front matter: ${missingFields.join(', ')}.`);
@@ -626,7 +650,17 @@ const posts = files.map(file => {
   if (!mediaEntryFor(post.image)) {
     throw new Error(`${file}: image is missing from assets/data/media-manifest.json.`);
   }
-  if (`${post.seoTitle || post.title} | ${siteProfile.name}`.length > 70) {
+  if (post.project && !siteProjects[post.project]) {
+    throw new Error(`${file}: project must reference a key from siteProjects.`);
+  }
+  if (post.recognition
+    && !siteProjects[post.project]?.awards?.some(({ name }) => name === post.recognition)) {
+    throw new Error(`${file}: recognition must match an award recorded on its project.`);
+  }
+  if (post.category === 'Award' && !post.recognition) {
+    throw new Error(`${file}: Award posts require recognition metadata.`);
+  }
+  if (`${post.seoTitle || post.title} | ${siteProfile.fullName}`.length > 70) {
     throw new Error(`${file}: generated SEO title exceeds 70 characters; add a shorter seoTitle.`);
   }
   if (post.summary.length > 160) {

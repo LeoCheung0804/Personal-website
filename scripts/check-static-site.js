@@ -106,7 +106,8 @@ const publicPages = [
     file: project.file,
     lastmod: project.seo.lastmod,
     schemaType: 'CreativeWork',
-    ogType: 'article'
+    ogType: 'article',
+    project
   })),
   ...Object.values(standalonePages).map(page => ({
     file: page.file,
@@ -119,7 +120,8 @@ const publicPages = [
     lastmod: post.updated || post.date,
     published: post.date,
     schemaType: 'BlogPosting',
-    ogType: 'article'
+    ogType: 'article',
+    post
   }))
 ].map(page => ({ ...page, canonical: canonicalFor(page.file) }));
 
@@ -136,12 +138,13 @@ for (const page of publicPages) {
   check(documentTitles.length === 1 && documentTitles[0], `${page.file}: requires one non-empty title.`);
   const title = documentTitles[0] || '';
   check(title.length <= 70, `${page.file}: title is ${title.length} characters; maximum is 70.`);
+  check(title.includes(siteProfile.fullName), `${page.file}: title must identify ${siteProfile.fullName}.`);
 
   const description = oneMeta(html, page.file, 'name', 'description');
   check(description.length >= 50 && description.length <= 160,
     `${page.file}: description is ${description.length} characters; expected 50-160.`);
-  check(oneMeta(html, page.file, 'name', 'author') === siteProfile.name,
-    `${page.file}: author metadata must match siteProfile.name.`);
+  check(oneMeta(html, page.file, 'name', 'author') === siteProfile.fullName,
+    `${page.file}: author metadata must match siteProfile.fullName.`);
   const robots = oneMeta(html, page.file, 'name', 'robots');
   check(/\bindex\b/i.test(robots) && /\bfollow\b/i.test(robots), `${page.file}: robots metadata must allow index and follow.`);
   check(oneCanonical(html, page.file) === page.canonical, `${page.file}: canonical URL does not match ${page.canonical}.`);
@@ -183,6 +186,51 @@ for (const page of publicPages) {
     check(Array.isArray(schema.inLanguage)
       && schema.inLanguage.includes('en')
       && schema.inLanguage.includes('zh-Hant'), `${page.file}: structured data must declare both site languages.`);
+
+    if (page.schemaType !== 'ProfilePage') {
+      check(schema.author?.['@id'] === `${siteProfile.siteUrl}/#person`,
+        `${page.file}: structured-data author must reference the shared Person @id.`);
+      check(schema.author?.name === siteProfile.fullName,
+        `${page.file}: structured-data author must use the full name.`);
+      check(Array.isArray(schema.author?.alternateName)
+        && schema.author.alternateName.includes(siteProfile.name)
+        && schema.author.alternateName.includes(siteProfile.publishedName),
+      `${page.file}: structured-data author must include preferred and published-name variants.`);
+    }
+  }
+
+  check(stripTags(markup).includes(siteProfile.fullName),
+    `${page.file}: visible content must identify ${siteProfile.fullName}.`);
+
+  if (page.schemaType === 'ProfilePage') {
+    const person = schema?.mainEntity;
+    check(person?.['@id'] === `${siteProfile.siteUrl}/#person`, 'index.html: Person requires the shared @id.');
+    check(person?.name === siteProfile.fullName, 'index.html: Person name must use the full name.');
+    check(Array.isArray(person?.alternateName)
+      && person.alternateName.includes(siteProfile.name)
+      && person.alternateName.includes(siteProfile.publishedName),
+    'index.html: Person alternateName must include preferred and published-name variants.');
+    check(person?.givenName === siteProfile.givenName && person?.familyName === siteProfile.familyName,
+      'index.html: Person requires matching givenName and familyName.');
+    const website = schemas.find(item => item['@type'] === 'WebSite');
+    check(Boolean(website), 'index.html: missing WebSite JSON-LD.');
+    check(website?.name === siteProfile.fullName && website?.url === page.canonical,
+      'index.html: WebSite name and URL must match the canonical site identity.');
+    check(Array.isArray(website?.alternateName) && website.alternateName.includes(siteProfile.name),
+      'index.html: WebSite alternateName must include the preferred name.');
+  }
+
+  if (page.project?.awards?.length) {
+    check(JSON.stringify(schema?.award) === JSON.stringify(page.project.awards.map(({ name }) => name)),
+      `${page.file}: project awards must be rendered in CreativeWork JSON-LD.`);
+    check(JSON.stringify(schema?.citation) === JSON.stringify(page.project.citations),
+      `${page.file}: project citations must be rendered in CreativeWork JSON-LD.`);
+    for (const award of page.project.awards) {
+      check(tags(markup, 'a').some(tag => attribute(tag, 'href') === award.url),
+        `${page.file}: missing visible award link ${award.url}.`);
+      check(schema?.subjectOf?.some(item => item.url === `${siteProfile.siteUrl}${award.url}`),
+        `${page.file}: missing structured-data subjectOf link for ${award.url}.`);
+    }
   }
 
   if (page.ogType === 'article') {
@@ -192,6 +240,21 @@ for (const page of publicPages) {
   if (page.schemaType === 'BlogPosting') {
     check(oneMeta(html, page.file, 'property', 'article:published_time') === page.published,
       `${page.file}: article:published_time must match its post date.`);
+    check(schema?.articleSection === page.post.category,
+      `${page.file}: BlogPosting articleSection must match its category.`);
+    check(schema?.keywords === page.post.keywords,
+      `${page.file}: BlogPosting keywords must match its source metadata.`);
+    if (page.post.project) {
+      const project = siteProjects[page.post.project];
+      check(schema?.about?.['@id'] === `${siteProfile.siteUrl}/${project.file}#creative-work`,
+        `${page.file}: BlogPosting about must reference its project.`);
+      check(tags(markup, 'a').some(tag => resolveReference(page.file, attribute(tag, 'href') || '').target === project.file),
+        `${page.file}: requires a visible contextual link to ${project.file}.`);
+    }
+    if (page.post.recognition) {
+      check(schema?.mentions?.name === page.post.recognition,
+        `${page.file}: BlogPosting mentions must name its recognition.`);
+    }
   }
 
   const htmlTag = tags(html, 'html')[0] || '';
@@ -243,7 +306,7 @@ function resolveReference(file, value, rootRelative = false) {
   const target = rootRelative || cleanPath.startsWith('/')
     ? cleanPath.replace(/^\/+/, '')
     : path.posix.normalize(path.posix.join(path.posix.dirname(file), cleanPath));
-  return { target: target.endsWith('/') ? `${target}index.html` : target, fragment };
+  return { target: !target ? 'index.html' : (target.endsWith('/') ? `${target}index.html` : target), fragment };
 }
 
 function isExternalReference(value) {
@@ -299,6 +362,22 @@ for (const [file, html] of pageHtml) {
         `${file}: target="_blank" link requires rel="noopener noreferrer".`);
     }
   }
+}
+
+const publicFileSet = new Set(publicPages.map(({ file }) => file));
+const incomingLinks = new Map(publicPages.map(({ file }) => [file, new Set()]));
+for (const [sourceFile, html] of pageHtml) {
+  if (!publicFileSet.has(sourceFile)) continue;
+  for (const anchor of tags(markupOnly(html), 'a')) {
+    const href = attribute(anchor, 'href');
+    if (!href || isExternalReference(href)) continue;
+    const { target } = resolveReference(sourceFile, href);
+    if (target !== sourceFile && publicFileSet.has(target)) incomingLinks.get(target).add(sourceFile);
+  }
+}
+for (const page of publicPages) {
+  check(incomingLinks.get(page.file).size > 0,
+    `${page.file}: indexable page requires a crawlable incoming link from another indexable page.`);
 }
 
 for (const cssFile of fs.readdirSync(path.join(rootDir, 'assets/css')).filter(file => file.endsWith('.css'))) {

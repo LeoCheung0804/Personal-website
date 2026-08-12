@@ -300,6 +300,17 @@ body.portfolio-site > main {
   white-space: normal;
 }
 
+.portfolio-site .info-content .name .full-name {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+}
+
 .portfolio-site .info-content .title {
   width: auto;
   max-width: 26ch;
@@ -1047,6 +1058,14 @@ body.portfolio-site > main {
   line-height: 1.55;
 }
 
+.portfolio-site .publications .publication-authors {
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  line-height: 1.55;
+}
+
 .portfolio-site .publications :is(.publication-abstract, .publication-citation) {
   max-width: 78ch;
   color: var(--muted);
@@ -1097,6 +1116,28 @@ body.portfolio-site > main {
 
 .portfolio-site .blog-meta {
   margin-bottom: 9px;
+}
+
+.portfolio-site .blog-byline {
+  margin: -1px 0 18px;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  letter-spacing: 0.035em;
+  line-height: 1.55;
+}
+
+.portfolio-site .project-tools-link {
+  margin-top: 30px;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  line-height: 1.6;
+}
+
+.portfolio-site .project-tools-link a {
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .portfolio-site .blog-meta :is(.blog-category, time) {

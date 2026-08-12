@@ -49,7 +49,11 @@ function applySharedShellTranslations(language = currentLanguage) {
   const profileName = document.querySelector(".info-content .name");
   if (profileName) {
     profileName.textContent = siteProfile.name;
-    profileName.setAttribute("title", siteProfile.name);
+    const fullName = document.createElement("span");
+    fullName.className = "full-name";
+    fullName.textContent = siteProfile.fullName;
+    profileName.append(fullName);
+    profileName.setAttribute("title", `${siteProfile.fullName} (${siteProfile.name})`);
   }
 
   const profileTitle = document.querySelector(".info-content .title");
@@ -99,7 +103,7 @@ function applySharedShellTranslations(language = currentLanguage) {
 
   const copyright = document.querySelector(".copyright");
   if (copyright) {
-    copyright.textContent = `© ${siteProfile.copyrightYear} ${siteProfile.name}`;
+    copyright.textContent = `© ${siteProfile.copyrightYear} ${siteProfile.fullName} (${siteProfile.name})`;
   }
 }
 
@@ -129,7 +133,7 @@ function applyProjectPageTranslations(language = currentLanguage) {
 
   if (pageTitle) {
     pageTitle.textContent = projectCopy.title;
-    document.title = `${projectCopy.title} | ${siteProfile.name}`;
+    document.title = `${projectCopy.title} | ${siteProfile.fullName}`;
   }
 
   if (overviewTitle) {
