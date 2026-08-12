@@ -402,22 +402,22 @@ function generateBlogPage(post) {
           <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
             <ul class="navbar-list">
             <li class="navbar-item">
-              <a href="../index.html#about" class="navbar-link" data-nav-link data-i18n="nav.about">${escapeHtml(translations.en['nav.about'])}</a>
+              <a href="/#about" class="navbar-link" data-nav-link data-i18n="nav.about">${escapeHtml(translations.en['nav.about'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">${escapeHtml(translations.en['nav.resume'])}</a>
+              <a href="/#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">${escapeHtml(translations.en['nav.resume'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">${escapeHtml(translations.en['nav.projects'])}</a>
+              <a href="/#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">${escapeHtml(translations.en['nav.projects'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">${escapeHtml(translations.en['nav.publications'])}</a>
+              <a href="/#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">${escapeHtml(translations.en['nav.publications'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">${escapeHtml(translations.en['nav.blog'])}</a>
+              <a href="/#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">${escapeHtml(translations.en['nav.blog'])}</a>
             </li>
             <li class="navbar-item">
-              <a href="../index.html#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">${escapeHtml(translations.en['nav.contact'])}</a>
+              <a href="/#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">${escapeHtml(translations.en['nav.contact'])}</a>
             </li>
             </ul>
           </div>
@@ -440,7 +440,7 @@ function generateBlogPage(post) {
 
         <article class="blog-post-full active" data-page="blog-post">
           <header>
-            <a href="../index.html#blog" class="btn-back" data-i18n="blog.backToBlog">${escapeHtml(translations.en['blog.backToBlog'])}</a>
+            <a href="/#blog" class="btn-back" data-i18n="blog.backToBlog">${escapeHtml(translations.en['blog.backToBlog'])}</a>
             <h1 class="h2 article-title">
               <span data-lang="en" lang="en">${escapeHtml(title)}</span>
               <span data-lang="zhHant" lang="zh-Hant">${escapeHtml(titleZhHant)}</span>

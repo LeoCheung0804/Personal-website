@@ -564,6 +564,27 @@ function syncLanguageAttributes(html, fileLabel) {
   return output;
 }
 
+function syncCanonicalHomepageLinks(html) {
+  const openings = findOpeningTags(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'a' && getAttribute(openTag, 'href') !== null
+  );
+  let output = html;
+
+  for (let index = openings.length - 1; index >= 0; index -= 1) {
+    const opening = openings[index];
+    const href = getAttribute(opening.openTag, 'href');
+    const match = href.match(/^(?:\/|\.\/|(?:\.\.\/)+)?index\.html([?#].*)?$/i);
+    if (!match) continue;
+
+    const canonicalHref = `/${match[1] || ''}`;
+    const updatedTag = setAttribute(opening.openTag, 'href', canonicalHref);
+    output = output.slice(0, opening.openStart) + updatedTag + output.slice(opening.openEnd);
+  }
+
+  return output;
+}
+
 function syncHomepageRouteIds(html, fileLabel) {
   for (const route of ['about', 'resume', 'portfolio', 'publications', 'blog', 'contact']) {
     html = updateSingleOpeningTag(
@@ -1223,6 +1244,7 @@ if (listMode) {
       output = syncDataI18n(output, relativePath);
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-placeholder', 'placeholder');
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-aria-label', 'aria-label');
+      output = syncCanonicalHomepageLinks(output);
       output = syncSharedShell(output, relativePath);
       output = syncHeadingStructure(output, relativePath);
 
@@ -1247,6 +1269,7 @@ if (listMode) {
   for (const page of Object.values(standalonePages)) {
     updateFile(page.file, (html, eol) => {
       let output = syncDashboardMetadata(html, page.file, eol);
+      output = syncCanonicalHomepageLinks(output);
       output = syncSafeBlankLinks(output);
       output = moveLateHeadMetadata(output, eol);
       return normalizeSingleLineMetaIndentation(output);

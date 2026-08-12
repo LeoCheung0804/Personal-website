@@ -276,7 +276,14 @@ for (const [file, html] of pageHtml) {
   for (const openTag of [...markup.matchAll(/<[A-Za-z][\w:-]*\b[^>]*>/g)].map(match => match[0])) {
     for (const name of ['href', 'src', 'poster', 'data-src']) {
       const value = attribute(openTag, name);
-      if (value !== null) checkReference(file, value, name);
+      if (value !== null) {
+        if (name === 'href' && !isExternalReference(value)) {
+          const explicitPath = value.split(/[?#]/, 1)[0].replace(/\\/g, '/');
+          check(!/(?:^|\/)index\.html$/i.test(explicitPath),
+            `${file}: href must use the canonical homepage URL instead of ${value}.`);
+        }
+        checkReference(file, value, name);
+      }
     }
     const mediaSource = attribute(openTag, 'data-media-source');
     if (mediaSource !== null) checkReference(file, mediaSource, 'data-media-source', true);
