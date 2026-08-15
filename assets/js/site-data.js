@@ -68,6 +68,7 @@ const siteProfile = {
     image: "/assets/images/profile.jpg",
     imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, construction robotics engineer",
     lastmod: "2026-08-13",
+    schemaDateModified: "2026-08-13T02:01:24+08:00",
     knowsAbout: [
       "CU-Brick cable-driven bricklaying robot",
       "Robo-Tapper robotic facade inspection",
@@ -876,7 +877,8 @@ function validateSiteData() {
 
   const requiredProfileSeoFields = [
     "title", "schemaName", "description", "schemaDescription", "keywords",
-    "ogDescription", "twitterDescription", "image", "imageAlt", "lastmod"
+    "ogDescription", "twitterDescription", "image", "imageAlt", "lastmod",
+    "schemaDateModified"
   ];
   const missingProfileSeo = requiredProfileSeoFields.filter((field) => !siteProfile.seo?.[field]);
   if (missingProfileSeo.length || !siteProfile.seo?.knowsAbout?.length) {
@@ -885,6 +887,11 @@ function validateSiteData() {
   if (!/^\/assets\/images\//.test(siteProfile.seo.image)
     || !/^\d{4}-\d{2}-\d{2}$/.test(siteProfile.seo.lastmod)) {
     throw new Error("siteProfile.seo requires an /assets/images image and YYYY-MM-DD lastmod.");
+  }
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/.test(siteProfile.seo.schemaDateModified)
+    || Number.isNaN(Date.parse(siteProfile.seo.schemaDateModified))
+    || !siteProfile.seo.schemaDateModified.startsWith(siteProfile.seo.lastmod)) {
+    throw new Error("siteProfile.seo.schemaDateModified must be a valid ISO 8601 datetime matching lastmod.");
   }
 
   const standaloneFiles = Object.values(standalonePages).map(({ file }) => file);

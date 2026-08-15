@@ -99,6 +99,7 @@ const publicPages = [
   {
     file: 'index.html',
     lastmod: siteProfile.seo.lastmod,
+    schemaDateModified: siteProfile.seo.schemaDateModified,
     schemaType: 'ProfilePage',
     ogType: 'website'
   },
@@ -182,7 +183,14 @@ for (const page of publicPages) {
   if (schema) {
     const schemaPageUrl = schema.mainEntityOfPage?.['@id'] || schema.url;
     check(schemaPageUrl === page.canonical, `${page.file}: structured-data URL does not match its canonical.`);
-    check(schema.dateModified === page.lastmod, `${page.file}: structured-data dateModified must be ${page.lastmod}.`);
+    const expectedSchemaDateModified = page.schemaDateModified || page.lastmod;
+    check(schema.dateModified === expectedSchemaDateModified,
+      `${page.file}: structured-data dateModified must be ${expectedSchemaDateModified}.`);
+    if (page.schemaType === 'ProfilePage') {
+      check(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/.test(schema.dateModified)
+        && !Number.isNaN(Date.parse(schema.dateModified)),
+      `${page.file}: ProfilePage dateModified must be a valid ISO 8601 datetime with a timezone.`);
+    }
     check(Array.isArray(schema.inLanguage)
       && schema.inLanguage.includes('en')
       && schema.inLanguage.includes('zh-Hant'), `${page.file}: structured data must declare both site languages.`);

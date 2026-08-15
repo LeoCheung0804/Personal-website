@@ -1026,7 +1026,7 @@ function syncHomepageMetadata(html, fileLabel, eol) {
     data.name = siteProfile.seo.schemaName;
     data.url = canonicalUrl;
     data.description = siteProfile.seo.schemaDescription;
-    data.dateModified = siteProfile.seo.lastmod;
+    data.dateModified = siteProfile.seo.schemaDateModified;
     data.inLanguage = ['en', 'zh-Hant'];
     data.mainEntity = {
       ...(data.mainEntity || {}),
