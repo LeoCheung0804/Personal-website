@@ -715,6 +715,36 @@ body.portfolio-site > main {
   display: block;
 }
 
+.portfolio-site .about-hero-image { position: relative; }
+
+.portfolio-site .about-hero-project-link {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  max-width: calc(100% - 24px);
+  padding: 10px 14px;
+  border: 1px solid #101713;
+  border-radius: var(--radius-sm);
+  background: #f2b84b;
+  color: #101713;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .22);
+}
+
+.portfolio-site .about-hero-project-link:hover { background: #ffc95f; }
+.portfolio-site .about-hero-project-link:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
 .portfolio-site .about-hero-caption {
   display: flex;
   align-items: baseline;

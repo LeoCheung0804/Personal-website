@@ -34,6 +34,13 @@ node generate-site-content.js
 
 Original files in `assets/images` remain the archival and social-sharing sources. Page markup uses the generated variants in `assets/images/optimized`, while `assets/data/media-manifest.json` supplies intrinsic dimensions and responsive candidates. Gallery thumbnails use dedicated 240-pixel variants, and non-selected gallery media is loaded only when selected.
 
+Project translations preserve responsive image attributes from the generated page,
+matched by `data-media-source`, before inserting translated content. Alternative
+text and captions still come from the selected language; images and video embeds
+retain lazy loading. Keep images shared across a project's language versions so
+each translated image can reuse its generated media metadata. The static audit
+checks this mapping for images in the media manifest.
+
 The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English detail bodies aligned with the same project registry. Do not edit generated project `.project-content` blocks directly.
 
 To verify that checked-in HTML is current without writing files:
@@ -69,6 +76,29 @@ menu while the language and theme controls remain visible. Shared pages also
 include a keyboard skip link, an announced contact-details toggle, and a
 consistent `#content-start` target. Keep these elements in new templates by
 running `generate-site-content.js` rather than copying the shell by hand.
+
+## Robosun Tapper assembly viewer
+
+`tapper.html` loads `assets/models/robosun-tapper.glb` near the viewport. The model
+comes from the local SolidWorks assembly, with image-reconstructed thruster
+guards. See `assets/models/README.md` for provenance and limitations.
+
+`assets/js/tapper-exploded.js` maps named CAD subassemblies into a stationary
+frame plus thrusters, drive assemblies, retractable linkage, and tapping head.
+Staged scroll offsets illustrate subsystem relationships, not disassembly or
+joint motion. Whole subassemblies retain their internal parts and fasteners.
+
+Three.js 0.180.0, GLTFLoader and MeshoptDecoder are vendored locally. Rendering
+occurs on interaction/scroll/resize. Labels wrap in separate rows outside the canvas.
+Phones, reduced motion, and viewports too short for the full panel use manual controls
+and normal page scrolling. Camera framing follows the full pose at every size and yaw;
+pixel density is capped at 1.5 for canvases under 600px wide. Asset or WebGL failure
+falls back to a project photo and HTML descriptions.
+Styling is isolated in `assets/css/tapper-exploded.css`; bilingual copy remains
+in `assets/js/site-data.js`.
+
+After changes, check scroll forward/backward, manual controls, drag/reset,
+language switching, mobile layout, and failed asset loading.
 
 ## Automatic Blog Listing
 

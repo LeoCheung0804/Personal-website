@@ -5,6 +5,7 @@ const defaultLanguage = "en";
 const storedLanguage = localStorage.getItem("language");
 let currentLanguage = supportedLanguages.includes(storedLanguage) ? storedLanguage : defaultLanguage;
 let loadedBlogPosts = [];
+const projectMediaByContainer = new WeakMap();
 
 function getTranslation(key, language = currentLanguage) {
   return translations[language]?.[key] || translations[defaultLanguage]?.[key] || key;
@@ -117,6 +118,42 @@ function getCurrentProjectPageKey() {
   return projectPageAliases[pageName] || pageName;
 }
 
+function renderTranslatedProjectContent(container, content) {
+  // The generated HTML already has responsive media from the image manifest.
+  // Keep that metadata keyed by original source, rather than image order or alt text.
+  let mediaBySource = projectMediaByContainer.get(container);
+  const mediaAttributes = ['src', 'srcset', 'sizes', 'width', 'height', 'loading', 'decoding', 'data-media-source'];
+  if (!mediaBySource) {
+    mediaBySource = new Map();
+    container.querySelectorAll('img[data-media-source]').forEach((image) => {
+      const source = new URL(image.dataset.mediaSource, document.baseURI).href;
+      mediaBySource.set(source, image);
+    });
+    projectMediaByContainer.set(container, mediaBySource);
+  }
+
+  // Template contents are inert: never insert original image URLs into the live
+  // document before restoring their optimized candidates (even for one frame).
+  const template = document.createElement('template');
+  template.innerHTML = content;
+  template.content.querySelectorAll('img').forEach((image) => {
+    const source = image.getAttribute('data-media-source') || image.getAttribute('src');
+    const optimized = source && mediaBySource.get(new URL(source, document.baseURI).href);
+    if (optimized) {
+      mediaAttributes.forEach((name) => {
+        const value = optimized.getAttribute(name);
+        if (value !== null) image.setAttribute(name, value);
+      });
+    }
+    if (!image.hasAttribute('loading')) image.setAttribute('loading', 'lazy');
+    if (!image.hasAttribute('decoding')) image.setAttribute('decoding', 'async');
+  });
+  template.content.querySelectorAll('iframe').forEach((frame) => {
+    frame.setAttribute('loading', 'lazy');
+  });
+  container.replaceChildren(template.content);
+}
+
 function applyProjectPageTranslations(language = currentLanguage) {
   const projectKey = getCurrentProjectPageKey();
   const projectCopy = projectPageTranslations[projectKey]?.[language];
@@ -141,7 +178,7 @@ function applyProjectPageTranslations(language = currentLanguage) {
   }
 
   if (projectContent) {
-    projectContent.innerHTML = projectCopy.content;
+    renderTranslatedProjectContent(projectContent, projectCopy.content);
   }
 }
 

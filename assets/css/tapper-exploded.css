@@ -1,0 +1,82 @@
+/* CAD assembly viewer, scoped to the Tapper project page. */
+.tapper-explorer { --explorer-sticky-top: 82px; margin: 0 -12px 40px; scroll-margin-top: 90px; min-width: 0; }
+.tapper-explorer.is-ready { height: 210vh; height: 210svh; }
+.tapper-explorer__panel {
+  position: relative; border: 1px solid #34443f; border-radius: 16px;
+  background: #101b19; color: #e7eeea; overflow: hidden;
+}
+.is-ready .tapper-explorer__panel { position: sticky; top: var(--explorer-sticky-top); }
+.tapper-explorer.is-inline { height: auto; }
+.is-inline .tapper-explorer__panel { position: relative; top: auto; }
+.tapper-explorer__heading { padding: 22px 24px 0; }
+.tapper-explorer__eyebrow { color: #dabb7b; font: 11px var(--ff-mono); letter-spacing: .14em; text-transform: uppercase; }
+.tapper-explorer h2 { color: #f4f6f2; font-size: clamp(23px, 3vw, 34px); line-height: 1.2; margin: 10px 0; }
+.tapper-explorer__note { color: #adbbb5; font-size: 12px; line-height: 1.6; max-width: 64ch; }
+.tapper-explorer__scene { position: relative; margin-top: 8px; }
+.tapper-explorer__viewport { height: clamp(320px, 48svh, 580px); position: relative; min-width: 0; }
+.tapper-explorer__scene {
+  background: radial-gradient(ellipse at 48% 42%, #707275 0%, #484b4e 60%, #262b2d 100%);
+  border-block: 1px solid #535954;
+}
+.light-theme .tapper-explorer__panel { background: #f4f6f8; color: #25313e; border-color: #cbd3dc; }
+.light-theme .tapper-explorer__scene { background: radial-gradient(ellipse at 48% 42%, #ffffff 0%, #e5ebf1 58%, #c8d2de 100%); border-color: #d3dce5; }
+.light-theme .tapper-explorer h2 { color: #1e2b39; }
+.light-theme .tapper-explorer__eyebrow { color: #795c24; }
+.light-theme .tapper-explorer__note,
+.light-theme .tapper-explorer__status,
+.light-theme .tapper-explorer__progress,
+.light-theme .tapper-explorer__fallback-note { color: #48596a; }
+.light-theme .tapper-explorer__controls { border-color: #cbd3dc; }
+.light-theme .tapper-explorer__actions button { color: #263647; border-color: #a4b2c0; }
+.light-theme .tapper-explorer__actions button:hover { background: #dde5ed; }
+.light-theme .tapper-explorer__progress output { color: #795c24; }
+.tapper-explorer__scene canvas { display: block; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+.tapper-explorer__scene canvas:active { cursor: grabbing; }
+.tapper-explorer__fallback { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+.tapper-explorer.is-ready .tapper-explorer__fallback { display: none; }
+.tapper-explorer__labels { display: none; background: #18211eed; }
+.light-theme .tapper-explorer__labels { background: transparent; }
+.is-ready .tapper-explorer__labels {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  padding: 8px 12px;
+}
+.tapper-explorer__label {
+  color: #e4e9e5; background: #202c26; border: 1px solid #4e6155;
+  border-radius: 4px; padding: 7px 8px; font: 11px/1.45 var(--ff-mono);
+  min-width: 0; overflow-wrap: anywhere;
+}
+.light-theme .tapper-explorer__label { color: #253747; background: #f6f9fcef; border-color: #a5b4c3; }
+.tapper-explorer__controls { border-top: 1px solid #34443f; padding: 16px 24px 20px; }
+.tapper-explorer__controls[hidden], .tapper-explorer [hidden] { display: none; }
+.tapper-explorer__progress { display: flex; justify-content: space-between; gap: 12px; font: 11px var(--ff-mono); color: #c0cfc7; }
+.tapper-explorer__progress output { color: #e6be72; font-variant-numeric: tabular-nums; }
+.tapper-explorer input[type="range"] { width: 100%; height: 44px; margin: 2px 0; accent-color: #dfb567; cursor: pointer; }
+.tapper-explorer__actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tapper-explorer__actions button { border: 1px solid #53665d; color: #edf3ef; border-radius: 6px; padding: 9px 12px; font: 11px var(--ff-mono); min-height: 44px; }
+.tapper-explorer__actions button:disabled { opacity: .45; cursor: default; }
+.tapper-explorer :is(button, input, canvas):focus-visible { outline: 2px solid #e7be72; outline-offset: 3px; }
+.light-theme .tapper-explorer :is(button, input, canvas):focus-visible { outline-color: #795c24; }
+.tapper-explorer__actions button:hover { background: #2b3c33; }
+.tapper-explorer__actions button[aria-pressed="true"] { background: #dcb879; color: #11211a; border-color: #dcb879; }
+.tapper-explorer__status { color: #c0cfc7; font-size: 12px; line-height: 1.5; margin: 12px 0 0; min-height: 2.9em; }
+.tapper-explorer__fallback-note { padding: 0 24px 22px; color: #c0cfc7; font-size: 13px; }
+.tapper-explorer__legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0 0 38px; }
+.tapper-explorer__legend div { padding: 16px 0; border-top: 1px solid var(--line); }
+.tapper-explorer__legend dt { color: var(--ink); font-size: 14px; font-weight: 600; margin-bottom: 7px; }
+.tapper-explorer__legend dd { font-size: 13px; line-height: 1.7; color: var(--muted); margin: 0; }
+@media (max-width: 700px) {
+  .tapper-explorer { --explorer-sticky-top: 76px; }
+  .tapper-explorer__heading { padding: 16px 16px 0; }
+  .tapper-explorer__controls { padding: 12px 16px 16px; }
+  .tapper-explorer__viewport { height: clamp(260px, 38svh, 340px); }
+  .tapper-explorer__label { font-size: 11px; padding: 6px; }
+  .tapper-explorer__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tapper-explorer__actions button { padding: 8px; }
+  .tapper-explorer__actions [data-explorer-follow] { grid-column: 1 / -1; }
+  .tapper-explorer__actions [data-explorer-yaw] { text-align: center; font: 13px var(--ff-mono); }
+  .tapper-explorer__legend { grid-template-columns: 1fr; gap: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tapper-explorer.is-ready { height: auto; }
+  .is-ready .tapper-explorer__panel { position: relative; top: auto; }
+}

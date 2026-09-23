@@ -5,6 +5,7 @@ const path = require('path');
 const {
   siteProfile,
   siteProjects,
+  projectPageTranslations,
   standalonePages,
   validateSiteData
 } = require('../assets/js/site-data.js');
@@ -282,6 +283,24 @@ for (const page of publicPages) {
   else titleOwners.set(title, page.file);
   if (descriptionOwners.has(description)) check(false, `${page.file}: duplicates the description used by ${descriptionOwners.get(description)}.`);
   else descriptionOwners.set(description, page.file);
+}
+
+// Runtime translations reuse generated media metadata. A translated image must
+// have a corresponding optimized source in the project's static content.
+for (const [key, project] of Object.entries(siteProjects)) {
+  const html = pageHtml.get(project.file) || '';
+  const content = html.match(/<div\b[^>]*class=["']project-content["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || '';
+  const generatedSources = new Set(tags(content, 'img').map(tag => attribute(tag, 'data-media-source')));
+  for (const [language, copy] of Object.entries(projectPageTranslations[key] || {})) {
+    for (const tag of tags(copy.content, 'img')) {
+      const source = attribute(tag, 'src');
+      if (!source || isExternalReference(source)) continue;
+      const { target } = resolveReference(project.file, source);
+      if (!mediaManifest[target]) continue;
+      check(generatedSources.has(target),
+        `${project.file} (${language}): translated image ${source} needs generated responsive media in project-content.`);
+    }
+  }
 }
 
 for (const file of ['404.html', 'blog-post.html']) {

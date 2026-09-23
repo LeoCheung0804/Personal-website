@@ -126,7 +126,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260813-1" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260923-6" />
 
     <!--
     - google font link
@@ -137,6 +137,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap"
       rel="stylesheet"
     />
+      <link rel="stylesheet" href="./assets/css/tapper-exploded.css?v=20260924-3">
   </head>
 
   <body class="portfolio-site">
@@ -357,6 +358,52 @@
           </header>
 
           
+          <section class="tapper-explorer" id="robot-explorer" data-tapper-explorer aria-labelledby="explorer-title">
+            <div class="tapper-explorer__panel">
+              <header class="tapper-explorer__heading">
+                <p class="tapper-explorer__eyebrow" data-i18n="explorer.eyebrow">ROBOSUN TAPPER / SUBSYSTEMS</p>
+                <h2 id="explorer-title" data-i18n="explorer.title">Explore the robot assembly</h2>
+                <p class="tapper-explorer__note" data-i18n="explorer.note">Use the slider to extend the arm. Drag horizontally to rotate the view.</p>
+              </header>
+              <div class="tapper-explorer__scene" data-explorer-scene>
+                <div class="tapper-explorer__labels" aria-hidden="true">
+                  <span class="tapper-explorer__label" data-part-label="thrusters" data-i18n="explorer.thrusters">01 / Guarded propellers</span>
+                  <span class="tapper-explorer__label" data-part-label="drives" data-i18n="explorer.drives">02 / Drive motors &amp; bearings</span>
+                </div>
+                <div class="tapper-explorer__viewport" data-explorer-viewport>
+                  <img class="tapper-explorer__fallback" src="./assets/images/optimized/robotapper_3-jpg-960.webp" width="960" height="720" alt="Robo-Tapper suspended beside a building facade">
+                </div>
+                <div class="tapper-explorer__labels" aria-hidden="true">
+                  <span class="tapper-explorer__label" data-part-label="arm" data-i18n="explorer.arm">03 / Scissor linkage</span>
+                  <span class="tapper-explorer__label" data-part-label="tool" data-i18n="explorer.tool">04 / Tapper &amp; casters</span>
+                </div>
+              </div>
+              <div class="tapper-explorer__controls" data-explorer-controls hidden>
+                <div class="tapper-explorer__progress">
+                  <label for="assembly-progress" data-i18n="explorer.progress">Assembly separation</label>
+                  <output for="assembly-progress">0%</output>
+                </div>
+                <input id="assembly-progress" type="range" min="0" max="100" value="0" step="1">
+                <div class="tapper-explorer__actions">
+                  <button type="button" data-explorer-pose="0" data-i18n="explorer.assembled">Assembled</button>
+                  <button type="button" data-explorer-pose="1" data-i18n="explorer.exploded">Exploded</button>
+                  <button type="button" data-explorer-follow aria-pressed="true" data-i18n="explorer.follow">Follow scroll</button>
+                  <output data-explorer-yaw aria-label="Yaw angle">ψ = 0°</output>
+                  <button type="button" data-explorer-reset data-i18n="explorer.reset">Reset angle</button>
+                </div>
+                <p class="tapper-explorer__status" id="explorer-interaction" data-explorer-status>Scroll down to separate the assembly, or use the slider. Drag horizontally to adjust yaw ψ around the vertical axis.</p>
+              </div>
+              <p class="tapper-explorer__fallback-note" data-explorer-fallback data-i18n="explorer.fallback">Loading the local 3D assembly when it comes into view. Robot photos and subsystem descriptions are also available below.</p>
+            </div>
+          </section>
+          <dl class="tapper-explorer__legend">
+            <div><dt data-i18n="explorer.frame">Reference / Chassis &amp; battery case</dt><dd data-i18n="explorer.frameText">The main chassis and battery case stay in place as the reference for the assembly view.</dd></div>
+            <div><dt data-i18n="explorer.thrusters">01 / Guarded propellers</dt><dd data-i18n="explorer.thrustersText">The two propeller units move slightly outward from the chassis. Their motors and blades come from the CAD; the circular guards were reconstructed from the reference image.</dd></div>
+            <div><dt data-i18n="explorer.drives">02 / Drive motors &amp; bearings</dt><dd data-i18n="explorer.drivesText">The paired motor and bearing assemblies stay mounted to the chassis during the reveal.</dd></div>
+            <div><dt data-i18n="explorer.arm">03 / Scissor linkage</dt><dd data-i18n="explorer.armText">The scissor links extend the arm straight out from the chassis. Their motion follows the CAD link spacing; the displayed stroke is illustrative.</dd></div>
+            <div><dt data-i18n="explorer.tool">04 / Tapper &amp; casters</dt><dd data-i18n="explorer.toolText">The CAD tapper assembly, including its caster wheels, travels with the end of the extending linkage.</dd></div>
+          </dl>
+
           <section class="project-photo-showcase">
             <div
               class="photo-sequence"
@@ -481,8 +528,8 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20260813-1"></script>
-    <script src="./assets/js/i18n.js?v=20260813-1"></script>
+    <script src="./assets/js/site-data.js?v=20260923-6"></script>
+    <script src="./assets/js/i18n.js?v=20260923-5"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js"></script>
     <script src="./assets/js/ui-interactions.js?v=20260721-1"></script>
@@ -490,6 +537,7 @@
     <script src="./assets/js/contact-form.js"></script>
     <script src="./assets/js/navigation.js?v=20260721-1"></script>
     <script src="./assets/js/app-init.js"></script>
+    <script type="module" src="./assets/js/tapper-exploded.js?v=20260924-1"></script>
     <!--
     - ionicon link
   -->
