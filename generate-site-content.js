@@ -361,8 +361,8 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20260923-6',
-    'assets/js/site-data.js': '20260923-6',
+    'assets/css/field-notes.css': '20260926-1',
+    'assets/js/site-data.js': '20260926-1',
     'assets/js/i18n.js': '20260923-5',
     'assets/js/ui-interactions.js': '20260721-1',
     'assets/js/navigation.js': '20260721-1'

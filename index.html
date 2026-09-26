@@ -390,7 +390,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260923-6" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20260926-1" />
     <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20260717-1" />
 
     <!--
@@ -653,14 +653,12 @@
 
         <article class="about active" data-page="about" id="about">
           <header>
-            <h2 class="h2 article-title" data-i18n="about.title">About me</h2>
+            <h2 class="h2 article-title" data-i18n="about.title">Construction robots at work</h2>
           </header>
 
           <div class="about-intro-grid">
             <section class="about-text">
-              <p data-i18n="about.paragraph1">I'm Cheung Man Loc, professionally known as Leo Cheung, a mechanical engineer specializing in construction robotics. My work spans mechanical design, embedded electronics, ROS software, sensing, system integration, and field validation—taking machines from the first CAD model to reliable operation on site.</p>
-
-              <p data-i18n="about.paragraph2">At C3 Construction Robotics, I develop cable-driven and autonomous systems for construction and facade inspection. Highlights include CU-Brick building the 5,800-brick YES Pavilion structure, earning Second Runner-up in the Open Section at YPEC 2025 and a Merit Award in the Open Category of the OSH Innovation and Technology Award 2026, Robo-Tapper progressing into commercial facade inspections, and presenting the CU-Brick paper at CableCon 2025.</p>
+              <p data-i18n="about.paragraph1">I'm Leo Cheung, a Hong Kong engineer building robots for real construction sites.</p>
             </section>
 
             <figure class="about-hero-media">
@@ -681,118 +679,27 @@
                   fetchpriority="high" data-media-source="assets/images/Robotapper_hero-1600.jpg" decoding="async"
                 />
               </picture>
-                <a class="about-hero-project-link" href="/tapper.html">
-                  <span data-i18n="about.viewTapper">Explore Robo-Tapper</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
               </div>
               <figcaption class="about-hero-caption">
-                <strong>Robo-Tapper</strong>
-                <span data-i18n="projectPreview.tapper">Automated facade inspection</span>
+                <span class="about-hero-caption-copy">
+                  <strong>Robo-Tapper</strong>
+                  <span data-i18n="projectPreview.tapper">Automated facade inspection</span>
+                </span>
+                <a class="about-hero-project-link" href="/tapper.html">
+                  <span data-i18n="about.viewTapper">View Robo-Tapper</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
               </figcaption>
             </figure>
+
+            <section class="about-text about-details">
+              <p data-i18n="about.paragraph2">I connect mechanical design, electronics, ROS software, and field testing to take machines from CAD into service. My work includes CU-Brick's 5,800-brick YES Pavilion and Robo-Tapper's commercial facade inspections.</p>
+              <div class="about-actions">
+                <a href="/#portfolio" data-i18n="about.viewProjects">View projects</a>
+                <a href="/#contact" data-i18n="about.contact">Get in touch</a>
+              </div>
+            </section>
           </div>
-
-          <!--
-          - service
-        -->
-
-          <section class="service">
-            <h3 class="h3 service-title" data-i18n="service.title">What i'm doing</h3>
-
-            <ul class="service-list">
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-dev.svg"
-                    alt="design icon"
-                    width="40"
-                    height="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4
-                    class="h4 service-item-title"
-                    data-i18n="service.software.title"
-                  >Software development</h4>
-                  <p
-                    class="service-item-text"
-                    data-i18n="service.software.text"
-                  >Build ROS-based control, navigation, signal-processing, UI, motor-control, and wireless communication software that connects cleanly to real hardware.</p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-design.svg"
-                    alt="Web development icon"
-                    width="40"
-                    height="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4
-                    class="h4 service-item-title"
-                    data-i18n="service.hardware.title"
-                  >Hardware design</h4>
-
-                  <p
-                    class="service-item-text"
-                    data-i18n="service.hardware.text"
-                  >Design robot mechanisms, electrical layouts, and testable prototypes using CAD, 3D printing, CNC machining, sensors, and embedded electronics.</p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-Project-Management.svg"
-                    alt="mobile app icon"
-                    width="40"
-                    height="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4
-                    class="h4 service-item-title"
-                    data-i18n="service.management.title"
-                  >Project management</h4>
-
-                  <p
-                    class="service-item-text"
-                    data-i18n="service.management.text"
-                  >Turn open-ended requirements into coordinated engineering work spanning scope, suppliers, integration, field tests, milestones, and safety documentation.</p>
-                </div>
-              </li>
-
-              <li class="service-item">
-                <div class="service-icon-box">
-                  <img
-                    src="./assets/images/icon-research.svg"
-                    alt="camera icon"
-                    width="40"
-                    height="40"
-                  />
-                </div>
-
-                <div class="service-content-box">
-                  <h4
-                    class="h4 service-item-title"
-                    data-i18n="service.research.title"
-                  >Research and Publishing</h4>
-
-                  <p
-                    class="service-item-text"
-                    data-i18n="service.research.text"
-                  >Translate experiments into engineering evidence and clear technical communication, including peer-reviewed work and conference presentations.</p>
-                </div>
-              </li>
-            </ul>
-          </section>
 
           <!--
           - project preview
@@ -923,6 +830,107 @@
 
               </ul>
             </div>
+          </section>
+
+          <!--
+          - service
+        -->
+
+          <section class="service">
+            <h3 class="h3 service-title" data-i18n="service.title">What i'm doing</h3>
+
+            <ul class="service-list">
+              <li class="service-item">
+                <div class="service-icon-box">
+                  <img
+                    src="./assets/images/icon-dev.svg"
+                    alt="design icon"
+                    width="40"
+                    height="40"
+                  />
+                </div>
+
+                <div class="service-content-box">
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.software.title"
+                  >Software development</h4>
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.software.text"
+                  >Build ROS-based control, navigation, signal-processing, UI, motor-control, and wireless communication software that connects cleanly to real hardware.</p>
+                </div>
+              </li>
+
+              <li class="service-item">
+                <div class="service-icon-box">
+                  <img
+                    src="./assets/images/icon-design.svg"
+                    alt="Web development icon"
+                    width="40"
+                    height="40"
+                  />
+                </div>
+
+                <div class="service-content-box">
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.hardware.title"
+                  >Hardware design</h4>
+
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.hardware.text"
+                  >Design robot mechanisms, electrical layouts, and testable prototypes using CAD, 3D printing, CNC machining, sensors, and embedded electronics.</p>
+                </div>
+              </li>
+
+              <li class="service-item">
+                <div class="service-icon-box">
+                  <img
+                    src="./assets/images/icon-Project-Management.svg"
+                    alt="mobile app icon"
+                    width="40"
+                    height="40"
+                  />
+                </div>
+
+                <div class="service-content-box">
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.management.title"
+                  >Project management</h4>
+
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.management.text"
+                  >Turn open-ended requirements into coordinated engineering work spanning scope, suppliers, integration, field tests, milestones, and safety documentation.</p>
+                </div>
+              </li>
+
+              <li class="service-item">
+                <div class="service-icon-box">
+                  <img
+                    src="./assets/images/icon-research.svg"
+                    alt="camera icon"
+                    width="40"
+                    height="40"
+                  />
+                </div>
+
+                <div class="service-content-box">
+                  <h4
+                    class="h4 service-item-title"
+                    data-i18n="service.research.title"
+                  >Research and Publishing</h4>
+
+                  <p
+                    class="service-item-text"
+                    data-i18n="service.research.text"
+                  >Translate experiments into engineering evidence and clear technical communication, including peer-reviewed work and conference presentations.</p>
+                </div>
+              </li>
+            </ul>
           </section>
         </article>
 
@@ -1781,7 +1789,7 @@
     - custom js link
   -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
-    <script src="./assets/js/site-data.js?v=20260923-6"></script>
+    <script src="./assets/js/site-data.js?v=20260926-1"></script>
     <script src="./assets/js/i18n.js?v=20260923-5"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js"></script>
