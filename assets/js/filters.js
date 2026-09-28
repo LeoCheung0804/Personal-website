@@ -72,6 +72,7 @@ const publicationSelectItems = document.querySelectorAll("[data-publication-sele
 const publicationSelectValue = document.querySelector("[data-publication-select-value]");
 const publicationFilterBtn = document.querySelectorAll("[data-publication-filter-btn]");
 const publicationFilterItems = document.querySelectorAll("[data-publication-filter-item]");
+const publicationEmpty = document.querySelector("[data-publication-empty]");
 let activePublicationFilterValue = getFilterValue(
   document.querySelector("[data-publication-filter-btn].active")
 );
@@ -88,6 +89,7 @@ const syncPublicationFilterControls = function () {
 const publicationFilterFunc = function (selectedValue) {
   activePublicationFilterValue = selectedValue;
   syncPublicationFilterControls();
+  let visibleCount = 0;
 
   for (let i = 0; i < publicationFilterItems.length; i++) {
     if (
@@ -95,11 +97,13 @@ const publicationFilterFunc = function (selectedValue) {
       || selectedValue === publicationFilterItems[i].dataset.publicationCategory
     ) {
       publicationFilterItems[i].classList.add("active");
+      visibleCount += 1;
     } else {
       publicationFilterItems[i].classList.remove("active");
     }
   }
 
+  if (publicationEmpty) publicationEmpty.hidden = visibleCount > 0;
   refreshFadeAnimations();
 };
 

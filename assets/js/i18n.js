@@ -161,8 +161,12 @@ function applyProjectPageTranslations(language = currentLanguage) {
 
   const backLink = document.querySelector(".btn-back");
   const pageTitle = document.querySelector(".portfolio.active .article-title");
-  const overviewTitle = document.querySelector(".project-detail .title");
+  const overviewTitle = document.querySelector(".project-intro .title");
+  const detailsTitle = document.querySelector(".project-detail .title");
+  const projectPreview = document.querySelector(".project-intro__eyebrow");
+  const projectIntro = document.querySelector(".project-intro-copy");
   const projectContent = document.querySelector(".project-detail .project-content");
+  const { overview, details } = splitProjectContent(projectCopy.content);
 
   if (backLink) {
     backLink.innerHTML = `&larr; ${getTranslation("projects.back", language)}`;
@@ -177,8 +181,20 @@ function applyProjectPageTranslations(language = currentLanguage) {
     overviewTitle.textContent = getTranslation("project.overview", language);
   }
 
+  if (detailsTitle) {
+    detailsTitle.textContent = getTranslation("project.details", language);
+  }
+
+  if (projectPreview) {
+    projectPreview.textContent = (siteProjects[projectKey].detailEyebrow || siteProjects[projectKey].previewTitle)?.[language] || "";
+  }
+
+  if (projectIntro) {
+    renderTranslatedProjectContent(projectIntro, overview);
+  }
+
   if (projectContent) {
-    renderTranslatedProjectContent(projectContent, projectCopy.content);
+    renderTranslatedProjectContent(projectContent, details);
   }
 }
 

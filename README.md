@@ -41,7 +41,7 @@ retain lazy loading. Keep images shared across a project's language versions so
 each translated image can reuse its generated media metadata. The static audit
 checks this mapping for images in the media manifest.
 
-The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English detail bodies aligned with the same project registry. Do not edit generated project `.project-content` blocks directly.
+The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English project overviews and detail bodies aligned with the same project registry. Do not edit generated project `.project-intro-copy` or `.project-content` blocks directly.
 
 To verify that checked-in HTML is current without writing files:
 

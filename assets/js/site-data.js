@@ -246,6 +246,10 @@ const siteProjects = {
       en: "Borderless Lab 365: Remote STEM Laboratory",
       zhHant: "Borderless Lab 365：STEM 遙距實驗室"
     },
+    detailEyebrow: {
+      en: "Remote STEM experiments",
+      zhHant: "STEM 遙距實驗"
+    },
     seo: {
       description: "Borderless Lab 365 is a browser-based PolyU platform that lets secondary students control real STEM experiments and monitor live sensor data remotely.",
       ogDescription: "A remote STEM laboratory combining browser controls, livestream monitoring, Raspberry Pi, Arduino, and real-time sensor data.",
@@ -265,6 +269,10 @@ const siteProjects = {
     cardTitle: {
       en: "Microwave Heating for Construction Materials",
       zhHant: "建築材料微波加熱研究"
+    },
+    detailEyebrow: {
+      en: "Material heating experiments",
+      zhHant: "材料加熱實驗"
     },
     seo: {
       description: "An experimental study of how concrete, cement, and metal compositions respond to microwave heating, supported by CAD-designed molds and prototypes.",
@@ -286,6 +294,10 @@ const siteProjects = {
       en: "Retractable Tapper & Thruster Module",
       zhHant: "可伸縮敲擊與推進模組"
     },
+    detailEyebrow: {
+      en: "Protected inspection hardware",
+      zhHant: "受保護的檢測硬件"
+    },
     seo: {
       description: "A compact retractable tapper and thruster module designed to protect impact-testing hardware while a facade inspection robot is moving.",
       ogDescription: "A modular impact-testing tool that deploys at an inspection point and retracts during robot travel.",
@@ -305,6 +317,10 @@ const siteProjects = {
     cardTitle: {
       en: "SuperLimb Wireless Motorized Foot Controller",
       zhHant: "SuperLimb 無線電動腳踏控制器"
+    },
+    detailEyebrow: {
+      en: "Hands-free robot control",
+      zhHant: "免手持機械人控制"
     },
     seo: {
       description: "A wearable motorized foot controller for SuperLimb, combining multi-axis input, wireless communication, embedded electronics, and haptic feedback.",
@@ -428,6 +444,7 @@ const translations = {
     "publications.title": "Research & Publications",
     "publications.filters.conference": "Conference papers",
     "publications.filters.journal": "Journal papers",
+    "publications.empty": "No publications in this category yet.",
     "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
     "publications.cuBrick.authors": "Co-authored and presented by Cheung Man Loc (published as Man Loc Cheung).",
     "publications.cuBrick.info": "Presented at CableCon 2025, the 7th International Conference on Cable-Driven Parallel Robots, July 2025",
@@ -561,6 +578,7 @@ const translations = {
     "publications.title": "研究與論文",
     "publications.filters.conference": "會議論文",
     "publications.filters.journal": "期刊論文",
+    "publications.empty": "此分類暫時未有論文。",
     "publications.cuBrick.title": "Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project",
     "publications.cuBrick.authors": "由 Cheung Man Loc 共同撰寫及發表（論文署名為 Man Loc Cheung）。",
     "publications.cuBrick.info": "於 2025 年 7 月在第 7 屆纜索驅動並聯機械人國際會議 CableCon 2025 發表",
@@ -590,6 +608,7 @@ const translations = {
 Object.assign(translations.en, {
   "projects.back": "Back to Projects",
   "project.overview": "Project Overview",
+  "project.details": "Project Details",
   "project.responsibilities": "Selected Contributions",
   "project.bookNow": "Open Remote Lab"
 });
@@ -597,6 +616,7 @@ Object.assign(translations.en, {
 Object.assign(translations.zhHant, {
   "projects.back": "返回項目",
   "project.overview": "項目概覽",
+  "project.details": "項目詳情",
   "project.responsibilities": "主要貢獻",
   "project.bookNow": "開啟遙距實驗室"
 });
@@ -916,6 +936,14 @@ Object.entries(siteProjects).forEach(([key, project]) => {
   project.copy = projectPageTranslations[key];
 });
 
+function splitProjectContent(content) {
+  const match = content.match(/^\s*(<p>[\s\S]*?<\/p>)([\s\S]*)$/);
+  if (!match) {
+    throw new Error("Project content must begin with an overview paragraph.");
+  }
+  return { overview: match[1], details: match[2] };
+}
+
 function validateSiteData() {
   if (!siteProfile.name || !siteProfile.fullName || !siteProfile.publishedName
     || !siteProfile.givenName || !siteProfile.familyName
@@ -1007,6 +1035,9 @@ function validateSiteData() {
     if (project.previewTitle && (!project.previewTitle.en || !project.previewTitle.zhHant)) {
       throw new Error(`siteProjects.${key}.previewTitle requires both languages.`);
     }
+    if (project.detailEyebrow && (!project.detailEyebrow.en || !project.detailEyebrow.zhHant)) {
+      throw new Error(`siteProjects.${key}.detailEyebrow requires both languages.`);
+    }
 
     const missingSeo = requiredProjectSeoFields.filter((field) => !project.seo?.[field]);
     if (missingSeo.length) {
@@ -1034,6 +1065,9 @@ function validateSiteData() {
       if (!project.copy?.[language]?.content || project.copy[language].title !== project.title[language]) {
         throw new Error(`Project copy mismatch for ${key}.${language}.`);
       }
+      if (!splitProjectContent(project.copy[language].content).details.trim()) {
+        throw new Error(`Project details are missing for ${key}.${language}.`);
+      }
       if (translations[language][`project.${key}.title`] !== project.cardTitle[language]) {
         throw new Error(`Project card translation mismatch for ${key}.${language}.`);
       }
@@ -1056,6 +1090,7 @@ if (typeof module !== "undefined" && module.exports) {
     projectPageFiles,
     projectPageAliases,
     projectPageTranslations,
+    splitProjectContent,
     validateSiteData
   };
 }

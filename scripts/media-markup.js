@@ -4,7 +4,7 @@ const path = require('path');
 const mediaManifest = require('../assets/data/media-manifest.json');
 
 const THUMB_SIZES = '(min-width: 1180px) 112px, 96px';
-const AVATAR_SIZES = '(min-width: 1250px) 260px, 72px';
+const AVATAR_SIZES = '(min-width: 1180px) 104px, 72px';
 const CARD_SIZES = '(min-width: 1250px) 220px, (min-width: 760px) 42vw, 88vw';
 const CONTENT_SIZES = '(min-width: 1250px) 760px, 92vw';
 

@@ -1110,6 +1110,21 @@ body.portfolio-site > main {
   gap: 0;
 }
 
+.portfolio-site .publication-empty {
+  margin-top: 18px;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  color: var(--ink-soft);
+  background: var(--surface-soft);
+  font-size: var(--type-body);
+  line-height: 1.5;
+}
+
+.portfolio-site .publication-empty[hidden] {
+  display: none;
+}
+
 .portfolio-site .publications .publication-item {
   margin: 0;
   padding: 24px 0;
@@ -1273,6 +1288,13 @@ body.portfolio-site > main {
   align-items: stretch;
 }
 
+.portfolio-site .photo-sequence > input[type="radio"] {
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  clip-path: inset(50%);
+}
+
 .portfolio-site .photo-sequence__stage {
   width: 100%;
   height: auto;
@@ -1324,6 +1346,36 @@ body.portfolio-site > main {
 .portfolio-site .photo-sequence__thumb:focus-visible {
   border-color: var(--accent);
   box-shadow: 0 0 0 1px var(--accent);
+}
+
+.portfolio-site .project-intro {
+  max-width: 76ch;
+  margin-bottom: clamp(38px, 5vw, 58px);
+}
+
+.portfolio-site .project-intro__eyebrow {
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.portfolio-site .project-intro__eyebrow:empty {
+  display: none;
+}
+
+.portfolio-site .project-intro .title {
+  margin-bottom: 16px;
+}
+
+.portfolio-site .project-intro-copy {
+  color: var(--ink-soft);
+  font-size: clamp(1.04rem, 1.8vw, 1.22rem);
+  line-height: 1.65;
 }
 
 .portfolio-site .project-detail {
@@ -1706,21 +1758,21 @@ body.portfolio-site > main {
     top: 24px;
     align-self: start;
     height: auto;
-    padding: 32px 28px;
+    padding: 24px;
   }
 
   .portfolio-site .sidebar-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 18px;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
     padding: 0;
   }
 
   .portfolio-site .avatar-box {
-    width: min(100%, 260px);
-    height: 260px;
-    flex-basis: 260px;
-    border-radius: 22px;
+    width: 104px;
+    height: 104px;
+    flex-basis: 104px;
+    border-radius: 16px;
   }
 
   .portfolio-site .avatar-box img {
@@ -1729,7 +1781,7 @@ body.portfolio-site > main {
   }
 
   .portfolio-site .info-content .name {
-    font-size: 1.95rem;
+    font-size: 1.55rem;
   }
 
   .portfolio-site .info-content .title {
@@ -1751,7 +1803,26 @@ body.portfolio-site > main {
 
   .portfolio-site .contacts-list {
     grid-template-columns: minmax(0, 1fr);
-    gap: 15px;
+    gap: 9px;
+  }
+
+  .portfolio-site .sidebar .separator {
+    margin: 18px 0;
+  }
+
+  .portfolio-site .contact-item {
+    gap: 10px;
+  }
+
+  .portfolio-site .contact-item .icon-box {
+    flex-basis: 34px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .portfolio-site .contact-info {
+    width: calc(100% - 44px);
+    max-width: calc(100% - 44px);
   }
 
   .portfolio-site .navbar {

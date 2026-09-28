@@ -10,6 +10,7 @@ const {
   siteProjects,
   standalonePages,
   translations,
+  splitProjectContent,
   validateSiteData
 } = require('./assets/js/site-data.js');
 
@@ -361,9 +362,10 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20260926-1',
-    'assets/js/site-data.js': '20260926-1',
-    'assets/js/i18n.js': '20260923-5',
+    'assets/css/field-notes.css': '20260928-1',
+    'assets/js/site-data.js': '20260928-1',
+    'assets/js/i18n.js': '20260928-1',
+    'assets/js/filters.js': '20260928-1',
     'assets/js/ui-interactions.js': '20260721-1',
     'assets/js/navigation.js': '20260721-1'
   };
@@ -1174,6 +1176,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
   if (copy.title !== project.title.en) {
     throw new Error(`${fileLabel}: project translation title does not match siteProjects.${project.key}.`);
   }
+  const { overview, details } = splitProjectContent(copy.content);
 
   html = replaceElementsByClass(
     html,
@@ -1195,6 +1198,32 @@ function syncProjectPage(html, project, fileLabel, eol) {
     `${fileLabel} project title`
   );
 
+  const introElements = findElements(
+    html,
+    (openTag, tagName) => tagName.toLowerCase() === 'div' && hasClass(openTag, 'project-intro-copy')
+  );
+  if (introElements.length !== 1) {
+    throw new Error(`${fileLabel}: expected one project-intro-copy element.`);
+  }
+  const introIndent = lineIndentAt(html, introElements[0].openStart);
+  html = replaceElementsByClass(
+    html,
+    'div',
+    'project-intro-copy',
+    1,
+    () => ({ inner: formatBlock(overview, introIndent, eol) }),
+    `${fileLabel} project overview`
+  );
+
+  html = replaceElementsByClass(
+    html,
+    'p',
+    'project-intro__eyebrow',
+    1,
+    () => ({ inner: escapeHtml((project.detailEyebrow || project.previewTitle)?.en || '') }),
+    `${fileLabel} project preview`
+  );
+
   const contentElements = findElements(
     html,
     (openTag, tagName) => tagName.toLowerCase() === 'div' && hasClass(openTag, 'project-content')
@@ -1210,7 +1239,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
     1,
     () => ({
       inner: formatBlock(
-        copy.content,
+        details,
         parentIndent,
         eol,
         'Generated from assets/js/site-data.js by generate-site-content.js.'
