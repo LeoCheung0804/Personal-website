@@ -300,6 +300,7 @@ async function initialize() {
   canvas.addEventListener('keydown', event => {
     if (!['ArrowLeft', 'ArrowRight', 'Home'].includes(event.key)) return;
     event.preventDefault();
+    if (event.key !== 'Home') root.classList.add('has-rotated');
     setYaw(event.key === 'Home' ? 0 : yaw + (event.key === 'ArrowRight' ? 1 : -1) * Math.PI / 36);
   });
   // Horizontal drag only; vertical touch movement remains native page scrolling.
@@ -311,7 +312,9 @@ async function initialize() {
   });
   canvas.addEventListener('pointermove', event => {
     if (!pointer || event.pointerId !== pointer.id) return;
-    setYaw(pointer.rotation + (event.clientX - pointer.x) * .006);
+    const deltaX = event.clientX - pointer.x;
+    if (Math.abs(deltaX) > 8) root.classList.add('has-rotated');
+    setYaw(pointer.rotation + deltaX * .006);
     requestRender();
   });
   const endDrag = () => { pointer = null; };

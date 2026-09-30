@@ -14,12 +14,34 @@
 .tapper-explorer__note { color: #adbbb5; font-size: 12px; line-height: 1.6; max-width: 64ch; }
 .tapper-explorer__scene { position: relative; margin-top: 8px; }
 .tapper-explorer__viewport { height: clamp(320px, 48svh, 580px); position: relative; min-width: 0; }
+.tapper-explorer__rotate-hint {
+  position: absolute; z-index: 2; left: 50%; bottom: 16px;
+  display: none; align-items: center; gap: 9px;
+  max-width: calc(100% - 24px); padding: 9px 13px;
+  border: 1px solid #87998e; border-radius: 999px;
+  background: #101b19e8; color: #f4f6f2;
+  font: 600 11px/1.35 var(--ff-mono); letter-spacing: .02em;
+  white-space: nowrap; pointer-events: none; user-select: none;
+  transform: translateX(-50%);
+}
+.tapper-explorer.is-ready:not(.has-rotated) .tapper-explorer__rotate-hint { display: flex; }
+.tapper-explorer__rotate-arrow {
+  color: #e6be72; font-size: 19px; line-height: 1;
+  animation: explorer-arrow-blink 1.4s ease-in-out infinite;
+}
+.tapper-explorer__rotate-arrow:last-child { animation-delay: .7s; }
+@keyframes explorer-arrow-blink {
+  0%, 100% { opacity: .32; }
+  50% { opacity: 1; }
+}
 .tapper-explorer__scene {
   background: radial-gradient(ellipse at 48% 42%, #707275 0%, #484b4e 60%, #262b2d 100%);
   border-block: 1px solid #535954;
 }
 .light-theme .tapper-explorer__panel { background: #f4f6f8; color: #25313e; border-color: #cbd3dc; }
 .light-theme .tapper-explorer__scene { background: radial-gradient(ellipse at 48% 42%, #ffffff 0%, #e5ebf1 58%, #c8d2de 100%); border-color: #d3dce5; }
+.light-theme .tapper-explorer__rotate-hint { background: #f4f6f8ee; color: #25313e; border-color: #a5b4c3; }
+.light-theme .tapper-explorer__rotate-arrow { color: #795c24; }
 .light-theme .tapper-explorer h2 { color: #1e2b39; }
 .light-theme .tapper-explorer__eyebrow { color: #795c24; }
 .light-theme .tapper-explorer__note,
@@ -69,6 +91,7 @@
   .tapper-explorer__heading { padding: 16px 16px 0; }
   .tapper-explorer__controls { padding: 12px 16px 16px; }
   .tapper-explorer__viewport { height: clamp(260px, 38svh, 340px); }
+  .tapper-explorer__rotate-hint { bottom: 12px; gap: 7px; padding: 8px 10px; font-size: 10px; }
   .tapper-explorer__label { font-size: 11px; padding: 6px; }
   .tapper-explorer__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tapper-explorer__actions button { padding: 8px; }
@@ -79,4 +102,5 @@
 @media (prefers-reduced-motion: reduce) {
   .tapper-explorer.is-ready { height: auto; }
   .is-ready .tapper-explorer__panel { position: relative; top: auto; }
+  .tapper-explorer__rotate-arrow { animation: none; opacity: 1; }
 }

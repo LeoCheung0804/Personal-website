@@ -363,7 +363,9 @@ function syncSafeBlankLinks(html) {
 function syncAssetVersions(html) {
   const versionedAssets = {
     'assets/css/field-notes.css': '20260928-1',
-    'assets/js/site-data.js': '20260928-1',
+    'assets/js/site-data.js': '20260930-1',
+    'assets/css/tapper-exploded.css': '20260930-1',
+    'assets/js/tapper-exploded.js': '20260930-1',
     'assets/js/i18n.js': '20260928-1',
     'assets/js/filters.js': '20260928-1',
     'assets/js/ui-interactions.js': '20260721-1',
