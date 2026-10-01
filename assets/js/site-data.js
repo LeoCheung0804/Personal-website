@@ -612,7 +612,10 @@ Object.assign(translations.en, {
   "project.overview": "Project Overview",
   "project.details": "Project Details",
   "project.responsibilities": "Selected Contributions",
-  "project.bookNow": "Open Remote Lab"
+  "project.bookNow": "Open Remote Lab",
+  "gallery.position": "Item {current} of {total}",
+  "projectPreview.previous": "Previous projects",
+  "projectPreview.next": "Next projects"
 });
 
 Object.assign(translations.zhHant, {
@@ -620,7 +623,10 @@ Object.assign(translations.zhHant, {
   "project.overview": "項目概覽",
   "project.details": "項目詳情",
   "project.responsibilities": "主要貢獻",
-  "project.bookNow": "開啟遙距實驗室"
+  "project.bookNow": "開啟遙距實驗室",
+  "gallery.position": "第 {current} 項，共 {total} 項",
+  "projectPreview.previous": "上一組項目",
+  "projectPreview.next": "下一組項目"
 });
 
 const projectPageFiles = Object.fromEntries(
@@ -949,7 +955,18 @@ function splitProjectContent(content) {
   if (!match) {
     throw new Error("Project content must begin with an overview paragraph.");
   }
-  return { overview: match[1], details: match[2] };
+  let details = match[2];
+  // Preserve the original media and captions while promoting one visual block
+  // into the project lead. Gallery projects have no image figures in this copy.
+  const mediaGrid = details.match(/<div\b[^>]*class=["'][^"']*\bproject-media-grid\b[^"']*["'][^>]*>[\s\S]*?<\/div>/i);
+  const imageFigure = [...details.matchAll(/<figure\b[^>]*>[\s\S]*?<\/figure>/gi)]
+    .find((figure) => /<img\b/i.test(figure[0]));
+  const media = mediaGrid || imageFigure;
+  const leadMedia = media?.[0] || "";
+  if (media) {
+    details = details.slice(0, media.index) + details.slice(media.index + leadMedia.length);
+  }
+  return { overview: match[1], leadMedia, details };
 }
 
 function validateSiteData() {

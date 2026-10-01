@@ -58,6 +58,7 @@ body.portfolio-site {
   --shadow-5: var(--shadow-field);
 
   min-width: 0;
+  font-family: var(--ff-poppins);
   min-height: 100vh;
   color: var(--ink-soft);
   color-scheme: dark;
@@ -67,6 +68,10 @@ body.portfolio-site {
     linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
   background-size: 48px 48px;
   background-attachment: fixed;
+}
+
+html[lang="zh-Hant"] body.portfolio-site {
+  --ff-poppins: "Noto Sans TC", "Poppins", "PingFang TC", "Microsoft JhengHei", sans-serif;
 }
 
 .light-theme body.portfolio-site {
@@ -79,8 +84,8 @@ body.portfolio-site {
   --muted: #647069;
   --line: #d8dfda;
   --line-strong: #b9c4bd;
-  --accent: #b87313;
-  --accent-strong: #d58a1c;
+  --accent: #946014;
+  --accent-strong: #9e6611;
   --accent-soft: rgba(184, 115, 19, 0.1);
   --danger: #a93f45;
   --bg-nav: rgba(255, 255, 255, 0.94);
@@ -238,6 +243,11 @@ body.portfolio-site > main {
 .portfolio-site article.active {
   display: block;
   animation: fieldNotesReveal 360ms ease both;
+}
+
+.portfolio-site .fade-ready {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .portfolio-site article[data-page] {
@@ -665,6 +675,11 @@ body.portfolio-site > main {
   text-transform: none;
 }
 
+.portfolio-site .about > header {
+  margin-bottom: clamp(24px, 3vw, 30px);
+  padding-bottom: 22px;
+}
+
 .portfolio-site article:not(.about) .article-title {
   font-size: clamp(2rem, 5.5vw, 3.5rem);
   line-height: 1.04;
@@ -683,6 +698,7 @@ body.portfolio-site > main {
   letter-spacing: -0.035em;
   text-transform: none;
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .portfolio-site .project-preview-item-title,
@@ -709,7 +725,7 @@ body.portfolio-site > main {
   grid-template-columns: minmax(0, 1fr);
   align-items: start;
   gap: clamp(24px, 5vw, 46px);
-  margin-bottom: var(--section-space);
+  margin-bottom: clamp(36px, 4vw, 52px);
 }
 
 .portfolio-site .about-text {
@@ -1398,6 +1414,112 @@ body.portfolio-site > main {
   line-height: 1.65;
 }
 
+/* The opening pairs the purpose of a project with its actual hardware. */
+.portfolio-site .project-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  margin-bottom: var(--section-space);
+}
+
+.portfolio-site .project-lead .project-intro {
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+}
+
+.portfolio-site .project-intro .title {
+  margin: 0 0 16px;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.portfolio-site .project-lead :is(.photo-sequence, .project-photo-showcase) {
+  min-width: 0;
+  margin: 0;
+}
+
+.portfolio-site .project-lead .photo-sequence {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.portfolio-site .project-lead .photo-sequence__thumbs {
+  flex-direction: row;
+  max-height: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1px 1px 5px;
+  scroll-snap-type: inline mandatory;
+}
+
+.portfolio-site .project-lead .photo-sequence__thumb {
+  flex: 0 0 82px;
+  width: auto;
+}
+
+.portfolio-site .project-lead .photo-sequence__thumb img {
+  height: 52px;
+}
+
+.portfolio-site .photo-sequence__position {
+  grid-column: 1 / -1;
+  justify-self: end;
+  color: var(--muted);
+  font-family: var(--ff-mono);
+  font-size: var(--type-label);
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+}
+
+.portfolio-site .project-lead-media {
+  min-width: 0;
+}
+
+.portfolio-site .project-lead-media figure {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
+}
+
+.portfolio-site .project-lead-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+}
+
+.portfolio-site .project-lead-media figcaption {
+  padding: 12px 16px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: var(--type-small);
+  line-height: 1.5;
+}
+
+.portfolio-site .project-lead-media .project-media-grid {
+  margin: 0;
+}
+
+.portfolio-site .project-detail > header {
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.portfolio-site .project-detail > header .title {
+  margin: 0;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+}
+
 .portfolio-site .project-detail {
   margin: 0 0 var(--section-space);
   padding: 0;
@@ -1570,6 +1692,18 @@ body.portfolio-site > main {
 }
 
 /* Contact */
+
+/* The contact form includes Google's visible reCAPTCHA branding and links. */
+.portfolio-site .grecaptcha-badge {
+  visibility: hidden;
+}
+
+.portfolio-site .recaptcha-notice {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: var(--type-small);
+  line-height: 1.65;
+}
 
 .portfolio-site .mapbox {
   height: auto;
@@ -1747,12 +1881,17 @@ body.portfolio-site > main {
 
   .portfolio-site .about-intro-grid {
     grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.15fr);
-    row-gap: 0;
+    grid-template-rows: min-content 1fr;
+    row-gap: 24px;
   }
 
   .portfolio-site .about-intro-grid > .about-text {
     grid-column: 1;
     grid-row: 1;
+  }
+
+  .portfolio-site .about-intro-grid > .about-text p:last-child {
+    margin-bottom: 0;
   }
 
   .portfolio-site .about-intro-grid > .about-details {
@@ -1791,6 +1930,11 @@ body.portfolio-site > main {
 }
 
 @media (min-width: 960px) {
+  .portfolio-site .project-lead {
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(24px, 3vw, 40px);
+  }
+
   .portfolio-site .project-list,
   .portfolio-site .blog-posts-list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1977,6 +2121,34 @@ body.portfolio-site > main {
 }
 
 @media (max-width: 620px) {
+  .portfolio-site .sidebar {
+    padding-block: 14px;
+  }
+
+  .portfolio-site .avatar-box {
+    width: 60px;
+    height: 60px;
+    flex-basis: 60px;
+  }
+
+  .portfolio-site .info-content .name {
+    font-size: 1.2rem;
+  }
+
+  .portfolio-site .info-content .name .full-name {
+    margin-top: 4px;
+  }
+
+  .portfolio-site article[data-project-key] > header {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+  }
+
+  .portfolio-site .btn-back {
+    min-height: 44px;
+    margin-bottom: 14px;
+  }
+
   body.portfolio-site {
     background-attachment: scroll;
   }

@@ -7,9 +7,18 @@ const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
 const reducedMotionQuery = typeof window.matchMedia === "function"
   ? window.matchMedia("(prefers-reduced-motion: reduce)")
   : { matches: false };
+const hoverPointerQuery = typeof window.matchMedia === "function"
+  ? window.matchMedia("(hover: hover) and (pointer: fine)")
+  : { matches: false };
+const preparedFadeItems = new WeakSet();
+let fadeRefreshFrame;
 
 function prefersReducedMotion() {
   return reducedMotionQuery.matches;
+}
+
+function allowsPointerMotion() {
+  return hoverPointerQuery.matches && !prefersReducedMotion();
 }
 
 function getMotionTargets(scope, selector) {
@@ -24,29 +33,47 @@ function getMotionTargets(scope, selector) {
 }
 
 
-// motion helpers
+// Keep the public helper name for existing consumers; reveals use a predictable
+// reading-order stagger and release their transform when the entrance finishes.
 function applyRandomFade(scope = document) {
   const fadeItems = getMotionTargets(scope, '.fade-seed');
 
-  fadeItems.forEach((item) => {
-    const delay = prefersReducedMotion() ? 0 : 0.1 + Math.random() * 0.5;
-    item.style.setProperty('--fade-delay', `${delay.toFixed(2)}s`);
-    item.classList.add('fade-ready');
+  fadeItems.forEach((item, index) => {
+    item.style.setProperty('--fade-delay', `${Math.min(index * 60, 240)}ms`);
+
+    if (!preparedFadeItems.has(item)) {
+      preparedFadeItems.add(item);
+      item.addEventListener('animationend', (event) => {
+        if (event.target === item && event.animationName === 'fadeUp') {
+          item.classList.remove('fade-ready');
+        }
+      });
+      if (!prefersReducedMotion()) item.classList.add('fade-ready');
+    }
+
+    if (prefersReducedMotion()) item.classList.remove('fade-ready');
   });
 }
 
 function refreshFadeAnimations(scope = document) {
-  const fadeItems = getMotionTargets(scope, '.fade-seed.fade-ready');
+  const fadeItems = getMotionTargets(scope, '.fade-seed');
+  applyRandomFade(scope);
+  cancelAnimationFrame(fadeRefreshFrame);
 
   fadeItems.forEach((item) => {
-    if (prefersReducedMotion()) {
-      item.style.setProperty('--fade-delay', '0s');
-      return;
-    }
-
     item.classList.remove('fade-ready');
-    void item.offsetWidth;
-    item.classList.add('fade-ready');
+  });
+
+  if (prefersReducedMotion()) return;
+
+  // Let the whole batch settle before restarting, without per-card layout reads.
+  fadeRefreshFrame = requestAnimationFrame(() => {
+    fadeRefreshFrame = requestAnimationFrame(() => {
+      if (prefersReducedMotion()) return;
+      fadeItems.forEach((item) => {
+        if (item.isConnected) item.classList.add('fade-ready');
+      });
+    });
   });
 }
 
@@ -65,8 +92,8 @@ function initMagneticButtons(scope = document) {
       target.style.removeProperty('transform');
     };
 
-    target.addEventListener('mousemove', (event) => {
-      if (prefersReducedMotion()) {
+    target.addEventListener('pointermove', (event) => {
+      if (!allowsPointerMotion() || event.pointerType === 'touch') {
         resetPosition();
         return;
       }
@@ -81,7 +108,7 @@ function initMagneticButtons(scope = document) {
 
       cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        if (prefersReducedMotion()) {
+        if (!allowsPointerMotion()) {
           resetPosition();
           return;
         }
@@ -90,7 +117,8 @@ function initMagneticButtons(scope = document) {
       });
     });
 
-    target.addEventListener('mouseleave', resetPosition);
+    target.addEventListener('pointerleave', resetPosition);
+    target.addEventListener('pointercancel', resetPosition);
     target.addEventListener('blur', resetPosition);
   });
 }
@@ -111,7 +139,7 @@ function destroyTiltCards(scope = document) {
 function initTiltCards(scope = document) {
   const tiltCards = getMotionTargets(scope, '.tilt-card');
 
-  if (prefersReducedMotion()) {
+  if (!allowsPointerMotion()) {
     destroyTiltCards(scope);
     return;
   }
@@ -127,41 +155,50 @@ function initTiltCards(scope = document) {
 
     if (newTiltCards.length > 0) {
       window.VanillaTilt.init(newTiltCards, {
-        max: 8,
-        speed: 500,
-        glare: true,
-        "max-glare": 0.15,
-        scale: 1.02,
-        reverse: true
+        max: 3,
+        speed: 400,
+        glare: false,
+        scale: 1.005,
+        reverse: true,
+        gyroscope: false
       });
     }
   }
 }
 
 function refreshMotionEffects(scope = document) {
-  applyRandomFade(scope);
   initMagneticButtons(scope);
   initTiltCards(scope);
   refreshFadeAnimations(scope);
 }
 
 function handleMotionPreferenceChange() {
-  if (prefersReducedMotion()) {
+  if (!allowsPointerMotion()) {
     getMotionTargets(document, '[data-magnetic]').forEach((target) => {
       target.style.removeProperty('transform');
     });
     destroyTiltCards(document);
-    applyRandomFade(document);
-    return;
   }
 
-  refreshMotionEffects(document);
+  if (prefersReducedMotion()) {
+    cancelAnimationFrame(fadeRefreshFrame);
+    applyRandomFade(document);
+  } else {
+    initMagneticButtons(document);
+    initTiltCards(document);
+  }
 }
 
 if (typeof reducedMotionQuery.addEventListener === "function") {
   reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
 } else if (typeof reducedMotionQuery.addListener === "function") {
   reducedMotionQuery.addListener(handleMotionPreferenceChange);
+}
+
+if (typeof hoverPointerQuery.addEventListener === "function") {
+  hoverPointerQuery.addEventListener("change", handleMotionPreferenceChange);
+} else if (typeof hoverPointerQuery.addListener === "function") {
+  hoverPointerQuery.addListener(handleMotionPreferenceChange);
 }
 
 document.addEventListener("site:page-activated", (event) => {

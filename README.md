@@ -41,7 +41,15 @@ retain lazy loading. Keep images shared across a project's language versions so
 each translated image can reuse its generated media metadata. The static audit
 checks this mapping for images in the media manifest.
 
-The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English project overviews and detail bodies aligned with the same project registry. Do not edit generated project `.project-intro-copy` or `.project-content` blocks directly.
+The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English project overviews and detail bodies aligned with the same project registry. Do not edit generated project `.project-intro-copy`, `.project-lead-media`, or `.project-content` blocks directly.
+
+Project pages begin with a `.project-lead` containing the overview and existing
+gallery, or the first image figure/media grid extracted from canonical project
+copy by `splitProjectContent()`. That function returns `overview`, `leadMedia`,
+and `details`, so a lead image is moved rather than duplicated. Runtime language
+switching translates lead captions and alternative text independently while
+retaining generated responsive attributes. The static audit checks both lead
+and detail media against the image manifest.
 
 To verify that checked-in HTML is current without writing files:
 
@@ -66,6 +74,13 @@ Homepage project-rail behavior lives in
 `assets/css/custom_project_preview.css` and `assets/js/project-preview.js`. It
 automatically advances when motion is allowed, provides a pause/resume control,
 and retains native horizontal scrolling and scroll snap for direct navigation.
+Previous/next controls also let visitors advance the rail directly. Gallery
+thumbnails support keyboard navigation and announce the selected media position.
+Hover pauses the rail while reading; keyboard focus reveals the full card and
+pauses automatic movement. Touch and reduced-motion preferences disable pointer
+effects. The bilingual typography uses Poppins and Noto Sans TC consistently.
+The contact form retains its visible reCAPTCHA notice and policy links while the
+floating badge is hidden, following Google's documented branding option.
 
 When adding a new portfolio or blog template, include the `portfolio-site`
 body class and load `field-notes.css` after `style.css`. Generated blog pages

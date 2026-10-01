@@ -128,22 +128,50 @@ function syncPhotoSequenceState(sequence) {
 
     if (media.tagName === "IFRAME") {
       media.tabIndex = isSelected ? 0 : -1;
+      // An inert, transparent player can still play audio. Unload inactive
+      // players, retaining their URL for the next deliberate selection.
+      const source = media.getAttribute("src");
+      if (!isSelected && source) {
+        media.dataset.src = source;
+        media.removeAttribute("src");
+      }
     }
   });
 
   thumbnails.forEach((thumbnail) => {
     const radioId = thumbnail.getAttribute("for");
     const radio = radioId && document.getElementById(radioId);
-    thumbnail.setAttribute("aria-pressed", String(Boolean(radio && radio.checked)));
+    const isSelected = Boolean(radio && radio.checked);
+    thumbnail.setAttribute("aria-pressed", String(isSelected));
+    thumbnail.tabIndex = isSelected ? 0 : -1;
   });
+
+  const position = sequence.querySelector(".photo-sequence__position");
+  if (position) {
+    const current = Math.max(1, [...thumbnails].findIndex((thumbnail) => thumbnail.getAttribute("for") === selectedRadio?.id) + 1);
+    const total = thumbnails.length;
+    const template = typeof getTranslation === "function" ? getTranslation("gallery.position") : "Item {current} of {total}";
+    const label = (template === "gallery.position" ? "Item {current} of {total}" : template)
+      .replace("{current}", String(current)).replace("{total}", String(total));
+    position.textContent = `${String(current).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+    position.setAttribute("aria-label", label);
+  }
 }
 
 function initPhotoSequenceControls() {
   const sequences = document.querySelectorAll(".photo-sequence");
 
   sequences.forEach((sequence) => {
+    if (sequence.dataset.photoControlsReady === "true") return;
+    sequence.dataset.photoControlsReady = "true";
     const thumbnailGroup = sequence.querySelector(".photo-sequence__thumbs");
     const thumbnails = sequence.querySelectorAll(".photo-sequence__thumb");
+    const position = document.createElement("output");
+    position.className = "photo-sequence__position";
+    position.setAttribute("role", "status");
+    position.setAttribute("aria-live", "polite");
+    position.setAttribute("aria-atomic", "true");
+    sequence.appendChild(position);
 
     if (thumbnailGroup) {
       thumbnailGroup.setAttribute("role", "group");
@@ -153,7 +181,7 @@ function initPhotoSequenceControls() {
       );
     }
 
-    thumbnails.forEach((thumbnail) => {
+    thumbnails.forEach((thumbnail, index) => {
       const radioId = thumbnail.getAttribute("for");
       const radio = radioId && document.getElementById(radioId);
 
@@ -166,11 +194,24 @@ function initPhotoSequenceControls() {
       radio.setAttribute("aria-hidden", "true");
 
       thumbnail.addEventListener("keydown", (event) => {
-        if (event.key !== "Enter" && event.key !== " " && event.key !== "Spacebar") return;
-
+        const lastIndex = thumbnails.length - 1;
+        const targetIndex = {
+          ArrowLeft: (index + lastIndex) % thumbnails.length,
+          ArrowRight: (index + 1) % thumbnails.length,
+          Home: 0,
+          End: lastIndex
+        }[event.key];
+        const isActivation = event.key === "Enter" || event.key === " " || event.key === "Spacebar";
+        if (targetIndex === undefined && !isActivation) return;
         event.preventDefault();
-        radio.click();
+        const targetThumbnail = targetIndex === undefined ? thumbnail : thumbnails[targetIndex];
+        const targetRadio = document.getElementById(targetThumbnail.getAttribute("for"));
+        if (!targetRadio) return;
+        targetRadio.click();
+        hydratePhotoSequenceMedia(sequence, targetRadio);
         syncPhotoSequenceState(sequence);
+        targetThumbnail.focus({ preventScroll: true });
+        targetThumbnail.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "auto" });
       });
 
       radio.addEventListener("change", () => {
@@ -185,6 +226,10 @@ function initPhotoSequenceControls() {
 }
 
 initPhotoSequenceControls();
+
+window.addEventListener("site-language-change", () => {
+  document.querySelectorAll(".photo-sequence").forEach(syncPhotoSequenceState);
+});
 
 
 

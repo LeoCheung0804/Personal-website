@@ -6,6 +6,7 @@ const {
   siteProfile,
   siteProjects,
   projectPageTranslations,
+  splitProjectContent,
   standalonePages,
   validateSiteData
 } = require('../assets/js/site-data.js');
@@ -290,15 +291,24 @@ for (const page of publicPages) {
 for (const [key, project] of Object.entries(siteProjects)) {
   const html = pageHtml.get(project.file) || '';
   const content = html.match(/<div\b[^>]*class=["']project-content["'][^>]*>([\s\S]*?)<\/section>/i)?.[1] || '';
-  const generatedSources = new Set(tags(content, 'img').map(tag => attribute(tag, 'data-media-source')));
+  const leadMedia = html.match(/<div\b[^>]*class=["']project-lead-media["'][^>]*>([\s\S]*?)<\/div>/i)?.[1] || '';
+  check(tags(html, 'div').filter(tag => attribute(tag, 'class') === 'project-lead').length === 1,
+    `${project.file}: requires one media-led project opening.`);
   for (const [language, copy] of Object.entries(projectPageTranslations[key] || {})) {
-    for (const tag of tags(copy.content, 'img')) {
-      const source = attribute(tag, 'src');
-      if (!source || isExternalReference(source)) continue;
-      const { target } = resolveReference(project.file, source);
-      if (!mediaManifest[target]) continue;
-      check(generatedSources.has(target),
-        `${project.file} (${language}): translated image ${source} needs generated responsive media in project-content.`);
+    const split = splitProjectContent(copy.content);
+    for (const [blockName, generated, translated] of [
+      ['project-content', content, split.details],
+      ['project-lead-media', leadMedia, split.leadMedia]
+    ]) {
+      const generatedSources = new Set(tags(generated, 'img').map(tag => attribute(tag, 'data-media-source')));
+      for (const tag of tags(translated, 'img')) {
+        const source = attribute(tag, 'src');
+        if (!source || isExternalReference(source)) continue;
+        const { target } = resolveReference(project.file, source);
+        if (!mediaManifest[target]) continue;
+        check(generatedSources.has(target),
+          `${project.file} (${language}): translated image ${source} needs generated responsive media in ${blockName}.`);
+      }
     }
   }
 }

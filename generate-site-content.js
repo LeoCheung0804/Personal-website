@@ -235,7 +235,7 @@ function formatBlock(value, parentIndent, eol, generatedComment) {
   const childIndent = `${parentIndent}  `;
   const body = source
     .split('\n')
-    .map((line) => `${childIndent}${line}`)
+    .map((line) => line.trim() ? `${childIndent}${line}` : '')
     .join(eol);
   return `${eol}${body}${eol}${parentIndent}`;
 }
@@ -362,14 +362,17 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20261001-1',
-    'assets/js/site-data.js': '20261001-1',
-    'assets/css/tapper-exploded.css': '20260930-1',
+    'assets/css/field-notes.css': '20261001-2',
+    'assets/css/custom_project_preview.css': '20261001-2',
+    'assets/js/site-data.js': '20261001-2',
+    'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
-    'assets/js/i18n.js': '20260928-1',
-    'assets/js/filters.js': '20260928-1',
-    'assets/js/ui-interactions.js': '20261001-1',
-    'assets/js/navigation.js': '20260721-1'
+    'assets/js/i18n.js': '20261001-2',
+    'assets/js/filters.js': '20261001-2',
+    'assets/js/motion.js': '20261001-2',
+    'assets/js/project-preview.js': '20261001-2',
+    'assets/js/ui-interactions.js': '20261001-2',
+    'assets/js/navigation.js': '20261001-2'
   };
 
   return Object.entries(versionedAssets).reduce((output, [assetPath, version]) => {
@@ -377,6 +380,27 @@ function syncAssetVersions(html) {
     const pattern = new RegExp(`((?:href|src)=["'][^"']*${escapedPath})(?:\\?[^"'\\s>]*)?`, 'g');
     return output.replace(pattern, `$1?v=${version}`);
   }, html);
+}
+
+function syncResponsiveLayoutSizes(html, fileLabel) {
+  const leadSizes = '(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw';
+  const pairedSizes = '(min-width: 1600px) 302px, (min-width: 1180px) calc((100vw - 496px) * 0.305), (min-width: 960px) calc(27.5vw - 8px), (min-width: 621px) 44vw, 92vw';
+  const railSizes = '(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw';
+  const mediaContainers = findElements(html, (openTag) =>
+    hasClass(openTag, 'project-lead-media')
+    || hasClass(openTag, 'photo-sequence__stage')
+    || hasClass(openTag, 'project-preview-img-box'));
+
+  let output = html;
+  for (const container of mediaContainers.reverse()) {
+    const inner = output.slice(container.openEnd, container.closeStart);
+    const sizes = hasClass(container.openTag, 'project-preview-img-box')
+      ? railSizes : /class=["'][^"']*\bproject-media-grid\b/.test(inner) ? pairedSizes : leadSizes;
+    const updated = inner.replace(/<img\b[^>]*>/gi, (tag) =>
+      setAttribute(tag, hasAttribute(tag, 'data-src') ? 'data-sizes' : 'sizes', sizes));
+    output = output.slice(0, container.openEnd) + updated + output.slice(container.closeStart);
+  }
+  return output;
 }
 
 function renderTranslation(value) {
@@ -1170,6 +1194,55 @@ function syncDashboardMetadata(html, fileLabel, eol) {
   return html;
 }
 
+function syncProjectLead(html, leadMedia, fileLabel, eol) {
+  const normalizeEmptyLines = (markup) => markup.replace(/^[ \t]+(?=\r?$)/gm, '');
+  const elementsWithClass = (className) => findElements(html, (openTag) => hasClass(openTag, className));
+  const intros = elementsWithClass('project-intro');
+  const galleries = elementsWithClass('project-photo-showcase');
+  const leads = elementsWithClass('project-lead');
+  if (intros.length !== 1 || galleries.length > 1 || leads.length > 1) {
+    throw new Error(`${fileLabel}: expected one project intro and at most one gallery and lead.`);
+  }
+  if (Boolean(galleries.length) === Boolean(leadMedia)) {
+    throw new Error(`${fileLabel}: project lead requires either an existing gallery or one canonical media block.`);
+  }
+
+  const elementMarkup = (element) => dedent(
+    lineIndentAt(html, element.openStart) + html.slice(element.openStart, element.closeEnd)
+  );
+  const introMarkup = elementMarkup(intros[0]);
+  const mediaMarkup = galleries.length
+    ? elementMarkup(galleries[0])
+    : `<div class="project-lead-media">${formatBlock(
+      leadMedia.replace(/<img\b[^>]*>/gi, (tag) => setAttribute(tag, 'loading', 'eager')),
+      '',
+      '\n',
+      'Generated from assets/js/site-data.js by generate-site-content.js.'
+    )}</div>`;
+  const contents = `${introMarkup}\n\n${mediaMarkup}`;
+
+  if (leads.length) {
+    const lead = leads[0];
+    if (intros[0].openStart < lead.openEnd || intros[0].closeEnd > lead.closeStart
+      || galleries.some((gallery) => gallery.openStart < lead.openEnd || gallery.closeEnd > lead.closeStart)) {
+      throw new Error(`${fileLabel}: intro and gallery must remain inside project-lead.`);
+    }
+    const indent = lineIndentAt(html, lead.openStart);
+    return normalizeEmptyLines(replaceElementsByClass(html, 'div', 'project-lead', 1,
+      () => ({ inner: formatBlock(contents, indent, eol) }), `${fileLabel} project lead`));
+  }
+
+  const intro = intros[0];
+  const indent = lineIndentAt(html, intro.openStart);
+  const replacement = `<div class="project-lead">${formatBlock(contents, indent, eol)}</div>`;
+  const changes = [
+    { start: intro.openStart, end: intro.closeEnd, replacement },
+    ...galleries.map((gallery) => ({ start: gallery.openStart, end: gallery.closeEnd, replacement: '' }))
+  ].sort((left, right) => right.start - left.start);
+  return normalizeEmptyLines(changes.reduce((output, change) =>
+    output.slice(0, change.start) + change.replacement + output.slice(change.end), html));
+}
+
 function syncProjectPage(html, project, fileLabel, eol) {
   const copy = project.copy?.en;
   if (!copy) {
@@ -1178,7 +1251,7 @@ function syncProjectPage(html, project, fileLabel, eol) {
   if (copy.title !== project.title.en) {
     throw new Error(`${fileLabel}: project translation title does not match siteProjects.${project.key}.`);
   }
-  const { overview, details } = splitProjectContent(copy.content);
+  const { overview, leadMedia, details } = splitProjectContent(copy.content);
 
   html = replaceElementsByClass(
     html,
@@ -1249,6 +1322,8 @@ function syncProjectPage(html, project, fileLabel, eol) {
     }),
     `${fileLabel} project content`
   );
+
+  html = syncProjectLead(html, leadMedia, fileLabel, eol);
 
   const documentTitle = `${project.title.en} | ${siteProfile.fullName}`;
   const canonicalUrl = absoluteSiteUrl(project.file);
@@ -1369,7 +1444,7 @@ if (listMode) {
       output = syncSafeBlankLinks(output);
       output = moveLateHeadMetadata(output, eol);
       output = normalizeSingleLineMetaIndentation(output);
-      return optimizeMediaMarkup(output, relativePath);
+      return syncResponsiveLayoutSizes(optimizeMediaMarkup(output, relativePath), relativePath);
     });
   }
 
@@ -1382,6 +1457,8 @@ if (listMode) {
       return normalizeSingleLineMetaIndentation(output);
     });
   }
+
+  updateFile('404.html', (html) => syncAssetVersions(html));
 
   if (!checkMode) {
     commitFileTransaction(pendingWrites.map(({ absolutePath, updated }) => ({

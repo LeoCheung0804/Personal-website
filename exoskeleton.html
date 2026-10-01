@@ -126,7 +126,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-1" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-2" />
 
     <!--
     - google font link
@@ -356,148 +356,152 @@
             <h1 class="h2 article-title">ME4: Exoskeleton-Controlled Humanoid Robot</h1>
           </header>
 
-          <section class="project-intro" aria-labelledby="project-overview-title">
-            <p class="project-intro__eyebrow">Exoskeleton-controlled humanoid robot</p>
-            <h2 class="h3 title" id="project-overview-title" data-i18n="project.overview">Project Overview</h2>
-            <div class="project-intro-copy">
-              <p>ME4 combines a humanoid robot with a wearable exoskeleton controller. The controller provides an interface for operating the robot, supported by haptic feedback, wireless communication, and motor-control software.</p>
-            </div>
-          </section>
-
-          <section class="project-photo-showcase">
-            <div
-              class="photo-sequence"
-              aria-label="Exoskeleton project photo sequence"
-            >
-              <input
-                type="radio"
-                name="exoskeleton-sequence"
-                id="exoskeleton-1"
-                checked
-              />
-              <input type="radio" name="exoskeleton-sequence" id="exoskeleton-2" />
-              <input type="radio" name="exoskeleton-sequence" id="exoskeleton-3" />
-              <input type="radio" name="exoskeleton-sequence" id="exoskeleton-4" />
-              <input type="radio" name="exoskeleton-sequence" id="exoskeleton-5" />
-              <input type="radio" name="exoskeleton-sequence" id="exoskeleton-6" />
-
-              <div class="photo-sequence__stage">
-                <img
-                  data-photo="1"
-                  src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp"
-                  alt="Exoskeleton robot overview"
-                  loading="eager" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1250px) 760px, 92vw"
-                />
-                <img
-                  data-photo="2"
-
-                  alt="Exoskeleton controller setup"
-                  loading="lazy" data-media-source="assets/images/Exoskeleton_2.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_2-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_2-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_2-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_2-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_2-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
-                />
-                <img
-                  data-photo="3"
-
-                  alt="Exoskeleton haptic feedback system"
-                  loading="lazy" data-media-source="assets/images/Exoskeleton_3.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_3-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_3-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_3-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_3-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_3-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
-                />
-                <img
-                  data-photo="4"
-
-                  alt="Exoskeleton robot joint detail"
-                  loading="lazy" data-media-source="assets/images/Exoskeleton_4.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_4-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_4-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_4-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_4-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_4-jpeg-1600.webp 1600w" data-sizes="(min-width: 1250px) 760px, 92vw"
-                />
-                <iframe
-                  data-photo="5"
-
-                  title="Exoskeleton project video 1"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen data-src="https://www.youtube.com/embed/nsQZ6Wz1Y60"
-                ></iframe>
-                <iframe
-                  data-photo="6"
-
-                  title="Exoskeleton project video 2"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen data-src="https://www.youtube.com/embed/FWXmPcBZO74"
-                ></iframe>
+          <div class="project-lead">
+            <section class="project-intro" aria-labelledby="project-overview-title">
+              <p class="project-intro__eyebrow">Exoskeleton-controlled humanoid robot</p>
+              <h2 class="h3 title" id="project-overview-title" data-i18n="project.overview">Project Overview</h2>
+              <div class="project-intro-copy">
+                <p>ME4 combines a humanoid robot with a wearable exoskeleton controller. The controller provides an interface for operating the robot, supported by haptic feedback, wireless communication, and motor-control software.</p>
               </div>
+            </section>
 
-              <div class="photo-sequence__thumbs" role="list">
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-1"
-                  role="listitem"
-                >
+            <section class="project-photo-showcase">
+              <div
+                class="photo-sequence"
+                aria-label="Exoskeleton project photo sequence"
+              >
+                <input
+                  type="radio"
+                  name="exoskeleton-sequence"
+                  id="exoskeleton-1"
+                  checked
+                />
+                <input type="radio" name="exoskeleton-sequence" id="exoskeleton-2" />
+                <input type="radio" name="exoskeleton-sequence" id="exoskeleton-3" />
+                <input type="radio" name="exoskeleton-sequence" id="exoskeleton-4" />
+                <input type="radio" name="exoskeleton-sequence" id="exoskeleton-5" />
+                <input type="radio" name="exoskeleton-sequence" id="exoskeleton-6" />
+
+                <div class="photo-sequence__stage">
                   <img
-                    src="./assets/images/optimized/exoskeleton_robot-jpg-240.webp"
+                    data-photo="1"
+                    src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp"
                     alt="Exoskeleton robot overview"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    loading="eager" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw"
                   />
-                </label>
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-2"
-                  role="listitem"
-                >
                   <img
-                    src="./assets/images/optimized/exoskeleton_2-jpeg-240.webp"
+                    data-photo="2"
+
                     alt="Exoskeleton controller setup"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_2.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    loading="lazy" data-media-source="assets/images/Exoskeleton_2.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_2-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_2-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_2-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_2-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_2-jpeg-1600.webp 1600w" data-sizes="(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw"
                   />
-                </label>
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-3"
-                  role="listitem"
-                >
                   <img
-                    src="./assets/images/optimized/exoskeleton_3-jpeg-240.webp"
+                    data-photo="3"
+
                     alt="Exoskeleton haptic feedback system"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_3.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    loading="lazy" data-media-source="assets/images/Exoskeleton_3.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_3-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_3-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_3-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_3-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_3-jpeg-1600.webp 1600w" data-sizes="(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw"
                   />
-                </label>
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-4"
-                  role="listitem"
-                >
                   <img
-                    src="./assets/images/optimized/exoskeleton_4-jpeg-240.webp"
+                    data-photo="4"
+
                     alt="Exoskeleton robot joint detail"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_4.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    loading="lazy" data-media-source="assets/images/Exoskeleton_4.jpeg" width="3024" height="4032" decoding="async" data-src="./assets/images/optimized/exoskeleton_4-jpeg-960.webp" data-srcset="./assets/images/optimized/exoskeleton_4-jpeg-240.webp 240w, ./assets/images/optimized/exoskeleton_4-jpeg-480.webp 480w, ./assets/images/optimized/exoskeleton_4-jpeg-960.webp 960w, ./assets/images/optimized/exoskeleton_4-jpeg-1600.webp 1600w" data-sizes="(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw"
                   />
-                </label>
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-5"
-                  role="listitem"
-                  aria-label="Show exoskeleton project video 1"
-                >
-                  <img
-                    src="./assets/images/optimized/exoskeleton_5-png-240.webp"
-                    alt="Exoskeleton project video 1 preview"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_5.png" width="1920" height="1080" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
-                  />
-                </label>
-                <label
-                  class="photo-sequence__thumb"
-                  for="exoskeleton-6"
-                  role="listitem"
-                  aria-label="Show exoskeleton project video 2"
-                >
-                  <img
-                    src="./assets/images/optimized/exoskeleton_6-png-240.webp"
-                    alt="Exoskeleton project video 2 preview"
-                    loading="lazy" data-media-source="assets/images/Exoskeleton_6.png" width="848" height="480" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
-                  />
-                </label>
+                  <iframe
+                    data-photo="5"
+
+                    title="Exoskeleton project video 1"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen data-src="https://www.youtube.com/embed/nsQZ6Wz1Y60"
+                  ></iframe>
+                  <iframe
+                    data-photo="6"
+
+                    title="Exoskeleton project video 2"
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen data-src="https://www.youtube.com/embed/FWXmPcBZO74"
+                  ></iframe>
+                </div>
+
+                <div class="photo-sequence__thumbs" role="list">
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-1"
+                    role="listitem"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_robot-jpg-240.webp"
+                      alt="Exoskeleton robot overview"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-2"
+                    role="listitem"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_2-jpeg-240.webp"
+                      alt="Exoskeleton controller setup"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_2.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-3"
+                    role="listitem"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_3-jpeg-240.webp"
+                      alt="Exoskeleton haptic feedback system"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_3.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-4"
+                    role="listitem"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_4-jpeg-240.webp"
+                      alt="Exoskeleton robot joint detail"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_4.jpeg" width="3024" height="4032" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-5"
+                    role="listitem"
+                    aria-label="Show exoskeleton project video 1"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_5-png-240.webp"
+                      alt="Exoskeleton project video 1 preview"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_5.png" width="1920" height="1080" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                  <label
+                    class="photo-sequence__thumb"
+                    for="exoskeleton-6"
+                    role="listitem"
+                    aria-label="Show exoskeleton project video 2"
+                  >
+                    <img
+                      src="./assets/images/optimized/exoskeleton_6-png-240.webp"
+                      alt="Exoskeleton project video 2 preview"
+                      loading="lazy" data-media-source="assets/images/Exoskeleton_6.png" width="848" height="480" decoding="async" sizes="(min-width: 1180px) 112px, 96px"
+                    />
+                  </label>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
+
+
 
           <section class="project-detail">
             <header>
@@ -528,14 +532,14 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20261001-1"></script>
-    <script src="./assets/js/i18n.js?v=20260928-1"></script>
+    <script src="./assets/js/site-data.js?v=20261001-2"></script>
+    <script src="./assets/js/i18n.js?v=20261001-2"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
-    <script src="./assets/js/motion.js"></script>
-    <script src="./assets/js/ui-interactions.js?v=20261001-1"></script>
-    <script src="./assets/js/filters.js?v=20260928-1"></script>
+    <script src="./assets/js/motion.js?v=20261001-2"></script>
+    <script src="./assets/js/ui-interactions.js?v=20261001-2"></script>
+    <script src="./assets/js/filters.js?v=20261001-2"></script>
     <script src="./assets/js/contact-form.js"></script>
-    <script src="./assets/js/navigation.js?v=20260721-1"></script>
+    <script src="./assets/js/navigation.js?v=20261001-2"></script>
     <script src="./assets/js/app-init.js"></script>
     <!--
     - ionicon link

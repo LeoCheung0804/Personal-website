@@ -1,4 +1,4 @@
-/* Homepage project rail — four-up desktop layout with accessible autoplay. */
+/* Selected work: generous images, native scrolling and deliberate controls. */
 
 .portfolio-site .project-preview {
   --project-preview-gap: clamp(14px, 2vw, 24px);
@@ -17,7 +17,13 @@
   margin: 0;
 }
 
-.portfolio-site .project-preview-autoplay {
+.portfolio-site .project-preview-controls {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.portfolio-site .project-preview-controls button {
   flex: 0 0 44px;
   display: inline-flex;
   align-items: center;
@@ -26,7 +32,7 @@
   height: 44px;
   color: var(--muted);
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 50%;
   background: transparent;
   transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
 }
@@ -35,15 +41,20 @@
   display: none;
 }
 
-.portfolio-site .project-preview-autoplay ion-icon {
+.portfolio-site .project-preview-controls ion-icon {
   font-size: 18px;
 }
 
-.portfolio-site .project-preview-autoplay:is(:hover, :focus-visible),
+.portfolio-site .project-preview-controls button:not(:disabled):is(:hover, :focus-visible),
 .portfolio-site .project-preview-autoplay[data-paused="true"] {
   color: var(--accent);
   border-color: var(--accent);
   background: var(--accent-soft);
+}
+
+.portfolio-site .project-preview-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .portfolio-site .project-preview-wrapper {
@@ -51,8 +62,8 @@
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
-  padding: 7px 7px 18px;
-  scroll-padding-inline: 7px;
+  padding: 6px 0 18px;
+  scroll-padding-inline: 0;
   scroll-snap-type: inline mandatory;
   scrollbar-color: var(--orange-yellow-crayola) transparent;
   scrollbar-width: thin;
@@ -74,14 +85,14 @@
 
 .portfolio-site .project-preview-list {
   display: flex;
-  width: max-content;
+  width: 100%;
   max-width: none;
   gap: var(--project-preview-gap);
   animation: none;
 }
 
 .portfolio-site .project-preview-item {
-  flex: 0 0 clamp(250px, 77vw, 350px);
+  flex: 0 0 82%;
   width: auto;
   margin: 0;
   overflow: visible;
@@ -98,6 +109,7 @@
 
 .portfolio-site .project-preview-link {
   display: grid;
+  grid-template-rows: auto 1fr;
   height: 100%;
   padding: 0;
   color: inherit;
@@ -128,6 +140,7 @@
 
 .portfolio-site .project-preview-content {
   display: grid;
+  align-content: start;
   gap: 4px;
   padding-inline: 2px;
   text-align: left;
@@ -156,32 +169,43 @@
 
 .portfolio-site .project-preview-link:focus-visible {
   outline: 2px solid var(--orange-yellow-crayola);
-  outline-offset: 5px;
+  outline-offset: -2px;
+  border-radius: 14px 14px 2px 2px;
 }
 
-@media (min-width: 760px) {
+@media (min-width: 640px) {
   .portfolio-site .project-preview-item {
-    flex-basis: clamp(290px, 34vw, 410px);
-  }
-
-  .portfolio-site .project-preview-item:nth-child(-n + 2) {
-    flex-basis: clamp(360px, 43vw, 510px);
+    flex-basis: calc((100% - var(--project-preview-gap)) / 2);
   }
 }
 
-@media (min-width: 1180px) {
+@media (min-width: 960px) {
   .portfolio-site .project-preview {
     --project-preview-gap: 16px;
   }
 
-  .portfolio-site .project-preview-list {
-    width: 100%;
+  .portfolio-site .project-preview-item {
+    flex-basis: calc((100% - 2 * var(--project-preview-gap)) / 3);
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .portfolio-site .project-preview-heading {
+    gap: 8px;
   }
 
-  .portfolio-site .project-preview-item,
-  .portfolio-site .project-preview-item:nth-child(-n + 2) {
-    flex: 0 0 calc(25% - 12px);
-    min-width: 0;
+  .portfolio-site .project-preview-controls {
+    gap: 4px;
+  }
+
+  .portfolio-site .project-preview-controls button {
+    flex-basis: 44px;
+  }
+
+  .portfolio-site .project-preview-title {
+    max-width: 10ch;
+    text-wrap: balance;
   }
 }
 

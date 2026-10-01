@@ -5,18 +5,20 @@
   const wrapper = section?.querySelector('.project-preview-wrapper');
   const list = section?.querySelector('.project-preview-list');
   const toggle = section?.querySelector('[data-project-preview-toggle]');
+  const controls = section?.querySelectorAll('[data-project-preview-direction]');
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   if (!section || !wrapper || !list || !toggle) return;
 
   const autoplayDelay = 4200;
-  const initialAutoplayDelay = 1800;
+  const initialAutoplayDelay = 4200;
   let direction = 1;
   let autoplayTimer = null;
   let hasAdvanced = false;
   let userPaused = false;
   let focusPaused = false;
   let pointerPaused = false;
+  let hoverPaused = false;
   let sectionVisible = true;
 
   const hasOverflow = () => wrapper.scrollWidth > wrapper.clientWidth + 2;
@@ -27,6 +29,7 @@
     && !userPaused
     && !focusPaused
     && !pointerPaused
+    && !hoverPaused
     && sectionVisible
     && !document.hidden
   );
@@ -62,6 +65,15 @@
 
     return [...new Set([0, ...stops, maxScroll].map((value) => Math.round(value)))]
       .sort((a, b) => a - b);
+  };
+
+  const updateControls = () => {
+    const maxScroll = Math.max(0, wrapper.scrollWidth - wrapper.clientWidth);
+    controls.forEach((control) => {
+      control.disabled = Number(control.dataset.projectPreviewDirection) < 0
+        ? wrapper.scrollLeft <= 2
+        : wrapper.scrollLeft >= maxScroll - 2;
+    });
   };
 
   const scheduleAutoplay = (delay = hasAdvanced ? autoplayDelay : initialAutoplayDelay) => {
@@ -108,6 +120,37 @@
     updateToggle();
   };
 
+  controls.forEach((control) => {
+    control.addEventListener('click', () => {
+      pauseForManualInput();
+      const step = Number(control.dataset.projectPreviewDirection);
+      const stops = getStops();
+      const target = step > 0
+        ? stops.find((stop) => stop > wrapper.scrollLeft + 2)
+        : [...stops].reverse().find((stop) => stop < wrapper.scrollLeft - 2);
+      if (target !== undefined) {
+        wrapper.scrollTo({ left: target, behavior: motionQuery.matches ? 'auto' : 'smooth' });
+      }
+    });
+  });
+
+  let controlFrame;
+  wrapper.addEventListener('scroll', () => {
+    cancelAnimationFrame(controlFrame);
+    controlFrame = requestAnimationFrame(updateControls);
+  }, { passive: true });
+
+  wrapper.addEventListener('focusin', (event) => {
+    const item = event.target.closest('.project-preview-item');
+    if (!item) return;
+    pauseForManualInput();
+    const card = item.getBoundingClientRect();
+    const viewport = wrapper.getBoundingClientRect();
+    const offset = card.left < viewport.left ? card.left - viewport.left
+      : card.right > viewport.right ? card.right - viewport.right : 0;
+    if (offset) wrapper.scrollTo({ left: wrapper.scrollLeft + offset, behavior: 'auto' });
+  });
+
   toggle.addEventListener('click', () => {
     userPaused = !userPaused;
     focusPaused = false;
@@ -132,6 +175,17 @@
   wrapper.addEventListener('pointerdown', () => {
     pointerPaused = true;
     clearAutoplay();
+  });
+
+  wrapper.addEventListener('pointerenter', (event) => {
+    if (event.pointerType === 'touch') return;
+    hoverPaused = true;
+    clearAutoplay();
+  });
+
+  wrapper.addEventListener('pointerleave', () => {
+    hoverPaused = false;
+    scheduleAutoplay(3000);
   });
 
   const releasePointer = () => {
@@ -178,6 +232,7 @@
       const maxScroll = Math.max(0, wrapper.scrollWidth - wrapper.clientWidth);
       if (wrapper.scrollLeft > maxScroll) wrapper.scrollLeft = maxScroll;
       updateToggle();
+      updateControls();
       scheduleAutoplay();
     });
 
@@ -185,5 +240,6 @@
   }
 
   updateToggle();
+  updateControls();
   scheduleAutoplay();
 })();

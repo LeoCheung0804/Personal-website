@@ -216,6 +216,25 @@ for (let i = 0; i < navigationLinks.length; i++) {
 window.addEventListener("DOMContentLoaded", activatePageFromHash);
 window.addEventListener("popstate", activatePageFromHash);
 
+// Scroll within the current route; an empty fragment would activate About.
+document.querySelectorAll('.back-to-top').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    event.preventDefault();
+    const reducedMotion = typeof prefersReducedMotion === 'function'
+      ? prefersReducedMotion()
+      : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, left: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+
+    if (event.detail === 0) {
+      const activePage = document.querySelector('[data-page].active');
+      if (activePage) {
+        preparePageForFocus(activePage, activePage.dataset.page);
+        focusActivePage(activePage);
+      }
+    }
+  });
+});
+
 // Track project link clicks
 const projectLinks = document.querySelectorAll('.project-item a');
 projectLinks.forEach(link => {

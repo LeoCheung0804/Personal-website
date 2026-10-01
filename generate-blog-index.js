@@ -314,7 +314,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261001-1" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261001-2" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -493,14 +493,14 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20261001-1"></script>
-    <script src="../assets/js/i18n.js?v=20260928-1"></script>
+    <script src="../assets/js/site-data.js?v=20261001-2"></script>
+    <script src="../assets/js/i18n.js?v=20261001-2"></script>
     <script src="../assets/js/theme.js?v=20260716-2"></script>
-    <script src="../assets/js/motion.js"></script>
-    <script src="../assets/js/ui-interactions.js?v=20261001-1"></script>
-    <script src="../assets/js/filters.js?v=20260928-1"></script>
+    <script src="../assets/js/motion.js?v=20261001-2"></script>
+    <script src="../assets/js/ui-interactions.js?v=20261001-2"></script>
+    <script src="../assets/js/filters.js?v=20261001-2"></script>
     <script src="../assets/js/contact-form.js"></script>
-    <script src="../assets/js/navigation.js?v=20260721-1"></script>
+    <script src="../assets/js/navigation.js?v=20261001-2"></script>
     <script src="../assets/js/app-init.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -571,7 +571,9 @@ function syncHomepageBlogCards(html, posts) {
   if (matches.length !== 1) {
     throw new Error(`index.html: expected one dynamic-blog-list, found ${matches.length}.`);
   }
-  const cards = posts.map(renderHomepageBlogCard).join('\n');
+  // Blog generation owns this list only. Preserve layout-specific image sizes
+  // elsewhere on the homepage, which are synchronized by the site generator.
+  const cards = optimizeMediaMarkup(posts.map(renderHomepageBlogCard).join('\n'), 'index.html');
   const inner = `\n              <!-- Generated from posts/*.md by generate-blog-index.js. -->\n${cards}\n            `;
   return html.replace(pattern, `$1${inner}$2`);
 }
@@ -697,10 +699,7 @@ const generatedBlogPages = posts.map(post => {
 });
 const generatedPostIndex = `${JSON.stringify(postIndex, null, 2)}\n`;
 const generatedSitemap = buildSitemap(posts);
-const generatedHomepage = optimizeMediaMarkup(
-  syncHomepageBlogCards(fs.readFileSync(homepageFile, 'utf8'), postIndex),
-  'index.html'
-);
+const generatedHomepage = syncHomepageBlogCards(fs.readFileSync(homepageFile, 'utf8'), postIndex);
 const generatedWrites = [
   ...generatedBlogPages.map(({ outputPath, content }) => ({ targetPath: outputPath, content })),
   { targetPath: outputFile, content: generatedPostIndex },
