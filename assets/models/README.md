@@ -1,4 +1,4 @@
-# Robosun Tapper model
+# RoBosun-Tapper model
 
 `robosun-tapper.glb` is a browser derivative of `Scissor_mechanism_V2.SLDASM`,
 exported through STEP and tessellated locally with occt-import-js. The source

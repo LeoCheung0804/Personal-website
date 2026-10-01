@@ -670,6 +670,26 @@ body.portfolio-site > main {
   line-height: 1.04;
 }
 
+/* Project names need room to wrap without inheriting title capitalization. */
+.portfolio-site article[data-project-key] > header {
+  margin-bottom: clamp(24px, 3vw, 36px);
+  padding-bottom: clamp(20px, 3vw, 28px);
+}
+
+.portfolio-site article[data-project-key] .article-title {
+  max-width: 32ch;
+  font-size: clamp(1.8rem, 3.1vw, 2.65rem);
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+  text-transform: none;
+  overflow-wrap: break-word;
+}
+
+.portfolio-site .project-preview-item-title,
+.portfolio-site .project-title {
+  text-transform: none;
+}
+
 .portfolio-site .h3 {
   color: var(--ink);
   font-size: clamp(1.35rem, 3vw, 1.85rem);
@@ -1307,7 +1327,7 @@ body.portfolio-site > main {
 .portfolio-site .photo-sequence__stage :is(img, iframe) {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .portfolio-site .photo-sequence__stage iframe {
@@ -1350,7 +1370,7 @@ body.portfolio-site > main {
 
 .portfolio-site .project-intro {
   max-width: 76ch;
-  margin-bottom: clamp(38px, 5vw, 58px);
+  margin-bottom: clamp(30px, 4vw, 42px);
 }
 
 .portfolio-site .project-intro__eyebrow {
@@ -1374,7 +1394,7 @@ body.portfolio-site > main {
 
 .portfolio-site .project-intro-copy {
   color: var(--ink-soft);
-  font-size: clamp(1.04rem, 1.8vw, 1.22rem);
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
   line-height: 1.65;
 }
 
@@ -1430,17 +1450,52 @@ body.portfolio-site > main {
 .portfolio-site .project-content figure img {
   width: 100%;
   height: auto;
+  max-height: 620px;
   min-height: 0;
   border: 0;
   object-fit: contain;
 }
 
 .portfolio-site .project-content figure iframe {
+  display: block;
   width: 100%;
   height: auto;
   min-height: 0;
   aspect-ratio: 16 / 9;
   border: 0;
+}
+
+.portfolio-site .project-content figcaption {
+  padding: 12px 16px;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: var(--type-small);
+  line-height: 1.5;
+}
+
+.portfolio-site .project-media-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.portfolio-site .project-media-grid figure {
+  min-width: 0;
+  margin: 0;
+}
+
+.portfolio-site .project-media-grid a {
+  display: block;
+}
+
+.portfolio-site .project-media-grid img {
+  aspect-ratio: 4 / 3;
+}
+
+.portfolio-site .project-content h3 {
+  padding-left: 0;
+  text-transform: none;
 }
 
 .portfolio-site .project-content ul {
@@ -1939,6 +1994,10 @@ body.portfolio-site > main {
 
   .portfolio-site .project-content [style*="grid-template-columns"] {
     grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  .portfolio-site .project-media-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .portfolio-site .mapbox {

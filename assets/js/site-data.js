@@ -8,8 +8,8 @@ const siteProfile = {
   familyName: "Cheung",
   siteUrl: "https://leocml.com",
   role: {
-    en: "Construction Robotics Engineer",
-    zhHant: "建築機械人工程師"
+    en: "Robotics Engineer",
+    zhHant: "機械人工程師"
   },
   location: {
     en: "Hong Kong",
@@ -58,20 +58,20 @@ const siteProfile = {
     }
   ],
   seo: {
-    title: "Cheung Man Loc (Leo Cheung) | Construction Robotics Engineer",
-    schemaName: "Cheung Man Loc Construction Robotics Portfolio",
-    description: "Portfolio of Cheung Man Loc, known as Leo Cheung, a Hong Kong construction robotics engineer behind CU-Brick, Robo-Tapper, and automation projects.",
-    schemaDescription: "Cheung Man Loc, professionally known as Leo Cheung, shares first-hand construction robotics work spanning CU-Brick, Robo-Tapper, facade inspection, autonomous painting, embedded systems, and mechanical design.",
-    keywords: "Cheung Man Loc, Leo Cheung, CU-Brick, Robo-Tapper, construction robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
-    ogDescription: "Construction robotics projects, publications, and awards by Cheung Man Loc, professionally known as Leo Cheung.",
-    twitterDescription: "Construction robotics projects, publications, and awards by Cheung Man Loc (Leo Cheung).",
+    title: "Cheung Man Loc (Leo Cheung) | Robotics Engineer",
+    schemaName: "Cheung Man Loc Robotics Portfolio",
+    description: "Robotics portfolio of Cheung Man Loc, known as Leo Cheung, featuring CU-Brick, RoBosun-Tapper, robot control, and mechanical design projects in Hong Kong.",
+    schemaDescription: "Cheung Man Loc, professionally known as Leo Cheung, shares robotics projects spanning CU-Brick, RoBosun-Tapper, facade inspection, wall spraying, humanoid control, embedded systems, and mechanical design.",
+    keywords: "Cheung Man Loc, Leo Cheung, CU-Brick, RoBosun-Tapper, robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
+    ogDescription: "Robotics projects, publications, and awards by Cheung Man Loc, professionally known as Leo Cheung.",
+    twitterDescription: "Robotics projects, publications, and awards by Cheung Man Loc (Leo Cheung).",
     image: "/assets/images/profile.jpg",
-    imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, construction robotics engineer",
-    lastmod: "2026-08-13",
-    schemaDateModified: "2026-08-13T02:01:24+08:00",
+    imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, robotics engineer",
+    lastmod: "2026-10-01",
+    schemaDateModified: "2026-10-01T00:00:00+08:00",
     knowsAbout: [
       "CU-Brick cable-driven bricklaying robot",
-      "Robo-Tapper robotic facade inspection",
+      "RoBosun-Tapper robotic facade inspection",
       "construction robotics",
       "cable-driven parallel robots",
       "facade inspection robots",
@@ -97,7 +97,7 @@ const standalonePages = {
       imageAlt: "Hong Kong weather and KMB arrival dashboard by Cheung Man Loc, known as Leo Cheung",
       schemaName: "Hong Kong Weather and KMB Arrival Dashboard",
       schemaDescription: "A responsive web dashboard combining Hong Kong Observatory weather data with KMB arrival information for Sheung Tak Bus Terminus.",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   }
 };
@@ -106,25 +106,25 @@ const siteProjects = {
   tapper: {
     file: "tapper.html",
     title: {
-      en: "Robo-Tapper: Robotic Facade Inspection",
-      zhHant: "Robo-Tapper 外牆檢測機械人"
+      en: "RoBosun-Tapper: Robotic Facade Inspection",
+      zhHant: "RoBosun-Tapper 外牆檢測機械人"
     },
     cardTitle: {
-      en: "Robo-Tapper: Robotic Facade Inspection",
-      zhHant: "Robo-Tapper 外牆檢測機械人"
+      en: "RoBosun-Tapper: Robotic Facade Inspection",
+      zhHant: "RoBosun-Tapper 外牆檢測機械人"
     },
     previewTitle: {
-      en: "Automated facade inspection",
-      zhHant: "自動化外牆檢測"
+      en: "Cable-driven facade hammer-testing robot",
+      zhHant: "纜索驅動外牆敲擊檢測機械人"
     },
     seo: {
-      description: "Robo-Tapper is a cable-driven robot for automated high-rise facade hammer testing, autonomous positioning, and AI-assisted impact analysis.",
-      ogDescription: "A field-deployed cable robot for consistent facade hammer testing, autonomous positioning, and AI-assisted defect analysis.",
-      twitterDescription: "Field-deployed robotic facade inspection with automated hammer testing and AI-assisted signal analysis.",
+      description: "RoBosun-Tapper is a cable-driven robot for high-rise facade hammer testing, combining robotic positioning, automated tapping, and impact-signal analysis.",
+      ogDescription: "RoBosun-Tapper combines cable-driven positioning, automated tapping, and impact-signal analysis for high-rise facade inspection.",
+      twitterDescription: "RoBosun-Tapper: cable-driven robotic hammer testing for high-rise facade inspection.",
       image: "/assets/images/Robotapper_cropped.jpeg",
-      structuredDescription: "Field-deployed cable-driven robot for automated facade hammer testing, LiDAR navigation, and AI-assisted impact-signal analysis.",
-      keywords: "Robo-Tapper, facade inspection robot, cable-driven robot, hammer testing robot, AI defect detection, LiDAR navigation, construction robotics, Hong Kong robotics",
-      lastmod: "2026-08-13"
+      structuredDescription: "Cable-driven robot for high-rise facade hammer testing, robotic positioning, and impact-signal analysis.",
+      keywords: "RoBosun-Tapper, facade inspection robot, cable-driven robot, hammer testing robot, impact-signal analysis, construction robotics, Hong Kong robotics",
+      lastmod: "2026-10-01"
     }
   },
   cuBrick: {
@@ -138,8 +138,8 @@ const siteProjects = {
       zhHant: "CU-Brick：纜索驅動砌磚機械人"
     },
     previewTitle: {
-      en: "5,800-brick pavilion build",
-      zhHant: "建造逾 5,800 塊磚的展亭"
+      en: "Cable-driven bricklaying robot",
+      zhHant: "纜索驅動砌磚機械人"
     },
     seo: {
       description: "CU-Brick is a cable-driven parallel robot that built a 40-layer YES Pavilion structure from more than 5,800 bricks across a 13 m by 9 m site.",
@@ -148,7 +148,7 @@ const siteProjects = {
       image: "/assets/images/YES_full.jpg",
       structuredDescription: "Architectural-scale cable-driven parallel robot for automated bricklaying, fiducial localization, 3D scanning, and construction automation.",
       keywords: "CU-Brick, bricklaying robot, cable-driven parallel robot, CDPR, construction automation, fiducial markers, 3D scanning, YES Pavilion, Hong Kong robotics",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     },
     awards: [
       {
@@ -172,11 +172,11 @@ const siteProjects = {
     },
     cardTitle: {
       en: "Autonomous Wall Spraying Robot",
-      zhHant: "自主牆身噴塗機械人"
+      zhHant: "自主牆面噴塗機械人"
     },
     previewTitle: {
-      en: "Automated paint application",
-      zhHant: "自動化牆面噴塗"
+      en: "Mobile wall-spraying robot",
+      zhHant: "移動式牆面噴塗機械人"
     },
     seo: {
       description: "An autonomous wall spraying prototype integrating AGV motion, IMU sensing, a linear rail, cameras, and ROS-based control for automated paint application.",
@@ -185,7 +185,7 @@ const siteProjects = {
       image: "/assets/images/Spray_robot.JPG",
       structuredDescription: "Autonomous wall painting prototype with AGV motion, IMU sensing, cameras, linear rail positioning, and ROS control.",
       keywords: "autonomous wall spraying robot, wall painting robot, ROS robot, AGV, IMU, machine vision, linear rail, construction robotics, industrial painting automation",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   knowTouch: {
@@ -199,8 +199,8 @@ const siteProjects = {
       zhHant: "kNOw Touch：免觸式升降機介面"
     },
     previewTitle: {
-      en: "1,200+ units deployed",
-      zhHant: "部署逾 1,200 套"
+      en: "Infrared touchless lift controls",
+      zhHant: "紅外線免觸式升降機控制"
     },
     seo: {
       description: "kNOw Touch is an infrared touchless lift interface deployed in more than 1,200 Hong Kong units within one year.",
@@ -209,7 +209,7 @@ const siteProjects = {
       image: "/assets/images/knowtouch_1.jpg",
       structuredDescription: "Infrared gesture interface for touchless lift controls, retrofit installation, and large-scale Hong Kong deployment.",
       keywords: "kNOw Touch, touchless lift button, elevator sensor, infrared gesture sensor, lift call bar, contactless interface, Hong Kong elevators, embedded hardware",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   exoskeleton: {
@@ -223,8 +223,8 @@ const siteProjects = {
       zhHant: "ME4：外骨骼控制人形機械人"
     },
     previewTitle: {
-      en: "Wearable humanoid control",
-      zhHant: "穿戴式人形機械人控制"
+      en: "Exoskeleton-controlled humanoid robot",
+      zhHant: "外骨骼操控人形機械人"
     },
     seo: {
       description: "ME4 pairs a wearable exoskeleton controller with a humanoid robot, combining haptic feedback, wireless communication, and 48 V BLDC motor control.",
@@ -233,7 +233,7 @@ const siteProjects = {
       image: "/assets/images/Exoskeleton_robot.jpg",
       structuredDescription: "Humanoid robot and wearable exoskeleton controller with haptic feedback, 48 V BLDC control, and wireless communication.",
       keywords: "exoskeleton control, humanoid robot, haptic feedback, BLDC motor control, wireless robot control, LiDAR, mechatronics, robotics engineering",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   borderless: {
@@ -257,7 +257,7 @@ const siteProjects = {
       image: "/assets/images/Borderless_lab.jpg",
       structuredDescription: "Browser-based remote STEM laboratory using Raspberry Pi, Arduino, livestream monitoring, and real-time sensor data.",
       keywords: "Borderless Lab 365, remote STEM laboratory, web-based lab platform, Raspberry Pi, Arduino, livestream experiments, real-time sensor data, STEM education",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   microwave: {
@@ -275,13 +275,13 @@ const siteProjects = {
       zhHant: "材料加熱實驗"
     },
     seo: {
-      description: "An experimental study of how concrete, cement, and metal compositions respond to microwave heating, supported by CAD-designed molds and prototypes.",
+      description: "An experimental study of how concrete, cement, and metal compositions respond to microwave heating, supported by CAD-designed moulds and prototypes.",
       ogDescription: "Construction-material microwave heating experiments using CAD-built prototypes, material testing, and a low-cost laboratory setup.",
       twitterDescription: "CAD-led prototype and material tests exploring microwave heating for concrete and cement compositions.",
       image: "/assets/images/Microwave.jpeg",
-      structuredDescription: "Experimental microwave heating research for concrete, cement, and metal compositions using CAD-designed molds and prototypes.",
+      structuredDescription: "Experimental microwave heating research for concrete, cement, and metal compositions using CAD-designed moulds and prototypes.",
       keywords: "microwave heating system, concrete heating, cement materials, sustainable construction, CAD prototype, SolidWorks, AutoCAD, material testing",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   retractable: {
@@ -305,7 +305,7 @@ const siteProjects = {
       image: "/assets/images/v2.0.png",
       structuredDescription: "Modular retractable tapper and thruster concept for robotic facade hammer testing and protected tool transport.",
       keywords: "retractable tapper, facade inspection robot, robotic hammer testing, thruster module, modular robot tool, construction inspection, robotics hardware design",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   },
   footController: {
@@ -329,7 +329,7 @@ const siteProjects = {
       image: "/assets/images/footcontroler.jpg",
       structuredDescription: "Wearable wireless foot controller for SuperLimb with motorized pedals, haptic feedback, embedded electronics, and multi-axis input.",
       keywords: "wireless foot controller, SuperLimb, motorized pedal, wearable robot controller, haptic feedback, embedded electronics, multi-axis control, robotics hardware",
-      lastmod: "2026-08-13"
+      lastmod: "2026-10-01"
     }
   }
 };
@@ -339,11 +339,11 @@ const translations = {
     "explorer.frame": "Reference / Chassis & battery case",
     "explorer.frameText": "The main chassis and battery case stay in place as the reference for the assembly view.",
     "explorer.manualStatus": "Manual view. Use the slider or pose buttons; drag horizontally to adjust yaw ψ.",
-    "explorer.eyebrow": "ROBOSUN TAPPER / SUBSYSTEMS",
+    "explorer.eyebrow": "RoBosun-Tapper / SUBSYSTEMS",
     "explorer.title": "Explore the robot assembly",
     "explorer.note": "Use the slider to extend the arm. Drag or swipe horizontally to rotate the view.",
     "explorer.rotateHint": "Drag or swipe to rotate",
-    "explorer.canvas": "Robosun Tapper CAD assembly. Drag horizontally to adjust yaw ψ; left/right arrow keys rotate, Home resets. Scroll or use the controls to separate subsystems.",
+    "explorer.canvas": "RoBosun-Tapper CAD assembly. Drag horizontally to adjust yaw ψ; left/right arrow keys rotate, Home resets. Scroll or use the controls to separate subsystems.",
     "explorer.progress": "Assembly separation",
     "explorer.assembled": "Assembled",
     "explorer.exploded": "Exploded",
@@ -387,21 +387,21 @@ const translations = {
     "theme.toggle": "Toggle theme",
     "theme.switchToLight": "Switch to light theme",
     "theme.switchToDark": "Switch to dark theme",
-    "about.title": "Construction robots at work",
-    "about.viewTapper": "View Robo-Tapper",
+    "about.title": "Robotics in practice",
+    "about.viewTapper": "View RoBosun-Tapper",
     "about.viewProjects": "View projects",
     "about.contact": "Get in touch",
-    "about.paragraph1": "I'm Leo Cheung, a Hong Kong engineer building robots for real construction sites.",
-    "about.paragraph2": "I connect mechanical design, electronics, ROS software, and field testing to take machines from CAD into service. My work includes CU-Brick's 5,800-brick YES Pavilion and Robo-Tapper's commercial facade inspections.",
-    "service.title": "What i'm doing",
+    "about.paragraph1": "I'm Leo Cheung, a robotics engineer based in Hong Kong. I work on construction robots, humanoid systems, and human-robot control interfaces.",
+    "about.paragraph2": "My work spans mechanical design, electronics, ROS software, and field testing. Projects include CU-Brick, RoBosun-Tapper, ME4, and the SuperLimb foot controller.",
+    "service.title": "What I do",
     "service.software.title": "Software development",
-    "service.software.text": "Build ROS-based control, navigation, signal-processing, UI, motor-control, and wireless communication software that connects cleanly to real hardware.",
+    "service.software.text": "Develop ROS-based software for robot control, navigation, signal processing, motor control, operator interfaces, and wireless communication.",
     "service.hardware.title": "Hardware design",
-    "service.hardware.text": "Design robot mechanisms, electrical layouts, and testable prototypes using CAD, 3D printing, CNC machining, sensors, and embedded electronics.",
+    "service.hardware.text": "Design robot mechanisms and electrical systems, and build prototypes using CAD, 3D printing, CNC machining, sensors, and embedded electronics.",
     "service.management.title": "Project management",
-    "service.management.text": "Turn open-ended requirements into coordinated engineering work spanning scope, suppliers, integration, field tests, milestones, and safety documentation.",
-    "service.research.title": "Research and Publishing",
-    "service.research.text": "Translate experiments into engineering evidence and clear technical communication, including peer-reviewed work and conference presentations.",
+    "service.management.text": "Coordinate project requirements, suppliers, system integration, field testing, schedules, and safety documentation.",
+    "service.research.title": "Research & publications",
+    "service.research.text": "Document experimental results and share engineering findings through technical reports, peer-reviewed publications, and conference presentations.",
     "projectPreview.title": "Selected work",
     "projectPreview.pause": "Pause selected work auto-scroll",
     "projectPreview.resume": "Resume selected work auto-scroll",
@@ -418,7 +418,7 @@ const translations = {
     "resume.bsc.project": "Final-year project: Artificial Lighting for Basil Growth",
     "resume.experience": "Experience",
     "resume.mechanicalEngineer": "Mechanical Engineer",
-    "resume.mechanicalEngineer.projects": "Robo-Tapper: Robotic Facade Inspection<br>Autonomous Wall Spraying Robot<br>CU-Brick: Cable-Driven Bricklaying Robot<br>Retractable Tapper & Thruster Module",
+    "resume.mechanicalEngineer.projects": "RoBosun-Tapper: Robotic Facade Inspection<br>Autonomous Wall Spraying Robot<br>CU-Brick: Cable-Driven Bricklaying Robot<br>Retractable Tapper & Thruster Module",
     "resume.projectEngineer": "Project Engineer",
     "resume.projectEngineer.projects": "kNOw Touch: Touchless Lift Interface<br>ME4: Exoskeleton-Controlled Humanoid Robot",
     "resume.graduateExecutive": "Graduate Executive",
@@ -474,11 +474,11 @@ const translations = {
     "explorer.frame": "參考 / 機身框架與電池盒",
     "explorer.frameText": "主機身框架與電池盒保留原位，作為組件展示的參考。",
     "explorer.manualStatus": "手動模式。使用滑桿或狀態按鈕；水平拖曳以調整偏航角 ψ。",
-    "explorer.eyebrow": "ROBOSUN TAPPER / 子系統",
+    "explorer.eyebrow": "RoBosun-Tapper / 子系統",
     "explorer.title": "探索機械人組件",
     "explorer.note": "使用滑桿伸展機械臂；用滑鼠或手指水平拖曳以旋轉視角。",
     "explorer.rotateHint": "拖曳或滑動以旋轉",
-    "explorer.canvas": "Robosun Tapper CAD 組件。水平拖曳以調整偏航角 ψ；左右方向鍵旋轉，Home 重設。捲動或使用控制分離子系統。",
+    "explorer.canvas": "RoBosun-Tapper CAD 組件。水平拖曳以調整偏航角 ψ；左右方向鍵旋轉，Home 重設。捲動或使用控制分離子系統。",
     "explorer.progress": "組件分離程度",
     "explorer.assembled": "組裝狀態",
     "explorer.exploded": "分解狀態",
@@ -522,22 +522,22 @@ const translations = {
     "theme.toggle": "切換主題",
     "theme.switchToLight": "切換至淺色主題",
     "theme.switchToDark": "切換至深色主題",
-    "about.title": "建築機械人投入實際應用",
-    "about.viewTapper": "查看 Robo-Tapper",
+    "about.title": "機械人的設計與實踐",
+    "about.viewTapper": "查看 RoBosun-Tapper",
     "about.viewProjects": "瀏覽項目",
     "about.contact": "聯絡我",
-    "about.paragraph1": "我是 Leo Cheung，一名在香港開發工地機械人的工程師。",
-    "about.paragraph2": "我結合機械設計、電子、ROS 軟件和現場測試，讓機械由 CAD 設計走向實際應用。我的工作包括建成 5,800 塊磚 YES Pavilion 的 CU-Brick，以及已投入商業外牆檢測的 Robo-Tapper。",
+    "about.paragraph1": "我是 Leo Cheung，一名駐香港的機械人工程師，工作涵蓋建築機械人、人形機械人及人機操控介面。",
+    "about.paragraph2": "我的工作涵蓋機械設計、電子系統、ROS 軟件及現場測試。項目包括 CU-Brick、RoBosun-Tapper、ME4 及 SuperLimb 腳踏控制器。",
     "service.title": "我的工作",
     "service.software.title": "軟件開發",
     "service.software.text": "開發 ROS 控制、自主導航、訊號處理、操作介面、馬達控制及無線通訊軟件，讓軟硬件可靠整合。",
     "service.hardware.title": "硬件設計",
-    "service.hardware.text": "運用 CAD、3D 打印、CNC 加工、感測器及嵌入式電子，設計機械結構、電氣配置與可測試原型。",
+    "service.hardware.text": "設計機械人機構及電氣系統，並運用 CAD、3D 打印、CNC 加工、感測器及嵌入式電子製作原型。",
     "service.management.title": "項目管理",
-    "service.management.text": "把開放式需求轉化為清晰的工程工作，涵蓋範疇、供應商協調、系統整合、現場測試、里程碑及安全文件。",
-    "service.research.title": "研究與出版",
-    "service.research.text": "把實驗整理成可驗證的工程證據，並透過同行評審成果與會議簡報清晰傳達技術內容。",
-    "projectPreview.title": "精選工作",
+    "service.management.text": "協調項目需求、供應商、系統整合、現場測試、進度及安全文件。",
+    "service.research.title": "研究與論文",
+    "service.research.text": "記錄實驗結果，並透過技術報告、同行評審論文及會議簡報分享工程研究成果。",
+    "projectPreview.title": "精選項目",
     "projectPreview.pause": "暫停精選作品自動捲動",
     "projectPreview.resume": "繼續精選作品自動捲動",
     "projectPreview.tapper": siteProjects.tapper.previewTitle.zhHant,
@@ -546,14 +546,14 @@ const translations = {
     "projectPreview.knowTouch": siteProjects.knowTouch.previewTitle.zhHant,
     "projectPreview.exoskeleton": siteProjects.exoskeleton.previewTitle.zhHant,
     "resume.title": "履歷",
-    "resume.education": "教育",
+    "resume.education": "學歷",
     "resume.msc.title": "機械與自動化工程理學碩士",
     "resume.msc.project": "碩士項目：SuperLimb 無線電動腳踏控制器",
     "resume.bsc.title": "工程物理學榮譽理學士",
     "resume.bsc.project": "畢業項目：羅勒生長人工照明",
     "resume.experience": "工作經驗",
     "resume.mechanicalEngineer": "機械工程師",
-    "resume.mechanicalEngineer.projects": "Robo-Tapper 外牆檢測機械人<br>自主牆面噴塗機械人<br>CU-Brick 纜索驅動砌磚機械人<br>可伸縮敲擊與推進模組",
+    "resume.mechanicalEngineer.projects": "RoBosun-Tapper 外牆檢測機械人<br>自主牆面噴塗機械人<br>CU-Brick 纜索驅動砌磚機械人<br>可伸縮敲擊與推進模組",
     "resume.projectEngineer": "項目工程師",
     "resume.projectEngineer.projects": "kNOw Touch 免觸式升降機介面<br>ME4 外骨骼操控人形機械人",
     "resume.graduateExecutive": "畢業行政人員",
@@ -636,9 +636,9 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.tapper.title.en,
       content: `
-        <p>Robo-Tapper is a cable-driven robot for high-rise facade inspection. It automates hammer testing and combines autonomous positioning with AI-assisted impact-signal analysis, creating a more consistent workflow for identifying facade defects.</p>
+        <p>RoBosun-Tapper is a cable-driven robot that performs hammer tests on high-rise building facades. It combines robotic positioning, automated tapping, and impact-signal analysis to support facade inspection.</p>
         <figure>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/5DXR3lMrMCk?si=djfk2KVHWyjRYlTt" title="Robo-Tapper project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/5DXR3lMrMCk?si=djfk2KVHWyjRYlTt" title="RoBosun-Tapper project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
@@ -653,9 +653,9 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.tapper.title.zhHant,
       content: `
-        <p>Robo-Tapper 是用於高樓外牆檢測的纜索驅動機械人。系統把敲擊測試自動化，並結合自主定位與 AI 輔助撞擊訊號分析，建立更一致的外牆缺陷識別流程。</p>
+        <p>RoBosun-Tapper 是用於高樓外牆敲擊測試的纜索驅動機械人。系統結合機械人定位、自動敲擊及撞擊訊號分析，支援外牆檢測工作。</p>
         <figure>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/5DXR3lMrMCk?si=djfk2KVHWyjRYlTt" title="Robo-Tapper 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/5DXR3lMrMCk?si=djfk2KVHWyjRYlTt" title="RoBosun-Tapper 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
@@ -672,7 +672,8 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.cuBrick.title.en,
       content: `
-        <p>CU-Brick is a cable-driven parallel robot built for automated bricklaying. At the Yard for Environmental Sustainability (YES) Pavilion, it constructed a permeable brick structure across a 13 m by 9 m work area, reaching 2.5 m in height with 40 layers and more than 5,800 bricks.</p>
+        <p>CU-Brick is a cable-driven parallel robot for automated bricklaying. The system uses cables to position the robot across a large construction workspace and was used to build the brick structure at the Yard for Environmental Sustainability (YES) Pavilion.</p>
+        <p>The YES Pavilion project used more than 5,800 bricks across 40 layers, reaching 2.5 m in height within a 13 m by 9 m work area.</p>
         <p>Fiducial-marker localization and 3D scanning support real-time calibration, while an elevation system shifts the robot's workspace to build taller structures without cable interference.</p>
         <figure>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -703,7 +704,8 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.cuBrick.title.zhHant,
       content: `
-        <p>CU-Brick 是為自動砌磚而設計的纜索驅動並聯機械人。系統在 Yard for Environmental Sustainability (YES) Pavilion 的實際建造項目中，於 13 米乘 9 米的工作範圍內建成高 2.5 米、共 40 層、使用超過 5,800 塊磚的透水磚結構。</p>
+        <p>CU-Brick 是用於自動砌磚的纜索驅動並聯機械人。系統透過纜索在大型施工範圍內定位，並曾用於建造 Yard for Environmental Sustainability (YES) Pavilion 的磚結構。</p>
+        <p>YES Pavilion 項目在 13 米乘 9 米的工作範圍內，使用超過 5,800 塊磚建成高 2.5 米、共 40 層的結構。</p>
         <p>基準標記定位與 3D 掃描支援即時校準，升降系統則調整機械人的工作空間，讓系統在避免纜索互相干涉的情況下建造更高結構。</p>
         <figure>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -736,7 +738,7 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.spray.title.en,
       content: `
-        <p>This autonomous wall spraying prototype coordinates an AGV platform, IMU, cameras, linear-rail motion, and a motorized sprayer through ROS. The system was developed to automate navigation and paint application while improving repeatability across large surfaces.</p>
+        <p>This mobile robot prototype was developed to automate wall spraying. Its ROS-based control system coordinates the mobile platform, linear rail, and motorized sprayer, with cameras and inertial sensing to support positioning.</p>
         <figure><img src="./assets/images/Spray_robot.JPG" alt="Autonomous wall spraying robot" width="600"><figcaption>Autonomous wall spraying robot</figcaption></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
@@ -749,7 +751,7 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.spray.title.zhHant,
       content: `
-        <p>自主牆面噴塗原型透過 ROS 協調 AGV 平台、IMU、相機、線性滑軌與電動噴塗器。系統旨在把導航和噴塗工序自動化，並提升大面積施工的重複一致性。</p>
+        <p>這款移動式機械人原型旨在把牆面噴塗工序自動化。系統透過 ROS 協調移動平台、線性滑軌及電動噴塗器，並利用相機和慣性感測支援定位。</p>
         <figure><img src="./assets/images/Spray_robot.JPG" alt="自主牆面噴塗機械人" width="600"><figcaption>自主牆面噴塗機械人</figcaption></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
@@ -764,7 +766,8 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.knowTouch.title.en,
       content: `
-        <p>kNOw Touch is an infrared gesture interface that lets users activate lift controls without physical contact. Designed for new or existing control panels, the sensor bar was deployed across more than 1,200 units in Hong Kong within one year.</p>
+        <p>kNOw Touch lets users operate lift controls without touching the panel. Its infrared sensor bar detects contactless input and can be fitted to new or existing lift control panels.</p>
+        <p>More than 1,200 units were deployed in Hong Kong within one year, including installations at Hong Kong International Airport and Pacific Place.</p>
         <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/H5CbdbJ4yW0?si=d9xhUFhmYV5AYOlU" title="kNOw Touch project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
@@ -777,7 +780,8 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.knowTouch.title.zhHant,
       content: `
-        <p>kNOw Touch 是紅外線手勢感應介面，讓使用者無需接觸即可啟動升降機控制。感應條可安裝於新造或現有控制面板，並於一年內在香港部署超過 1,200 套。</p>
+        <p>kNOw Touch 讓使用者無需接觸面板即可操作升降機。其紅外線感應條偵測免觸輸入，並可安裝於新造或現有的升降機控制面板。</p>
+        <p>項目於一年內在香港部署超過 1,200 套設備，包括香港國際機場及太古廣場的安裝項目。</p>
         <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/H5CbdbJ4yW0?si=d9xhUFhmYV5AYOlU" title="kNOw Touch 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
@@ -792,7 +796,7 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.exoskeleton.title.en,
       content: `
-        <p>ME4 pairs a wearable exoskeleton controller with a humanoid robot to explore more natural human-to-robot control. The system brings together custom mechanics, electronics, sensors, actuators, haptic feedback, and control software in one integrated interface.</p>
+        <p>ME4 combines a humanoid robot with a wearable exoskeleton controller. The controller provides an interface for operating the robot, supported by haptic feedback, wireless communication, and motor-control software.</p>
         <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/14kadLLVMPQ?si=MYOS6TnPgDZjG4YG" title="Exoskeleton project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
@@ -805,7 +809,7 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.exoskeleton.title.zhHant,
       content: `
-        <p>ME4 把穿戴式外骨骼控制器與人形機械人結合，探索更自然的人機操控方式。系統在同一介面中整合訂製機械結構、電子系統、感測器、致動器、觸覺回饋及控制軟件。</p>
+        <p>ME4 結合人形機械人與穿戴式外骨骼控制器。控制器提供機械人操作介面，並配合觸覺回饋、無線通訊及馬達控制軟件。</p>
         <figure><iframe width="560" height="315" src="https://www.youtube.com/embed/14kadLLVMPQ?si=MYOS6TnPgDZjG4YG" title="外骨骼項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
@@ -820,7 +824,7 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.borderless.title.en,
       content: `
-        <p>Borderless Lab 365 is a browser-based remote laboratory that lets secondary students control real STEM experiments from anywhere. The physical setups are hosted and maintained by PolyU's Department of Applied Physics.</p>
+        <p>Borderless Lab 365 lets secondary school students operate physical STEM experiments through a web browser. The experiment hardware is hosted by PolyU's Department of Applied Physics, with live video and sensor readings available during each session.</p>
         <p>The platform relays user commands to laboratory hardware through PolyU's server, then returns live video and sensor data so students can observe each experiment as it runs.</p>
         <a href="https://stem-ap.polyu.edu.hk/remotelab/home.html" class="btn btn-primary">${translations.en["project.bookNow"]}</a>
         <figure><iframe width="560" height="315" loading="lazy" src="https://www.youtube.com/embed/aAXATNk18v4" title="Borderless Lab project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
@@ -835,7 +839,7 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.borderless.title.zhHant,
       content: `
-        <p>Borderless Lab 365 是網頁式遙距實驗室，讓中學生可在任何地方操控真實 STEM 實驗。實體裝置設於理工大學應用物理學系，並由大學團隊維護。</p>
+        <p>Borderless Lab 365 讓中學生透過網頁瀏覽器操控真實 STEM 實驗。實驗硬件設於理工大學應用物理學系，學生可在實驗期間查看即時影像及感測器讀數。</p>
         <p>平台透過理工大學伺服器把使用者指令傳送至實驗硬件，再回傳即時影像與感測器數據，讓學生同步觀察實驗過程。</p>
         <a href="https://stem-ap.polyu.edu.hk/remotelab/home.html" class="btn btn-primary">${translations.zhHant["project.bookNow"]}</a>
         <figure><iframe width="560" height="315" loading="lazy" src="https://www.youtube.com/embed/aAXATNk18v4" title="Borderless Lab 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>
@@ -852,12 +856,13 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.microwave.title.en,
       content: `
-        <p>This project investigated how concrete, cement, and metal compositions respond to microwave heating, building on research from the Universitat Politècnica de València. Material tests, CAD-designed molds, and prototypes were used to evaluate a low-cost household-microwave setup for construction materials.</p>
+        <p>This experimental project studied how construction-material mixtures respond to microwave heating. Tests on concrete, cement, and metal compositions used CAD-designed moulds and prototypes to explore the heating behaviour of different materials.</p>
+        <p>Building on research from the Universitat Politècnica de València, the project evaluated a low-cost household microwave setup for construction-material experiments.</p>
         <p>The study compared the heating response of different mixtures and structural forms, and reached the final eight of a local innovation competition.</p>
-        <div style="display: flex; gap: 1rem"><figure style="flex: 1; position: relative; padding-top: 25%"><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="Microwave heating CAD concept" style="position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover"></a></figure><figure style="flex: 1; position: relative; padding-top: 25%"><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="Microwave heating CAD concept" style="position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover"></a></figure></div>
+        <div class="project-media-grid"><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="CAD model from the microwave-heating project"></a></figure><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="Prototype from the microwave-heating project"></a></figure></div>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
-          <li>Designed the experimental molds and system prototypes in SolidWorks and AutoCAD.</li>
+          <li>Designed the experimental moulds and system prototypes in SolidWorks and AutoCAD.</li>
           <li>Planned and performed microwave-heating tests on concrete, cement, and metal compositions.</li>
           <li>Coordinated material selection, sourcing, and transport with suppliers.</li>
         </ul>`
@@ -865,9 +870,10 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.microwave.title.zhHant,
       content: `
-        <p>此項目建基於 Universitat Politècnica de València 的相關研究，分析混凝土、水泥與金屬配方在微波加熱下的反應。研究透過材料測試、CAD 模具及原型，評估以低成本家用微波裝置加熱建築材料的可行性。</p>
+        <p>這個實驗項目研究建築材料混合物在微波加熱下的反應。研究使用 CAD 設計的模具及原型，測試混凝土、水泥與金屬配方，探索不同材料的升溫特性。</p>
+        <p>項目建基於 Universitat Politècnica de València 的相關研究，評估以低成本家用微波裝置進行建築材料實驗的可行性。</p>
         <p>項目比較不同混合比例與結構形式的升溫反應，並入選本地創新比賽最後八強。</p>
-        <div style="display: flex; gap: 1rem"><figure style="flex: 1; position: relative; padding-top: 25%"><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="微波加熱 CAD 概念" style="position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover"></a></figure><figure style="flex: 1; position: relative; padding-top: 25%"><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="微波加熱 CAD 概念" style="position: absolute; top: 0; width: 100%; height: 100%; object-fit: cover"></a></figure></div>
+        <div class="project-media-grid"><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="微波加熱項目的 CAD 模型"></a></figure><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="微波加熱項目的原型"></a></figure></div>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>使用 SolidWorks 與 AutoCAD 設計實驗模具及系統原型。</li>
@@ -880,8 +886,8 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.retractable.title.en,
       content: `
-        <p>This concept adds a compact retractable tapper and thruster module to cable-driven facade inspection robots. The impact tool extends only at an inspection point and retracts during travel, protecting the mechanism between tests.</p>
-        <p>The design focuses on compact mechanical packaging, modular integration, and reliable deployment for high-rise hammer-testing workflows.</p>
+        <p>This concept explores a retractable tapping mechanism and thruster arrangement for cable-driven facade inspection robots. The tapping tool is designed to extend at an inspection point and retract during travel to protect the mechanism between tests.</p>
+        <p>The design considers compact packaging and modular interfaces for integration with a cable-driven inspection robot.</p>
         <figure><img src="./assets/images/v2.0.png" alt="Retractable tapper and thruster module for facade inspection robot" width="600" loading="lazy"><figcaption>Retractable tapper and thruster module concept</figcaption></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
@@ -893,8 +899,8 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.retractable.title.zhHant,
       content: `
-        <p>此概念為纜索驅動外牆檢測機械人加入緊湊的可伸縮敲擊與推進模組。撞擊工具只在到達檢測位置時伸出，移動期間則收回，以保護機構。</p>
-        <p>設計重點包括緊湊機械封裝、模組化整合，以及高樓敲擊測試流程中的可靠部署。</p>
+        <p>此概念探索用於纜索驅動外牆檢測機械人的可伸縮敲擊機構及推進器佈局。敲擊工具設計為在檢測位置伸出，並在移動期間收回，以保護機構。</p>
+        <p>設計考慮緊湊的機構佈局及模組化介面，以便整合至纜索驅動檢測機械人。</p>
         <figure><img src="./assets/images/v2.0.png" alt="外牆檢測機械人的可伸縮敲擊器與推進器模組" width="600" loading="lazy"><figcaption>可伸縮敲擊器與推進器模組概念</figcaption></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
@@ -908,7 +914,7 @@ const projectPageTranslations = {
     en: {
       title: siteProjects.footController.title.en,
       content: `
-        <p>Developed for SuperLimb, this compact wearable foot controller supports hands-free, multi-axis robot input through motorized pedals, wireless telemetry, and ergonomic foot movement.</p>
+        <p>This wireless motorized foot controller was developed for the SuperLimb project. It uses foot input to command robotic motion, allowing the operator's hands to remain available for other tasks.</p>
         <p>The prototype combines mechanical design, embedded electronics, haptic feedback, and wireless communication in a wearable human-robot control interface.</p>
         <figure><img src="./assets/images/footcontroler.jpg" alt="Wireless motorized foot controller for SuperLimb robot control" width="600" loading="lazy"><figcaption>Wireless motorized foot controller prototype</figcaption></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
@@ -921,7 +927,7 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.footController.title.zhHant,
       content: `
-        <p>這款為 SuperLimb 開發的緊湊穿戴式腳踏控制器，透過電動踏板、無線遙測與符合人體工學的腳部動作，支援免手持多軸機械人輸入。</p>
+        <p>這款無線電動腳踏控制器為 SuperLimb 項目而開發。操作者透過腳部輸入控制機械人動作，同時可騰出雙手處理其他工作。</p>
         <p>原型把機械設計、嵌入式電子、觸覺回饋與無線通訊整合成穿戴式人機控制介面。</p>
         <figure><img src="./assets/images/footcontroler.jpg" alt="SuperLimb 無線電動腳踏控制器" width="600" loading="lazy"><figcaption>無線電動腳踏控制器原型</figcaption></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>

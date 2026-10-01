@@ -77,7 +77,7 @@ include a keyboard skip link, an announced contact-details toggle, and a
 consistent `#content-start` target. Keep these elements in new templates by
 running `generate-site-content.js` rather than copying the shell by hand.
 
-## Robosun Tapper assembly viewer
+## RoBosun-Tapper assembly viewer
 
 `tapper.html` loads `assets/models/robosun-tapper.glb` near the viewport. The model
 comes from the local SolidWorks assembly, with image-reconstructed thruster

@@ -1,8 +1,8 @@
 ---
-title: "Presenting at CableCon2025 in Hong Kong"
+title: "Presenting at CableCon 2025 in Hong Kong"
 titleZhHant: "在香港 CableCon 2025 進行簡報"
 date: "2025-07-02"
-updated: "2026-08-13"
+updated: "2026-10-01"
 category: "Conference"
 categoryZhHant: "會議"
 image: "./assets/images/cablecon_pre.jpeg"
@@ -13,7 +13,7 @@ keywords: "CU-Brick, CableCon 2025, cable-driven parallel robot, bricklaying rob
 ---
 
 <div data-lang="en">
-<p>Thrilled to have presented our paper <em>Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project</em> at the 7th International Conference on Cable-Driven Parallel Robots. It was an honor to showcase how cable-driven robots are reshaping the construction industry. Grateful to the organisers and every delegate who stopped by our demo.</p>
+<p>Thrilled to have presented our paper <em>Development of CU-Brick Brick Laying Cable-Driven Robot for a Real-World Construction Project</em> at the 7th International Conference on Cable-Driven Parallel Robots. It was an honour to showcase how cable-driven robots are reshaping the construction industry. Grateful to the organisers and every delegate who stopped by our demo.</p>
 
 <p>Read the <a href="https://doi.org/10.1007/978-3-031-94608-0_28" target="_blank" rel="noopener noreferrer">peer-reviewed CU-Brick paper</a> or explore the <a href="/yes.html">CU-Brick cable-driven bricklaying robot project</a>.</p>
 </div>

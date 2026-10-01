@@ -118,6 +118,18 @@ function hydratePhotoSequenceMedia(sequence, radio) {
 
 function syncPhotoSequenceState(sequence) {
   const thumbnails = sequence.querySelectorAll(".photo-sequence__thumb");
+  const selectedRadio = sequence.querySelector('input[type="radio"]:checked');
+  const selectedPhoto = selectedRadio?.id.match(/-(\d+)$/)?.[1];
+
+  sequence.querySelectorAll(".photo-sequence__stage [data-photo]").forEach((media) => {
+    const isSelected = media.dataset.photo === selectedPhoto;
+    media.inert = !isSelected;
+    media.setAttribute("aria-hidden", String(!isSelected));
+
+    if (media.tagName === "IFRAME") {
+      media.tabIndex = isSelected ? 0 : -1;
+    }
+  });
 
   thumbnails.forEach((thumbnail) => {
     const radioId = thumbnail.getAttribute("for");
