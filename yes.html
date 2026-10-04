@@ -45,7 +45,7 @@
     <meta property="og:image:width" content="2925" />
     <meta property="og:image:height" content="2194" />
     <meta name="twitter:image:alt" content="CU-Brick: Cable-Driven Bricklaying Robot project" />
-    <meta property="article:modified_time" content="2026-10-01" />
+    <meta property="article:modified_time" content="2026-10-03" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,7 +69,7 @@
           "url": "https://leocml.com/"
         },
         "@id": "https://leocml.com/yes.html#creative-work",
-        "dateModified": "2026-10-01",
+        "dateModified": "2026-10-03",
         "inLanguage": [
           "en",
           "zh-Hant"
@@ -148,6 +148,7 @@
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-2" />
+    <link rel="stylesheet" href="./assets/css/cu-brick-exploded.css?v=20261004-5" />
 
     <!--
     - google font link
@@ -493,6 +494,119 @@
 
 
 
+          <section class="brick-explorer" id="cu-brick-explorer" data-brick-explorer data-view="site" aria-labelledby="brick-explorer-title">
+            <header class="brick-explorer__heading">
+              <h2 id="brick-explorer-title" data-i18n="brick.title">Inside CU-Brick</h2>
+              <p class="brick-explorer__intro" data-i18n="brick.intro">Explore the cable-driven robot, then look inside its brick-handling end effector.</p>
+            </header>
+            <div class="brick-explorer__panel">
+              <div class="brick-explorer__toolbar" data-brick-controls hidden>
+                <div class="brick-explorer__views" role="group" data-i18n-aria-label="brick.views" aria-label="Assembly view">
+                  <button type="button" data-brick-view="site" aria-pressed="true" data-i18n="brick.site">Whole robot</button>
+                  <button type="button" data-brick-view="detail" aria-pressed="false" data-i18n="brick.detail">End effector</button>
+                </div>
+                <div class="brick-explorer__tools">
+                  <button type="button" data-brick-labels aria-pressed="true" data-i18n-aria-label="brick.labels" aria-label="Annotation"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4h9M3 8h5l5 7h4"/><path d="M14 12l3 3-3 3"/></svg><span data-i18n="brick.labels">Annotation</span></button>
+                  <button type="button" data-brick-reset data-i18n-aria-label="brick.reset" aria-label="Reset view"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7a7 7 0 1 1-.4 5M4 2v5h5"/></svg><span data-i18n="brick.reset">Reset view</span></button>
+                </div>
+              </div>
+              <div class="brick-explorer__layout">
+                <div class="brick-explorer__visual">
+                  <div class="brick-explorer__picker" data-brick-controls hidden>
+                    <select data-brick-picker data-i18n-aria-label="brick.components" aria-label="Components"></select>
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg>
+                  </div>
+                  <div class="brick-explorer__viewport" data-brick-viewport>
+                    <img class="brick-explorer__fallback" src="./assets/images/optimized/cu-brick_1-jpeg-960.webp" width="960" height="720" loading="lazy" alt="CU-Brick robot at the construction site">
+                    <div class="brick-explorer__meta" data-brick-meta data-i18n="brick.siteMeta">4 support poles / 8 cables</div>
+                    <div class="brick-explorer__markers" data-brick-markers></div>
+                  </div>
+                  <div class="brick-explorer__viewport-footer" data-brick-controls hidden>
+                    <p class="brick-explorer__hint" data-i18n="brick.interaction">Drag to orbit · Use + / − to zoom</p>
+                    <div class="brick-explorer__zoom">
+                      <button type="button" data-brick-zoom="out" aria-label="Zoom out" data-i18n-aria-label="brick.zoomOut">−</button>
+                      <button type="button" data-brick-zoom="in" aria-label="Zoom in" data-i18n-aria-label="brick.zoomIn">+</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="brick-explorer__inspector">
+                  <p class="brick-explorer__caption" data-i18n="brick.components">Components</p>
+                  <ol class="brick-explorer__parts" data-brick-parts>
+                    <li><span data-i18n="brick.part.pole0">Pole 0 · motors 0, 4</span></li>
+                    <li><span data-i18n="brick.part.pole1">Pole 1 · motors 1, 5</span></li>
+                    <li><span data-i18n="brick.part.pole2">Pole 2 · motors 2, 6</span></li>
+                    <li><span data-i18n="brick.part.pole3">Pole 3 · motors 3, 7</span></li>
+                    <li><span data-i18n="brick.part.winches">Motorized winches × 8</span></li>
+                    <li><span data-i18n="brick.part.pulleys">Adjustable lower pulleys × 4</span></li>
+                    <li><span data-i18n="brick.part.cables">Positioning cables × 8</span></li>
+                    <li><span data-i18n="brick.part.effector">Suspended end effector</span></li>
+                    <li><span data-i18n="brick.part.pickup">Brick pick-up pole</span></li>
+                    <li><span data-i18n="brick.part.conveyor">Brick feed conveyor</span></li>
+                  </ol>
+                  <div class="brick-explorer__description" aria-live="polite" aria-atomic="true" data-brick-description hidden>
+                    <h3 data-brick-part-title></h3>
+                    <p data-brick-part-text></p>
+                    <button class="brick-explorer__inspect" type="button" data-brick-inspect data-i18n="brick.openDetail" hidden>Inspect end effector →</button>
+                  </div>
+                </div>
+              </div>
+              <div class="brick-explorer__controls" data-brick-controls hidden>
+                <div data-brick-zoom-control>
+                  <div class="brick-explorer__range-heading">
+                    <label for="brick-zoom" data-i18n="brick.zoom">Zoom</label>
+                    <output for="brick-zoom" data-brick-zoom-output>100%</output>
+                  </div>
+                  <input id="brick-zoom" type="range" min="70" max="220" value="100" step="1">
+                  <div class="brick-explorer__range-actions brick-explorer__range-note"><span>70%</span><span>220%</span></div>
+                </div>
+                <div data-brick-rotation-control hidden>
+                  <div class="brick-explorer__range-heading">
+                    <label for="brick-rotation" data-i18n="brick.rotation">Brick rotation</label>
+                    <output for="brick-rotation" data-brick-rotation-output>0°</output>
+                  </div>
+                  <input id="brick-rotation" type="range" min="-180" max="180" value="0" step="1" aria-describedby="brick-motion-note">
+                  <div class="brick-explorer__range-actions">
+                    <button type="button" data-brick-rotation="0" aria-pressed="true">0°</button>
+                    <button type="button" data-brick-rotation="90" aria-pressed="false">90°</button>
+                  </div>
+                </div>
+                <div data-brick-grip-control hidden>
+                  <div class="brick-explorer__range-heading">
+                    <label for="brick-grip" data-i18n="brick.grip">Grip &amp; release</label>
+                    <output for="brick-grip" data-brick-grip-output>Gripped</output>
+                  </div>
+                  <input id="brick-grip" type="range" min="0" max="100" value="0" step="1" aria-describedby="brick-motion-note" aria-valuetext="Gripped">
+                  <div class="brick-explorer__range-actions">
+                    <button type="button" data-brick-grip="0" aria-pressed="true" data-i18n="brick.gripAction">Grip</button>
+                    <button type="button" data-brick-grip="1" aria-pressed="false" data-i18n="brick.releaseAction">Release</button>
+                  </div>
+                </div>
+                <p class="brick-explorer__range-note brick-explorer__motion-note" id="brick-motion-note" data-brick-motion-note data-i18n="brick.motionNote" hidden>Turn the held brick, then slide to release. Reverse to grip again.</p>
+                <div data-brick-separation-control hidden>
+                  <div class="brick-explorer__range-heading">
+                    <label for="brick-separation" data-i18n="brick.separation">Separate by function</label>
+                    <output for="brick-separation" data-brick-separation-output>0%</output>
+                  </div>
+                  <input id="brick-separation" type="range" min="0" max="100" value="0" step="1">
+                  <div class="brick-explorer__range-actions">
+                    <button type="button" data-brick-pose="0" aria-pressed="true" data-i18n="brick.assembled">Assembled</button>
+                    <button type="button" data-brick-pose="1" aria-pressed="false" data-i18n="brick.exploded">By function</button>
+                  </div>
+                </div>
+                <div data-brick-elevation-control>
+                  <div class="brick-explorer__range-heading">
+                    <label for="brick-elevation" data-i18n="brick.elevation">Lower cable attachment height</label>
+                    <output for="brick-elevation" data-brick-elevation-output>0%</output>
+                  </div>
+                  <input id="brick-elevation" type="range" min="0" max="100" value="0" step="1" aria-describedby="brick-elevation-note">
+                  <p class="brick-explorer__range-note" id="brick-elevation-note" data-i18n="brick.elevationNote">Raise the four lower pulleys to clear the growing brickwork.</p>
+                </div>
+              </div>
+              <p class="brick-explorer__status" role="status" data-brick-status data-i18n="brick.fallback">The 3D view is unavailable. CU-Brick uses eight motorized cables on four poles to position a wireless gripper. Four lower pulleys rise as the wall grows; a separate pick-up pole presents bricks to the robot. The project photos above show the assembled system.</p>
+            </div>
+            <p class="brick-explorer__note" data-i18n="brick.note">Simplified site layout; end effector enlarged in the overview. The end-effector controls illustrate rotation, gripping and release; separation groups hardware by function.</p>
+          </section>
+
           <section class="project-detail">
             <header>
               <h2 class="h3 title" data-i18n="project.details">Project Details</h2>
@@ -541,15 +655,16 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20261001-2"></script>
-    <script src="./assets/js/i18n.js?v=20261001-2"></script>
+    <script src="./assets/js/site-data.js?v=20261004-5"></script>
+    <script src="./assets/js/i18n.js?v=20261003-7"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js?v=20261001-2"></script>
     <script src="./assets/js/ui-interactions.js?v=20261001-2"></script>
     <script src="./assets/js/filters.js?v=20261001-2"></script>
     <script src="./assets/js/contact-form.js"></script>
-    <script src="./assets/js/navigation.js?v=20261001-2"></script>
+    <script src="./assets/js/navigation.js?v=20261003-7"></script>
     <script src="./assets/js/app-init.js"></script>
+    <script type="module" src="./assets/js/cu-brick-exploded.js?v=20261004-6"></script>
     <!--
     - ionicon link
   -->

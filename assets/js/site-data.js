@@ -148,7 +148,7 @@ const siteProjects = {
       image: "/assets/images/YES_full.jpg",
       structuredDescription: "Architectural-scale cable-driven parallel robot for automated bricklaying, fiducial localization, 3D scanning, and construction automation.",
       keywords: "CU-Brick, bricklaying robot, cable-driven parallel robot, CDPR, construction automation, fiducial markers, 3D scanning, YES Pavilion, Hong Kong robotics",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-03"
     },
     awards: [
       {
@@ -628,6 +628,83 @@ Object.assign(translations.zhHant, {
   "projectPreview.previous": "上一組項目",
   "projectPreview.next": "下一組項目"
 });
+
+// Shared English / Traditional Chinese copy for the CU-Brick assembly explorer.
+const brickExplorerCopy = {
+  title: ['Inside CU-Brick', '探索 CU-Brick 的構造'],
+  intro: ['Explore the cable-driven robot, then look inside its brick-handling end effector.', '探索纜索驅動機械人，再近距離了解夾磚末端執行器的構造。'],
+  site: ['Whole robot', '整體機械人'],
+  detail: ['End effector', '末端執行器'],
+  views: ['Assembly view', '組件視圖'],
+  siteMeta: ['4 support poles / 8 cables', '4 支支柱 / 8 條纜索'],
+  detailMeta: ['380 × 380 × 220 mm frame', '380 × 380 × 220 毫米框架'],
+  components: ['Components', '組件'],
+  choose: ['Select a component', '選擇組件'],
+  chooseText: ['Select a part in the model or the list to reveal its name and function.', '點選模型或清單中的組件，查看名稱及用途。'],
+  functions: ['Five functional modules', '五個功能模組'],
+  functionsText: ['Separate the end effector by function. Each module stays together, so you can see how it supports, powers, rotates, grips or sees the brick.', '按功能分解末端執行器。每個模組保持完整，方便了解支撐、供電、旋轉、夾放及視覺定位的分工。'],
+  separation: ['Separate by function', '按功能分離'],
+  assembled: ['Assembled', '組裝狀態'],
+  exploded: ['By function', '功能分解'],
+  rotation: ['Brick rotation', '磚塊旋轉'],
+  grip: ['Grip & release', '夾持及釋放'],
+  gripAction: ['Grip', '夾持'],
+  releaseAction: ['Release', '釋放'],
+  gripped: ['Gripped', '已夾持'],
+  opening: ['Opening', '正在張開'],
+  releasing: ['Releasing', '正在釋放'],
+  released: ['Released', '已釋放'],
+  motionNote: ['Turn the held brick, then slide to release. Reverse to grip again.', '轉動夾持中的磚塊，再滑動以釋放。反向滑動可重新夾持。'],
+  elevation: ['Lower cable attachment height', '下方纜索連接點高度'],
+  elevationNote: ['Raise the four lower pulleys to clear the growing brickwork.', '升起四個下方滑輪，避開逐漸增高的磚牆。'],
+  low: ['Low', '低'],
+  raised: ['Raised', '高'],
+  labels: ['Annotation', '標註'],
+  reset: ['Reset view', '重設視角'],
+  zoomIn: ['Zoom in', '放大'],
+  zoom: ['Zoom', '縮放'],
+  zoomOut: ['Zoom out', '縮小'],
+  openDetail: ['Inspect end effector →', '查看末端執行器 →'],
+  interaction: ['Drag to orbit · Use + / − to zoom', '拖曳旋轉 · 使用 + / − 縮放'],
+  canvas: ['Interactive CU-Brick assembly. Drag or use arrow keys to rotate, plus and minus to zoom, Home to reset. Select a component in the model or the adjacent list.', 'CU-Brick 互動組件模型。拖曳或使用方向鍵旋轉，按加減鍵縮放，Home 重設視角。點選模型或旁邊清單中的組件。'],
+  note: ['Simplified site layout; end effector enlarged in the overview. The end-effector controls illustrate rotation, gripping and release; separation groups hardware by function.', '場地配置經過簡化；整體視圖中的末端執行器已放大。末端執行器控制展示旋轉、夾持及釋放動作；分離視圖按功能整合零件。'],
+  loading: ['Loading the interactive assembly…', '正在載入互動組件模型…'],
+  fallback: ['The 3D view is unavailable. CU-Brick uses eight motorized cables on four poles to position a wireless gripper. Four lower pulleys rise as the wall grows; a separate pick-up pole presents bricks to the robot. The project photos above show the assembled system.', '目前無法顯示三維模型。CU-Brick 透過四支支柱上的八條電動纜索定位無線夾爪。四個下方滑輪隨磚牆增高而上升，另一支取磚支柱把磚塊送至機械人。上方項目照片展示實際系統。'],
+  'part.pole0': ['Pole 0 · motors 0, 4', '支柱 0 · 馬達 0、4'],
+  'part.pole1': ['Pole 1 · motors 1, 5', '支柱 1 · 馬達 1、5'],
+  'part.pole2': ['Pole 2 · motors 2, 6', '支柱 2 · 馬達 2、6'],
+  'part.pole3': ['Pole 3 · motors 3, 7', '支柱 3 · 馬達 3、7'],
+  'part.pole0Text': ['One of four steel support poles around the work area. Carries winches 0 and 4, an upper pulley, and a height-adjustable lower pulley.', '工作範圍四周的四支鋼製支柱之一，設有捲揚機 0 及 4、上方滑輪及可調高度的下方滑輪。'],
+  'part.pole1Text': ['Carries winches 1 and 5. Its two cables connect to the upper and lower levels of the suspended frame.', '設有捲揚機 1 及 5，兩條纜索分別連接懸吊框架的上下兩層。'],
+  'part.pole2Text': ['Carries winches 2 and 6. Together, the four poles surround the robot’s working area.', '設有捲揚機 2 及 6，與其餘三支支柱一起包圍機械人的工作範圍。'],
+  'part.pole3Text': ['Carries winches 3 and 7. The braced steel support transfers cable loads to its base.', '設有捲揚機 3 及 7，帶斜撐的鋼製支柱把纜索負載傳遞至底座。'],
+  'part.winches': ['Motorized winches × 8', '電動捲揚機 × 8'],
+  'part.winchesText': ['Two motor-and-drum assemblies per pole pay out and retract the cables to position the end effector.', '每支支柱的兩組馬達及捲筒收放纜索，以定位末端執行器。'],
+  'part.pulleys': ['Adjustable lower pulleys × 4', '可升降下方滑輪 × 4'],
+  'part.pulleysText': ['The secondary elevation system raises the four lower cable attachment points to avoid the growing structure. Try the attachment-height slider.', '輔助升降系統提高四個下方纜索連接點，以避開逐漸增高的結構。可使用高度滑桿查看。'],
+  'part.cables': ['Positioning cables × 8', '定位纜索 × 8'],
+  'part.cablesText': ['Four upper cables (bronze) and four lower cables (silver) connect the poles to the end effector. Coordinated cable lengths control its position and orientation.', '四條上方纜索（銅色）及四條下方纜索（銀色）連接支柱與末端執行器，透過協調纜索長度控制位置及方向。'],
+  'part.effector': ['Suspended end effector', '懸吊末端執行器'],
+  'part.effectorText': ['The aluminium frame carries a wireless, rotating brick gripper. Switch to the end-effector view to separate and inspect its components.', '鋁製框架承載無線旋轉夾磚器。切換至末端執行器視圖，以分離並查看內部組件。'],
+  'part.pickup': ['Brick pick-up pole', '取磚支柱'],
+  'part.pickupText': ['The separate fifth pole has a vertical carriage and a cantilevered brick holder. It presents a brick at the robot’s pick-up height.', '獨立的第五支支柱設有垂直滑台及懸臂式磚塊托架，把磚塊送到機械人的取磚高度。'],
+  'part.conveyor': ['Brick feed conveyor', '供磚輸送帶'],
+  'part.conveyorText': ['The feed conveyor brings individual bricks toward the pick-up station. Rollers and supports are simplified from the site assembly.', '供磚輸送帶把磚塊送至取磚站。模型中的滾輪及支架由場地組件簡化而成。'],
+  'part.support': ['Cable support frame', '纜索支撐框架'],
+  'part.supportText': ['The aluminium cage carries the cable loads and supports the tool. All eight eyelets and the corner brackets stay attached to the 380 × 380 × 220 mm frame.', '鋁製框架承受纜索負載並支撐工具。八個吊環及角碼均保留在 380 × 380 × 220 毫米框架上。'],
+  'part.power': ['Power & control', '電源及控制'],
+  'part.powerText': ['The printed enclosure houses an Arduino MEGA 2560 with Bluetooth control. A 120 Wh lithium-ion battery sits inside the printed battery mount and provides around four hours of operation. The battery, mount and enclosure stay together in this view.', '3D 列印外殼內置 Arduino MEGA 2560 及藍牙控制模組。120 Wh 鋰離子電池放在列印電池座內，可支援約四小時運作。此視圖將電池、電池座及外殼保持為同一模組。'],
+  'part.rotation': ['Brick rotation', '磚塊旋轉'],
+  'part.rotationText': ['The geared ring and bearing turn the gripper relative to the cable-supported frame. Use the rotation slider to orient the held brick before placement.', '齒輪環及軸承讓夾爪相對纜索支撐框架轉動。使用旋轉滑桿，在放置前調整夾持中磚塊的方向。'],
+  'part.grip': ['Gripping & release', '夾持及釋放'],
+  'part.gripText': ['The gripper motors use impedance control to regulate force. When closed, the pads grip the brick’s two long faces. Slide Grip & release to open the jaws, move the guided release plates and lower the brick. The modular gripper adapts to different brick shapes and sizes.', '夾爪馬達採用阻抗控制以調節力度。閉合時，夾墊夾持磚塊的兩個長側面。滑動「夾持及釋放」，可張開夾爪、移動導向釋放壓板並降下磚塊。模組化夾爪可配合不同形狀及尺寸的磚塊。'],
+  'part.vision': ['Vision & alignment', '視覺及對準'],
+  'part.visionText': ['A frame-mounted C920 Pro camera feeds ArUco localization on a Raspberry Pi 4B. Two tags in the workspace support regular cable calibration and gripper alignment; localization data reaches the main computer over TCP. Camera, bracket and Pi enclosure move together here.', '框架上的 C920 Pro 相機把影像送至 Raspberry Pi 4B 進行 ArUco 定位。工作範圍內的兩個標記支援定期纜索校準及夾爪對準，定位數據透過 TCP 傳送至主電腦。此處將相機、支架及 Pi 外殼一起移動。']
+};
+for (const [key, [en, zhHant]] of Object.entries(brickExplorerCopy)) {
+  translations.en[`brick.${key}`] = en;
+  translations.zhHant[`brick.${key}`] = zhHant;
+}
 
 const projectPageFiles = Object.fromEntries(
   Object.entries(siteProjects).map(([key, project]) => [key, project.file])

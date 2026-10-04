@@ -115,6 +115,50 @@ in `assets/js/site-data.js`.
 After changes, check scroll forward/backward, manual controls, drag/reset,
 language switching, mobile layout, and failed asset loading.
 
+## CU-Brick assembly viewer
+
+`yes.html#cu-brick-explorer` provides a simplified whole-robot view and a CAD-derived
+end-effector close-up. The local Three.js module and 560 KB GLB load near the viewport.
+Visitors can orbit by dragging or using arrow keys, zoom with buttons or +/- keys,
+select meshes or component names, and separate five intact end-effector functions
+with the slider: support, power/control, rotation, gripping/release and vision.
+Small hardware stays with its module and the sample brick stays in the jaws;
+the assembled geometry and finishes are unchanged. Whole-robot view has a
+synchronized 70–220% zoom slider and raises the four lower pulleys and the pick-up
+carriage; all eight cables stay attached while the display changes. The site plan
+uses saved SolidWorks placements; dimensions and operating strokes are illustrative.
+
+`assets/js/cu-brick-model.js` owns geometry/grouping, while
+`assets/js/cu-brick-exploded.js` owns rendering and controls. Styles are scoped in
+`assets/css/cu-brick-exploded.css`. English and Traditional Chinese copy stays in
+`assets/js/site-data.js`. The explorer is outside the generated project-content
+block so language changes retain the renderer and current interaction state.
+
+Rendering is on demand. Reduced motion disables pose tweening, vertical touch
+gestures keep page scrolling, and mobile controls stack below the scene. Model,
+module or WebGL failure leaves a project photo and readable system description.
+The presentation uses silver and graphite finishes with restrained bronze accents.
+The viewer follows the site's light/dark switch, adapting controls, lighting,
+the site grid and cable contrast while preserving the current pose and selection.
+Only the selected component gets an exterior name and fine leader; no numbered
+overlays cover the CAD. On phones, a native component selector above the model
+replaces the desktop list. The annotation rail remains outside the canvas at any zoom.
+See `assets/models/README.md` for the CAD/photo provenance, simplifications and
+rebuild command. The original CAD and reference files are not published.
+
+Checks after editing:
+
+```powershell
+node scripts/check-cu-brick-model.mjs
+node generate-blog-index.js --check
+node generate-site-content.js --check
+node scripts/check-static-site.js
+```
+
+In a browser also verify both views, assembled/exploded reversal, elevation,
+selection by list/mesh, the single exterior annotation, orbit/reset, zoom, English/Chinese, both themes,
+mobile scrolling, reduced motion, and the failed-model fallback.
+
 ## Automatic Blog Listing
 
 This site supports an automatic blog listing generated from Markdown files in the `posts/` directory. Each post should include bilingual titles, categories and summaries together with `date` and `image`. Optional `seoTitle` and `updated` fields provide a shorter search title and an authoritative modification date.

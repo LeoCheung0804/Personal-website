@@ -364,15 +364,17 @@ function syncAssetVersions(html) {
   const versionedAssets = {
     'assets/css/field-notes.css': '20261001-2',
     'assets/css/custom_project_preview.css': '20261001-2',
-    'assets/js/site-data.js': '20261001-2',
+    'assets/js/site-data.js': '20261004-5',
+    'assets/css/cu-brick-exploded.css': '20261004-5',
+    'assets/js/cu-brick-exploded.js': '20261004-6',
     'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
-    'assets/js/i18n.js': '20261001-2',
+    'assets/js/i18n.js': '20261003-7',
     'assets/js/filters.js': '20261001-2',
     'assets/js/motion.js': '20261001-2',
     'assets/js/project-preview.js': '20261001-2',
     'assets/js/ui-interactions.js': '20261001-2',
-    'assets/js/navigation.js': '20261001-2'
+    'assets/js/navigation.js': '20261003-7'
   };
 
   return Object.entries(versionedAssets).reduce((output, [assetPath, version]) => {
