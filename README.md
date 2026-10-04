@@ -118,18 +118,31 @@ language switching, mobile layout, and failed asset loading.
 ## CU-Brick assembly viewer
 
 `yes.html#cu-brick-explorer` provides a simplified whole-robot view and a CAD-derived
-end-effector close-up. The local Three.js module and 560 KB GLB load near the viewport.
+end-effector close-up. The local Three.js module and 599 KB GLB load near the viewport.
 Visitors can orbit by dragging or using arrow keys, zoom with buttons or +/- keys,
 select meshes or component names, and separate five intact end-effector functions
 with the slider: support, power/control, rotation, gripping/release and vision.
 Small hardware stays with its module and the sample brick stays in the jaws;
-the assembled geometry and finishes are unchanged. Whole-robot view has a
+the assembled geometry and finishes are retained during separation. Whole-robot view has a
 synchronized 70–220% zoom slider and raises the four lower pulleys and the pick-up
 carriage; all eight cables stay attached while the display changes. The site plan
 uses saved SolidWorks placements; dimensions and operating strokes are illustrative.
 
+The whole-robot viewer also has a 21.7-second bricklaying cycle: the TX2-60 arm
+collects a brick from the conveyor, sets it on the pick-up pole, and retracts.
+The pole presents it to the cable-driven end effector, which closes its jaws,
+lifts, travels, rotates, lowers and releases it onto the wall. All eight cable
+endpoints follow the frame. Play/pause, replay, reset, a scrub timeline and four
+stage shortcuts control the same reversible sequence. Focus action frames the
+transfer area from the open side; users can return to the full-site view.
+Playback starts when the scene scrolls into view, resumes on re-entry, and replays
+completed cycles on re-entry. Reduced motion uses discrete stage advancement.
+Playback pauses when switching
+model views, scrolling the explorer out of view or hiding the browser tab.
+
 `assets/js/cu-brick-model.js` owns geometry/grouping, while
-`assets/js/cu-brick-exploded.js` owns rendering and controls. Styles are scoped in
+`assets/js/cu-brick-sequence.js` owns the deterministic site cycle and simplified
+transfer arm, and `assets/js/cu-brick-exploded.js` owns rendering and controls. Styles are scoped in
 `assets/css/cu-brick-exploded.css`. English and Traditional Chinese copy stays in
 `assets/js/site-data.js`. The explorer is outside the generated project-content
 block so language changes retain the renderer and current interaction state.
@@ -137,7 +150,8 @@ block so language changes retain the renderer and current interaction state.
 Rendering is on demand. Reduced motion disables pose tweening, vertical touch
 gestures keep page scrolling, and mobile controls stack below the scene. Model,
 module or WebGL failure leaves a project photo and readable system description.
-The presentation uses silver and graphite finishes with restrained bronze accents.
+Hardware finishes follow the supplied photos: silver metal, orange printed parts,
+blue battery, black electronics and red-brown brick.
 The viewer follows the site's light/dark switch, adapting controls, lighting,
 the site grid and cable contrast while preserving the current pose and selection.
 Only the selected component gets an exterior name and fine leader; no numbered
@@ -155,7 +169,8 @@ node generate-site-content.js --check
 node scripts/check-static-site.js
 ```
 
-In a browser also verify both views, assembled/exploded reversal, elevation,
+In a browser also verify both views, assembled/exploded reversal, elevation, cycle
+play/pause/replay, reverse scrubbing, all brick handoffs and moving cable spans,
 selection by list/mesh, the single exterior annotation, orbit/reset, zoom, English/Chinese, both themes,
 mobile scrolling, reduced motion, and the failed-model fallback.
 

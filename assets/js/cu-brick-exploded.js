@@ -32,7 +32,7 @@ async function initialize() {
     import('../vendor/three/three.module.min.js'),
     import('../vendor/three/addons/loaders/GLTFLoader.js'),
     import('../vendor/three/addons/libs/meshopt_decoder.module.js'),
-    import('./cu-brick-model.js?v=20261004-6'),
+    import('./cu-brick-model.js?v=20261005-1'),
     import('../vendor/three/addons/environments/RoomEnvironment.js')
   ]);
   const viewport = q('[data-brick-viewport]');
@@ -73,6 +73,9 @@ async function initialize() {
   const on = (element, event, handler, options = {}) => element.addEventListener(event, handler, { ...options, signal: listeners.signal });
   let view = 'site', model = models.site, progress = 0, elevation = 0;
   let rotation = 0, grip = 0;
+  let cycleProgress = 0, cyclePlaying = false, cycleLastTime = null, focusAction = false;
+  const cycleStops = [0, .12, .34, .48, .65, .78, .90, 1];
+  const actionBounds = new THREE.Box3(new THREE.Vector3(-.2, -.2, -2.8), new THREE.Vector3(8.8, 4.5, 4.2));
   const motionAnimations = { rotation: null, grip: null };
   let yaw = model.yaw, pitch = model.pitch, zoom = 1, selected = null, labels = true;
   let lightTheme = document.documentElement.classList.contains('light-theme');
@@ -84,6 +87,7 @@ async function initialize() {
   const separationSlider = q('#brick-separation'), elevationSlider = q('#brick-elevation');
   const zoomSlider = q('#brick-zoom');
   const rotationSlider = q('#brick-rotation'), gripSlider = q('#brick-grip');
+  const cycleSlider = q('#brick-cycle'), cyclePlay = q('[data-brick-cycle-play]');
   const selectionTitle = q('[data-brick-part-title]'), selectionText = q('[data-brick-part-text]');
   const picker = q('[data-brick-picker]');
 
@@ -91,7 +95,8 @@ async function initialize() {
     if (!frame && alive) frame = requestAnimationFrame(render);
   }
   function fitCamera() {
-    bounds.setFromObject(model.object);
+    const focused = view === 'site' && focusAction;
+    if (focused) bounds.copy(actionBounds); else bounds.setFromObject(model.object);
     const center = bounds.getCenter(new THREE.Vector3());
     camera.position.set(Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch))
       .multiplyScalar(35).add(center);
@@ -99,15 +104,19 @@ async function initialize() {
     // Fit each mesh in camera space, avoiding empty corners of the combined
     // world box that made the exploded view unnecessarily small on phones.
     viewBounds.makeEmpty();
-    model.object.traverse(node => {
+    const includeBounds = (box, matrix) => {
+      for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
+        corner.set(x, y, z).applyMatrix4(matrix).applyMatrix4(camera.matrixWorldInverse);
+        viewBounds.expandByPoint(corner);
+      }
+    };
+    if (focused) includeBounds(actionBounds, model.object.matrixWorld);
+    else model.object.traverse(node => {
       if (!node.geometry) return;
       const source = node.isInstancedMesh ? node : node.geometry;
       if (!source.boundingBox || node.isLine) source.computeBoundingBox();
       const box = source.boundingBox;
-      for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
-        corner.set(x, y, z).applyMatrix4(node.matrixWorld).applyMatrix4(camera.matrixWorldInverse);
-        viewBounds.expandByPoint(corner);
-      }
+      includeBounds(box, node.matrixWorld);
     });
     const extentX = (viewBounds.max.x - viewBounds.min.x) / 2, extentY = (viewBounds.max.y - viewBounds.min.y) / 2;
     const centerX = (viewBounds.max.x + viewBounds.min.x) / 2, centerY = (viewBounds.max.y + viewBounds.min.y) / 2;
@@ -141,6 +150,26 @@ async function initialize() {
     root.querySelectorAll('[data-brick-grip]').forEach(button => button.setAttribute('aria-pressed', String(Math.abs(grip - Number(button.dataset.brickGrip)) < .001)));
     root.dataset.explode = String(percent);
     root.dataset.elevation = String(Math.round(elevation * 100));
+    const cyclePercent = Math.round(cycleProgress * 100);
+    cycleSlider.value = String(Math.round(cycleProgress * 1000));
+    cycleSlider.style.setProperty('--range-progress', `${cyclePercent}%`);
+    q('[data-brick-cycle-output]').value = `${cyclePercent}%`;
+    const stage = t(`cycle.${models.site.cycle.stage}`);
+    cycleSlider.setAttribute('aria-valuetext', `${stage}, ${cyclePercent}%`);
+    const stageLabel = q('[data-brick-cycle-stage]');
+    if (stageLabel.textContent !== stage) stageLabel.textContent = stage;
+    cyclePlay.textContent = t(reducedMotion.matches ? 'cycleNext' : cyclePlaying ? 'cyclePause' : cycleProgress === 1 ? 'cycleReplay' : 'cyclePlay');
+    cyclePlay.setAttribute('aria-pressed', String(cyclePlaying));
+    q('[data-brick-cycle-reset]').disabled = cycleProgress === 0 && !cyclePlaying;
+    q('[data-brick-action-focus]').setAttribute('aria-pressed', String(focusAction));
+    const stepButtons = [...root.querySelectorAll('[data-brick-cycle-step]')];
+    stepButtons.forEach((button, i) => {
+      const current = cycleProgress >= Number(button.dataset.brickCycleStep) && (i === stepButtons.length - 1 || cycleProgress < Number(stepButtons[i + 1].dataset.brickCycleStep));
+      if (current) button.setAttribute('aria-current', 'step'); else button.removeAttribute('aria-current');
+    });
+    root.dataset.cycle = String(cyclePercent); root.dataset.cyclePlaying = String(cyclePlaying);
+    root.dataset.cycleStage = models.site.cycle.stage; root.dataset.brickOwner = models.site.cycle.owner;
+    root.dataset.actionFocus = String(focusAction);
     root.querySelectorAll('[data-brick-pose]').forEach(button => {
       button.setAttribute('aria-pressed', String(Math.abs(progress - Number(button.dataset.brickPose)) < .001));
     });
@@ -150,6 +179,11 @@ async function initialize() {
   function render(time) {
     frame = 0;
     if (!alive) return;
+    if (cyclePlaying && view === 'site') {
+      if (cycleLastTime !== null) cycleProgress = Math.min(1, cycleProgress + Math.min(time - cycleLastTime, 100) * 1.2 / 26000);
+      cycleLastTime = time;
+      if (cycleProgress === 1) { cyclePlaying = false; cycleLastTime = null; }
+    }
     if (animation) {
       const fraction = Math.min(1, (time - animation.start) / 650);
       progress = THREE.MathUtils.lerp(animation.from, animation.to, fraction * fraction * (3 - 2 * fraction));
@@ -163,7 +197,7 @@ async function initialize() {
       if (fraction === 1) motionAnimations[name] = null;
     }
     if (view === 'detail') model.update(progress, { rotation, release: grip });
-    else model.update(0, elevation);
+    else model.update(0, elevation, cycleProgress);
     model.object.updateMatrixWorld(true);
     fitCamera();
     const part = model.parts.find(item => item.id === selected);
@@ -182,7 +216,7 @@ async function initialize() {
       }
     }
     updateControls(); renderer.render(scene, camera);
-    if (animation || Object.values(motionAnimations).some(Boolean)) requestRender();
+    if (cyclePlaying || animation || Object.values(motionAnimations).some(Boolean)) requestRender();
   }
   function describe() {
     selectionTitle.textContent = t(selected ? `part.${selected}` : view === 'detail' ? 'functions' : 'choose');
@@ -231,15 +265,17 @@ async function initialize() {
     describe(); requestRender();
   }
   function showView(next) {
+    cyclePlaying = false; cycleLastTime = null;
     // Clear highlight before hiding the previous model.
     hovered = null; select(null);
     view = next; model = models[view]; root.dataset.view = view;
     Object.entries(models).forEach(([key, item]) => { item.object.visible = key === view; });
-    progress = 0; elevation = 0; elevationSlider.value = '0'; animation = null;
+    progress = 0; elevationSlider.value = String(Math.round(elevation * 100)); animation = null;
     motionAnimations.rotation = motionAnimations.grip = null;
-    yaw = model.yaw; pitch = model.pitch; zoom = 1;
+    yaw = view === 'site' && focusAction ? -.58 : model.yaw; pitch = model.pitch; zoom = 1;
     q('[data-brick-elevation-control]').hidden = view !== 'site';
     q('[data-brick-zoom-control]').hidden = view !== 'site';
+    q('[data-brick-cycle-control]').hidden = view !== 'site';
     q('[data-brick-separation-control]').hidden = view !== 'detail';
     q('[data-brick-rotation-control]').hidden = view !== 'detail';
     q('[data-brick-grip-control]').hidden = view !== 'detail';
@@ -297,7 +333,35 @@ async function initialize() {
     } else motionAnimations[name] = { start: performance.now(), from: name === 'rotation' ? rotation : grip, to };
     requestRender();
   }
-  function reset() { yaw = model.yaw; pitch = model.pitch; zoom = 1; requestRender(); }
+  function reset() { yaw = model.yaw; pitch = model.pitch; zoom = 1; if (view === 'site') focusAction = false; requestRender(); }
+  function seekCycle(value) {
+    cyclePlaying = false; cycleLastTime = null;
+    cycleProgress = THREE.MathUtils.clamp(value, 0, 1); requestRender();
+  }
+  function focusCycle() {
+    // View from the open side so the pick-up mast does not hide the transfer arm.
+    if (!focusAction) { yaw = -.58; pitch = .55; zoom = 1; }
+    focusAction = true;
+  }
+  on(cyclePlay, 'click', () => {
+    if (view !== 'site') return;
+    if (reducedMotion.matches) {
+      focusCycle(); seekCycle(cycleStops.find(stop => stop > cycleProgress + .001) ?? 0); return;
+    }
+    if (!cyclePlaying && cycleProgress === 1) cycleProgress = 0;
+    cyclePlaying = !cyclePlaying; cycleLastTime = null;
+    if (cyclePlaying) focusCycle();
+    requestRender();
+  });
+  on(cycleSlider, 'input', () => seekCycle(Number(cycleSlider.value) / 1000));
+  on(q('[data-brick-cycle-reset]'), 'click', () => seekCycle(0));
+  on(q('[data-brick-action-focus]'), 'click', () => {
+    if (focusAction) { focusAction = false; yaw = model.yaw; pitch = model.pitch; zoom = 1; }
+    else focusCycle();
+    requestRender();
+  });
+  root.querySelectorAll('[data-brick-cycle-step]').forEach(button => on(button, 'click', () => seekCycle(Number(button.dataset.brickCycleStep))));
+  on(document, 'visibilitychange', () => { if (document.hidden && cyclePlaying) seekCycle(cycleProgress); });
   root.querySelectorAll('[data-brick-view]').forEach(button => on(button, 'click', () => showView(button.dataset.brickView)));
   root.querySelectorAll('[data-brick-pose]').forEach(button => on(button, 'click', () => setPose(Number(button.dataset.brickPose))));
   on(separationSlider, 'input', () => {
@@ -366,6 +430,7 @@ async function initialize() {
   on(reducedMotion, 'change', () => {
     if (reducedMotion.matches && animation) { progress = animation.to; animation = null; requestRender(); }
     if (reducedMotion.matches) {
+      cyclePlaying = false; cycleLastTime = null;
       for (const [name, motion] of Object.entries(motionAnimations)) {
         if (!motion) continue;
         if (name === 'rotation') rotation = motion.to; else grip = motion.to;
@@ -375,11 +440,23 @@ async function initialize() {
     }
   });
   const resizeObserver = new ResizeObserver(resize); resizeObserver.observe(viewport);
+  const activityObserver = new IntersectionObserver(entries => {
+    const visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .15;
+    if (!visible) {
+      if (cyclePlaying) seekCycle(cycleProgress);
+      return;
+    }
+    if (view !== 'site' || reducedMotion.matches || document.hidden) return;
+    if (cycleProgress === 1) cycleProgress = 0;
+    cyclePlaying = true; cycleLastTime = null;
+    focusCycle(); requestRender();
+  }, { threshold: .15 });
+  activityObserver.observe(viewport);
   const themeObserver = new MutationObserver(syncTheme);
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   teardown = () => {
     if (!alive) return;
-    alive = false; cancelAnimationFrame(frame); listeners.abort(); resizeObserver.disconnect(); themeObserver.disconnect();
+    alive = false; cancelAnimationFrame(frame); listeners.abort(); resizeObserver.disconnect(); themeObserver.disconnect(); activityObserver.disconnect();
     const geometries = new Set(), materials = new Set();
     scene.traverse(node => {
       if (node.geometry) geometries.add(node.geometry);

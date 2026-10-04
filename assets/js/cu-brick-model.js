@@ -1,3 +1,5 @@
+import { createBrickSequence } from './cu-brick-sequence.js?v=20261005-1';
+
 /* Simplified site hardware follows the CU_BRICK_CAD subsystem inventory and the
  * supplied site plan/photos. The close-up uses the separate v9 STEP derivative.
  * Distances and exploded offsets in the site overview are illustrative. */
@@ -216,11 +218,10 @@ export function createBrickModels(THREE, cad) {
   box(pickup, [.045, 3.7, .055], [.08, 2.1, .20], 'metal');
   box(pickup, [.075, 3.7, .08], [-.23, 2.1, 0], 'dark');
   beam(pickup, [.0, .18, -.4], [0, 1.7, 0], .08);
-  const pickupCarriage = new THREE.Group(); pickupCarriage.position.y = 1.65; pickup.add(pickupCarriage);
+  const pickupCarriage = new THREE.Group(); pickupCarriage.name = 'pickupCarriage'; pickupCarriage.position.y = 1.65; pickup.add(pickupCarriage);
   box(pickupCarriage, [.34, .36, .15], [0, 0, .26], 'metal');
   box(pickupCarriage, [1.3, .11, .16], [-.65, -.06, .26], 'metal');
   box(pickupCarriage, [.40, .08, .48], [-1.19, .015, .26], 'orange');
-  box(pickupCarriage, [.24, .115, .12], [-1.19, .115, .26], 'brick');
   box(pickup, [.38, .52, .23], [.40, .6, 0], 'steel');
   site.part('pickup', pickup, [0, 3.1, .15], [1.3, 0, 0]);
   const conveyor = new THREE.Group(); conveyor.position.set(7.660, 0, -1.480);
@@ -231,7 +232,7 @@ export function createBrickModels(THREE, cad) {
   }
   box(conveyor, [.64, .08, 2], [0, .86, .1], 'dark');
   for (let i = 0; i < 12; i++) cylinder(conveyor, .045, .60, [0, .94, -.80 + i * .16], 'steel', 'x');
-  for (let i = 0; i < 4; i++) box(conveyor, [.25, .115, .12], [0, 1.04, -.6 + i * .38], 'brick');
+  for (let i = 0; i < 3; i++) box(conveyor, [.3432, .143, .209], [0, 1.0565, -.6 + i * .44], 'brick');
   site.part('conveyor', conveyor, [.1, 1.05, .7], [1.3, 0, 1]);
 
   const cables = new THREE.Group(), cableLines = [];
@@ -271,17 +272,19 @@ export function createBrickModels(THREE, cad) {
     }
   }
   backdrop.add(wall); site.object.add(backdrop);
-  const siteOrder = ['pole0', 'pole1', 'pole2', 'pole3', 'winches', 'pulleys', 'cables', 'effector', 'pickup', 'conveyor'];
+  const sequence = createBrickSequence(THREE, { site, effector, pickup, pickupCarriage, conveyor, paths, box, cylinder, beam });
+  site.cycle = sequence.state;
+  const siteOrder = ['pole0', 'pole1', 'pole2', 'pole3', 'winches', 'pulleys', 'cables', 'effector', 'pickup', 'arm', 'conveyor'];
   site.parts.sort((a, b) => siteOrder.indexOf(a.id) - siteOrder.indexOf(b.id));
   site.yaw = .62; site.pitch = .55;
-  site.update = (progress, elevation) => {
+  site.update = (progress, elevation, cycle = 0) => {
     site.move(progress);
     poleParts.forEach((part, i) => {
       const offset = part.group.position.clone().sub(part.rest);
       lower[i].position.copy(V(...poles[i])).add(offset).add(V(0, 1.15 + elevation * 1.45, .24 + progress * .5));
       motors[i].position.copy(V(...poles[i])).add(offset).add(V(progress * .42, .45, .39 + progress * .55));
     });
-    pickupCarriage.position.y = 1.65 + elevation * 1.3;
+    sequence.update(cycle, elevation);
     site.parts.find(part => part.id === 'pulleys').anchor.copy(lower[1].position);
     site.object.updateMatrixWorld(true);
     for (let i = 0; i < 8; i++) {

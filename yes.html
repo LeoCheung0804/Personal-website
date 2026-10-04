@@ -45,7 +45,7 @@
     <meta property="og:image:width" content="2925" />
     <meta property="og:image:height" content="2194" />
     <meta name="twitter:image:alt" content="CU-Brick: Cable-Driven Bricklaying Robot project" />
-    <meta property="article:modified_time" content="2026-10-03" />
+    <meta property="article:modified_time" content="2026-10-05" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,7 +69,7 @@
           "url": "https://leocml.com/"
         },
         "@id": "https://leocml.com/yes.html#creative-work",
-        "dateModified": "2026-10-03",
+        "dateModified": "2026-10-05",
         "inLanguage": [
           "en",
           "zh-Hant"
@@ -148,7 +148,7 @@
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-2" />
-    <link rel="stylesheet" href="./assets/css/cu-brick-exploded.css?v=20261004-5" />
+    <link rel="stylesheet" href="./assets/css/cu-brick-exploded.css?v=20261005-1" />
 
     <!--
     - google font link
@@ -510,6 +510,30 @@
                   <button type="button" data-brick-reset data-i18n-aria-label="brick.reset" aria-label="Reset view"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7a7 7 0 1 1-.4 5M4 2v5h5"/></svg><span data-i18n="brick.reset">Reset view</span></button>
                 </div>
               </div>
+              <div class="brick-explorer__cycle" data-brick-cycle-control data-brick-controls hidden>
+                <div class="brick-explorer__cycle-heading">
+                  <div>
+                    <label for="brick-cycle" data-i18n="brick.cycleTitle">Bricklaying cycle</label>
+                    <p data-brick-cycle-stage role="status" aria-live="polite">Pick from conveyor</p>
+                  </div>
+                  <div class="brick-explorer__cycle-actions">
+                    <button type="button" data-brick-action-focus aria-pressed="false" data-i18n="brick.cycleFocus">Focus action</button>
+                    <button type="button" data-brick-cycle-reset data-i18n="brick.cycleReset">Reset cycle</button>
+                    <button type="button" data-brick-cycle-play aria-pressed="false">Play cycle</button>
+                  </div>
+                </div>
+                <div class="brick-explorer__cycle-track">
+                  <input id="brick-cycle" type="range" min="0" max="1000" value="0" step="1" aria-describedby="brick-cycle-note">
+                  <output for="brick-cycle" data-brick-cycle-output>0%</output>
+                </div>
+                <div class="brick-explorer__cycle-steps">
+                  <button type="button" data-brick-cycle-step="0" aria-current="step"><span aria-hidden="true">01</span> <span data-i18n="brick.cycleStepFeed">Feed</span></button>
+                  <button type="button" data-brick-cycle-step="0.34"><span aria-hidden="true">02</span> <span data-i18n="brick.cycleStepHandoff">Handoff</span></button>
+                  <button type="button" data-brick-cycle-step="0.58"><span aria-hidden="true">03</span> <span data-i18n="brick.cycleStepCollect">Collect</span></button>
+                  <button type="button" data-brick-cycle-step="0.88"><span aria-hidden="true">04</span> <span data-i18n="brick.cycleStepPlace">Place</span></button>
+                </div>
+                <p class="brick-explorer__range-note" id="brick-cycle-note" data-i18n="brick.cycleNote">Play the cycle or drag the timeline to follow one brick from conveyor to wall.</p>
+              </div>
               <div class="brick-explorer__layout">
                 <div class="brick-explorer__visual">
                   <div class="brick-explorer__picker" data-brick-controls hidden>
@@ -541,6 +565,7 @@
                     <li><span data-i18n="brick.part.cables">Positioning cables × 8</span></li>
                     <li><span data-i18n="brick.part.effector">Suspended end effector</span></li>
                     <li><span data-i18n="brick.part.pickup">Brick pick-up pole</span></li>
+                    <li><span data-i18n="brick.part.arm">TX2-60 transfer arm</span></li>
                     <li><span data-i18n="brick.part.conveyor">Brick feed conveyor</span></li>
                   </ol>
                   <div class="brick-explorer__description" aria-live="polite" aria-atomic="true" data-brick-description hidden>
@@ -604,7 +629,7 @@
               </div>
               <p class="brick-explorer__status" role="status" data-brick-status data-i18n="brick.fallback">The 3D view is unavailable. CU-Brick uses eight motorized cables on four poles to position a wireless gripper. Four lower pulleys rise as the wall grows; a separate pick-up pole presents bricks to the robot. The project photos above show the assembled system.</p>
             </div>
-            <p class="brick-explorer__note" data-i18n="brick.note">Simplified site layout; end effector enlarged in the overview. The end-effector controls illustrate rotation, gripping and release; separation groups hardware by function.</p>
+            <p class="brick-explorer__note" data-i18n="brick.note">Simplified site layout; arm reach and end effector enlarged for clarity. The cycle illustrates brick transfer and placement with moving cables. End-effector controls show rotation, gripping and release; separation groups hardware by function.</p>
           </section>
 
           <section class="project-detail">
@@ -655,7 +680,7 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20261004-5"></script>
+    <script src="./assets/js/site-data.js?v=20261005-1"></script>
     <script src="./assets/js/i18n.js?v=20261003-7"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
     <script src="./assets/js/motion.js?v=20261001-2"></script>
@@ -664,7 +689,7 @@
     <script src="./assets/js/contact-form.js"></script>
     <script src="./assets/js/navigation.js?v=20261003-7"></script>
     <script src="./assets/js/app-init.js"></script>
-    <script type="module" src="./assets/js/cu-brick-exploded.js?v=20261004-6"></script>
+    <script type="module" src="./assets/js/cu-brick-exploded.js?v=20261005-3"></script>
     <!--
     - ionicon link
   -->

@@ -73,6 +73,22 @@ effector is enlarged 2.2x in the site overview for legibility. Cables are ideali
 straight spans through their pulleys. This is not a tension/kinematics simulator,
 survey model, manufacturing drawing or validated disassembly sequence.
 
+`assets/js/cu-brick-sequence.js` adds an articulated schematic of the TX2-60
+transfer arm, confirmed by the user as the conveyor-to-pole robot. Its table
+origin follows `Tx2-60WithTAble-1` in the saved assembly (CAD X=0.099472,
+Z=-6.346854); the links, gripper and reach are simplified/enlarged for readability.
+The model uses equal 1.2 m illustrative links with an upward elbow solution,
+not the physical TX2-60 reach or a collision-checked industrial trajectory.
+One visible brick (scaled to the overview gripper) passes through five owners:
+conveyor, transfer arm, pick-up holder, cable-driven gripper and wall. The holder
+rises only after the arm withdraws. The end effector rotates its lower gripping
+module while the outer cable frame retains its orientation. Every frame updates
+all eight winch/pulley/attachment polylines from world-space positions.
+Timeline sampling is stateless, so seeking backward does not duplicate bricks
+or leave stale transforms. Checks sample 303 poses across three elevation
+settings, verify fixed link lengths, supported wall placement, continuous
+handoffs, reversible poses, and every cable attachment.
+
 To rebuild the end-effector derivative, install these one-time conversion tools
 outside the website, then provide that directory's `node_modules` path:
 

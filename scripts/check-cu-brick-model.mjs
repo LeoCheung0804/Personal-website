@@ -13,7 +13,7 @@ gltf.scene.updateMatrixWorld(true);
 const sourceTransforms = new Map();
 gltf.scene.traverse(node => { if (node.isMesh) sourceTransforms.set(node, node.matrixWorld.clone()); });
 const { site, detail } = createBrickModels(THREE, gltf.scene);
-assert.equal(site.parts.length, 10);
+assert.equal(site.parts.length, 11);
 assert.equal(detail.parts.length, 5);
 const find = (model, id) => model.parts.find(part => part.id === id);
 const close = (actual, expected, tolerance = .0001) => assert.ok(Math.abs(actual - expected) < tolerance, `${actual} != ${expected}`);
@@ -184,4 +184,57 @@ site.update(0, 0); detail.update(0);
 detail.object.updateMatrixWorld(true);
 sourceTransforms.forEach((matrix, node) => assert.deepEqual(node.matrixWorld.elements, matrix.elements, 'Reassembly restores the original CAD'));
 cables.forEach((line, i) => assert.deepEqual([...line.geometry.attributes.position.array], initialCables[i]));
-console.log('CU-Brick model checks passed: rotation at 6 headings / 3 separation poses, symmetric jaw and rack motion, guided release, detached brick heading, reversible long-face grip, photo-corrected enclosure and battery mount, 8 connected cables, 4 rising pulleys, isolated materials.');
+
+// Full-site handoffs are deterministic, including reverse scrubbing. Test the
+// actual transforms at every phase, not just the displayed stage labels.
+const cycleBrick = site.object.getObjectByName('cycleBrick');
+const cycleBrickSize = cycleBrick.scale.clone();
+const transferTool = site.object.getObjectByName('transferTool');
+const carriage = site.object.getObjectByName('pickupCarriage');
+const arm = find(site, 'arm');
+const feedCenter = cycleBrick.position.clone();
+const siteTurntable = effector.group.getObjectByName('gripTurntable');
+const up = new THREE.Vector3(0, 1, 0);
+const world = node => node.getWorldPosition(new THREE.Vector3());
+assert.equal(effector.group.getObjectByName('payload').visible, false, 'The static payload must not duplicate the moving brick');
+for (const elevation of [0, .5, 1]) {
+  for (let step = 0; step <= 100; step++) {
+    const phase = step / 100;
+    site.update(0, elevation, phase);
+    assert.deepEqual(cycleBrick.scale, cycleBrickSize, 'The same brick size survives every handoff');
+    assert.ok([...cycleBrick.position, ...effector.group.position].every(Number.isFinite));
+    for (const name of ['transferUpperLink', 'transferForeLink']) close(site.object.getObjectByName(name).scale.y, 1.2);
+    cables.forEach((line, i) => {
+      const start = new THREE.Vector3().fromBufferAttribute(line.geometry.attributes.position, 0);
+      const expected = effector.group.localToWorld(new THREE.Vector3(i % 4 === 0 || i % 4 === 3 ? -.22 : .22, i < 4 ? .1 : -.1, i % 4 < 2 ? .18 : -.18));
+      const end = new THREE.Vector3().fromBufferAttribute(line.geometry.attributes.position, 2);
+      assert.ok(end.distanceTo(expected) < .00001, 'Each cable follows its own moving frame attachment');
+      assert.ok(start.distanceTo(new THREE.Vector3(...initialCables[i].slice(0, 3))) < .00001, 'Winch endpoints remain fixed');
+    });
+    if (site.cycle.owner === 'arm') {
+      assert.ok(world(cycleBrick).distanceTo(world(transferTool).addScaledVector(up, -.18)) < .00001, 'Transfer jaws carry the brick');
+    } else if (site.cycle.owner === 'pickup') {
+      assert.ok(world(cycleBrick).distanceTo(carriage.localToWorld(new THREE.Vector3(-1.19, .055 + cycleBrickSize.y / 2, .26))) < .00001, 'The brick sits on the moving holder');
+    } else if (site.cycle.owner === 'effector') {
+      assert.ok(world(cycleBrick).distanceTo(effector.group.localToWorld(new THREE.Vector3(0, -.132, 0))) < .00001, 'The suspended gripper carries the brick');
+      assert.ok(cycleBrick.getWorldQuaternion(new THREE.Quaternion()).angleTo(siteTurntable.getWorldQuaternion(new THREE.Quaternion())) < .00001, 'The held brick rotates with the gripper');
+    } else if (site.cycle.owner === 'wall') {
+      close(cycleBrick.position.y - cycleBrickSize.y / 2, .555);
+    }
+  }
+}
+for (const phase of [.12, .34, .58, .88]) {
+  site.update(0, .5, phase - .00001); const beforeHandoff = world(cycleBrick);
+  site.update(0, .5, phase + .00001);
+  assert.ok(world(cycleBrick).distanceTo(beforeHandoff) < .001, 'Brick handoffs must not teleport');
+}
+site.update(0, .5, .7);
+const forward = world(cycleBrick), forwardCables = cables.map(line => [...line.geometry.attributes.position.array]);
+site.update(0, .5, 1); site.update(0, .5, .7);
+assert.ok(world(cycleBrick).distanceTo(forward) < .00001, 'Scrubbing backward restores the same brick pose');
+cables.forEach((line, i) => assert.deepEqual([...line.geometry.attributes.position.array], forwardCables[i]));
+site.update(0, 0, 0);
+assert.ok(cycleBrick.position.distanceTo(feedCenter) < .00001, 'Replay restores the conveyor brick');
+cables.forEach((line, i) => assert.deepEqual([...line.geometry.attributes.position.array], initialCables[i]));
+assert.equal(site.cycle.stage, 'feed');
+console.log('CU-Brick model checks passed: detail rotation/grip/release; 303 site-cycle poses; fixed arm link lengths; continuous and reversible brick handoffs; wall contact; all 8 moving cable attachments; 4 rising pulleys; isolated materials.');
