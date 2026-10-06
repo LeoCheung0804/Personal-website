@@ -72,7 +72,8 @@ Portfolio pages use `assets/css/style.css` as the legacy component base and
 only applies inside `body.portfolio-site`, keeping `dashboard.html` isolated.
 Homepage project-rail behavior lives in
 `assets/css/custom_project_preview.css` and `assets/js/project-preview.js`. It
-automatically advances when motion is allowed, provides a pause/resume control,
+uses a compact image rail that advances every six seconds when motion is allowed,
+provides a pause/resume control,
 and retains native horizontal scrolling and scroll snap for direct navigation.
 Previous/next controls also let visitors advance the rail directly. Gallery
 thumbnails support keyboard navigation and announce the selected media position.
@@ -114,6 +115,32 @@ in `assets/js/site-data.js`.
 
 After changes, check scroll forward/backward, manual controls, drag/reset,
 language switching, mobile layout, and failed asset loading.
+
+## Homepage robot features
+
+The homepage gives RoBosun-Tapper and CU-Brick their own model stages above
+Selected work. `homepageWork` in `assets/js/site-data.js` owns both featured
+explorer anchors and the four selected projects, in order: ME4, kNOw Touch,
+Wall Spraying, and Borderless Lab 365. The generator validates placement and
+keeps both the project and 3D explorer links aligned with the project registry.
+
+`assets/js/robot-previews.js` initially shows the chosen Tapper facade and CU-Brick
+pavilion photos. A cursor resting over a photo for 500 ms reveals its 3D preview;
+moving the cursor away returns to the photo. Passing across or scrolling past a
+photo does not activate the preview. Touch and keyboard visitors can use **View
+3D model**, then **Show photo** or Escape to return. Geometry loads on the first
+activation and stays cached for later visits to the same photo.
+
+The previews reuse the Tapper finishes and CU-Brick site model,
+and renders on input, resize, or theme changes rather than running an animation
+loop. Keyboard controls are left/right arrows to rotate, +/− to zoom, and Home
+to reset. Horizontal touch gestures preserve vertical page scrolling. The
+project explorers retain the full component and mechanism controls.
+
+The original photos (`Robotapper_hero-1600.jpg` and `YES_preview-960.jpg`) and their
+responsive WebP variants also provide the asset/WebGL failure fallback. Hidden
+models do not accept input or render. Photo/model transitions respect reduced
+motion. Layout styles are scoped in `assets/css/featured-robots.css`.
 
 ## CU-Brick assembly viewer
 

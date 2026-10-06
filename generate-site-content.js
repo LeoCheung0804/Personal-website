@@ -8,6 +8,7 @@ const mediaManifest = require('./assets/data/media-manifest.json');
 const {
   siteProfile,
   siteProjects,
+  homepageWork,
   standalonePages,
   translations,
   splitProjectContent,
@@ -58,7 +59,20 @@ Object.assign(requiredIndexTranslationCounts, {
   'projectPreview.exoskeleton': 1,
   'projectPreview.knowTouch': 1,
   'projectPreview.spray': 1,
-  'projectPreview.tapper': 2,
+  'projectPreview.tapper': 1,
+  'projectPreview.borderless': 1,
+  'homepage.title': 1,
+  'homepage.intro': 1,
+  'homepage.exoskeleton': 1,
+  'homepage.knowTouch': 1,
+  'homepage.spray': 1,
+  'homepage.borderless': 1,
+  'homepage.activate': 2,
+  'homepage.drag': 2,
+  'homepage.photo': 2,
+  'homepage.instructions': 2,
+  'homepage.explore': 2,
+  'homepage.project': 2,
   'publications.filters.conference': 2,
   'publications.filters.journal': 2
 });
@@ -363,16 +377,18 @@ function syncSafeBlankLinks(html) {
 function syncAssetVersions(html) {
   const versionedAssets = {
     'assets/css/field-notes.css': '20261001-2',
-    'assets/css/custom_project_preview.css': '20261001-2',
-    'assets/js/site-data.js': '20261005-1',
+    'assets/css/custom_project_preview.css': '20261006-1',
+    'assets/css/featured-robots.css': '20261005-5',
+    'assets/js/robot-previews.js': '20261005-5',
+    'assets/js/site-data.js': '20261005-5',
     'assets/css/cu-brick-exploded.css': '20261005-1',
     'assets/js/cu-brick-exploded.js': '20261005-3',
     'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
     'assets/js/i18n.js': '20261003-7',
     'assets/js/filters.js': '20261001-2',
-    'assets/js/motion.js': '20261001-2',
-    'assets/js/project-preview.js': '20261001-2',
+    'assets/js/motion.js': '20261006-1',
+    'assets/js/project-preview.js': '20261006-1',
     'assets/js/ui-interactions.js': '20261001-2',
     'assets/js/navigation.js': '20261003-7'
   };
@@ -387,17 +403,20 @@ function syncAssetVersions(html) {
 function syncResponsiveLayoutSizes(html, fileLabel) {
   const leadSizes = '(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw';
   const pairedSizes = '(min-width: 1600px) 302px, (min-width: 1180px) calc((100vw - 496px) * 0.305), (min-width: 960px) calc(27.5vw - 8px), (min-width: 621px) 44vw, 92vw';
-  const railSizes = '(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw';
+  const railSizes = '(min-width: 1600px) 310px, (min-width: 1380px) calc((100vw - 470px) * 0.275), (min-width: 1180px) 310px, (min-width: 760px) 310px, (min-width: 560px) 45vw, 78vw';
+  const modelSizes = '(min-width: 1600px) 540px, (min-width: 1180px) calc((100vw - 480px) / 2), (min-width: 760px) 44vw, 92vw';
   const mediaContainers = findElements(html, (openTag) =>
     hasClass(openTag, 'project-lead-media')
     || hasClass(openTag, 'photo-sequence__stage')
-    || hasClass(openTag, 'project-preview-img-box'));
+    || hasClass(openTag, 'project-preview-img-box')
+    || hasClass(openTag, 'robot-preview__visual'));
 
   let output = html;
   for (const container of mediaContainers.reverse()) {
     const inner = output.slice(container.openEnd, container.closeStart);
     const sizes = hasClass(container.openTag, 'project-preview-img-box')
-      ? railSizes : /class=["'][^"']*\bproject-media-grid\b/.test(inner) ? pairedSizes : leadSizes;
+      ? railSizes : hasClass(container.openTag, 'robot-preview__visual') ? modelSizes
+        : /class=["'][^"']*\bproject-media-grid\b/.test(inner) ? pairedSizes : leadSizes;
     const updated = inner.replace(/<img\b[^>]*>/gi, (tag) =>
       setAttribute(tag, hasAttribute(tag, 'data-src') ? 'data-sizes' : 'sizes', sizes));
     output = output.slice(0, container.openEnd) + updated + output.slice(container.closeStart);
@@ -1000,7 +1019,7 @@ function syncHomepageProjectLinks(html, fileLabel) {
   });
 
   for (const project of projectPages) {
-    const expectedCount = project.previewTitle ? 2 : 1;
+    const expectedCount = homepageWork.selected.includes(project.key) ? 2 : 1;
     if ((actualCounts[project.key] || 0) !== expectedCount) {
       throw new Error(`${fileLabel}: expected ${expectedCount} link(s) for project ${project.key}.`);
     }
@@ -1017,6 +1036,29 @@ function syncHomepageProjectLinks(html, fileLabel) {
     output = output.slice(0, element.openStart) + updatedTag + output.slice(element.openEnd);
   }
 
+  const featuredLinks = findElements(output, (openTag, tagName) =>
+    tagName.toLowerCase() === 'a' && hasAttribute(openTag, 'data-featured-project'));
+  for (const { key } of homepageWork.featured) {
+    const views = featuredLinks.filter(({ openTag }) => getAttribute(openTag, 'data-featured-project') === key)
+      .map(({ openTag }) => getAttribute(openTag, 'data-featured-view')).sort();
+    if (views.join(',') !== 'explore,project') throw new Error(`${fileLabel}: missing featured actions for ${key}.`);
+  }
+  for (const element of featuredLinks.reverse()) {
+    const key = getAttribute(element.openTag, 'data-featured-project');
+    const featured = homepageWork.featured.find(project => project.key === key);
+    if (!featured) throw new Error(`${fileLabel}: unknown featured project ${key}.`);
+    const suffix = getAttribute(element.openTag, 'data-featured-view') === 'explore' ? `#${featured.anchor}` : '';
+    const updatedTag = setAttribute(element.openTag, 'href', `${siteProjects[key].file}${suffix}`);
+    output = output.slice(0, element.openStart) + updatedTag + output.slice(element.openEnd);
+  }
+  const featuredOrder = findElements(output, openTag => hasAttribute(openTag, 'data-robot-preview'))
+    .map(({ openTag }) => getAttribute(openTag, 'data-robot-preview'));
+  const selectedOrder = findElements(output, openTag => hasAttribute(openTag, 'data-selected-project'))
+    .map(({ openTag }) => getAttribute(openTag, 'data-selected-project'));
+  if (featuredOrder.join(',') !== homepageWork.featured.map(({ key }) => key).join(',')
+    || selectedOrder.join(',') !== homepageWork.selected.join(',')) {
+    throw new Error(`${fileLabel}: homepage project order does not match homepageWork.`);
+  }
   return output;
 }
 

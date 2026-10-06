@@ -101,7 +101,7 @@
           }
         },
         "@id": "https://leocml.com/#profile-page",
-        "dateModified": "2026-10-01T00:00:00+08:00",
+        "dateModified": "2026-10-05T00:00:00+08:00",
         "inLanguage": [
           "en",
           "zh-Hant"
@@ -391,7 +391,8 @@
   -->
     <link rel="stylesheet" href="./assets/css/style.css?v=20260606" />
     <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-2" />
-    <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20261001-2" />
+    <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20261006-1" />
+    <link rel="stylesheet" href="./assets/css/featured-robots.css?v=20261005-5" />
 
     <!--
     - google font link
@@ -656,59 +657,94 @@
             <h2 class="h2 article-title" data-i18n="about.title">Robotics in practice</h2>
           </header>
 
-          <div class="about-intro-grid">
+          <div class="home-intro">
             <section class="about-text">
               <p data-i18n="about.paragraph1">I'm Leo Cheung, a robotics engineer based in Hong Kong. I work on construction robots, humanoid systems, and human-robot control interfaces.</p>
-            </section>
-
-            <figure class="about-hero-media">
-              <div class="about-hero-image">
-              <picture>
-                <source
-                  media="(max-width: 700px)"
-                  srcset="./assets/images/Robotapper_hero-960.jpg"
-                />
-                <img
-                  src="./assets/images/optimized/robotapper_hero-1600-jpg-960.webp"
-                  srcset="./assets/images/optimized/robotapper_hero-1600-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-1600-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-1600-jpg-960.webp 960w, ./assets/images/optimized/robotapper_hero-1600-jpg-1600.webp 1600w"
-                  sizes="(min-width: 1250px) 760px, 92vw"
-                  alt="RoBosun-Tapper inspecting a building facade"
-                  width="1600"
-                  height="1200"
-                  loading="eager"
-                  fetchpriority="high" data-media-source="assets/images/Robotapper_hero-1600.jpg" decoding="async"
-                />
-              </picture>
-              </div>
-              <figcaption class="about-hero-caption">
-                <span class="about-hero-caption-copy">
-                  <strong>RoBosun-Tapper</strong>
-                  <span data-i18n="projectPreview.tapper">Cable-driven facade hammer-testing robot</span>
-                </span>
-                <a class="about-hero-project-link" href="/tapper.html">
-                  <span data-i18n="about.viewTapper">View RoBosun-Tapper</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </figcaption>
-            </figure>
-
-            <section class="about-text about-details">
-              <p data-i18n="about.paragraph2">My work spans mechanical design, electronics, ROS software, and field testing. Projects include CU-Brick, RoBosun-Tapper, ME4, and the SuperLimb foot controller.</p>
               <div class="about-actions">
                 <a href="/#portfolio" data-i18n="about.viewProjects">View projects</a>
                 <a href="/#contact" data-i18n="about.contact">Get in touch</a>
               </div>
             </section>
+            <section class="about-text">
+              <p data-i18n="about.paragraph2">My work spans mechanical design, electronics, ROS software, and field testing. Projects include CU-Brick, RoBosun-Tapper, ME4, and the SuperLimb foot controller.</p>
+            </section>
           </div>
+
+          <section class="featured-robots" aria-labelledby="featured-robots-title">
+            <div class="featured-robots__heading">
+              <h3 class="h3" id="featured-robots-title" data-i18n="homepage.title">Explore the robots</h3>
+              <p data-i18n="homepage.intro">Pause over a photo or tap to explore in 3D.</p>
+            </div>
+            <ul class="featured-robots__list">
+              <li class="robot-preview" data-robot-preview="tapper">
+                <figure>
+                  <div class="robot-preview__stage">
+                    <div class="robot-preview__visual" id="tapper-preview-viewport" data-preview-viewport>
+                      <img class="robot-preview__photo" src="./assets/images/optimized/robotapper_hero-1600-jpg-960.webp" alt="RoBosun-Tapper inspecting a building facade" loading="eager" decoding="async" data-media-source="assets/images/Robotapper_hero-1600.jpg" width="1600" height="1200" srcset="./assets/images/optimized/robotapper_hero-1600-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-1600-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-1600-jpg-960.webp 960w, ./assets/images/optimized/robotapper_hero-1600-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 540px, (min-width: 1180px) calc((100vw - 480px) / 2), (min-width: 760px) 44vw, 92vw" />
+                    </div>
+                    <div class="robot-preview__toolbar">
+                      <button type="button" data-preview-activate data-i18n-aria-label="homepage.tapperActivate" aria-label="View the RoBosun-Tapper 3D model" aria-controls="tapper-preview-viewport" aria-expanded="false" hidden>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3c2.2 0 4 4 4 9s-1.8 9-4 9-4-4-4-9 1.8-9 4-9Z"/></svg><span data-i18n="homepage.activate">View 3D model</span>
+                      </button>
+                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
+                      <span data-preview-status role="status" aria-live="polite" hidden></span>
+                      <button class="robot-preview__photo-toggle" type="button" data-preview-photo data-i18n="homepage.photo" hidden>Show photo</button>
+                      <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.tapperReset" aria-label="Reset the RoBosun-Tapper view" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 1-3-5.6M17 2v5h5"/></svg></button>
+                    </div>
+                  </div>
+                  <figcaption class="robot-preview__caption">
+                    <h4 class="robot-preview__title" id="tapper-preview-title">RoBosun-Tapper</h4>
+                    <p class="robot-preview__description" data-i18n="projectPreview.tapper">Cable-driven facade hammer-testing robot</p>
+                    <div class="robot-preview__actions">
+                      <a class="robot-preview__explore" href="tapper.html#robot-explorer" data-featured-project="tapper" data-featured-view="explore" aria-labelledby="tapper-preview-title tapper-explore-label">
+                        <span id="tapper-explore-label" data-i18n="homepage.explore">Explore in 3D</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg>
+                      </a>
+                      <a href="tapper.html" data-featured-project="tapper" data-featured-view="project" aria-labelledby="tapper-preview-title tapper-project-label"><span id="tapper-project-label" data-i18n="homepage.project">View project</span></a>
+                    </div>
+                  </figcaption>
+                </figure>
+                <p class="robot-preview__instructions" id="tapper-preview-instructions" data-i18n="homepage.instructions">Pause the cursor over the photo, or activate the View 3D model button. Drag horizontally or use the left and right arrow keys to rotate. Use + and − to zoom; Home resets the view. Escape returns to the photo.</p>
+              </li>
+              <li class="robot-preview" data-robot-preview="cuBrick">
+                <figure>
+                  <div class="robot-preview__stage">
+                    <div class="robot-preview__visual" id="cuBrick-preview-viewport" data-preview-viewport>
+                      <img class="robot-preview__photo" src="./assets/images/optimized/yes_preview-960-jpg-960.webp" alt="CU-Brick cable-driven bricklaying robot at the YES Pavilion" loading="lazy" decoding="async" data-media-source="assets/images/YES_preview-960.jpg" width="960" height="720" srcset="./assets/images/optimized/yes_preview-960-jpg-240.webp 240w, ./assets/images/optimized/yes_preview-960-jpg-480.webp 480w, ./assets/images/optimized/yes_preview-960-jpg-960.webp 960w" sizes="(min-width: 1600px) 540px, (min-width: 1180px) calc((100vw - 480px) / 2), (min-width: 760px) 44vw, 92vw" />
+                    </div>
+                    <div class="robot-preview__toolbar">
+                      <button type="button" data-preview-activate data-i18n-aria-label="homepage.cuBrickActivate" aria-label="View the CU-Brick 3D model" aria-controls="cuBrick-preview-viewport" aria-expanded="false" hidden>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3c2.2 0 4 4 4 9s-1.8 9-4 9-4-4-4-9 1.8-9 4-9Z"/></svg><span data-i18n="homepage.activate">View 3D model</span>
+                      </button>
+                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
+                      <span data-preview-status role="status" aria-live="polite" hidden></span>
+                      <button class="robot-preview__photo-toggle" type="button" data-preview-photo data-i18n="homepage.photo" hidden>Show photo</button>
+                      <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.cuBrickReset" aria-label="Reset the CU-Brick view" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 1-3-5.6M17 2v5h5"/></svg></button>
+                    </div>
+                  </div>
+                  <figcaption class="robot-preview__caption">
+                    <h4 class="robot-preview__title" id="cuBrick-preview-title">CU-Brick</h4>
+                    <p class="robot-preview__description" data-i18n="projectPreview.cuBrick">Cable-driven bricklaying robot</p>
+                    <div class="robot-preview__actions">
+                      <a class="robot-preview__explore" href="yes.html#cu-brick-explorer" data-featured-project="cuBrick" data-featured-view="explore" aria-labelledby="cuBrick-preview-title cuBrick-explore-label">
+                        <span id="cuBrick-explore-label" data-i18n="homepage.explore">Explore in 3D</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 18 18 6M6 6h12v12"/></svg>
+                      </a>
+                      <a href="yes.html" data-featured-project="cuBrick" data-featured-view="project" aria-labelledby="cuBrick-preview-title cuBrick-project-label"><span id="cuBrick-project-label" data-i18n="homepage.project">View project</span></a>
+                    </div>
+                  </figcaption>
+                </figure>
+                <p class="robot-preview__instructions" id="cuBrick-preview-instructions" data-i18n="homepage.instructions">Pause the cursor over the photo, or activate the View 3D model button. Drag horizontally or use the left and right arrow keys to rotate. Use + and − to zoom; Home resets the view. Escape returns to the photo.</p>
+              </li>
+            </ul>
+          </section>
 
           <!--
           - project preview
         -->
 
-          <section class="project-preview">
+          <section class="project-preview" aria-labelledby="selected-work-title">
             <div class="project-preview-heading">
               <h3
-                class="h3 project-preview-title"
+                class="h3 project-preview-title" id="selected-work-title"
                 data-i18n="projectPreview.title"
               >Selected work</h3>
 
@@ -739,107 +775,50 @@
 
             <div class="project-preview-wrapper" id="selected-work-rail">
               <ul class="project-preview-list">
-                <li class="project-preview-item">
-                  <a href="tapper.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/optimized/robotapper_hero-960-jpg-960.webp"
-                        width="960"
-                        height="720"
-                        alt="RoBosun-Tapper"
-                        loading="lazy" data-media-source="assets/images/Robotapper_hero-960.jpg" decoding="async" srcset="./assets/images/optimized/robotapper_hero-960-jpg-240.webp 240w, ./assets/images/optimized/robotapper_hero-960-jpg-480.webp 480w, ./assets/images/optimized/robotapper_hero-960-jpg-960.webp 960w" sizes="(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">RoBosun-Tapper</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.tapper"
-                      >Cable-driven facade hammer-testing robot</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="yes.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/optimized/yes_preview-960-jpg-960.webp"
-                        width="960"
-                        height="720"
-                        alt="CU-Brick cable-driven bricklaying robot"
-                        loading="lazy" data-media-source="assets/images/YES_preview-960.jpg" decoding="async" srcset="./assets/images/optimized/yes_preview-960-jpg-240.webp 240w, ./assets/images/optimized/yes_preview-960-jpg-480.webp 480w, ./assets/images/optimized/yes_preview-960-jpg-960.webp 960w" sizes="(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">CU-Brick</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.cuBrick"
-                      >Cable-driven bricklaying robot</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="spray.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/optimized/spray_robot-jpg-633.webp"
-                        alt="Wall Spraying"
-                        loading="lazy" data-media-source="assets/images/Spray_robot.JPG" width="633" height="475" decoding="async" srcset="./assets/images/optimized/spray_robot-jpg-240.webp 240w, ./assets/images/optimized/spray_robot-jpg-480.webp 480w, ./assets/images/optimized/spray_robot-jpg-633.webp 633w" sizes="(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">
-                        Wall Spraying
-                      </h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.spray"
-                      >Mobile wall-spraying robot</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
-                  <a href="knowtouch.html" class="project-preview-link">
-                    <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/optimized/knowtouch_1-jpg-960.webp"
-                        alt="kNOw Touch"
-                        loading="lazy" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" decoding="async" srcset="./assets/images/optimized/knowtouch_1-jpg-240.webp 240w, ./assets/images/optimized/knowtouch_1-jpg-480.webp 480w, ./assets/images/optimized/knowtouch_1-jpg-960.webp 960w, ./assets/images/optimized/knowtouch_1-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw"
-                      />
-                    </figure>
-                    <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">kNOw Touch</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.knowTouch"
-                      >Infrared touchless lift controls</p>
-                    </div>
-                  </a>
-                </li>
-
-                <li class="project-preview-item">
+                <li class="project-preview-item" data-selected-project="exoskeleton">
                   <a href="exoskeleton.html" class="project-preview-link">
                     <figure class="project-preview-img-box">
-                      <img
-                        src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp"
-                        alt="ME4 humanoid robot"
-                        loading="lazy" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" decoding="async" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 370px, (min-width: 1180px) calc((100vw - 480px) / 3), (min-width: 960px) 29vw, (min-width: 640px) 44vw, 76vw"
-                      />
+                      <img src="./assets/images/optimized/exoskeleton_robot-jpg-960.webp" alt="ME4 humanoid robot with an exoskeleton operator" loading="lazy" decoding="async" data-media-source="assets/images/Exoskeleton_robot.jpg" width="2617" height="1963" srcset="./assets/images/optimized/exoskeleton_robot-jpg-240.webp 240w, ./assets/images/optimized/exoskeleton_robot-jpg-480.webp 480w, ./assets/images/optimized/exoskeleton_robot-jpg-960.webp 960w, ./assets/images/optimized/exoskeleton_robot-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 310px, (min-width: 1380px) calc((100vw - 470px) * 0.275), (min-width: 1180px) 310px, (min-width: 760px) 310px, (min-width: 560px) 45vw, 78vw" />
                     </figure>
                     <div class="project-preview-content">
-                      <h4 class="h4 project-preview-item-title">ME4</h4>
-                      <p
-                        class="project-preview-text"
-                        data-i18n="projectPreview.exoskeleton"
-                      >Exoskeleton-controlled humanoid robot</p>
+                      <h4 class="h4 project-preview-item-title" data-i18n="homepage.exoskeleton">ME4</h4>
+                      <p class="project-preview-text" data-i18n="projectPreview.exoskeleton">Exoskeleton-controlled humanoid robot</p>
                     </div>
                   </a>
                 </li>
-
+                <li class="project-preview-item" data-selected-project="knowTouch">
+                  <a href="knowtouch.html" class="project-preview-link">
+                    <figure class="project-preview-img-box">
+                      <img src="./assets/images/optimized/knowtouch_1-jpg-960.webp" alt="kNOw Touch infrared lift controls" loading="lazy" decoding="async" data-media-source="assets/images/knowtouch_1.jpg" width="3024" height="2268" srcset="./assets/images/optimized/knowtouch_1-jpg-240.webp 240w, ./assets/images/optimized/knowtouch_1-jpg-480.webp 480w, ./assets/images/optimized/knowtouch_1-jpg-960.webp 960w, ./assets/images/optimized/knowtouch_1-jpg-1600.webp 1600w" sizes="(min-width: 1600px) 310px, (min-width: 1380px) calc((100vw - 470px) * 0.275), (min-width: 1180px) 310px, (min-width: 760px) 310px, (min-width: 560px) 45vw, 78vw" />
+                    </figure>
+                    <div class="project-preview-content">
+                      <h4 class="h4 project-preview-item-title" data-i18n="homepage.knowTouch">kNOw Touch</h4>
+                      <p class="project-preview-text" data-i18n="projectPreview.knowTouch">Infrared touchless lift controls</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="project-preview-item" data-selected-project="spray">
+                  <a href="spray.html" class="project-preview-link">
+                    <figure class="project-preview-img-box">
+                      <img src="./assets/images/optimized/spray_robot-jpg-633.webp" alt="Wall-spraying robot applying material to a wall" loading="lazy" decoding="async" data-media-source="assets/images/Spray_robot.JPG" width="633" height="475" srcset="./assets/images/optimized/spray_robot-jpg-240.webp 240w, ./assets/images/optimized/spray_robot-jpg-480.webp 480w, ./assets/images/optimized/spray_robot-jpg-633.webp 633w" sizes="(min-width: 1600px) 310px, (min-width: 1380px) calc((100vw - 470px) * 0.275), (min-width: 1180px) 310px, (min-width: 760px) 310px, (min-width: 560px) 45vw, 78vw" />
+                    </figure>
+                    <div class="project-preview-content">
+                      <h4 class="h4 project-preview-item-title" data-i18n="homepage.spray">Wall Spraying</h4>
+                      <p class="project-preview-text" data-i18n="projectPreview.spray">Mobile wall-spraying robot</p>
+                    </div>
+                  </a>
+                </li>
+                <li class="project-preview-item" data-selected-project="borderless">
+                  <a href="borderless.html" class="project-preview-link">
+                    <figure class="project-preview-img-box">
+                      <img src="./assets/images/optimized/borderless_lab-jpg-530.webp" alt="Borderless Lab 365 remote experiment equipment" loading="lazy" decoding="async" data-media-source="assets/images/Borderless_lab.jpg" width="530" height="397" srcset="./assets/images/optimized/borderless_lab-jpg-240.webp 240w, ./assets/images/optimized/borderless_lab-jpg-480.webp 480w, ./assets/images/optimized/borderless_lab-jpg-530.webp 530w" sizes="(min-width: 1600px) 310px, (min-width: 1380px) calc((100vw - 470px) * 0.275), (min-width: 1180px) 310px, (min-width: 760px) 310px, (min-width: 560px) 45vw, 78vw" />
+                    </figure>
+                    <div class="project-preview-content">
+                      <h4 class="h4 project-preview-item-title" data-i18n="homepage.borderless">Borderless Lab 365</h4>
+                      <p class="project-preview-text" data-i18n="projectPreview.borderless">Remote STEM experiments with real hardware</p>
+                    </div>
+                  </a>
+                </li>
               </ul>
             </div>
           </section>
@@ -1795,16 +1774,17 @@
     - custom js link
   -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.0/dist/vanilla-tilt.min.js"></script>
-    <script src="./assets/js/site-data.js?v=20261005-1"></script>
+    <script src="./assets/js/site-data.js?v=20261005-5"></script>
     <script src="./assets/js/i18n.js?v=20261003-7"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
-    <script src="./assets/js/motion.js?v=20261001-2"></script>
+    <script src="./assets/js/motion.js?v=20261006-1"></script>
     <script src="./assets/js/ui-interactions.js?v=20261001-2"></script>
     <script src="./assets/js/filters.js?v=20261001-2"></script>
     <script src="./assets/js/contact-form.js"></script>
     <script src="./assets/js/navigation.js?v=20261003-7"></script>
     <script src="./assets/js/app-init.js"></script>
-    <script src="./assets/js/project-preview.js?v=20261001-2"></script>
+    <script src="./assets/js/project-preview.js?v=20261006-1"></script>
+    <script type="module" src="./assets/js/robot-previews.js?v=20261005-5"></script>
     <!--
     - ionicon link
   -->

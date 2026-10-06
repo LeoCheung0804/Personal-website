@@ -128,7 +128,11 @@ function destroyTiltCards(scope = document) {
 
   tiltCards.forEach((card) => {
     if (card.vanillaTilt && typeof card.vanillaTilt.destroy === 'function') {
-      card.vanillaTilt.destroy();
+      const tilt = card.vanillaTilt;
+      tilt.destroy();
+      // VanillaTilt 1.8 resets during destroy and schedules a new transition timeout.
+      // Cancel that timeout before it reads the now-released element.
+      window.clearTimeout(tilt.transitionTimeout);
     }
 
     card.style.removeProperty('transform');

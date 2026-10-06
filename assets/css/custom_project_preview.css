@@ -1,53 +1,80 @@
-/* Selected work: generous images, native scrolling and deliberate controls. */
+/* Selected work is a compact, quiet companion to the interactive robots. */
 
 .portfolio-site .project-preview {
-  --project-preview-gap: clamp(14px, 2vw, 24px);
-  margin-bottom: 0;
+  --project-preview-gap: 20px;
+  container-type: inline-size;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.portfolio-site .about .project-preview {
+  margin-bottom: 38px;
 }
 
 .portfolio-site .project-preview-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .portfolio-site .project-preview-title {
   margin: 0;
+  font-size: clamp(1.25rem, 2.6cqw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+  text-transform: none;
 }
 
 .portfolio-site .project-preview-controls {
   display: flex;
   flex: 0 0 auto;
-  gap: 8px;
+  gap: 6px;
 }
 
-.portfolio-site .project-preview-controls button {
-  flex: 0 0 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: transparent;
-  transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
+.portfolio-site .project-preview-controls[hidden],
 .portfolio-site .project-preview-autoplay[hidden] {
   display: none;
 }
 
-.portfolio-site .project-preview-controls ion-icon {
-  font-size: 18px;
+/* The visible circles are 32px; the touch and keyboard targets remain 44px. */
+.portfolio-site .project-preview-controls button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: var(--ink-soft);
+  background: transparent;
+  touch-action: manipulation;
+  transition: color 180ms ease;
 }
 
-.portfolio-site .project-preview-controls button:not(:disabled):is(:hover, :focus-visible),
-.portfolio-site .project-preview-autoplay[data-paused="true"] {
+.portfolio-site .project-preview-controls button::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: inherit;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.portfolio-site .project-preview-controls ion-icon {
+  font-size: 16px;
+}
+
+.portfolio-site .project-preview-controls button:not(:disabled):is(:hover, :focus-visible) {
   color: var(--accent);
+}
+
+.portfolio-site .project-preview-controls button:not(:disabled):is(:hover, :focus-visible)::before {
   border-color: var(--accent);
   background: var(--accent-soft);
 }
@@ -62,25 +89,15 @@
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-inline: contain;
-  padding: 6px 0 18px;
+  padding: 2px 0 4px;
   scroll-padding-inline: 0;
   scroll-snap-type: inline mandatory;
-  scrollbar-color: var(--orange-yellow-crayola) transparent;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
 
 .portfolio-site .project-preview-wrapper::-webkit-scrollbar {
-  height: 5px;
-}
-
-.portfolio-site .project-preview-wrapper::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.portfolio-site .project-preview-wrapper::-webkit-scrollbar-thumb {
-  background: var(--orange-yellow-crayola);
-  border-radius: 99px;
+  display: none;
 }
 
 .portfolio-site .project-preview-list {
@@ -92,7 +109,8 @@
 }
 
 .portfolio-site .project-preview-item {
-  flex: 0 0 82%;
+  flex: 0 0 min(78%, 280px);
+  min-width: 0;
   width: auto;
   margin: 0;
   overflow: visible;
@@ -113,28 +131,34 @@
   height: 100%;
   padding: 0;
   color: inherit;
-  gap: 14px;
+  gap: 12px;
+  text-decoration: none;
 }
 
 .portfolio-site .project-preview-img-box {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2.15;
+  max-height: 126px;
   margin: 0;
   overflow: hidden;
-  border: 1px solid var(--jet);
-  border-radius: 14px;
-  background: var(--eerie-black-1);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-soft);
 }
 
 .portfolio-site .project-preview-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 300ms ease;
+  transition: transform 280ms ease;
 }
 
-.portfolio-site .project-preview-item:nth-child(2) .project-preview-img-box img {
+.portfolio-site .project-preview-item[data-selected-project="exoskeleton"] .project-preview-img-box img {
+  object-position: center 48%;
+}
+
+.portfolio-site .project-preview-item[data-selected-project="knowTouch"] .project-preview-img-box img {
   object-position: center 58%;
 }
 
@@ -142,70 +166,85 @@
   display: grid;
   align-content: start;
   gap: 4px;
-  padding-inline: 2px;
+  min-width: 0;
+  padding: 0;
   text-align: left;
 }
 
 .portfolio-site .project-preview-item-title {
   margin: 0;
-  color: var(--white-2);
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  font-weight: var(--fw-500);
-  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+  text-transform: none;
+  transition: color 180ms ease;
 }
 
 .portfolio-site .project-preview-text {
-  color: var(--light-gray-70);
-  font-family: var(--ff-mono);
-  font-size: var(--type-small, 0.875rem);
-  font-weight: var(--fw-400);
-  letter-spacing: 0.035em;
+  min-height: 3.1em;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--ff-poppins);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: 1.55;
 }
 
 .portfolio-site .project-preview-link:is(:hover, :focus-visible) .project-preview-img-box img {
-  transform: scale(1.035);
+  transform: scale(1.025);
+}
+
+.portfolio-site .project-preview-link:is(:hover, :focus-visible) .project-preview-item-title {
+  color: var(--accent);
 }
 
 .portfolio-site .project-preview-link:focus-visible {
-  outline: 2px solid var(--orange-yellow-crayola);
+  outline: 2px solid var(--accent);
   outline-offset: -2px;
-  border-radius: 14px 14px 2px 2px;
+  border-radius: 6px 6px 2px 2px;
 }
 
-@media (min-width: 640px) {
+@container (min-width: 520px) {
   .portfolio-site .project-preview-item {
-    flex-basis: calc((100% - var(--project-preview-gap)) / 2);
+    flex-basis: min(45%, 310px);
   }
 }
 
-@media (min-width: 960px) {
-  .portfolio-site .project-preview {
-    --project-preview-gap: 16px;
+@container (max-width: 519px) {
+  .portfolio-site .project-preview-heading {
+    margin-bottom: 12px;
   }
 
+  .portfolio-site .project-preview-img-box {
+    aspect-ratio: 2.35;
+  }
+}
+
+@container (min-width: 820px) {
+  .portfolio-site .project-preview-list {
+    --project-preview-gap: 24px;
+  }
+
+  /* A glimpse of the fourth project keeps the rail scrollable on wide screens. */
   .portfolio-site .project-preview-item {
-    flex-basis: calc((100% - 2 * var(--project-preview-gap)) / 3);
-    min-width: 0;
+    flex-basis: 27.5%;
   }
 }
 
 @media (max-width: 420px) {
-  .portfolio-site .project-preview-heading {
-    gap: 8px;
-  }
-
   .portfolio-site .project-preview-controls {
-    gap: 4px;
-  }
-
-  .portfolio-site .project-preview-controls button {
-    flex-basis: 44px;
+    gap: 0;
   }
 
   .portfolio-site .project-preview-title {
-    max-width: 10ch;
-    text-wrap: balance;
+    font-size: 1.2rem;
+  }
+
+  .portfolio-site .project-preview-item-title {
+    font-size: 1rem;
   }
 }
 
@@ -214,7 +253,8 @@
     scroll-behavior: auto;
   }
 
-  .portfolio-site .project-preview-img-box img {
+  .portfolio-site .project-preview :is(img, button, h4),
+  .portfolio-site .project-preview-controls button::before {
     transition: none;
   }
 }

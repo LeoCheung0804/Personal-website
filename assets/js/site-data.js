@@ -67,8 +67,8 @@ const siteProfile = {
     twitterDescription: "Robotics projects, publications, and awards by Cheung Man Loc (Leo Cheung).",
     image: "/assets/images/profile.jpg",
     imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, robotics engineer",
-    lastmod: "2026-10-01",
-    schemaDateModified: "2026-10-01T00:00:00+08:00",
+    lastmod: "2026-10-05",
+    schemaDateModified: "2026-10-05T00:00:00+08:00",
     knowsAbout: [
       "CU-Brick cable-driven bricklaying robot",
       "RoBosun-Tapper robotic facade inspection",
@@ -250,6 +250,10 @@ const siteProjects = {
       en: "Remote STEM experiments",
       zhHant: "STEM 遙距實驗"
     },
+    previewTitle: {
+      en: "Remote STEM experiments with real hardware",
+      zhHant: "以真實設備進行 STEM 遙距實驗"
+    },
     seo: {
       description: "Borderless Lab 365 is a browser-based PolyU platform that lets secondary students control real STEM experiments and monitor live sensor data remotely.",
       ogDescription: "A remote STEM laboratory combining browser controls, livestream monitoring, Raspberry Pi, Arduino, and real-time sensor data.",
@@ -334,6 +338,16 @@ const siteProjects = {
   }
 };
 
+// Homepage placement is explicit: having a preview caption does not imply
+// membership in Selected work. Featured links open the existing full explorers.
+const homepageWork = {
+  featured: [
+    { key: "tapper", anchor: "robot-explorer" },
+    { key: "cuBrick", anchor: "cu-brick-explorer" }
+  ],
+  selected: ["exoskeleton", "knowTouch", "spray", "borderless"]
+};
+
 const translations = {
   en: {
     "explorer.frame": "Reference / Chassis & battery case",
@@ -388,7 +402,6 @@ const translations = {
     "theme.switchToLight": "Switch to light theme",
     "theme.switchToDark": "Switch to dark theme",
     "about.title": "Robotics in practice",
-    "about.viewTapper": "View RoBosun-Tapper",
     "about.viewProjects": "View projects",
     "about.contact": "Get in touch",
     "about.paragraph1": "I'm Leo Cheung, a robotics engineer based in Hong Kong. I work on construction robots, humanoid systems, and human-robot control interfaces.",
@@ -410,6 +423,7 @@ const translations = {
     "projectPreview.spray": siteProjects.spray.previewTitle.en,
     "projectPreview.knowTouch": siteProjects.knowTouch.previewTitle.en,
     "projectPreview.exoskeleton": siteProjects.exoskeleton.previewTitle.en,
+    "projectPreview.borderless": siteProjects.borderless.previewTitle.en,
     "resume.title": "Resume",
     "resume.education": "Education",
     "resume.msc.title": "MSc in Mechanical and Automation Engineering",
@@ -523,7 +537,6 @@ const translations = {
     "theme.switchToLight": "切換至淺色主題",
     "theme.switchToDark": "切換至深色主題",
     "about.title": "機械人的設計與實踐",
-    "about.viewTapper": "查看 RoBosun-Tapper",
     "about.viewProjects": "瀏覽項目",
     "about.contact": "聯絡我",
     "about.paragraph1": "我是 Leo Cheung，一名駐香港的機械人工程師，工作涵蓋建築機械人、人形機械人及人機操控介面。",
@@ -545,6 +558,7 @@ const translations = {
     "projectPreview.spray": siteProjects.spray.previewTitle.zhHant,
     "projectPreview.knowTouch": siteProjects.knowTouch.previewTitle.zhHant,
     "projectPreview.exoskeleton": siteProjects.exoskeleton.previewTitle.zhHant,
+    "projectPreview.borderless": siteProjects.borderless.previewTitle.zhHant,
     "resume.title": "履歷",
     "resume.education": "學歷",
     "resume.msc.title": "機械與自動化工程理學碩士",
@@ -628,6 +642,35 @@ Object.assign(translations.zhHant, {
   "projectPreview.previous": "上一組項目",
   "projectPreview.next": "下一組項目"
 });
+
+const homepageRobotCopy = {
+  title: ['Explore the robots', '探索機械人'],
+  intro: ['Pause over a photo or tap to explore in 3D.', '將游標停留在相片上，或輕觸相片以探索 3D 模型。'],
+  explore: ['Explore in 3D', '探索 3D 模型'],
+  project: ['View project', '查看項目'],
+  activate: ['View 3D model', '查看 3D 模型'],
+  hover: ['Pause to explore in 3D', '停留以探索 3D 模型'],
+  photo: ['Show photo', '顯示相片'],
+  loading: ['Loading 3D model…', '正在載入 3D 模型…'],
+  drag: ['Drag to rotate', '拖曳以旋轉'],
+  reset: ['Reset view', '重設視角'],
+  tapperReset: ['Reset the RoBosun-Tapper view', '重設 RoBosun-Tapper 視角'],
+  cuBrickReset: ['Reset the CU-Brick view', '重設 CU-Brick 視角'],
+  fallback: ['3D preview unavailable. Explore the project below.', '未能載入 3D 預覽。請使用下方連結查看項目。'],
+  instructions: ['Pause the cursor over the photo, or activate the View 3D model button. Drag horizontally or use the left and right arrow keys to rotate. Use + and − to zoom; Home resets the view. Escape returns to the photo.', '將游標停留在相片上，或按查看 3D 模型按鈕。左右拖曳或使用左右方向鍵旋轉。按 + 或 − 縮放；按 Home 重設視角。按 Escape 返回相片。'],
+  tapperActivate: ['View the RoBosun-Tapper 3D model', '查看 RoBosun-Tapper 3D 模型'],
+  cuBrickActivate: ['View the CU-Brick 3D model', '查看 CU-Brick 3D 模型'],
+  tapperCanvas: ['Rotate the RoBosun-Tapper model', '旋轉 RoBosun-Tapper 模型'],
+  cuBrickCanvas: ['Rotate the CU-Brick model', '旋轉 CU-Brick 模型'],
+  exoskeleton: ['ME4', 'ME4'],
+  knowTouch: ['kNOw Touch', 'kNOw Touch'],
+  spray: ['Wall Spraying', '牆面噴塗'],
+  borderless: ['Borderless Lab 365', 'Borderless Lab 365']
+};
+for (const [key, [en, zhHant]] of Object.entries(homepageRobotCopy)) {
+  translations.en[`homepage.${key}`] = en;
+  translations.zhHant[`homepage.${key}`] = zhHant;
+}
 
 // Shared English / Traditional Chinese copy for the CU-Brick assembly explorer.
 const brickExplorerCopy = {
@@ -1202,6 +1245,13 @@ function validateSiteData() {
     }
   });
 
+  const homepageKeys = [...homepageWork.featured.map(({ key }) => key), ...homepageWork.selected];
+  if (new Set(homepageKeys).size !== homepageKeys.length
+    || homepageKeys.some(key => !siteProjects[key]?.previewTitle)
+    || homepageWork.featured.some(({ anchor }) => !/^[a-z-]+$/.test(anchor))) {
+    throw new Error('Homepage work must contain distinct projects with captions and safe explorer anchors.');
+  }
+
   return true;
 }
 
@@ -1209,6 +1259,7 @@ if (typeof module !== "undefined" && module.exports) {
   module.exports = {
     siteProfile,
     siteProjects,
+    homepageWork,
     standalonePages,
     translations,
     projectPageFiles,

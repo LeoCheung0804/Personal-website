@@ -10,8 +10,8 @@
 
   if (!section || !wrapper || !list || !toggle) return;
 
-  const autoplayDelay = 4200;
-  const initialAutoplayDelay = 4200;
+  const autoplayDelay = 6000;
+  const initialAutoplayDelay = 6000;
   let direction = 1;
   let autoplayTimer = null;
   let hasAdvanced = false;
@@ -69,6 +69,7 @@
 
   const updateControls = () => {
     const maxScroll = Math.max(0, wrapper.scrollWidth - wrapper.clientWidth);
+    section.querySelector('.project-preview-controls').hidden = !hasOverflow();
     controls.forEach((control) => {
       control.disabled = Number(control.dataset.projectPreviewDirection) < 0
         ? wrapper.scrollLeft <= 2
@@ -156,7 +157,7 @@
     focusPaused = false;
     updateToggle();
     if (userPaused) clearAutoplay();
-    else scheduleAutoplay(800);
+    else scheduleAutoplay();
   });
 
   section.addEventListener('focusin', (event) => {
@@ -168,7 +169,7 @@
   section.addEventListener('focusout', () => {
     window.setTimeout(() => {
       focusPaused = section.contains(document.activeElement) && document.activeElement !== toggle;
-      if (!focusPaused) scheduleAutoplay(3000);
+      if (!focusPaused) scheduleAutoplay();
     }, 0);
   });
 
@@ -185,7 +186,7 @@
 
   wrapper.addEventListener('pointerleave', () => {
     hoverPaused = false;
-    scheduleAutoplay(3000);
+    scheduleAutoplay();
   });
 
   const releasePointer = () => {
