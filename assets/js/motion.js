@@ -29,7 +29,8 @@ function getMotionTargets(scope, selector) {
     targets.unshift(root);
   }
 
-  return targets;
+  // Reading cards keep a single title-color response instead of layered motion.
+  return targets.filter(target => !target.closest('.blog-post-item, .publication-item'));
 }
 
 

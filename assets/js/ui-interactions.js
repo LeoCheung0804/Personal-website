@@ -4,13 +4,16 @@
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 const sidebarDetails = sidebar && sidebar.querySelector(".sidebar-info_more");
-let sidebarHeightTimer;
+const desktopSidebarQuery = window.matchMedia("(min-width: 1180px)");
+let sidebarDetailsHadFocus = false;
 
 function updateSidebarButtonState(expanded) {
   if (!sidebarBtn) return;
 
   const labelKey = expanded ? "sidebar.hideContacts" : "sidebar.showContacts";
   const label = typeof getTranslation === "function" ? getTranslation(labelKey) : expanded ? "Hide Contacts" : "Show Contacts";
+  const visibleLabelKey = expanded ? "sidebar.closeContacts" : "sidebar.contacts";
+  const compactLabel = typeof getTranslation === "function" ? getTranslation(visibleLabelKey) : expanded ? "Close" : "Contact";
   const visibleLabel = sidebarBtn.querySelector("span");
 
   sidebarBtn.setAttribute("aria-expanded", String(expanded));
@@ -18,48 +21,26 @@ function updateSidebarButtonState(expanded) {
   sidebarBtn.dataset.i18nAriaLabel = labelKey;
 
   if (visibleLabel) {
-    visibleLabel.dataset.i18n = labelKey;
-    visibleLabel.textContent = label;
+    visibleLabel.dataset.i18n = visibleLabelKey;
+    visibleLabel.textContent = compactLabel;
   }
 }
 
 function setSidebarExpanded(expanded) {
-  if (!sidebar || !sidebarBtn) return;
+  if (!sidebar || !sidebarBtn || !sidebarDetails) return;
+  sidebar.classList.toggle("active", expanded);
+  syncSidebarVisibility();
+}
 
-  window.clearTimeout(sidebarHeightTimer);
-  const startHeight = sidebar.getBoundingClientRect().height;
-  sidebar.style.maxHeight = `${startHeight}px`;
-  updateSidebarButtonState(expanded);
-
-  if (expanded) {
-    sidebar.classList.add("active");
-
-    const expandedHeight = sidebar.scrollHeight;
-    sidebar.style.setProperty("--sidebar-expanded-height", `${expandedHeight}px`);
-    void sidebar.offsetHeight;
-
-    requestAnimationFrame(() => {
-      if (sidebar.classList.contains("active")) {
-        sidebar.style.maxHeight = `${sidebar.scrollHeight}px`;
-      }
-    });
-
-    sidebarHeightTimer = window.setTimeout(() => {
-      if (sidebar.classList.contains("active")) {
-        sidebar.style.maxHeight = "none";
-      }
-    }, 600);
-  } else {
-    sidebar.style.setProperty("--sidebar-expanded-height", `${sidebar.scrollHeight}px`);
-    void sidebar.offsetHeight;
-    sidebar.classList.remove("active");
-
-    requestAnimationFrame(() => {
-      if (!sidebar.classList.contains("active")) {
-        sidebar.style.removeProperty("max-height");
-      }
-    });
+function syncSidebarVisibility() {
+  if (!sidebar || !sidebarDetails) return;
+  const expanded = desktopSidebarQuery.matches || sidebar.classList.contains("active");
+  // Update layout, keyboard access, and announced state together, without a height timer.
+  if (!expanded && (sidebarDetails.contains(document.activeElement) || sidebarDetailsHadFocus)) {
+    sidebarBtn.focus({ preventScroll: true });
   }
+  sidebarDetails.hidden = !expanded;
+  updateSidebarButtonState(expanded);
 }
 
 // sidebar toggle functionality for mobile
@@ -69,32 +50,28 @@ if (sidebar && sidebarBtn) {
     sidebarBtn.setAttribute("aria-controls", sidebarDetails.id);
   }
 
-  updateSidebarButtonState(sidebar.classList.contains("active"));
+  syncSidebarVisibility();
+  // A breakpoint can hide the focused link before the media-query event runs.
+  document.addEventListener("focusin", (event) => {
+    if (event.target !== document.body) {
+      sidebarDetailsHadFocus = sidebarDetails?.contains(event.target) || false;
+    }
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (!sidebarDetails?.contains(event.target)) sidebarDetailsHadFocus = false;
+  });
   sidebarBtn.addEventListener("click", function () {
     setSidebarExpanded(!sidebar.classList.contains("active"));
   });
 
-  sidebar.addEventListener("transitionend", (event) => {
-    if (event.target !== sidebar || event.propertyName !== "max-height") return;
-
-    if (sidebar.classList.contains("active")) {
-      window.clearTimeout(sidebarHeightTimer);
-      sidebar.style.maxHeight = "none";
-    }
+  sidebar.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || desktopSidebarQuery.matches || !sidebar.classList.contains("active")) return;
+    event.preventDefault();
+    sidebarBtn.focus({ preventScroll: true });
+    setSidebarExpanded(false);
   });
-
-  window.addEventListener("resize", () => {
-    if (!sidebar.classList.contains("active")) return;
-
-    sidebar.style.setProperty("--sidebar-expanded-height", `${sidebar.scrollHeight}px`);
-    if (sidebar.style.maxHeight !== "none") {
-      sidebar.style.maxHeight = `${sidebar.scrollHeight}px`;
-    }
-  });
-
-  window.addEventListener("site-language-change", () => {
-    updateSidebarButtonState(sidebar.classList.contains("active"));
-  });
+  desktopSidebarQuery.addEventListener("change", syncSidebarVisibility);
+  window.addEventListener("site-language-change", syncSidebarVisibility);
 }
 
 

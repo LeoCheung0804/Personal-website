@@ -1,3 +1,5 @@
+@import url("../../tokens.css?v=20261023-1");
+
 /*
  * Construction Robotics Field Notes
  * Scoped visual and responsive layer for portfolio pages.
@@ -2211,5 +2213,408 @@ body.portfolio-site > main {
   .portfolio-site .project-img img,
   .portfolio-site .blog-banner-box img {
     transform: none !important;
+  }
+}
+
+/* Hallmark · component: identity card · genre: editorial · theme: existing forest / amber
+ * Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V4
+ * Disclosure layout updates immediately. Motion only indicates the chevron state.
+ */
+.portfolio-site .sidebar {
+  transition: none;
+}
+
+.portfolio-site .sidebar-info {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: var(--space-identity-md);
+  padding: 0;
+}
+
+.portfolio-site .sidebar .avatar-box {
+  width: 48px;
+  height: 48px;
+}
+
+.portfolio-site .sidebar .info-content .name,
+.portfolio-site .sidebar .info-content .full-name,
+.portfolio-site .sidebar .info-content .title {
+  text-align: left;
+  font-style: normal;
+}
+
+.portfolio-site .sidebar .info-content .name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.portfolio-site .sidebar .info_more-btn {
+  position: static;
+  gap: var(--space-identity-xs);
+  min-height: 44px;
+  padding: 0 var(--space-identity-sm);
+  transform: none;
+  transition: none;
+  border-radius: var(--radius-identity-control);
+}
+
+.portfolio-site .sidebar .info_more-btn span {
+  display: inline;
+  font-size: var(--text-identity-control);
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.portfolio-site .sidebar .info_more-btn ion-icon {
+  display: none;
+  font-size: 14px;
+  transition: transform var(--dur-identity-feedback) var(--ease-identity-out);
+}
+
+.portfolio-site .sidebar .info_more-btn:active {
+  color: var(--ink);
+  background: var(--accent-soft);
+}
+
+.portfolio-site .sidebar .info_more-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  color: var(--muted);
+  background: var(--surface-soft);
+}
+
+.portfolio-site .sidebar .separator {
+  display: none;
+}
+
+.portfolio-site .sidebar .sidebar-info_more {
+  display: none;
+  max-height: none !important;
+  overflow: visible;
+  opacity: 1;
+  visibility: visible;
+  transition: none;
+}
+
+.portfolio-site .sidebar.active .sidebar-info_more {
+  display: block;
+}
+
+.portfolio-site .sidebar .sidebar-info_more[hidden] {
+  display: none;
+}
+
+.portfolio-site .sidebar .contacts-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-identity-xs) 0;
+  margin-top: var(--space-identity-lg);
+}
+
+.portfolio-site .sidebar .contact-item {
+  grid-column: 1 / -1;
+  display: block;
+  min-width: 0;
+}
+
+.portfolio-site .sidebar .contact-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-identity-xs);
+  width: 100%;
+  min-width: 44px;
+  min-height: 48px;
+  padding: var(--space-identity-xs) 0;
+  color: var(--ink-soft);
+  border-radius: var(--radius-identity-control);
+  font-size: var(--type-small);
+  line-height: 1.45;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.portfolio-site .sidebar .contact-title {
+  display: block;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.portfolio-site .sidebar .contact-value {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font-size: var(--type-small);
+  line-height: 1.45;
+}
+
+.portfolio-site .sidebar .contact-primary .contact-link {
+  margin-block: var(--space-identity-sm);
+  padding: var(--space-identity-md);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  background: var(--accent-soft);
+}
+
+.portfolio-site .sidebar .contact-primary .contact-title {
+  color: var(--accent);
+}
+
+.portfolio-site .sidebar .contact-primary .contact-value {
+  font-size: var(--text-identity-link);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.portfolio-site .sidebar .contact-location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-identity-sm);
+  min-height: 24px;
+  color: var(--muted);
+}
+
+.portfolio-site .sidebar .contact-location ion-icon {
+  flex: 0 0 14px;
+  font-size: 14px;
+}
+
+.portfolio-site .sidebar .contact-location address {
+  color: var(--muted);
+  font-size: var(--type-label);
+  font-style: normal;
+}
+
+.portfolio-site .sidebar .contact-affiliation[data-contact-id="employer"] {
+  margin-top: var(--space-identity-xs);
+  padding-top: var(--space-identity-sm);
+  border-top: 1px solid var(--line);
+}
+
+.portfolio-site .sidebar .contact-profile {
+  grid-column: auto;
+  margin-top: var(--space-identity-sm);
+  padding-top: var(--space-identity-sm);
+  border-top: 1px solid var(--line);
+}
+
+.portfolio-site .sidebar .contact-profile .contact-link {
+  align-items: center;
+  min-height: 44px;
+}
+
+.portfolio-site .sidebar .contact-profile .contact-title {
+  color: inherit;
+  font-family: var(--ff-poppins);
+  font-size: var(--text-identity-link);
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.portfolio-site .sidebar .contact-location .contact-title,
+.portfolio-site .sidebar .contact-profile .contact-value {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.portfolio-site .sidebar .contact-link:active {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-site .sidebar .contact-link:hover {
+    color: var(--accent);
+  }
+
+  .portfolio-site .sidebar .contact-primary .contact-link:hover {
+    border-color: var(--accent);
+  }
+
+  .portfolio-site .sidebar :is(.contact-affiliation, .contact-profile) .contact-link:hover .contact-value,
+  .portfolio-site .sidebar .contact-profile .contact-link:hover .contact-title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+@media (min-width: 621px) {
+  .portfolio-site .sidebar-info {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: var(--space-identity-lg);
+  }
+
+  .portfolio-site .sidebar .avatar-box {
+    width: 72px;
+    height: 72px;
+  }
+
+  .portfolio-site .sidebar .info_more-btn {
+    gap: var(--space-identity-sm);
+    padding-inline: var(--space-identity-md);
+  }
+
+  .portfolio-site .sidebar .info_more-btn ion-icon {
+    display: block;
+  }
+}
+
+@media (min-width: 1180px) {
+  .portfolio-site .sidebar-info {
+    grid-template-columns: 80px minmax(0, 1fr);
+  }
+
+  .portfolio-site .sidebar .avatar-box {
+    width: 80px;
+    height: 80px;
+  }
+
+  .portfolio-site .sidebar .info_more-btn {
+    display: none;
+  }
+
+  .portfolio-site .sidebar .sidebar-info_more {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-site .sidebar .info_more-btn ion-icon {
+    transition: none !important;
+  }
+}
+
+/* Inline contact icons retain the grouped hierarchy and full-row hit targets. */
+.portfolio-site .sidebar .contact-link {
+  display: grid;
+  grid-template-columns: var(--space-identity-lg) minmax(0, 1fr);
+  column-gap: var(--space-identity-sm);
+  align-items: center;
+}
+
+.portfolio-site .sidebar .contact-icon {
+  display: block;
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+  color: var(--accent);
+  font-size: var(--type-body);
+}
+
+.portfolio-site .sidebar .contact-link :is(.contact-title, .contact-value) {
+  grid-column: 2;
+}
+
+.portfolio-site .sidebar .contact-location .contact-icon {
+  color: var(--muted);
+}
+
+.portfolio-site .sidebar .contact-profile .contact-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: var(--space-identity-xs);
+}
+
+.portfolio-site .sidebar .contact-profile .contact-icon {
+  flex: 0 0 var(--type-small);
+  font-size: var(--type-small);
+}
+
+/* Hallmark · interaction refinements · existing forest / amber
+ * Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4
+ */
+.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled) {
+  color: var(--page-bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  transition: color var(--dur-feedback) var(--ease-out),
+    background-color var(--dur-feedback) var(--ease-out),
+    border-color var(--dur-feedback) var(--ease-out),
+    transform var(--dur-press) var(--ease-out);
+}
+
+.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):focus-visible {
+  color: var(--page-bg);
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):hover {
+    color: var(--page-bg);
+    background: var(--accent-strong);
+    border-color: var(--accent-strong);
+  }
+}
+
+.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.portfolio-site .form-btn:disabled {
+  color: var(--muted);
+  background: var(--surface-raised);
+  border-color: var(--line-strong);
+  cursor: not-allowed;
+}
+
+.portfolio-site .form-btn[aria-busy="true"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  cursor: progress;
+}
+
+.portfolio-site :is(.blog-post-item, .publication-item),
+.portfolio-site :is(.blog-post-item, .publication-item) > a {
+  opacity: 1;
+  transform: none;
+  transform-style: flat;
+  will-change: auto;
+  animation: none;
+  transition: none;
+}
+
+.portfolio-site .blog-post-item > a .blog-banner-box img {
+  transform: none;
+  transition: none;
+}
+
+.portfolio-site :is(.blog-item-title, .publication-title) {
+  transition: color var(--dur-feedback) var(--ease-out);
+}
+
+.portfolio-site .blog-post-item > a:focus-visible .blog-item-title {
+  color: var(--accent);
+}
+
+.portfolio-site .publication-item > a:is(:hover, :focus-visible) .publication-title {
+  color: var(--accent);
+}
+
+/* Navigation focuses the article for reading; controls retain the visible ring. */
+body.portfolio-site article[data-page][tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
+body.portfolio-site :is(a, button, input, textarea, select, [tabindex]):focus-visible {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):active {
+    transform: none;
   }
 }

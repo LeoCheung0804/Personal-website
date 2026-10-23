@@ -74,6 +74,7 @@ async function initialize() {
   let view = 'site', model = models.site, progress = 0, elevation = 0;
   let rotation = 0, grip = 0;
   let cycleProgress = 0, cyclePlaying = false, cycleLastTime = null, focusAction = false;
+  let cycleUserPaused = false;
   const cycleStops = [0, .12, .34, .48, .65, .78, .90, 1];
   const actionBounds = new THREE.Box3(new THREE.Vector3(-.2, -.2, -2.8), new THREE.Vector3(8.8, 4.5, 4.2));
   const motionAnimations = { rotation: null, grip: null };
@@ -334,7 +335,8 @@ async function initialize() {
     requestRender();
   }
   function reset() { yaw = model.yaw; pitch = model.pitch; zoom = 1; if (view === 'site') focusAction = false; requestRender(); }
-  function seekCycle(value) {
+  function seekCycle(value, userInitiated = true) {
+    if (userInitiated) cycleUserPaused = true;
     cyclePlaying = false; cycleLastTime = null;
     cycleProgress = THREE.MathUtils.clamp(value, 0, 1); requestRender();
   }
@@ -350,6 +352,7 @@ async function initialize() {
     }
     if (!cyclePlaying && cycleProgress === 1) cycleProgress = 0;
     cyclePlaying = !cyclePlaying; cycleLastTime = null;
+    cycleUserPaused = !cyclePlaying;
     if (cyclePlaying) focusCycle();
     requestRender();
   });
@@ -361,7 +364,7 @@ async function initialize() {
     requestRender();
   });
   root.querySelectorAll('[data-brick-cycle-step]').forEach(button => on(button, 'click', () => seekCycle(Number(button.dataset.brickCycleStep))));
-  on(document, 'visibilitychange', () => { if (document.hidden && cyclePlaying) seekCycle(cycleProgress); });
+  on(document, 'visibilitychange', () => { if (document.hidden && cyclePlaying) seekCycle(cycleProgress, false); });
   root.querySelectorAll('[data-brick-view]').forEach(button => on(button, 'click', () => showView(button.dataset.brickView)));
   root.querySelectorAll('[data-brick-pose]').forEach(button => on(button, 'click', () => setPose(Number(button.dataset.brickPose))));
   on(separationSlider, 'input', () => {
@@ -443,10 +446,10 @@ async function initialize() {
   const activityObserver = new IntersectionObserver(entries => {
     const visible = entries[0].isIntersecting && entries[0].intersectionRatio >= .15;
     if (!visible) {
-      if (cyclePlaying) seekCycle(cycleProgress);
+      if (cyclePlaying) seekCycle(cycleProgress, false);
       return;
     }
-    if (view !== 'site' || reducedMotion.matches || document.hidden) return;
+    if (view !== 'site' || reducedMotion.matches || document.hidden || cycleUserPaused) return;
     if (cycleProgress === 1) cycleProgress = 0;
     cyclePlaying = true; cycleLastTime = null;
     focusCycle(); requestRender();

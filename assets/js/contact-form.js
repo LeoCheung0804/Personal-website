@@ -7,39 +7,35 @@ window.recaptchaSiteKey = '6Lc8CRYsAAAAALLR-ZPucEIMyn5hXZrEmZyHKovp';
 const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
+let formSubmitting = false;
 
-// add event to all form input field
-if (formInputs.length > 0) {
-  for (let i = 0; i < formInputs.length; i++) {
-    formInputs[i].addEventListener("input", function () {
-
-      // check form validation
-      if (form.checkValidity()) {
-        formBtn.removeAttribute("disabled");
-      } else {
-        formBtn.setAttribute("disabled", "");
-      }
-
-    });
-  }
+function syncFormButton() {
+  formBtn.disabled = formSubmitting || !form.checkValidity();
+  formBtn.setAttribute("aria-busy", String(formSubmitting));
+  const label = formBtn.querySelector("span");
+  label.dataset.i18n = formSubmitting ? "contact.sending" : "contact.sendMessage";
+  label.textContent = getTranslation(label.dataset.i18n);
 }
 
 // Handle form submission with Formspree and reCAPTCHA
-if (form) {
+if (form && formBtn) {
+  formInputs.forEach(input => input.addEventListener("input", syncFormButton));
+  syncFormButton();
+
   form.addEventListener("submit", async function(e) {
     e.preventDefault();
+    if (formSubmitting || !form.checkValidity()) return;
     
     const formData = new FormData(form);
     const formStatus = document.getElementById('form-status');
     const formMessage = document.getElementById('form-message');
     
     // Disable button during submission
-    formBtn.setAttribute("disabled", "");
-    formBtn.querySelector("span").textContent = getTranslation("contact.sending");
+    formSubmitting = true;
+    syncFormButton();
     
     try {
       // Get reCAPTCHA token (v3)
-      // Note: Replace 'YOUR_RECAPTCHA_SITE_KEY' with your actual site key
       if (typeof grecaptcha !== 'undefined' && window.recaptchaSiteKey) {
         const token = await grecaptcha.execute(window.recaptchaSiteKey, {action: 'submit'});
         document.getElementById('recaptchaResponse').value = token;
@@ -59,7 +55,6 @@ if (form) {
         formMessage.textContent = getTranslation("contact.success");
         formMessage.style.color = 'var(--orange-yellow-crayola)';
         form.reset();
-        formBtn.querySelector("span").textContent = getTranslation("contact.sendMessage");
         
         // Track form submission in Google Analytics
         if (typeof trackFormSubmission === 'function') {
@@ -72,8 +67,9 @@ if (form) {
       formStatus.style.display = 'block';
       formMessage.textContent = getTranslation("contact.error");
       formMessage.style.color = 'var(--bittersweet-shimmer)';
-      formBtn.removeAttribute("disabled");
-      formBtn.querySelector("span").textContent = getTranslation("contact.sendMessage");
+    } finally {
+      formSubmitting = false;
+      syncFormButton();
     }
   });
 }

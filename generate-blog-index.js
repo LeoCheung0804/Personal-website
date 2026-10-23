@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
+const { renderProfileContacts } = require('./scripts/profile-card.js');
 const {
   CARD_SIZES,
   optimizeMediaMarkup,
@@ -16,10 +17,6 @@ const {
 } = require('./assets/js/site-data.js');
 
 validateSiteData();
-
-const profileContacts = Object.fromEntries(
-  siteProfile.contacts.map(contact => [contact.id, contact])
-);
 
 const siteUrl = siteProfile.siteUrl;
 const postsDir = path.join(__dirname, 'posts');
@@ -314,7 +311,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261001-2" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261023-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -334,77 +331,12 @@ function generateBlogPage(post) {
             <p class="name" title="${escapeHtml(`${siteProfile.fullName} (${siteProfile.name})`)}">${escapeHtml(siteProfile.name)}<span class="full-name">${escapeHtml(siteProfile.fullName)}</span></p>
             <p class="title">${escapeHtml(siteProfile.role.en)}</p>
           </div>
-          <button class="info_more-btn" data-sidebar-btn="" aria-expanded="false" aria-controls="sidebar-contact-details" aria-label="${escapeHtml(translations.en['sidebar.showContacts'])}" data-i18n-aria-label="sidebar.showContacts">
-            <span>${escapeHtml(translations.en['sidebar.showContacts'])}</span>
-            <ion-icon name="chevron-down"></ion-icon>
-          </button>
+          <button class="info_more-btn" type="button" data-sidebar-btn="" aria-expanded="false" aria-controls="sidebar-contact-details" aria-label="${escapeHtml(translations.en['sidebar.showContacts'])}" data-i18n-aria-label="sidebar.showContacts"><span data-i18n="sidebar.contacts">${escapeHtml(translations.en['sidebar.contacts'])}</span><ion-icon name="chevron-down" aria-hidden="true"></ion-icon></button>
         </div>
         <div class="sidebar-info_more" id="sidebar-contact-details">
           <div class="separator"></div>
           <ul class="contacts-list">
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.email.id)}">
-              <div class="icon-box">
-                <ion-icon name="mail-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(translations.en[profileContacts.email.labelKey])}</p>
-                <a href="${escapeHtml(profileContacts.email.href)}" class="contact-link">${escapeHtml(profileContacts.email.value)}</a>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.location.id)}">
-              <div class="icon-box">
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(translations.en[profileContacts.location.labelKey])}</p>
-                <address>${escapeHtml(siteProfile.location.en)}</address>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.employer.id)}">
-              <div class="icon-box">
-                <ion-icon name="business-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(translations.en[profileContacts.employer.labelKey])}</p>
-                <a href="${escapeHtml(profileContacts.employer.href)}" class="contact-link">${escapeHtml(profileContacts.employer.value)}</a>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.organization.id)}">
-              <div class="icon-box">
-                <ion-icon name="link-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(translations.en[profileContacts.organization.labelKey])}</p>
-                <a href="${escapeHtml(profileContacts.organization.href)}" class="contact-link">${escapeHtml(profileContacts.organization.value)}</a>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.github.id)}">
-              <div class="icon-box">
-                <ion-icon name="logo-octocat"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(profileContacts.github.label)}</p>
-                <a href="${escapeHtml(profileContacts.github.href)}" class="contact-link">${escapeHtml(profileContacts.github.value)}</a>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.linkedin.id)}">
-              <div class="icon-box">
-                <ion-icon name="logo-linkedin"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(profileContacts.linkedin.label)}</p>
-                <a href="${escapeHtml(profileContacts.linkedin.href)}" class="contact-link">${escapeHtml(profileContacts.linkedin.value)}</a>
-              </div>
-            </li>
-            <li class="contact-item" data-contact-id="${escapeHtml(profileContacts.orcid.id)}">
-              <div class="icon-box">
-                <ion-icon name="book-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">${escapeHtml(profileContacts.orcid.label)}</p>
-                <a href="${escapeHtml(profileContacts.orcid.href)}" class="contact-link">${escapeHtml(profileContacts.orcid.value)}</a>
-              </div>
-            </li>
+${renderProfileContacts(siteProfile, translations.en, '            ')}
           </ul>
         </div>
       </aside>
@@ -493,13 +425,13 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20261005-5"></script>
-    <script src="../assets/js/i18n.js?v=20261003-7"></script>
+    <script src="../assets/js/site-data.js?v=20261022-1"></script>
+    <script src="../assets/js/i18n.js?v=20261022-1"></script>
     <script src="../assets/js/theme.js?v=20260716-2"></script>
-    <script src="../assets/js/motion.js?v=20261006-1"></script>
-    <script src="../assets/js/ui-interactions.js?v=20261001-2"></script>
+    <script src="../assets/js/motion.js?v=20261023-1"></script>
+    <script src="../assets/js/ui-interactions.js?v=20261022-1"></script>
     <script src="../assets/js/filters.js?v=20261001-2"></script>
-    <script src="../assets/js/contact-form.js"></script>
+    <script src="../assets/js/contact-form.js?v=20261023-1"></script>
     <script src="../assets/js/navigation.js?v=20261003-7"></script>
     <script src="../assets/js/app-init.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

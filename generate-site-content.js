@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
+const { renderProfileContacts } = require('./scripts/profile-card.js');
 const { optimizeMediaMarkup } = require('./scripts/media-markup.js');
 const mediaManifest = require('./assets/data/media-manifest.json');
 const {
@@ -46,7 +47,7 @@ const requiredIndexTranslationCounts = Object.fromEntries(`
   resume.summerInternship resume.summerInternship.project resume.title
   service.hardware.text service.hardware.title service.management.text
   service.management.title service.research.text service.research.title
-  service.software.text service.software.title service.title sidebar.showContacts
+  service.software.text service.software.title service.title sidebar.contacts
 `.trim().split(/\s+/).map((key) => [key, 1]));
 
 Object.assign(requiredIndexTranslationCounts, {
@@ -376,20 +377,21 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20261001-2',
+    'assets/css/field-notes.css': '20261023-1',
     'assets/css/custom_project_preview.css': '20261006-1',
     'assets/css/featured-robots.css': '20261005-5',
     'assets/js/robot-previews.js': '20261005-5',
-    'assets/js/site-data.js': '20261005-5',
+    'assets/js/site-data.js': '20261022-1',
     'assets/css/cu-brick-exploded.css': '20261005-1',
-    'assets/js/cu-brick-exploded.js': '20261005-3',
+    'assets/js/cu-brick-exploded.js': '20261023-1',
     'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
-    'assets/js/i18n.js': '20261003-7',
+    'assets/js/i18n.js': '20261022-1',
     'assets/js/filters.js': '20261001-2',
-    'assets/js/motion.js': '20261006-1',
+    'assets/js/motion.js': '20261023-1',
+    'assets/js/contact-form.js': '20261023-1',
     'assets/js/project-preview.js': '20261006-1',
-    'assets/js/ui-interactions.js': '20261001-2',
+    'assets/js/ui-interactions.js': '20261022-1',
     'assets/js/navigation.js': '20261003-7'
   };
 
@@ -646,10 +648,6 @@ function syncHomepageRouteIds(html, fileLabel) {
   return html;
 }
 
-function getContactLabel(contact) {
-  return contact.labelKey ? translations.en[contact.labelKey] : contact.label;
-}
-
 function syncSharedShell(html, fileLabel) {
   const contactIds = siteProfile.contacts.map(({ id }) => id);
   if (new Set(contactIds).size !== contactIds.length) {
@@ -708,45 +706,18 @@ function syncSharedShell(html, fileLabel) {
     throw new Error(`${fileLabel}: contact IDs do not match siteProfile.contacts.`);
   }
 
-  for (let index = contactItems.length - 1; index >= 0; index -= 1) {
-    const item = contactItems[index];
-    const contactId = getAttribute(item.openTag, 'data-contact-id');
-    const contact = siteProfile.contacts.find(({ id }) => id === contactId);
-    let itemHtml = html.slice(item.openStart, item.closeEnd);
+  const contactLists = findElements(html, (openTag, tagName) => tagName.toLowerCase() === 'ul' && hasClass(openTag, 'contacts-list'));
+  if (contactLists.length !== 1) throw new Error(`${fileLabel}: expected one contact list.`);
+  const contactList = contactLists[0];
+  const contactIndent = lineIndentAt(html, contactList.openStart);
+  const eol = html.match(/\r\n|\n/)?.[0] || '\n';
+  const contactMarkup = renderProfileContacts(siteProfile, translations.en, `${contactIndent}  `, eol);
+  html = html.slice(0, contactList.openEnd) + `${eol}${contactMarkup}${eol}${contactIndent}` + html.slice(contactList.closeStart);
 
-    itemHtml = replaceElementsByClass(
-      itemHtml,
-      'p',
-      'contact-title',
-      1,
-      () => ({ inner: escapeHtml(getContactLabel(contact)) }),
-      `${fileLabel} ${contactId} label`
-    );
-
-    if (contact.id === 'location') {
-      itemHtml = replaceElements(
-        itemHtml,
-        (openTag, tagName) => tagName.toLowerCase() === 'address',
-        1,
-        () => ({ inner: escapeHtml(siteProfile.location.en) }),
-        `${fileLabel} location value`
-      );
-    } else {
-      itemHtml = replaceElementsByClass(
-        itemHtml,
-        'a',
-        'contact-link',
-        1,
-        ({ openTag }) => ({
-          openTag: setAttribute(openTag, 'href', contact.href),
-          inner: escapeHtml(contact.value)
-        }),
-        `${fileLabel} ${contactId} link`
-      );
-    }
-
-    html = html.slice(0, item.openStart) + itemHtml + html.slice(item.closeEnd);
-  }
+  html = replaceElements(html, (openTag) => hasAttribute(openTag, 'data-sidebar-btn'), 1, ({ openTag }) => ({
+    openTag: setAttribute(openTag, 'type', 'button'),
+    inner: `<span data-i18n="sidebar.contacts">${escapeHtml(translations.en['sidebar.contacts'])}</span><ion-icon name="chevron-down" aria-hidden="true"></ion-icon>`
+  }), `${fileLabel} contact disclosure`);
 
   html = replaceElementsByClass(
     html,
@@ -1456,6 +1427,7 @@ if (listMode) {
   for (const relativePath of getSharedPagePaths()) {
     updateFile(relativePath, (html, eol) => {
       let output = ensureAccessibleShell(html, relativePath, eol);
+      output = syncSharedShell(output, relativePath);
 
       if (relativePath === 'index.html') {
         validateIndexTranslationStructure(output, relativePath);
@@ -1471,7 +1443,6 @@ if (listMode) {
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-placeholder', 'placeholder');
       output = syncTranslatedAttribute(output, relativePath, 'data-i18n-aria-label', 'aria-label');
       output = syncCanonicalHomepageLinks(output);
-      output = syncSharedShell(output, relativePath);
       output = syncHeadingStructure(output, relativePath);
 
       if (relativePath === 'index.html') {

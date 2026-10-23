@@ -126,7 +126,7 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261001-2" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261023-1" />
 
     <!--
     - google font link
@@ -156,7 +156,7 @@
             <img
               src="./assets/images/optimized/profile-jpg-960.webp"
               alt="Cheung Man Loc, known as Leo Cheung"
-              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1180px) 104px, 72px" loading="eager"
+              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1180px) 80px, (min-width: 621px) 72px, 48px" loading="eager"
             />
           </figure>
 
@@ -166,105 +166,59 @@
             <p class="title">Robotics Engineer</p>
           </div>
 
-          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts">
-            <span>Show Contacts</span>
-
-            <ion-icon name="chevron-down"></ion-icon>
-          </button>
+          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts" type="button"><span data-i18n="sidebar.contacts">Contact</span><ion-icon name="chevron-down" aria-hidden="true"></ion-icon></button>
         </div>
 
         <div class="sidebar-info_more" id="sidebar-contact-details">
           <div class="separator"></div>
 
           <ul class="contacts-list">
-            <li class="contact-item" data-contact-id="email">
-              <div class="icon-box">
-                  <ion-icon name="mail-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">Email</p>
-                  <a href="mailto:leocheung0804@gmail.com" class="contact-link"
-                    >leocheung0804@gmail.com</a
-                  >
-                </div>
+            <li class="contact-item contact-location" data-contact-id="location">
+              <span class="contact-title" data-i18n="contact.location">Location</span>
+              <ion-icon class="contact-icon" name="location-outline" aria-hidden="true"></ion-icon>
+              <address class="contact-value" data-i18n="contact.hongKong">Hong Kong</address>
             </li>
-
-            <li class="contact-item" data-contact-id="location">
-              <div class="icon-box">
-                <ion-icon name="location-outline"></ion-icon>
-              </div>
-              <div class="contact-info">
-                <p class="contact-title">Location</p>
-                <address>Hong Kong</address>
-              </div>
+            <li class="contact-item contact-primary" data-contact-id="email">
+              <a class="contact-link" href="mailto:leocheung0804@gmail.com">
+                <ion-icon class="contact-icon" name="mail-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.email">Email</span>
+                <span class="contact-value">leocheung0804@gmail.com</span>
+              </a>
             </li>
-
-            <li class="contact-item" data-contact-id="employer">
-              <div class="icon-box">
-                  <ion-icon name="business-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">Employer</p>
-                  <a href="https://www.c3robotics.com.hk" class="contact-link"
-                    >C3 Construction Robotics Limited</a
-                  >
-                </div>
+            <li class="contact-item contact-affiliation" data-contact-id="employer">
+              <a class="contact-link" href="https://www.c3robotics.com.hk">
+                <ion-icon class="contact-icon" name="business-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.employer">Employer</span>
+                <span class="contact-value">C3 Construction Robotics Limited</span>
+              </a>
             </li>
-
-            <li class="contact-item" data-contact-id="organization">
-              <div class="icon-box">
-                  <ion-icon name="link-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">Organization</p>
-                  <a
-                    href="https://c3robolab.mae.cuhk.edu.hk/"
-                    class="contact-link"
-                    >C3 Robotics Lab</a
-                  >
-                </div>
+            <li class="contact-item contact-affiliation" data-contact-id="organization">
+              <a class="contact-link" href="https://c3robolab.mae.cuhk.edu.hk/">
+                <ion-icon class="contact-icon" name="link-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.organization">Organization</span>
+                <span class="contact-value">C3 Robotics Lab</span>
+              </a>
             </li>
-
-            <li class="contact-item" data-contact-id="github">
-              <div class="icon-box">
-                  <ion-icon name="logo-octocat"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">GitHub</p>
-                  <a
-                    href="https://github.com/LeoCheung0804"
-                    class="contact-link"
-                    >LeoCheung0804</a
-                  >
-                </div>
+            <li class="contact-item contact-profile" data-contact-id="github">
+              <a class="contact-link" href="https://github.com/LeoCheung0804" aria-label="GitHub: LeoCheung0804">
+                <ion-icon class="contact-icon" name="logo-octocat" aria-hidden="true"></ion-icon>
+                <span class="contact-title">GitHub</span>
+                <span class="contact-value">LeoCheung0804</span>
+              </a>
             </li>
-
-            <li class="contact-item" data-contact-id="linkedin">
-              <div class="icon-box">
-                  <ion-icon name="logo-linkedin"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">LinkedIn</p>
-                  <a
-                    href="https://www.linkedin.com/in/leocheung0804"
-                    class="contact-link"
-                    >leocheung0804</a
-                  >
-                </div>
+            <li class="contact-item contact-profile" data-contact-id="linkedin">
+              <a class="contact-link" href="https://www.linkedin.com/in/leocheung0804" aria-label="LinkedIn: leocheung0804">
+                <ion-icon class="contact-icon" name="logo-linkedin" aria-hidden="true"></ion-icon>
+                <span class="contact-title">LinkedIn</span>
+                <span class="contact-value">leocheung0804</span>
+              </a>
             </li>
-
-            <li class="contact-item" data-contact-id="orcid">
-              <div class="icon-box">
-                  <ion-icon name="book-outline"></ion-icon>
-                </div>
-                <div class="contact-info">
-                  <p class="contact-title">ORCID</p>
-                  <a
-                    href="https://orcid.org/0009-0003-1691-6603"
-                    class="contact-link"
-                    >0009-0003-1691-6603</a
-                  >
-                </div>
+            <li class="contact-item contact-profile" data-contact-id="orcid">
+              <a class="contact-link" href="https://orcid.org/0009-0003-1691-6603" aria-label="ORCID: 0009-0003-1691-6603">
+                <ion-icon class="contact-icon" name="book-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title">ORCID</span>
+                <span class="contact-value">0009-0003-1691-6603</span>
+              </a>
             </li>
           </ul>
         </div>
@@ -401,13 +355,13 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20261005-5"></script>
-    <script src="./assets/js/i18n.js?v=20261003-7"></script>
+    <script src="./assets/js/site-data.js?v=20261022-1"></script>
+    <script src="./assets/js/i18n.js?v=20261022-1"></script>
     <script src="./assets/js/theme.js?v=20260716-2"></script>
-    <script src="./assets/js/motion.js?v=20261006-1"></script>
-    <script src="./assets/js/ui-interactions.js?v=20261001-2"></script>
+    <script src="./assets/js/motion.js?v=20261023-1"></script>
+    <script src="./assets/js/ui-interactions.js?v=20261022-1"></script>
     <script src="./assets/js/filters.js?v=20261001-2"></script>
-    <script src="./assets/js/contact-form.js"></script>
+    <script src="./assets/js/contact-form.js?v=20261023-1"></script>
     <script src="./assets/js/navigation.js?v=20261003-7"></script>
     <script src="./assets/js/app-init.js"></script>
     <!--

@@ -66,7 +66,10 @@ function applySharedShellTranslations(language = currentLanguage) {
   const sidebarLabelKey = sidebarButton?.getAttribute("aria-expanded") === "true"
     ? "sidebar.hideContacts"
     : "sidebar.showContacts";
-  setText("[data-sidebar-btn] span", sidebarLabelKey, language);
+  const sidebarVisibleLabelKey = sidebarButton?.getAttribute("aria-expanded") === "true"
+    ? "sidebar.closeContacts"
+    : "sidebar.contacts";
+  setText("[data-sidebar-btn] span", sidebarVisibleLabelKey, language);
 
   if (sidebarButton) {
     sidebarButton.dataset.i18nAriaLabel = sidebarLabelKey;
@@ -95,8 +98,13 @@ function applySharedShellTranslations(language = currentLanguage) {
 
     const link = item.querySelector(".contact-link");
     if (link) {
-      link.textContent = contact.value;
+      const value = link.querySelector(".contact-value");
+      if (value) value.textContent = contact.value;
+      else link.textContent = contact.value;
       link.setAttribute("href", contact.href);
+      if (item.classList.contains("contact-profile")) {
+        link.setAttribute("aria-label", `${contact.label}: ${contact.value}`);
+      }
     }
   });
 

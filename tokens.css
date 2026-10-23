@@ -1,0 +1,19 @@
+/* Hallmark · component: identity card · genre: editorial · theme: existing forest / amber
+ * Hallmark · pre-emit critique: P5 H5 E4 S5 R5 V4
+ * Palette and type inherit the portfolio's existing semantic tokens.
+ */
+:root {
+  --dur-feedback: 160ms;
+  --dur-press: 100ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --space-identity-xs: 4px;
+  --space-identity-sm: 8px;
+  --space-identity-md: 12px;
+  --space-identity-lg: 16px;
+  --space-identity-xl: 24px;
+  --radius-identity-control: 8px;
+  --text-identity-control: 0.6875rem;
+  --text-identity-link: 0.8125rem;
+  --dur-identity-feedback: var(--dur-feedback);
+  --ease-identity-out: var(--ease-out);
+}

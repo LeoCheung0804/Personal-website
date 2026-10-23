@@ -83,6 +83,14 @@ effects. The bilingual typography uses Poppins and Noto Sans TC consistently.
 The contact form retains its visible reCAPTCHA notice and policy links while the
 floating badge is hidden, following Google's documented branding option.
 
+Blog and research cards keep their text stationary and use a title-color response
+for interaction feedback. Primary buttons retain their amber emphasis on hover;
+the contact button distinguishes disabled and sending states and prevents repeat
+submissions while a request is pending. Keyboard focus rings appear immediately,
+while the article focused by page navigation has no surrounding panel ring.
+The CU-Brick cycle preserves an explicit pause, timeline seek, or reset when its
+viewer leaves and re-enters the viewport.
+
 When adding a new portfolio or blog template, include the `portfolio-site`
 body class and load `field-notes.css` after `style.css`. Generated blog pages
 inherit both from `generate-blog-index.js`.
@@ -92,6 +100,14 @@ menu while the language and theme controls remain visible. Shared pages also
 include a keyboard skip link, an announced contact-details toggle, and a
 consistent `#content-start` target. Keep these elements in new templates by
 running `generate-site-content.js` rather than copying the shell by hand.
+
+The shared name card groups location, email, affiliations, and professional
+profiles. `scripts/profile-card.js` supplies the contact markup to both page
+generators. Each linked row has a full click target; profile handles and the
+ORCID ID remain in the accessible labels. The labeled mobile disclosure opens
+immediately and supports Enter, Space, and Escape. It closes out of the keyboard
+order when hidden and stays visible in the desktop rail. Its spacing tokens live
+in `tokens.css`; colors and typography inherit the existing visual system.
 
 ## RoBosun-Tapper assembly viewer
 
