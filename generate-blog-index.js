@@ -310,8 +310,8 @@ function generateBlogPage(post) {
     </script>
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=20260606" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261023-1" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=20261028-1" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261028-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -425,15 +425,14 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20261022-1"></script>
-    <script src="../assets/js/i18n.js?v=20261022-1"></script>
-    <script src="../assets/js/theme.js?v=20260716-2"></script>
-    <script src="../assets/js/motion.js?v=20261023-1"></script>
-    <script src="../assets/js/ui-interactions.js?v=20261022-1"></script>
-    <script src="../assets/js/filters.js?v=20261001-2"></script>
+    <script src="../assets/js/site-data.js?v=20261027-2"></script>
+    <script src="../assets/js/i18n.js?v=20261028-1"></script>
+    <script src="../assets/js/theme.js?v=20261028-1"></script>
+    <script src="../assets/js/ui-interactions.js?v=20261028-1"></script>
+    <script src="../assets/js/filters.js?v=20261028-1"></script>
     <script src="../assets/js/contact-form.js?v=20261023-1"></script>
-    <script src="../assets/js/navigation.js?v=20261003-7"></script>
-    <script src="../assets/js/app-init.js"></script>
+    <script src="../assets/js/navigation.js?v=20261028-1"></script>
+    <script src="../assets/js/app-init.js?v=20261028-1"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
@@ -469,8 +468,8 @@ function renderHomepageBlogCard(post) {
                 </figure>`
     : '';
 
-  return `              <li class="blog-post-item tilt-card fade-seed">
-                <a href="${escapeHtml(post.url)}" class="magnetic" data-magnetic>
+  return `              <li class="blog-post-item ">
+                <a href="${escapeHtml(post.url)}">
                 ${imageMarkup}
                   <div class="blog-content">
                     <div class="blog-meta">

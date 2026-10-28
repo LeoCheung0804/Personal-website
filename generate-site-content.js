@@ -37,7 +37,7 @@ const requiredIndexTranslationCounts = Object.fromEntries(`
   footer.backToTop nav.about nav.blog nav.contact nav.menu nav.projects nav.publications
   nav.resume profile.title project.borderless.title project.cuBrick.title
   project.exoskeleton.title project.footController.title project.knowTouch.title
-  project.microwave.title project.retractable.title project.spray.title
+  project.microwave.title project.cdpr.title project.spray.title
   project.tapper.title projectPreview.title projects.dashboard projects.moreTools projects.title
   publications.cuBrick.abstract publications.cuBrick.authors publications.cuBrick.info publications.cuBrick.title
   publications.title resume.bsc.project resume.bsc.title resume.education
@@ -377,22 +377,24 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/css/field-notes.css': '20261023-1',
+    'assets/css/style.css': '20261028-1',
+    'assets/css/field-notes.css': '20261028-1',
     'assets/css/custom_project_preview.css': '20261006-1',
     'assets/css/featured-robots.css': '20261005-5',
     'assets/js/robot-previews.js': '20261005-5',
-    'assets/js/site-data.js': '20261022-1',
+    'assets/js/site-data.js': '20261027-2',
     'assets/css/cu-brick-exploded.css': '20261005-1',
     'assets/js/cu-brick-exploded.js': '20261023-1',
     'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
-    'assets/js/i18n.js': '20261022-1',
-    'assets/js/filters.js': '20261001-2',
-    'assets/js/motion.js': '20261023-1',
+    'assets/js/i18n.js': '20261028-1',
+    'assets/js/filters.js': '20261028-1',
+    'assets/js/theme.js': '20261028-1',
+    'assets/js/app-init.js': '20261028-1',
     'assets/js/contact-form.js': '20261023-1',
     'assets/js/project-preview.js': '20261006-1',
-    'assets/js/ui-interactions.js': '20261022-1',
-    'assets/js/navigation.js': '20261003-7'
+    'assets/js/ui-interactions.js': '20261028-1',
+    'assets/js/navigation.js': '20261028-1'
   };
 
   return Object.entries(versionedAssets).reduce((output, [assetPath, version]) => {

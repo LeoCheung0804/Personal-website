@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="600" viewBox="0 0 720 600" role="img" aria-labelledby="title desc">
+  <title id="title">Kinematic analysis — pose and cable lengths</title>
+  <desc id="desc">Conceptual planar diagram of fixed anchor points joined to a tool carrier by representative cables. One cable length is highlighted. Kinematics relates the carrier pose to the required cable lengths. This is not the robot's calculated workspace or actual cable arrangement.</desc>
+  <rect width="720" height="600" fill="#101714"/>
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="M82 104H638V432H82Z" fill="none" stroke="#52675a" stroke-width="5"/>
+    <g fill="none" stroke="#7bbaa9" stroke-width="3">
+      <path d="M82 104 315 240M638 104 405 240M82 432 315 310M638 432 405 310"/>
+    </g>
+    <path d="M82 104 315 240" fill="none" stroke="#f2b84b" stroke-width="5"/>
+    <g fill="#cbd5ce"><circle cx="82" cy="104" r="9"/><circle cx="638" cy="104" r="9"/><circle cx="82" cy="432" r="9"/><circle cx="638" cy="432" r="9"/></g>
+    <rect x="315" y="240" width="90" height="70" rx="5" fill="#263e33" stroke="#d9dfdb" stroke-width="4"/>
+    <circle cx="360" cy="275" r="5" fill="#f2b84b"/>
+  </g>
+  <g fill="#f6f8f5" font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="208" y="152" font-size="48" fill="#f2b84b">ℓᵢ</text>
+    <text x="360" y="365" font-size="42">q</text>
+    <text x="360" y="539" font-size="56">q → ℓ</text>
+  </g>
+</svg>

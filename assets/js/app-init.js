@@ -4,15 +4,9 @@ window.addEventListener('DOMContentLoaded', () => {
   applyTranslations(currentLanguage);
   updateLanguageButton();
   syncSelectLabels();
-});
-
-// kick off interactions after DOM is ready
-window.addEventListener('DOMContentLoaded', () => {
-  applyRandomFade();
-  initMagneticButtons();
-  initTiltCards();
   filterFunc('all');
 });
+
 
 // Language Toggle logic
 const langBtn = document.querySelector("[data-lang-btn]");

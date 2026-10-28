@@ -167,6 +167,114 @@
       }
     ]
   },
+  "assets/images/cdpr-drive-layout.jpg": {
+    "width": 810,
+    "height": 1080,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cdpr-drive-layout-jpg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 16434
+      },
+      {
+        "path": "assets/images/optimized/cdpr-drive-layout-jpg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 53144
+      },
+      {
+        "path": "assets/images/optimized/cdpr-drive-layout-jpg-810.webp",
+        "width": 810,
+        "height": 1080,
+        "bytes": 114116
+      }
+    ]
+  },
+  "assets/images/cdpr-frame-and-winches.jpg": {
+    "width": 810,
+    "height": 1080,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cdpr-frame-and-winches-jpg-240.webp",
+        "width": 240,
+        "height": 320,
+        "bytes": 16788
+      },
+      {
+        "path": "assets/images/optimized/cdpr-frame-and-winches-jpg-480.webp",
+        "width": 480,
+        "height": 640,
+        "bytes": 52646
+      },
+      {
+        "path": "assets/images/optimized/cdpr-frame-and-winches-jpg-810.webp",
+        "width": 810,
+        "height": 1080,
+        "bytes": 109522
+      }
+    ]
+  },
+  "assets/images/cdpr-nozzle-concept.png": {
+    "width": 1448,
+    "height": 1086,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cdpr-nozzle-concept-png-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 10762
+      },
+      {
+        "path": "assets/images/optimized/cdpr-nozzle-concept-png-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 33388
+      },
+      {
+        "path": "assets/images/optimized/cdpr-nozzle-concept-png-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 97086
+      },
+      {
+        "path": "assets/images/optimized/cdpr-nozzle-concept-png-1448.webp",
+        "width": 1448,
+        "height": 1086,
+        "bytes": 160006
+      }
+    ]
+  },
+  "assets/images/cdpr-system.jpg": {
+    "width": 1080,
+    "height": 810,
+    "variants": [
+      {
+        "path": "assets/images/optimized/cdpr-system-jpg-240.webp",
+        "width": 240,
+        "height": 180,
+        "bytes": 10708
+      },
+      {
+        "path": "assets/images/optimized/cdpr-system-jpg-480.webp",
+        "width": 480,
+        "height": 360,
+        "bytes": 34312
+      },
+      {
+        "path": "assets/images/optimized/cdpr-system-jpg-960.webp",
+        "width": 960,
+        "height": 720,
+        "bytes": 97740
+      },
+      {
+        "path": "assets/images/optimized/cdpr-system-jpg-1080.webp",
+        "width": 1080,
+        "height": 810,
+        "bytes": 118072
+      }
+    ]
+  },
   "assets/images/CU-Brick_1.jpeg": {
     "width": 1600,
     "height": 1200,
@@ -314,24 +422,6 @@
         "width": 1600,
         "height": 739,
         "bytes": 194646
-      }
-    ]
-  },
-  "assets/images/Esp_sys_1.jpg": {
-    "width": 294,
-    "height": 228,
-    "variants": [
-      {
-        "path": "assets/images/optimized/esp_sys_1-jpg-240.webp",
-        "width": 240,
-        "height": 186,
-        "bytes": 3526
-      },
-      {
-        "path": "assets/images/optimized/esp_sys_1-jpg-294.webp",
-        "width": 294,
-        "height": 228,
-        "bytes": 4944
       }
     ]
   },
@@ -539,36 +629,6 @@
       }
     ]
   },
-  "assets/images/icon.png": {
-    "width": 1024,
-    "height": 1024,
-    "variants": [
-      {
-        "path": "assets/images/optimized/icon-png-240.webp",
-        "width": 240,
-        "height": 240,
-        "bytes": 4684
-      },
-      {
-        "path": "assets/images/optimized/icon-png-480.webp",
-        "width": 480,
-        "height": 480,
-        "bytes": 11430
-      },
-      {
-        "path": "assets/images/optimized/icon-png-960.webp",
-        "width": 960,
-        "height": 960,
-        "bytes": 26130
-      },
-      {
-        "path": "assets/images/optimized/icon-png-1024.webp",
-        "width": 1024,
-        "height": 1024,
-        "bytes": 28158
-      }
-    ]
-  },
   "assets/images/IMG_0129.JPG": {
     "width": 6000,
     "height": 4000,
@@ -596,120 +656,6 @@
         "width": 1600,
         "height": 1067,
         "bytes": 78356
-      }
-    ]
-  },
-  "assets/images/IMG_8837.jpeg": {
-    "width": 3024,
-    "height": 4032,
-    "variants": [
-      {
-        "path": "assets/images/optimized/img_8837-jpeg-240.webp",
-        "width": 240,
-        "height": 320,
-        "bytes": 10266
-      },
-      {
-        "path": "assets/images/optimized/img_8837-jpeg-480.webp",
-        "width": 480,
-        "height": 640,
-        "bytes": 29354
-      },
-      {
-        "path": "assets/images/optimized/img_8837-jpeg-960.webp",
-        "width": 960,
-        "height": 1280,
-        "bytes": 77530
-      },
-      {
-        "path": "assets/images/optimized/img_8837-jpeg-1600.webp",
-        "width": 1600,
-        "height": 2133,
-        "bytes": 171460
-      }
-    ]
-  },
-  "assets/images/IMG_9093.jpeg": {
-    "width": 1200,
-    "height": 1600,
-    "variants": [
-      {
-        "path": "assets/images/optimized/img_9093-jpeg-240.webp",
-        "width": 240,
-        "height": 320,
-        "bytes": 5368
-      },
-      {
-        "path": "assets/images/optimized/img_9093-jpeg-480.webp",
-        "width": 480,
-        "height": 640,
-        "bytes": 14466
-      },
-      {
-        "path": "assets/images/optimized/img_9093-jpeg-960.webp",
-        "width": 960,
-        "height": 1280,
-        "bytes": 40646
-      },
-      {
-        "path": "assets/images/optimized/img_9093-jpeg-1200.webp",
-        "width": 1200,
-        "height": 1600,
-        "bytes": 56898
-      }
-    ]
-  },
-  "assets/images/IMG_9094.jpeg": {
-    "width": 1024,
-    "height": 768,
-    "variants": [
-      {
-        "path": "assets/images/optimized/img_9094-jpeg-240.webp",
-        "width": 240,
-        "height": 180,
-        "bytes": 3810
-      },
-      {
-        "path": "assets/images/optimized/img_9094-jpeg-480.webp",
-        "width": 480,
-        "height": 360,
-        "bytes": 9612
-      },
-      {
-        "path": "assets/images/optimized/img_9094-jpeg-960.webp",
-        "width": 960,
-        "height": 720,
-        "bytes": 23408
-      },
-      {
-        "path": "assets/images/optimized/img_9094-jpeg-1024.webp",
-        "width": 1024,
-        "height": 768,
-        "bytes": 25700
-      }
-    ]
-  },
-  "assets/images/IMG_9095.jpeg": {
-    "width": 768,
-    "height": 1024,
-    "variants": [
-      {
-        "path": "assets/images/optimized/img_9095-jpeg-240.webp",
-        "width": 240,
-        "height": 320,
-        "bytes": 5160
-      },
-      {
-        "path": "assets/images/optimized/img_9095-jpeg-480.webp",
-        "width": 480,
-        "height": 640,
-        "bytes": 14600
-      },
-      {
-        "path": "assets/images/optimized/img_9095-jpeg-768.webp",
-        "width": 768,
-        "height": 1024,
-        "bytes": 28748
       }
     ]
   },

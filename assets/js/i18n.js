@@ -264,10 +264,10 @@ function renderBlogPosts(posts = loadedBlogPosts) {
       : `src="${post.image}"`;
 
     const li = document.createElement('li');
-    li.className = 'blog-post-item tilt-card fade-seed';
+    li.className = 'blog-post-item ';
 
     li.innerHTML = `
-      <a href="${post.url || `blog-post.html?post=${post.filename}`}" class="magnetic" data-magnetic>
+      <a href="${post.url || `blog-post.html?post=${post.filename}`}">
         ${post.image ? `<figure class="blog-banner-box"><img ${imageAttributes} alt="${title}" loading="lazy" decoding="async"></figure>` : ''}
         <div class="blog-content">
           <div class="blog-meta">
@@ -282,9 +282,6 @@ function renderBlogPosts(posts = loadedBlogPosts) {
     blogList.appendChild(li);
   });
 
-  applyRandomFade();
-  initMagneticButtons();
-  initTiltCards();
 }
 
 function syncSelectLabels() {

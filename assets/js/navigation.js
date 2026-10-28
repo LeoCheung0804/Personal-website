@@ -220,9 +220,7 @@ window.addEventListener("popstate", activatePageFromHash);
 document.querySelectorAll('.back-to-top').forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
-    const reducedMotion = typeof prefersReducedMotion === 'function'
-      ? prefersReducedMotion()
-      : window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, left: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
 
     if (event.detail === 0) {

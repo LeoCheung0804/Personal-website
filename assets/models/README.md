@@ -95,7 +95,7 @@ outside the website, then provide that directory's `node_modules` path:
 ```powershell
 npm install --prefix <temporary-tools> occt-import-js@0.0.23 @gltf-transform/core@4.5.1 @gltf-transform/extensions@4.5.1 @gltf-transform/functions@4.5.1 meshoptimizer@1.3.0
 node scripts/build-cu-brick-model.cjs <original-v9.step> <temporary-tools/node_modules>
-node scripts/check-cu-brick-model.mjs
+node --experimental-default-type=module scripts/check-cu-brick-model.mjs
 ```
 
 The converter checks the source revision before applying its subsystem mapping.

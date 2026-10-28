@@ -60,20 +60,22 @@ const siteProfile = {
   seo: {
     title: "Cheung Man Loc (Leo Cheung) | Robotics Engineer",
     schemaName: "Cheung Man Loc Robotics Portfolio",
-    description: "Robotics portfolio of Cheung Man Loc, known as Leo Cheung, featuring CU-Brick, RoBosun-Tapper, robot control, and mechanical design projects in Hong Kong.",
-    schemaDescription: "Cheung Man Loc, professionally known as Leo Cheung, shares robotics projects spanning CU-Brick, RoBosun-Tapper, facade inspection, wall spraying, humanoid control, embedded systems, and mechanical design.",
+    description: "Robotics portfolio of Cheung Man Loc, known as Leo Cheung, featuring concrete-printing CDPR development, CU-Brick, RoBosun-Tapper, and robot control.",
+    schemaDescription: "Cheung Man Loc, professionally known as Leo Cheung, shares robotics projects spanning 3D concrete printing, CU-Brick, RoBosun-Tapper, wall spraying, humanoid control, embedded systems, and mechanical design.",
     keywords: "Cheung Man Loc, Leo Cheung, CU-Brick, RoBosun-Tapper, robotics engineer, robotics engineer Hong Kong, construction automation, cable-driven robots, facade inspection robot, ROS, mechatronics",
     ogDescription: "Robotics projects, publications, and awards by Cheung Man Loc, professionally known as Leo Cheung.",
     twitterDescription: "Robotics projects, publications, and awards by Cheung Man Loc (Leo Cheung).",
     image: "/assets/images/profile.jpg",
     imageAlt: "Cheung Man Loc, professionally known as Leo Cheung, robotics engineer",
-    lastmod: "2026-10-05",
-    schemaDateModified: "2026-10-05T00:00:00+08:00",
+    lastmod: "2026-10-27",
+    schemaDateModified: "2026-10-27T00:00:00+08:00",
     knowsAbout: [
       "CU-Brick cable-driven bricklaying robot",
       "RoBosun-Tapper robotic facade inspection",
       "construction robotics",
       "cable-driven parallel robots",
+      "3D concrete printing",
+      "kinematic and static workspace analysis",
       "facade inspection robots",
       "robot automation",
       "ROS",
@@ -124,7 +126,7 @@ const siteProjects = {
       image: "/assets/images/Robotapper_cropped.jpeg",
       structuredDescription: "Cable-driven robot for high-rise facade hammer testing, robotic positioning, and impact-signal analysis.",
       keywords: "RoBosun-Tapper, facade inspection robot, cable-driven robot, hammer testing robot, impact-signal analysis, construction robotics, Hong Kong robotics",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-27"
     }
   },
   cuBrick: {
@@ -142,13 +144,13 @@ const siteProjects = {
       zhHant: "纜索驅動砌磚機械人"
     },
     seo: {
-      description: "CU-Brick is a cable-driven parallel robot that built a 40-layer YES Pavilion structure from more than 5,800 bricks across a 13 m by 9 m site.",
+      description: "CU-Brick is a cable-driven parallel robot used to place more than 5,800 bricks at the YES Pavilion, alongside workers applying mortar and checking quality.",
       ogDescription: "CU-Brick combines fiducial localization, 3D scanning, and elevation control for automated bricklaying at architectural scale.",
-      twitterDescription: "A cable-driven robot that built a 40-layer pavilion structure from more than 5,800 bricks.",
+      twitterDescription: "Robotic placement of more than 5,800 bricks at the YES Pavilion, with workers applying mortar and checking quality.",
       image: "/assets/images/YES_full.jpg",
       structuredDescription: "Architectural-scale cable-driven parallel robot for automated bricklaying, fiducial localization, 3D scanning, and construction automation.",
       keywords: "CU-Brick, bricklaying robot, cable-driven parallel robot, CDPR, construction automation, fiducial markers, 3D scanning, YES Pavilion, Hong Kong robotics",
-      lastmod: "2026-10-05"
+      lastmod: "2026-10-27"
     },
     awards: [
       {
@@ -185,7 +187,7 @@ const siteProjects = {
       image: "/assets/images/Spray_robot.JPG",
       structuredDescription: "Autonomous wall painting prototype with AGV motion, IMU sensing, cameras, linear rail positioning, and ROS control.",
       keywords: "autonomous wall spraying robot, wall painting robot, ROS robot, AGV, IMU, machine vision, linear rail, construction robotics, industrial painting automation",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-27"
     }
   },
   knowTouch: {
@@ -209,7 +211,7 @@ const siteProjects = {
       image: "/assets/images/knowtouch_1.jpg",
       structuredDescription: "Infrared gesture interface for touchless lift controls, retrofit installation, and large-scale Hong Kong deployment.",
       keywords: "kNOw Touch, touchless lift button, elevator sensor, infrared gesture sensor, lift call bar, contactless interface, Hong Kong elevators, embedded hardware",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-27"
     }
   },
   exoskeleton: {
@@ -285,31 +287,31 @@ const siteProjects = {
       image: "/assets/images/Microwave.jpeg",
       structuredDescription: "Experimental microwave heating research for concrete, cement, and metal compositions using CAD-designed moulds and prototypes.",
       keywords: "microwave heating system, concrete heating, cement materials, sustainable construction, CAD prototype, SolidWorks, AutoCAD, material testing",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-27"
     }
   },
-  retractable: {
-    file: "retractable.html",
+  cdpr: {
+    file: "cdpr.html",
     title: {
-      en: "Retractable Tapper & Thruster Module",
-      zhHant: "可伸縮敲擊與推進模組"
+      en: "CDPR for 3D Concrete Printing",
+      zhHant: "用於 3D 混凝土打印的纜索驅動並聯機械人"
     },
     cardTitle: {
-      en: "Retractable Tapper & Thruster Module",
-      zhHant: "可伸縮敲擊與推進模組"
+      en: "CDPR for 3D Concrete Printing",
+      zhHant: "CDPR：3D 混凝土打印"
     },
     detailEyebrow: {
-      en: "Protected inspection hardware",
-      zhHant: "受保護的檢測硬件"
+      en: "Cable-driven concrete printing · Ongoing",
+      zhHant: "纜索驅動混凝土打印 · 持續開發中"
     },
     seo: {
-      description: "A compact retractable tapper and thruster module designed to protect impact-testing hardware while a facade inspection robot is moving.",
-      ogDescription: "A modular impact-testing tool that deploys at an inspection point and retracts during robot travel.",
-      twitterDescription: "Compact retractable impact-testing hardware for cable-driven facade inspection robots.",
-      image: "/assets/images/v2.0.png",
-      structuredDescription: "Modular retractable tapper and thruster concept for robotic facade hammer testing and protected tool transport.",
-      keywords: "retractable tapper, facade inspection robot, robotic hammer testing, thruster module, modular robot tool, construction inspection, robotics hardware design",
-      lastmod: "2026-10-01"
+      description: "Development of a cable-driven parallel robot for 3D concrete printing, spanning design, software, calibration, workspace analysis, and printing trials.",
+      ogDescription: "Robot design, assembly, software, calibration, and kinematic and static workspace analysis for cable-driven 3D concrete printing.",
+      twitterDescription: "A CDPR for 3D concrete printing: from robot design and workspace analysis to calibration, dry runs, and printing trials.",
+      image: "/assets/images/cdpr-system.jpg",
+      structuredDescription: "Ongoing development of a cable-driven parallel robot for 3D concrete printing, including design, assembly, software, calibration, kinematic and static workspace analysis, dry runs, and concrete-printing trials.",
+      keywords: "CDPR, cable-driven parallel robot, 3D concrete printing, construction robotics, kinematic workspace, static workspace, robot calibration, robot software",
+      lastmod: "2026-10-27"
     }
   },
   footController: {
@@ -333,7 +335,7 @@ const siteProjects = {
       image: "/assets/images/footcontroler.jpg",
       structuredDescription: "Wearable wireless foot controller for SuperLimb with motorized pedals, haptic feedback, embedded electronics, and multi-axis input.",
       keywords: "wireless foot controller, SuperLimb, motorized pedal, wearable robot controller, haptic feedback, embedded electronics, multi-axis control, robotics hardware",
-      lastmod: "2026-10-01"
+      lastmod: "2026-10-27"
     }
   }
 };
@@ -407,7 +409,7 @@ const translations = {
     "about.viewProjects": "View projects",
     "about.contact": "Get in touch",
     "about.paragraph1": "I'm Leo Cheung, a robotics engineer based in Hong Kong. I work on construction robots, humanoid systems, and human-robot control interfaces.",
-    "about.paragraph2": "My work spans mechanical design, electronics, ROS software, and field testing. Projects include CU-Brick, RoBosun-Tapper, ME4, and the SuperLimb foot controller.",
+    "about.paragraph2": "My work spans mechanical design, electronics, robot software, workspace analysis, and field testing. I am currently developing a cable-driven parallel robot for 3D concrete printing, alongside work on CU-Brick, RoBosun-Tapper, and human-robot interfaces.",
     "service.title": "What I do",
     "service.software.title": "Software development",
     "service.software.text": "Develop ROS-based software for robot control, navigation, signal processing, motor control, operator interfaces, and wireless communication.",
@@ -434,7 +436,7 @@ const translations = {
     "resume.bsc.project": "Final-year project: Artificial Lighting for Basil Growth",
     "resume.experience": "Experience",
     "resume.mechanicalEngineer": "Mechanical Engineer",
-    "resume.mechanicalEngineer.projects": "RoBosun-Tapper: Robotic Facade Inspection<br>Autonomous Wall Spraying Robot<br>CU-Brick: Cable-Driven Bricklaying Robot<br>Retractable Tapper & Thruster Module",
+    "resume.mechanicalEngineer.projects": "CDPR for 3D Concrete Printing<br>RoBosun-Tapper: Robotic Facade Inspection<br>Autonomous Wall Spraying Robot<br>CU-Brick: Cable-Driven Bricklaying Robot",
     "resume.projectEngineer": "Project Engineer",
     "resume.projectEngineer.projects": "kNOw Touch: Touchless Lift Interface<br>ME4: Exoskeleton-Controlled Humanoid Robot",
     "resume.graduateExecutive": "Graduate Executive",
@@ -456,7 +458,7 @@ const translations = {
     "project.exoskeleton.title": siteProjects.exoskeleton.cardTitle.en,
     "project.borderless.title": siteProjects.borderless.cardTitle.en,
     "project.microwave.title": siteProjects.microwave.cardTitle.en,
-    "project.retractable.title": siteProjects.retractable.cardTitle.en,
+    "project.cdpr.title": siteProjects.cdpr.cardTitle.en,
     "project.footController.title": siteProjects.footController.cardTitle.en,
     "publications.title": "Research & Publications",
     "publications.filters.conference": "Conference papers",
@@ -544,7 +546,7 @@ const translations = {
     "about.viewProjects": "瀏覽項目",
     "about.contact": "聯絡我",
     "about.paragraph1": "我是 Leo Cheung，一名駐香港的機械人工程師，工作涵蓋建築機械人、人形機械人及人機操控介面。",
-    "about.paragraph2": "我的工作涵蓋機械設計、電子系統、ROS 軟件及現場測試。項目包括 CU-Brick、RoBosun-Tapper、ME4 及 SuperLimb 腳踏控制器。",
+    "about.paragraph2": "我的工作涵蓋機械設計、電子系統、機械人軟件、工作空間分析及現場測試。目前正在開發用於 3D 混凝土打印的纜索驅動並聯機械人，其他項目包括 CU-Brick、RoBosun-Tapper 及人機控制介面。",
     "service.title": "我的工作",
     "service.software.title": "軟件開發",
     "service.software.text": "開發 ROS 控制、自主導航、訊號處理、操作介面、馬達控制及無線通訊軟件，讓軟硬件可靠整合。",
@@ -571,7 +573,7 @@ const translations = {
     "resume.bsc.project": "畢業項目：羅勒生長人工照明",
     "resume.experience": "工作經驗",
     "resume.mechanicalEngineer": "機械工程師",
-    "resume.mechanicalEngineer.projects": "RoBosun-Tapper 外牆檢測機械人<br>自主牆面噴塗機械人<br>CU-Brick 纜索驅動砌磚機械人<br>可伸縮敲擊與推進模組",
+    "resume.mechanicalEngineer.projects": "用於 3D 混凝土打印的纜索驅動並聯機械人<br>RoBosun-Tapper 外牆檢測機械人<br>自主牆面噴塗機械人<br>CU-Brick 纜索驅動砌磚機械人",
     "resume.projectEngineer": "項目工程師",
     "resume.projectEngineer.projects": "kNOw Touch 免觸式升降機介面<br>ME4 外骨骼操控人形機械人",
     "resume.graduateExecutive": "畢業行政人員",
@@ -593,7 +595,7 @@ const translations = {
     "project.exoskeleton.title": siteProjects.exoskeleton.cardTitle.zhHant,
     "project.borderless.title": siteProjects.borderless.cardTitle.zhHant,
     "project.microwave.title": siteProjects.microwave.cardTitle.zhHant,
-    "project.retractable.title": siteProjects.retractable.cardTitle.zhHant,
+    "project.cdpr.title": siteProjects.cdpr.cardTitle.zhHant,
     "project.footController.title": siteProjects.footController.cardTitle.zhHant,
     "publications.title": "研究與論文",
     "publications.filters.conference": "會議論文",
@@ -800,7 +802,10 @@ const projectPageTranslations = {
           <li>Developed C++ and Python ROS nodes and APIs for the operator interface, navigation, and signal-processing workflow.</li>
           <li>Integrated laser sensors, IMU, LiDAR, and computer vision for positioning and defect analysis.</li>
           <li>Supported industrial safety compliance, including Form 5 certification work with a Registered Professional Engineer.</li>
-        </ul>`
+        </ul>
+        <h3 id="retractable-mechanism">Retractable tapping mechanism</h3>
+        <p>The tapping mechanism extends from the robot towards the facade and retracts for travel. My work covered the linkage design, compact packaging, and the arrangement of the tapper and thrusters for contact with the wall.</p>
+        <figure data-detail-media><img src="./assets/images/v2.0.png" alt="RoBosun-Tapper beside an exterior wall with its tapping linkage extended" loading="lazy"><figcaption>The extended tapping linkage at the facade during field testing.</figcaption></figure>`
     },
     zhHant: {
       title: siteProjects.tapper.title.zhHant,
@@ -817,16 +822,20 @@ const projectPageTranslations = {
           <li>使用 C++ 與 Python 開發 ROS 節點及 API，支援操作介面、導航與訊號處理流程。</li>
           <li>整合激光感應器、IMU、LiDAR 與電腦視覺，用於定位及缺陷分析。</li>
           <li>支援工業安全合規工作，包括與註冊專業工程師合作處理 Form 5 認證。</li>
-        </ul>`
+        </ul>
+        <h3 id="retractable-mechanism">可伸縮敲擊機構</h3>
+        <p>敲擊機構可由機械人本體向外牆伸出，並在移動時收回。我的工作涵蓋連桿設計、緊湊的機構佈局，以及敲擊器與推進器的配置，以配合牆面接觸。</p>
+        <figure data-detail-media><img src="./assets/images/v2.0.png" alt="RoBosun-Tapper 在外牆旁伸出敲擊連桿" loading="lazy"><figcaption>現場測試中，敲擊連桿伸出至外牆位置。</figcaption></figure>`
     }
   },
   cuBrick: {
     en: {
       title: siteProjects.cuBrick.title.en,
       content: `
-        <p>CU-Brick is a cable-driven parallel robot for automated bricklaying. The system uses cables to position the robot across a large construction workspace and was used to build the brick structure at the Yard for Environmental Sustainability (YES) Pavilion.</p>
+        <p>CU-Brick is a cable-driven parallel robot for automated brick placement. At the Yard for Environmental Sustainability (YES) Pavilion, it positioned bricks across a large construction workspace while workers applied mortar and checked the brickwork.</p>
         <p>The YES Pavilion project used more than 5,800 bricks across 40 layers, reaching 2.5 m in height within a 13 m by 9 m work area.</p>
-        <p>Fiducial-marker localization and 3D scanning support real-time calibration, while an elevation system shifts the robot's workspace to build taller structures without cable interference.</p>
+        <p>Fiducial-marker localization and 3D scanning support calibration. An elevation system raises the lower cable attachment points as construction progresses, helping the cables clear the growing brick structure.</p>
+        <p><a href="https://cloud.itsc.cuhk.edu.hk/enewsasp/app/article-details.aspx/ECDBC60B14B6AA9F11EBA9E2048BFFA9/" target="_blank" rel="noopener">CUHK Engineering: the construction workflow and deployment</a></p>
         <figure>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick project video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
@@ -845,7 +854,7 @@ const projectPageTranslations = {
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
           <li>Designed and implemented the cable-driven robot for a full-scale construction project.</li>
-          <li>Delivered autonomous construction of a 2.5 m-high, 40-layer structure using more than 5,800 bricks.</li>
+          <li>Supported robotic brick placement for the 2.5 m-high, 40-layer structure, working alongside the contractor's mortar application and quality checks.</li>
           <li>Integrated fiducial markers and high-resolution 3D spatial data for calibration and localization.</li>
           <li>Designed and manufactured the robot's electrical and control boxes.</li>
           <li>Co-authored and presented the CU-Brick paper at CableCon 2025.</li>
@@ -856,9 +865,10 @@ const projectPageTranslations = {
     zhHant: {
       title: siteProjects.cuBrick.title.zhHant,
       content: `
-        <p>CU-Brick 是用於自動砌磚的纜索驅動並聯機械人。系統透過纜索在大型施工範圍內定位，並曾用於建造 Yard for Environmental Sustainability (YES) Pavilion 的磚結構。</p>
+        <p>CU-Brick 是用於自動放置磚塊的纜索驅動並聯機械人。在 Yard for Environmental Sustainability (YES) Pavilion 項目中，機械人在大型施工範圍內定位及放置磚塊，工人則負責塗抹砂漿與檢查砌磚品質。</p>
         <p>YES Pavilion 項目在 13 米乘 9 米的工作範圍內，使用超過 5,800 塊磚建成高 2.5 米、共 40 層的結構。</p>
-        <p>基準標記定位與 3D 掃描支援即時校準，升降系統則調整機械人的工作空間，讓系統在避免纜索互相干涉的情況下建造更高結構。</p>
+        <p>基準標記定位與 3D 掃描支援校準。升降系統隨施工進度抬高下方纜索連接點，協助纜索避開逐漸增高的磚結構。</p>
+        <p><a href="https://cloud.itsc.cuhk.edu.hk/enewsasp/app/article-details.aspx/ECDBC60B14B6AA9F11EBA9E2048BFFA9/" target="_blank" rel="noopener">香港中文大學工程學院：施工流程與現場部署</a></p>
         <figure>
           <iframe width="560" height="315" src="https://www.youtube.com/embed/DkltJm3nhyI?si=xpFi4j9ImTA5RzOU" title="CU-Brick 項目影片" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </figure>
@@ -877,7 +887,7 @@ const projectPageTranslations = {
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>設計並實作應用於全尺寸建造項目的砌磚纜索驅動機械人。</li>
-          <li>完成高 2.5 米、共 40 層、使用超過 5,800 塊磚的自主建造工作。</li>
+          <li>支援高 2.5 米、共 40 層結構的機械人放磚工作，配合承建商的砂漿施工及品質檢查。</li>
           <li>整合基準標記與高解像度 3D 空間數據，支援校準及定位。</li>
           <li>設計並製作機械人的電氣箱及控制箱。</li>
           <li>共同撰寫 CU-Brick 論文，並於 CableCon 2025 發表。</li>
@@ -891,7 +901,7 @@ const projectPageTranslations = {
       title: siteProjects.spray.title.en,
       content: `
         <p>This mobile robot prototype was developed to automate wall spraying. Its ROS-based control system coordinates the mobile platform, linear rail, and motorized sprayer, with cameras and inertial sensing to support positioning.</p>
-        <figure><img src="./assets/images/Spray_robot.JPG" alt="Autonomous wall spraying robot" width="600"><figcaption>Autonomous wall spraying robot</figcaption></figure>
+        <figure><img src="./assets/images/Spray_robot.JPG" alt="Wall-spraying robot prototype applying a coating to a test panel" width="600"><figcaption>The integrated spraying prototype during a test on a vertical panel.</figcaption></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
           <li>Guided a master's student project from early concept through integrated robot development.</li>
@@ -904,7 +914,7 @@ const projectPageTranslations = {
       title: siteProjects.spray.title.zhHant,
       content: `
         <p>這款移動式機械人原型旨在把牆面噴塗工序自動化。系統透過 ROS 協調移動平台、線性滑軌及電動噴塗器，並利用相機和慣性感測支援定位。</p>
-        <figure><img src="./assets/images/Spray_robot.JPG" alt="自主牆面噴塗機械人" width="600"><figcaption>自主牆面噴塗機械人</figcaption></figure>
+        <figure><img src="./assets/images/Spray_robot.JPG" alt="牆面噴塗機械人原型在測試板上進行噴塗" width="600"><figcaption>已整合的噴塗原型在垂直測試板上進行試驗。</figcaption></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>指導碩士生項目由早期概念推進至完整機械人整合。</li>
@@ -926,7 +936,7 @@ const projectPageTranslations = {
           <li>Coordinated delivery and installation of more than 1,200 units, including deployments at Hong Kong International Airport and Pacific Place.</li>
           <li>Worked with suppliers on mechanical design, material selection, and microprocessor procurement.</li>
           <li>Resolved manufacturing, installation, and software issues during production and rollout.</li>
-          <li>Performed quality inspections and performance evaluations across more than 150 deployment processes.</li>
+          <li>Performed quality inspections and performance evaluations during deployment.</li>
         </ul>`
     },
     zhHant: {
@@ -940,7 +950,7 @@ const projectPageTranslations = {
           <li>協調超過 1,200 套設備的交付與安裝，包括香港國際機場及太古廣場的部署。</li>
           <li>與供應商協調機械設計、物料選擇及微處理器採購。</li>
           <li>在生產及推出期間解決製造、安裝與軟件問題。</li>
-          <li>為超過 150 次部署流程進行品質檢查及性能評估。</li>
+          <li>在部署期間進行品質檢查及性能評估。</li>
         </ul>`
     }
   },
@@ -1011,7 +1021,9 @@ const projectPageTranslations = {
         <p>This experimental project studied how construction-material mixtures respond to microwave heating. Tests on concrete, cement, and metal compositions used CAD-designed moulds and prototypes to explore the heating behaviour of different materials.</p>
         <p>Building on research from the Universitat Politècnica de València, the project evaluated a low-cost household microwave setup for construction-material experiments.</p>
         <p>The study compared the heating response of different mixtures and structural forms, and reached the final eight of a local innovation competition.</p>
-        <div class="project-media-grid"><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="CAD model from the microwave-heating project"></a></figure><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="Prototype from the microwave-heating project"></a></figure></div>
+        <figure><img src="./assets/images/Microwave.jpeg" alt="Labelled construction-material specimens prepared in moulds for the microwave-heating study"><figcaption>Material specimens prepared for comparing heating response.</figcaption></figure>
+        <h3>Design and workshop documentation</h3>
+        <div class="project-media-grid" data-detail-media><figure data-detail-media><img src="./assets/images/microwave_cad_1.jpeg" alt="CAD view of a mould designed for the microwave-heating experiments" loading="lazy"><figcaption>Mould design in CAD.</figcaption></figure><figure data-detail-media><img src="./assets/images/microwave_cad_2.jpeg" alt="Ribbed panels beside a workshop wall" loading="lazy"><figcaption>Ribbed panels documented in the workshop.</figcaption></figure></div>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
           <li>Designed the experimental moulds and system prototypes in SolidWorks and AutoCAD.</li>
@@ -1025,7 +1037,9 @@ const projectPageTranslations = {
         <p>這個實驗項目研究建築材料混合物在微波加熱下的反應。研究使用 CAD 設計的模具及原型，測試混凝土、水泥與金屬配方，探索不同材料的升溫特性。</p>
         <p>項目建基於 Universitat Politècnica de València 的相關研究，評估以低成本家用微波裝置進行建築材料實驗的可行性。</p>
         <p>項目比較不同混合比例與結構形式的升溫反應，並入選本地創新比賽最後八強。</p>
-        <div class="project-media-grid"><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_1.jpeg" alt="微波加熱項目的 CAD 模型"></a></figure><figure><a href="https://fablabvalencia.com/proyectos/"><img src="./assets/images/microwave_cad_2.jpeg" alt="微波加熱項目的原型"></a></figure></div>
+        <figure><img src="./assets/images/Microwave.jpeg" alt="為微波加熱研究準備、放置於模具中的已標記建築材料試樣"><figcaption>用於比較升溫反應的材料試樣。</figcaption></figure>
+        <h3>設計與工作坊紀錄</h3>
+        <div class="project-media-grid" data-detail-media><figure data-detail-media><img src="./assets/images/microwave_cad_1.jpeg" alt="微波加熱實驗模具的 CAD 視圖" loading="lazy"><figcaption>模具的 CAD 設計。</figcaption></figure><figure data-detail-media><img src="./assets/images/microwave_cad_2.jpeg" alt="工作坊牆邊的肋狀板件" loading="lazy"><figcaption>工作坊內的肋狀板件紀錄。</figcaption></figure></div>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>使用 SolidWorks 與 AutoCAD 設計實驗模具及系統原型。</li>
@@ -1034,32 +1048,98 @@ const projectPageTranslations = {
         </ul>`
     }
   },
-  retractable: {
+  cdpr: {
     en: {
-      title: siteProjects.retractable.title.en,
+      title: siteProjects.cdpr.title.en,
       content: `
-        <p>This concept explores a retractable tapping mechanism and thruster arrangement for cable-driven facade inspection robots. The tapping tool is designed to extend at an inspection point and retract during travel to protect the mechanism between tests.</p>
-        <p>The design considers compact packaging and modular interfaces for integration with a cable-driven inspection robot.</p>
-        <figure><img src="./assets/images/v2.0.png" alt="Retractable tapper and thruster module for facade inspection robot" width="600" loading="lazy"><figcaption>Retractable tapper and thruster module concept</figcaption></figure>
+        <p>I am developing a cable-driven parallel robot for 3D concrete printing. My work spans robot design, assembly, software development, calibration, kinematic and static workspace analysis, and validation through dry runs and concrete-printing trials.</p>
+        <figure><img src="./assets/images/cdpr-system.jpg" alt="The assembled CDPR in the laboratory, with its structural frame, winches, cables, and empty central tool carrier" width="1080" height="810"><figcaption>Laboratory assembly: the full frame, perimeter winches, and central tool carrier.</figcaption></figure>
+        <h3>From robot design to printing trials</h3>
+        <p>The robot uses coordinated cables to position a printing tool within its workspace. My contribution brings together the mechanical system, software, and experimental work needed to move from an assembled robot to printing trials.</p>
+        <details class="project-photo-details">
+          <summary>Two more views of the frame and drives</summary>
+          <div class="project-media-grid project-system-photos" data-detail-media>
+            <figure data-detail-media><img src="./assets/images/cdpr-frame-and-winches.jpg" alt="A side view of the assembled CDPR frame with winches along the lower perimeter" width="810" height="1080" loading="lazy"><figcaption>The assembled frame and the winch units along its lower perimeter.</figcaption></figure>
+            <figure data-detail-media><img src="./assets/images/cdpr-drive-layout.jpg" alt="Another laboratory view of the CDPR showing the foreground winches, cable routing, and central metal carrier" width="810" height="1080" loading="lazy"><figcaption>A second view of the drive layout, cable routing, and central carrier.</figcaption></figure>
+          </div>
+        </details>
+        <h3>System arrangement</h3>
+        <figure data-detail-media class="project-technical-figure">
+          <img src="./assets/images/cdpr-system-diagram.svg" alt="Conceptual CDPR schematic with numbered frame, winches, cables, tool carrier, and example nozzle with feeding hose" width="1000" height="800" loading="lazy">
+          <figcaption>
+            <ol class="project-figure-key"><li><b>1</b> Support frame</li><li><b>2</b> Winch drives</li><li><b>3</b> Cables</li><li><b>4</b> Tool carrier</li><li><b>5</b> Example nozzle and feed hose</li></ol>
+            <span class="project-media-note">Conceptual schematic. Cable count, routing, and proportions are simplified.</span>
+            <a href="./assets/images/cdpr-system-diagram.svg" target="_blank" rel="noopener noreferrer">Open full-size figure</a>
+          </figcaption>
+        </figure>
+        <h3>Kinematic and static workspace analysis</h3>
+        <p>I study where the tool carrier can operate by considering both its geometry and the feasibility of the cable tensions. The diagrams below illustrate these two checks.</p>
+        <div class="project-media-grid project-analysis-figures" data-detail-media>
+          <figure data-detail-media><img src="./assets/images/cdpr-kinematics-diagram.svg" alt="Conceptual kinematic diagram relating tool-carrier pose q to cable lengths, with one cable length highlighted" width="720" height="600" loading="lazy"><figcaption><strong>Kinematics</strong><br>Relate the carrier pose q to cable lengths ℓ, then check reachability against geometry and cable-length limits.</figcaption></figure>
+          <figure data-detail-media><img src="./assets/images/cdpr-statics-diagram.svg" alt="Conceptual static force diagram with pulling cable tensions and a downward external load, requiring force and moment equilibrium" width="720" height="600" loading="lazy"><figcaption><strong>Statics</strong><br>Check whether cable tensions within their permitted limits can balance the specified load in force and moment.</figcaption></figure>
+        </div>
+        <p class="project-media-note">These are conceptual diagrams with illustrative geometry and force directions, rather than calculated workspace maps.</p>
+        <h3>Example nozzle integration</h3>
+        <figure data-detail-media>
+          <img src="./assets/images/cdpr-nozzle-concept.png" alt="AI-edited concept showing a compact concrete-printing nozzle within the central metal carrier, connected to a flexible feeding hose" loading="lazy">
+          <figcaption><strong>AI-edited concept illustration.</strong> An example nozzle fits inside the existing carrier frame, with a concrete feed hose connected from the side. <a href="./assets/images/cdpr-nozzle-concept.png" target="_blank" rel="noopener noreferrer">View full size</a></figcaption>
+        </figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
-          <li>Designed a modular retractable tapping mechanism for robotic facade hammer testing.</li>
-          <li>Developed packaging and interface concepts that protect the tool while fitting a cable-driven inspection robot.</li>
-          <li>Evaluated tapper and thruster layouts for stable contact at high-rise inspection points.</li>
-        </ul>`
+          <li>Design and assemble the robot, integrating its mechanical and printing hardware.</li>
+          <li>Develop the robot software and carry out system calibration.</li>
+          <li>Perform kinematic and static workspace analysis to evaluate reachable poses and cable-tension feasibility.</li>
+          <li>Carry out dry runs and concrete-printing trials as part of ongoing system development.</li>
+        </ul>
+        <h3>Research context</h3>
+        <p>This robot development forms part of a wider research programme on sustainable 3D concrete printing. The programme brings together materials research, computational modelling, robotics, and automated printing; my work focuses on the cable-driven robot.</p>
+        <p><a href="https://scholars.cityu.edu.hk/en/projects/tomorrow-is-now-eco-friendly-autonomous-construction-through-sust-2/" target="_blank" rel="noopener">CityUHK Scholars: Tomorrow is Now — Eco-friendly Autonomous Construction through Sustainable 3D Concrete Printing</a></p>`
     },
     zhHant: {
-      title: siteProjects.retractable.title.zhHant,
+      title: siteProjects.cdpr.title.zhHant,
       content: `
-        <p>此概念探索用於纜索驅動外牆檢測機械人的可伸縮敲擊機構及推進器佈局。敲擊工具設計為在檢測位置伸出，並在移動期間收回，以保護機構。</p>
-        <p>設計考慮緊湊的機構佈局及模組化介面，以便整合至纜索驅動檢測機械人。</p>
-        <figure><img src="./assets/images/v2.0.png" alt="外牆檢測機械人的可伸縮敲擊器與推進器模組" width="600" loading="lazy"><figcaption>可伸縮敲擊器與推進器模組概念</figcaption></figure>
+        <p>我正在開發用於 3D 混凝土打印的纜索驅動並聯機械人。工作涵蓋機械人設計、組裝、軟件開發、校準、運動學與靜力學工作空間分析，以及透過空載試運行和混凝土打印試驗進行驗證。</p>
+        <figure><img src="./assets/images/cdpr-system.jpg" alt="實驗室內已組裝的 CDPR，展示支撐框架、捲揚機、纜索及尚未裝上噴嘴的中央工具框架" width="1080" height="810"><figcaption>實驗室組裝：完整框架、周邊捲揚機及中央工具框架。</figcaption></figure>
+        <h3>從機械人設計到打印試驗</h3>
+        <p>機械人透過多條纜索協調運動，在工作空間內定位打印工具。我的工作結合機械系統、軟件與實驗，將已組裝的機械人逐步推進至打印試驗。</p>
+        <details class="project-photo-details">
+          <summary>查看框架與驅動裝置的另外兩張照片</summary>
+          <div class="project-media-grid project-system-photos" data-detail-media>
+            <figure data-detail-media><img src="./assets/images/cdpr-frame-and-winches.jpg" alt="CDPR 組裝框架的側面視圖，下方周邊設有捲揚機" width="810" height="1080" loading="lazy"><figcaption>已組裝的框架，以及沿下方周邊佈置的捲揚機。</figcaption></figure>
+            <figure data-detail-media><img src="./assets/images/cdpr-drive-layout.jpg" alt="實驗室內 CDPR 的另一個視角，展示前方捲揚機、纜索路徑及中央金屬框架" width="810" height="1080" loading="lazy"><figcaption>另一視角下的驅動裝置佈局、纜索路徑及中央框架。</figcaption></figure>
+          </div>
+        </details>
+        <h3>系統配置</h3>
+        <figure data-detail-media class="project-technical-figure">
+          <img src="./assets/images/cdpr-system-diagram.svg" alt="CDPR 概念示意圖，以編號標示支撐框架、捲揚機、纜索、工具框架，以及噴嘴與供料管範例" width="1000" height="800" loading="lazy">
+          <figcaption>
+            <ol class="project-figure-key"><li><b>1</b> 支撐框架</li><li><b>2</b> 捲揚驅動裝置</li><li><b>3</b> 纜索</li><li><b>4</b> 工具框架</li><li><b>5</b> 噴嘴與供料管範例</li></ol>
+            <span class="project-media-note">概念示意圖；纜索數量、路徑及比例經過簡化。</span>
+            <a href="./assets/images/cdpr-system-diagram.svg" target="_blank" rel="noopener noreferrer">開啟原尺寸圖</a>
+          </figcaption>
+        </figure>
+        <h3>運動學與靜力學工作空間分析</h3>
+        <p>我同時考慮幾何條件與纜索張力的可行性，分析工具框架可運作的範圍。以下示意圖說明這兩項分析。</p>
+        <div class="project-media-grid project-analysis-figures" data-detail-media>
+          <figure data-detail-media><img src="./assets/images/cdpr-kinematics-diagram.svg" alt="運動學概念圖，將工具框架位姿 q 與纜索長度連繫，並突出其中一條纜索的長度" width="720" height="600" loading="lazy"><figcaption><strong>運動學</strong><br>將工具框架的位姿 q 對應至纜索長度 ℓ，再按幾何條件及纜索長度限制檢查可達性。</figcaption></figure>
+          <figure data-detail-media><img src="./assets/images/cdpr-statics-diagram.svg" alt="靜力學概念受力圖，展示纜索拉力及向下的外力，並要求力與力矩達至平衡" width="720" height="600" loading="lazy"><figcaption><strong>靜力學</strong><br>檢查纜索張力能否在容許範圍內，使指定負載下的力與力矩達至平衡。</figcaption></figure>
+        </div>
+        <p class="project-media-note">以上為概念圖，幾何配置與力的方向僅作說明，並非計算所得的工作空間圖。</p>
+        <h3>噴嘴整合範例</h3>
+        <figure data-detail-media>
+          <img src="./assets/images/cdpr-nozzle-concept.png" alt="AI 編輯的概念圖：小型混凝土打印噴嘴設於中央金屬框架內，並接上柔性供料管" loading="lazy">
+          <figcaption><strong>AI 編輯概念圖。</strong>噴嘴範例設於現有工具框架內，混凝土供料管由側面接入。<a href="./assets/images/cdpr-nozzle-concept.png" target="_blank" rel="noopener noreferrer">查看原尺寸圖片</a></figcaption>
+        </figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
-          <li>為機械人外牆敲擊測試設計模組化可伸縮機構。</li>
-          <li>開發兼顧工具保護及纜索檢測機械人整合的封裝與介面概念。</li>
-          <li>評估敲擊器與推進器佈局，確保在高樓檢測位置穩定接觸牆面。</li>
-        </ul>`
+          <li>設計及組裝機械人，整合機械結構與打印硬件。</li>
+          <li>開發機械人軟件，並進行系統校準。</li>
+          <li>進行運動學與靜力學工作空間分析，評估可達位姿及纜索張力的可行性。</li>
+          <li>進行空載試運行與混凝土打印試驗，持續完善系統。</li>
+        </ul>
+        <h3>研究背景</h3>
+        <p>這項機械人開發工作是可持續 3D 混凝土打印研究計劃的一部分。整體計劃涵蓋材料研究、計算建模、機械人與自動化打印，而我的工作聚焦於纜索驅動機械人。</p>
+        <p><a href="https://scholars.cityu.edu.hk/en/projects/tomorrow-is-now-eco-friendly-autonomous-construction-through-sust-2/" target="_blank" rel="noopener">CityUHK Scholars：可持續 3D 混凝土打印研究計劃</a></p>`
     }
   },
   footController: {
@@ -1068,7 +1148,7 @@ const projectPageTranslations = {
       content: `
         <p>This wireless motorized foot controller was developed for the SuperLimb project. It uses foot input to command robotic motion, allowing the operator's hands to remain available for other tasks.</p>
         <p>The prototype combines mechanical design, embedded electronics, haptic feedback, and wireless communication in a wearable human-robot control interface.</p>
-        <figure><img src="./assets/images/footcontroler.jpg" alt="Wireless motorized foot controller for SuperLimb robot control" width="600" loading="lazy"><figcaption>Wireless motorized foot controller prototype</figcaption></figure>
+        <figure><img src="./assets/images/footcontroler.jpg" alt="SuperLimb foot-controller mechanisms and electronics on a workbench" width="600" loading="lazy"><figcaption>Bench prototype showing the foot-control mechanisms and development electronics.</figcaption></figure>
         <h3>${translations.en["project.responsibilities"]}</h3>
         <ul>
           <li>Designed the mechanical layout and wearable form of the motorized foot interface.</li>
@@ -1081,7 +1161,7 @@ const projectPageTranslations = {
       content: `
         <p>這款無線電動腳踏控制器為 SuperLimb 項目而開發。操作者透過腳部輸入控制機械人動作，同時可騰出雙手處理其他工作。</p>
         <p>原型把機械設計、嵌入式電子、觸覺回饋與無線通訊整合成穿戴式人機控制介面。</p>
-        <figure><img src="./assets/images/footcontroler.jpg" alt="SuperLimb 無線電動腳踏控制器" width="600" loading="lazy"><figcaption>無線電動腳踏控制器原型</figcaption></figure>
+        <figure><img src="./assets/images/footcontroler.jpg" alt="工作枱上的 SuperLimb 腳踏控制機構及電子組件" width="600" loading="lazy"><figcaption>桌面原型，展示腳踏控制機構及開發用電子組件。</figcaption></figure>
         <h3>${translations.zhHant["project.responsibilities"]}</h3>
         <ul>
           <li>設計電動腳踏控制介面的機械佈局與穿戴形式。</li>
@@ -1103,10 +1183,10 @@ function splitProjectContent(content) {
   }
   let details = match[2];
   // Preserve the original media and captions while promoting one visual block
-  // into the project lead. Gallery projects have no image figures in this copy.
-  const mediaGrid = details.match(/<div\b[^>]*class=["'][^"']*\bproject-media-grid\b[^"']*["'][^>]*>[\s\S]*?<\/div>/i);
+  // into the project lead. Explicit detail media stays beside its explanation.
+  const mediaGrid = details.match(/<div\b(?![^>]*\bdata-detail-media\b)[^>]*class=["'][^"']*\bproject-media-grid\b[^"']*["'][^>]*>[\s\S]*?<\/div>/i);
   const imageFigure = [...details.matchAll(/<figure\b[^>]*>[\s\S]*?<\/figure>/gi)]
-    .find((figure) => /<img\b/i.test(figure[0]));
+    .find((figure) => /<img\b/i.test(figure[0]) && !/^<figure\b[^>]*\bdata-detail-media\b/i.test(figure[0]));
   const media = mediaGrid || imageFigure;
   const leadMedia = media?.[0] || "";
   if (media) {

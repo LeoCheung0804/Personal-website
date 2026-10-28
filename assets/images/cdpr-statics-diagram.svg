@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="600" viewBox="0 0 720 600" role="img" aria-labelledby="title desc">
+  <title id="title">Static analysis — equilibrium and feasible cable tensions</title>
+  <desc id="desc">Conceptual planar force diagram. Cable forces pull the carrier towards their anchors; an external load points downwards. Static feasibility requires force and moment equilibrium with cable tensions inside their permitted limits. Arrow directions are illustrative, not measured forces or a computed workspace.</desc>
+  <defs>
+    <marker id="tension-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 8 4 0 8Z" fill="#7bbaa9"/></marker>
+    <marker id="load-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0 0 8 4 0 8Z" fill="#f2b84b"/></marker>
+  </defs>
+  <rect width="720" height="600" fill="#101714"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M82 104H638V432H82Z" stroke="#52675a" stroke-width="5"/>
+    <path d="M82 104 315 240M638 104 405 240M82 432 315 310M638 432 405 310" stroke="#52675a" stroke-width="2" stroke-dasharray="7 9"/>
+    <g stroke="#7bbaa9" stroke-width="5" marker-end="url(#tension-arrow)">
+      <path d="M315 240 194 169"/>
+      <path d="M405 240 526 169"/>
+      <path d="M315 310 219 360"/>
+      <path d="M405 310 501 360"/>
+    </g>
+    <rect x="315" y="240" width="90" height="70" rx="5" fill="#263e33" stroke="#d9dfdb" stroke-width="4"/>
+    <path d="M360 310V435" stroke="#f2b84b" stroke-width="5" marker-end="url(#load-arrow)"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+    <text x="203" y="137" font-size="42" fill="#7bbaa9">Tᵢ</text>
+    <text x="405" y="411" font-size="42" fill="#f2b84b">W</text>
+    <text x="360" y="539" font-size="45" fill="#f6f8f5">ΣF = 0   ·   ΣM = 0</text>
+  </g>
+</svg>

@@ -143,7 +143,6 @@ const filterFunc = function (selectedValue) {
     }
   }
 
-  refreshFadeAnimations();
 };
 
 initFilterSelect(select, selectItems, filterFunc, "project-filter-options");
@@ -192,7 +191,6 @@ const publicationFilterFunc = function (selectedValue) {
   }
 
   if (publicationEmpty) publicationEmpty.hidden = visibleCount > 0;
-  refreshFadeAnimations();
 };
 
 initFilterSelect(publicationSelect, publicationSelectItems, publicationFilterFunc, "publication-filter-options");

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CDPR for 3D Concrete Printing | Cheung Man Loc</title>
+    <meta
+      name="description"
+      content="Development of a cable-driven parallel robot for 3D concrete printing, spanning design, software, calibration, workspace analysis, and printing trials."
+    />
+    <link rel="canonical" href="https://leocml.com/cdpr.html" />
+    <meta
+      property="og:title"
+      content="CDPR for 3D Concrete Printing | Cheung Man Loc"
+    />
+    <meta
+      property="og:description"
+      content="Robot design, assembly, software, calibration, and kinematic and static workspace analysis for cable-driven 3D concrete printing."
+    />
+    <meta
+      property="og:image"
+      content="https://leocml.com/assets/images/cdpr-system.jpg"
+    />
+    <meta property="og:url" content="https://leocml.com/cdpr.html" />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="CDPR for 3D Concrete Printing | Cheung Man Loc"
+    />
+    <meta
+      name="twitter:description"
+      content="A CDPR for 3D concrete printing: from robot design and workspace analysis to calibration, dry runs, and printing trials."
+    />
+    <meta
+      name="twitter:image"
+      content="https://leocml.com/assets/images/cdpr-system.jpg"
+    />
+
+    <meta name="author" content="Cheung Man Loc" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:site_name" content="Cheung Man Loc Portfolio" />
+    <meta property="og:image:alt" content="CDPR for 3D Concrete Printing project" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="810" />
+    <meta name="twitter:image:alt" content="CDPR for 3D Concrete Printing project" />
+    <meta property="article:modified_time" content="2026-10-27" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "headline": "CDPR for 3D Concrete Printing",
+        "name": "CDPR for 3D Concrete Printing",
+        "url": "https://leocml.com/cdpr.html",
+        "image": "https://leocml.com/assets/images/cdpr-system.jpg",
+        "description": "Ongoing development of a cable-driven parallel robot for 3D concrete printing, including design, assembly, software, calibration, kinematic and static workspace analysis, dry runs, and concrete-printing trials.",
+        "keywords": "CDPR, cable-driven parallel robot, 3D concrete printing, construction robotics, kinematic workspace, static workspace, robot calibration, robot software",
+        "author": {
+          "@type": "Person",
+          "@id": "https://leocml.com/#person",
+          "name": "Cheung Man Loc",
+          "alternateName": [
+            "Leo Cheung",
+            "Man Loc Cheung"
+          ],
+          "givenName": "Man Loc",
+          "familyName": "Cheung",
+          "url": "https://leocml.com/"
+        },
+        "@id": "https://leocml.com/cdpr.html#creative-work",
+        "dateModified": "2026-10-27",
+        "inLanguage": [
+          "en",
+          "zh-Hant"
+        ],
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://leocml.com/cdpr.html"
+        }
+      }
+    </script>
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-LEBDJN7H6D"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-LEBDJN7H6D", {
+        page_title: "CDPR for 3D Concrete Printing",
+        send_page_view: true,
+      });
+
+            function trackFormSubmission() {
+        gtag("event", "form_submission", {
+          event_category: "Contact",
+          event_label: "Contact Form",
+          value: 1,
+        });
+      }
+      function trackProjectView(projectName) {
+        gtag("event", "project_view", {
+          event_category: "Engagement",
+          event_label: projectName,
+          value: 1,
+        });
+      }
+    </script>
+
+    <!--
+    - favicon
+  -->
+    <link
+      rel="shortcut icon"
+      href="./assets/images/icon.ico"
+      type="image/x-icon"
+    />
+
+    <!--
+    - custom css link
+  -->
+    <link rel="stylesheet" href="./assets/css/style.css?v=20261028-1" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261028-1" />
+
+    <!--
+    - google font link
+  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="portfolio-site">
+    <a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">Skip to main content</a>
+    <!--
+    - #MAIN
+  -->
+
+    <main>
+      <!--
+      - #SIDEBAR
+    -->
+
+      <aside class="sidebar" data-sidebar>
+        <div class="sidebar-info">
+          <figure class="avatar-box">
+            <img
+              src="./assets/images/optimized/profile-jpg-960.webp"
+              alt="Cheung Man Loc, known as Leo Cheung"
+              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1180px) 80px, (min-width: 621px) 72px, 48px" loading="eager"
+            />
+          </figure>
+
+          <div class="info-content">
+            <p class="name" title="Cheung Man Loc (Leo Cheung)">Leo Cheung<span class="full-name">Cheung Man Loc</span></p>
+
+            <p class="title">Robotics Engineer</p>
+          </div>
+
+          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts" type="button"><span data-i18n="sidebar.contacts">Contact</span><ion-icon name="chevron-down" aria-hidden="true"></ion-icon></button>
+        </div>
+
+        <div class="sidebar-info_more" id="sidebar-contact-details">
+          <div class="separator"></div>
+
+          <ul class="contacts-list">
+            <li class="contact-item contact-location" data-contact-id="location">
+              <span class="contact-title" data-i18n="contact.location">Location</span>
+              <ion-icon class="contact-icon" name="location-outline" aria-hidden="true"></ion-icon>
+              <address class="contact-value" data-i18n="contact.hongKong">Hong Kong</address>
+            </li>
+            <li class="contact-item contact-primary" data-contact-id="email">
+              <a class="contact-link" href="mailto:leocheung0804@gmail.com">
+                <ion-icon class="contact-icon" name="mail-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.email">Email</span>
+                <span class="contact-value">leocheung0804@gmail.com</span>
+              </a>
+            </li>
+            <li class="contact-item contact-affiliation" data-contact-id="employer">
+              <a class="contact-link" href="https://www.c3robotics.com.hk">
+                <ion-icon class="contact-icon" name="business-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.employer">Employer</span>
+                <span class="contact-value">C3 Construction Robotics Limited</span>
+              </a>
+            </li>
+            <li class="contact-item contact-affiliation" data-contact-id="organization">
+              <a class="contact-link" href="https://c3robolab.mae.cuhk.edu.hk/">
+                <ion-icon class="contact-icon" name="link-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title" data-i18n="contact.organization">Organization</span>
+                <span class="contact-value">C3 Robotics Lab</span>
+              </a>
+            </li>
+            <li class="contact-item contact-profile" data-contact-id="github">
+              <a class="contact-link" href="https://github.com/LeoCheung0804" aria-label="GitHub: LeoCheung0804">
+                <ion-icon class="contact-icon" name="logo-octocat" aria-hidden="true"></ion-icon>
+                <span class="contact-title">GitHub</span>
+                <span class="contact-value">LeoCheung0804</span>
+              </a>
+            </li>
+            <li class="contact-item contact-profile" data-contact-id="linkedin">
+              <a class="contact-link" href="https://www.linkedin.com/in/leocheung0804" aria-label="LinkedIn: leocheung0804">
+                <ion-icon class="contact-icon" name="logo-linkedin" aria-hidden="true"></ion-icon>
+                <span class="contact-title">LinkedIn</span>
+                <span class="contact-value">leocheung0804</span>
+              </a>
+            </li>
+            <li class="contact-item contact-profile" data-contact-id="orcid">
+              <a class="contact-link" href="https://orcid.org/0009-0003-1691-6603" aria-label="ORCID: 0009-0003-1691-6603">
+                <ion-icon class="contact-icon" name="book-outline" aria-hidden="true"></ion-icon>
+                <span class="contact-title">ORCID</span>
+                <span class="contact-value">0009-0003-1691-6603</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!--
+      - #main-content
+    -->
+
+      <div class="main-content">
+        <!--
+        - #NAVBAR
+      -->
+        <nav class="navbar" data-mobile-nav="" data-i18n-aria-label="nav.primary" aria-label="Primary navigation">
+          <button
+            class="navbar-menu-btn"
+            type="button"
+            aria-expanded="false"
+            aria-controls="primary-navigation"
+            aria-label="Menu"
+            data-i18n-aria-label="nav.menu"
+            data-mobile-nav-btn=""
+          >
+            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
+            <span data-i18n="nav.menu">Menu</span>
+          </button>
+
+          <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
+            <ul class="navbar-list">
+            <li class="navbar-item">
+              <a href="/#about" class="navbar-link" data-nav-link data-i18n="nav.about">About</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a href="/#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">Resume</a>
+            </li>
+
+            <li class="navbar-item">
+              <a
+                href="/#portfolio"
+                class="navbar-link active" data-nav-link data-i18n="nav.projects">Projects</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a
+                href="/#publications"
+                class="navbar-link" data-nav-link data-i18n="nav.publications">Research</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a href="/#blog" class="navbar-link" data-nav-link data-i18n="nav.blog">Blog</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="/#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">Contact</a>
+            </li>
+            </ul>
+          </div>
+
+          <ul class="navbar-actions" aria-label="Language and appearance" data-i18n-aria-label="nav.preferences">
+            <li class="navbar-item navbar-action-item">
+                <button class="navbar-link lang-btn" aria-label="Switch language" data-i18n-aria-label="language.toggle" data-lang-btn>
+                  <span data-lang-label>ZH</span>
+                </button>
+              </li>
+            <li class="navbar-item navbar-action-item">
+                <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
+                  <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
+                </button>
+              </li>
+          </ul>
+          </nav>
+
+        <span class="content-start" id="content-start" tabindex="-1"></span>
+
+        <!--
+        - #PAGE
+        -->
+        <article class="portfolio active" data-page="portfolio" data-project-key="cdpr">
+          <header>
+            <a href="/#portfolio" class="btn-back" data-i18n="projects.back">&larr; Back to Projects</a
+            >
+            <h1 class="h2 article-title">CDPR for 3D Concrete Printing</h1>
+          </header>
+
+          <div class="project-lead">
+            <section class="project-intro" aria-labelledby="project-overview-title">
+              <p class="project-intro__eyebrow">Cable-driven concrete printing · Ongoing</p>
+              <h2 class="h3 title" id="project-overview-title" data-i18n="project.overview">Project Overview</h2>
+              <div class="project-intro-copy">
+                <p>I am developing a cable-driven parallel robot for 3D concrete printing. My work spans robot design, assembly, software development, calibration, kinematic and static workspace analysis, and validation through dry runs and concrete-printing trials.</p>
+              </div>
+            </section>
+
+            <div class="project-lead-media">
+              <!-- Generated from assets/js/site-data.js by generate-site-content.js. -->
+              <figure><img src="./assets/images/optimized/cdpr-system-jpg-960.webp" alt="The assembled CDPR in the laboratory, with its structural frame, winches, cables, and empty central tool carrier" width="1080" height="810" loading="eager" data-media-source="assets/images/cdpr-system.jpg" decoding="async" srcset="./assets/images/optimized/cdpr-system-jpg-240.webp 240w, ./assets/images/optimized/cdpr-system-jpg-480.webp 480w, ./assets/images/optimized/cdpr-system-jpg-960.webp 960w, ./assets/images/optimized/cdpr-system-jpg-1080.webp 1080w" sizes="(min-width: 1600px) 620px, (min-width: 1180px) calc((100vw - 470px) * 0.61), (min-width: 960px) 55vw, 92vw"><figcaption>Laboratory assembly: the full frame, perimeter winches, and central tool carrier.</figcaption></figure>
+            </div>
+          </div>
+
+          <section class="project-detail">
+            <header>
+              <h2 class="h3 title" data-i18n="project.details">Project Details</h2>
+            </header>
+            <div class="project-content">
+              <!-- Generated from assets/js/site-data.js by generate-site-content.js. -->
+              <h3>From robot design to printing trials</h3>
+              <p>The robot uses coordinated cables to position a printing tool within its workspace. My contribution brings together the mechanical system, software, and experimental work needed to move from an assembled robot to printing trials.</p>
+              <details class="project-photo-details">
+                <summary>Two more views of the frame and drives</summary>
+                <div class="project-media-grid project-system-photos" data-detail-media>
+                  <figure data-detail-media><img src="./assets/images/optimized/cdpr-frame-and-winches-jpg-810.webp" alt="A side view of the assembled CDPR frame with winches along the lower perimeter" width="810" height="1080" loading="lazy" data-media-source="assets/images/cdpr-frame-and-winches.jpg" decoding="async" srcset="./assets/images/optimized/cdpr-frame-and-winches-jpg-240.webp 240w, ./assets/images/optimized/cdpr-frame-and-winches-jpg-480.webp 480w, ./assets/images/optimized/cdpr-frame-and-winches-jpg-810.webp 810w" sizes="(min-width: 1250px) 760px, 92vw"><figcaption>The assembled frame and the winch units along its lower perimeter.</figcaption></figure>
+                  <figure data-detail-media><img src="./assets/images/optimized/cdpr-drive-layout-jpg-810.webp" alt="Another laboratory view of the CDPR showing the foreground winches, cable routing, and central metal carrier" width="810" height="1080" loading="lazy" data-media-source="assets/images/cdpr-drive-layout.jpg" decoding="async" srcset="./assets/images/optimized/cdpr-drive-layout-jpg-240.webp 240w, ./assets/images/optimized/cdpr-drive-layout-jpg-480.webp 480w, ./assets/images/optimized/cdpr-drive-layout-jpg-810.webp 810w" sizes="(min-width: 1250px) 760px, 92vw"><figcaption>A second view of the drive layout, cable routing, and central carrier.</figcaption></figure>
+                </div>
+              </details>
+              <h3>System arrangement</h3>
+              <figure data-detail-media class="project-technical-figure">
+                <img src="./assets/images/cdpr-system-diagram.svg" alt="Conceptual CDPR schematic with numbered frame, winches, cables, tool carrier, and example nozzle with feeding hose" width="1000" height="800" loading="lazy">
+                <figcaption>
+                  <ol class="project-figure-key"><li><b>1</b> Support frame</li><li><b>2</b> Winch drives</li><li><b>3</b> Cables</li><li><b>4</b> Tool carrier</li><li><b>5</b> Example nozzle and feed hose</li></ol>
+                  <span class="project-media-note">Conceptual schematic. Cable count, routing, and proportions are simplified.</span>
+                  <a href="./assets/images/cdpr-system-diagram.svg" target="_blank" rel="noopener noreferrer">Open full-size figure</a>
+                </figcaption>
+              </figure>
+              <h3>Kinematic and static workspace analysis</h3>
+              <p>I study where the tool carrier can operate by considering both its geometry and the feasibility of the cable tensions. The diagrams below illustrate these two checks.</p>
+              <div class="project-media-grid project-analysis-figures" data-detail-media>
+                <figure data-detail-media><img src="./assets/images/cdpr-kinematics-diagram.svg" alt="Conceptual kinematic diagram relating tool-carrier pose q to cable lengths, with one cable length highlighted" width="720" height="600" loading="lazy"><figcaption><strong>Kinematics</strong><br>Relate the carrier pose q to cable lengths ℓ, then check reachability against geometry and cable-length limits.</figcaption></figure>
+                <figure data-detail-media><img src="./assets/images/cdpr-statics-diagram.svg" alt="Conceptual static force diagram with pulling cable tensions and a downward external load, requiring force and moment equilibrium" width="720" height="600" loading="lazy"><figcaption><strong>Statics</strong><br>Check whether cable tensions within their permitted limits can balance the specified load in force and moment.</figcaption></figure>
+              </div>
+              <p class="project-media-note">These are conceptual diagrams with illustrative geometry and force directions, rather than calculated workspace maps.</p>
+              <h3>Example nozzle integration</h3>
+              <figure data-detail-media>
+                <img src="./assets/images/optimized/cdpr-nozzle-concept-png-960.webp" alt="AI-edited concept showing a compact concrete-printing nozzle within the central metal carrier, connected to a flexible feeding hose" loading="lazy" data-media-source="assets/images/cdpr-nozzle-concept.png" width="1448" height="1086" decoding="async" srcset="./assets/images/optimized/cdpr-nozzle-concept-png-240.webp 240w, ./assets/images/optimized/cdpr-nozzle-concept-png-480.webp 480w, ./assets/images/optimized/cdpr-nozzle-concept-png-960.webp 960w, ./assets/images/optimized/cdpr-nozzle-concept-png-1448.webp 1448w" sizes="(min-width: 1250px) 760px, 92vw">
+                <figcaption><strong>AI-edited concept illustration.</strong> An example nozzle fits inside the existing carrier frame, with a concrete feed hose connected from the side. <a href="./assets/images/cdpr-nozzle-concept.png" target="_blank" rel="noopener noreferrer">View full size</a></figcaption>
+              </figure>
+              <h3>Selected Contributions</h3>
+              <ul>
+                <li>Design and assemble the robot, integrating its mechanical and printing hardware.</li>
+                <li>Develop the robot software and carry out system calibration.</li>
+                <li>Perform kinematic and static workspace analysis to evaluate reachable poses and cable-tension feasibility.</li>
+                <li>Carry out dry runs and concrete-printing trials as part of ongoing system development.</li>
+              </ul>
+              <h3>Research context</h3>
+              <p>This robot development forms part of a wider research programme on sustainable 3D concrete printing. The programme brings together materials research, computational modelling, robotics, and automated printing; my work focuses on the cable-driven robot.</p>
+              <p><a href="https://scholars.cityu.edu.hk/en/projects/tomorrow-is-now-eco-friendly-autonomous-construction-through-sust-2/" target="_blank" rel="noopener noreferrer">CityUHK Scholars: Tomorrow is Now — Eco-friendly Autonomous Construction through Sustainable 3D Concrete Printing</a></p>
+            </div>
+          </section>
+        </article>
+
+        <footer class="footer">
+          <p class="copyright">&copy; 2026 Cheung Man Loc (Leo Cheung)</p>
+          <a href="#" class="back-to-top">Back to Top</a>
+        </footer>
+
+      </div>
+
+    </main>
+
+    <!--
+    - custom js link
+  -->
+    <script src="./assets/js/site-data.js?v=20261027-2"></script>
+    <script src="./assets/js/i18n.js?v=20261028-1"></script>
+    <script src="./assets/js/theme.js?v=20261028-1"></script>
+    <script src="./assets/js/ui-interactions.js?v=20261028-1"></script>
+    <script src="./assets/js/filters.js?v=20261028-1"></script>
+    <script src="./assets/js/contact-form.js?v=20261023-1"></script>
+    <script src="./assets/js/navigation.js?v=20261028-1"></script>
+    <script src="./assets/js/app-init.js?v=20261028-1"></script>
+    <!--
+    - ionicon link
+  -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

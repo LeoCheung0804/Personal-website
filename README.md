@@ -51,6 +51,18 @@ switching translates lead captions and alternative text independently while
 retaining generated responsive attributes. The static audit checks both lead
 and detail media against the image manifest.
 
+Add `data-detail-media` to figures that belong with the detail copy rather than
+in the project lead, such as Tapper's retractable mechanism. If those figures
+are grouped in a media grid, mark the grid with the same attribute.
+
+`cdpr.html` uses the supplied laboratory photograph for its cover and social
+image. A native disclosure contains two further system photographs. Three SVG
+figures explain the system arrangement, kinematics, and static equilibrium;
+they are conceptual diagrams, not calculated workspace results. The nozzle
+integration image is an explicitly captioned AI-edited concept. Source and
+generation notes are in `assets/images/CDPR-MEDIA.md`. The previous
+`retractable.html` URL redirects to the mechanism section in `tapper.html`.
+
 To verify that checked-in HTML is current without writing files:
 
 ```powershell
@@ -206,7 +218,7 @@ rebuild command. The original CAD and reference files are not published.
 Checks after editing:
 
 ```powershell
-node scripts/check-cu-brick-model.mjs
+node --experimental-default-type=module scripts/check-cu-brick-model.mjs
 node generate-blog-index.js --check
 node generate-site-content.js --check
 node scripts/check-static-site.js

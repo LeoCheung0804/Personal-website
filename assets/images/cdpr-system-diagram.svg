@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800" role="img" aria-labelledby="title desc">
+  <title id="title">CDPR system arrangement — conceptual schematic</title>
+  <desc id="desc">An illustrative frame with perimeter winches, representative cables, a central tool carrier, and an example nozzle and feed hose. Numbered keys: 1 frame, 2 winches, 3 cables, 4 tool carrier, 5 example nozzle and hose. Not a dimensioned drawing; cable count and routes are simplified.</desc>
+  <rect width="1000" height="800" fill="#101714"/>
+  <g stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M120 600 325 440 800 540 595 730Z" fill="#18221d" stroke="#3b4942" stroke-width="3"/>
+    <g stroke="#74877c" stroke-width="6">
+      <path d="M325 440V140L800 240V540M325 440 800 540M325 140 120 300M800 240 595 400"/>
+      <path d="M325 220 385 153M800 320 733 226" stroke-width="4"/>
+    </g>
+    <g stroke="#7bbaa9" stroke-width="3">
+      <path d="M325 440V140L465 485M800 540V240L515 497M120 600V300L435 510M595 730V400L485 522"/>
+    </g>
+    <g stroke="#cbd5ce" stroke-width="6">
+      <path d="M120 600V300L595 400V730M120 600 595 730M120 300 325 140M595 400 800 240"/>
+      <path d="M120 390 190 315M595 490 525 385" stroke-width="4"/>
+    </g>
+    <g stroke="#a5b0aa" stroke-width="3" fill="#29392f">
+      <path d="M97 587 122 571 154 579 129 595ZM97 587V615L129 623V595M129 623 154 607V579"/>
+      <path d="M573 711 598 695 630 703 605 719ZM573 711V739L605 747V719M605 747 630 731V703"/>
+      <path d="M302 427 327 411 359 419 334 435ZM302 427V455L334 463V435M334 463 359 447V419"/>
+      <path d="M777 527 802 511 834 519 809 535ZM777 527V555L809 563V535M809 563 834 547V519"/>
+    </g>
+    <path d="M932 657C780 681 675 656 594 595S495 469 480 521" stroke="#263e33" stroke-width="16"/>
+    <path d="M932 657C780 681 675 656 594 595S495 469 480 521" stroke="#f2b84b" stroke-width="4" stroke-dasharray="9 9"/>
+    <g stroke="#a5b0aa" stroke-width="4">
+      <path d="M435 510 465 485 515 497 485 522ZM465 485V585L515 597V497M435 610 465 585"/>
+    </g>
+    <g fill="#f2b84b" stroke="#f2b84b" stroke-width="3">
+      <path d="M470 526H489V563L482 582V596H478V582L470 563Z"/>
+    </g>
+    <g stroke="#d9dfdb" stroke-width="4">
+      <path d="M435 510V610L485 622V522M485 622 515 597"/>
+    </g>
+    <g stroke="#a5b0aa" stroke-width="2">
+      <path d="M850 163 810 238M682 735 630 725M278 323 400 325M361 545H434M644 569 481 553"/>
+    </g>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="33" font-weight="600" text-anchor="middle">
+    <g><circle cx="859" cy="145" r="28" fill="#f2b84b"/><text x="859" y="157" fill="#101714">1</text></g>
+    <g><circle cx="710" cy="739" r="28" fill="#f2b84b"/><text x="710" y="751" fill="#101714">2</text></g>
+    <g><circle cx="250" cy="320" r="28" fill="#f2b84b"/><text x="250" y="332" fill="#101714">3</text></g>
+    <g><circle cx="333" cy="545" r="28" fill="#f2b84b"/><text x="333" y="557" fill="#101714">4</text></g>
+    <g><circle cx="672" cy="569" r="28" fill="#f2b84b"/><text x="672" y="581" fill="#101714">5</text></g>
+  </g>
+</svg>
