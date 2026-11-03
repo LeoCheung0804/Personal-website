@@ -24,6 +24,7 @@ const blogDir = path.join(__dirname, 'blog');
 const outputFile = path.join(__dirname, 'assets', 'data', 'posts.json');
 const sitemapFile = path.join(__dirname, 'sitemap.xml');
 const homepageFile = path.join(__dirname, 'index.html');
+const legacyPostFile = path.join(__dirname, 'blog-post.html');
 const checkMode = process.argv.includes('--check');
 
 const staticSitemapPages = [
@@ -311,7 +312,7 @@ function generateBlogPage(post) {
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="../assets/css/style.css?v=20261028-1" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261028-1" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261103-1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -425,14 +426,15 @@ ${postBody}
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20261027-2"></script>
-    <script src="../assets/js/i18n.js?v=20261028-1"></script>
-    <script src="../assets/js/theme.js?v=20261028-1"></script>
+    <script src="../assets/js/site-data.js?v=20261103-1"></script>
+    <script src="../assets/js/preferences.js?v=20261102-1"></script>
+    <script src="../assets/js/i18n.js?v=20261103-1"></script>
+    <script src="../assets/js/theme.js?v=20261102-1"></script>
     <script src="../assets/js/ui-interactions.js?v=20261028-1"></script>
     <script src="../assets/js/filters.js?v=20261028-1"></script>
     <script src="../assets/js/contact-form.js?v=20261023-1"></script>
     <script src="../assets/js/navigation.js?v=20261028-1"></script>
-    <script src="../assets/js/app-init.js?v=20261028-1"></script>
+    <script src="../assets/js/app-init.js?v=20261102-1"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
@@ -538,6 +540,16 @@ ${entries.map(entry => `  <url>
 `;
 }
 
+function syncLegacyPostRoutes(html, posts) {
+  const pattern = /(<script type="application\/json" id="legacy-post-routes">)[\s\S]*?(<\/script>)/g;
+  if ([...html.matchAll(pattern)].length !== 1) {
+    throw new Error('blog-post.html: expected one legacy-post-routes data block.');
+  }
+  const routes = Object.fromEntries(posts.map(post => [post.filename, post.url]));
+  const json = JSON.stringify(routes, null, 2).replace(/</g, '\\u003c');
+  return html.replace(pattern, (_, open, close) => `${open}\n${json}\n    ${close}`);
+}
+
 const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.md'));
 
 const posts = files.map(file => {
@@ -631,11 +643,13 @@ const generatedBlogPages = posts.map(post => {
 const generatedPostIndex = `${JSON.stringify(postIndex, null, 2)}\n`;
 const generatedSitemap = buildSitemap(posts);
 const generatedHomepage = syncHomepageBlogCards(fs.readFileSync(homepageFile, 'utf8'), postIndex);
+const generatedLegacyPost = syncLegacyPostRoutes(fs.readFileSync(legacyPostFile, 'utf8'), postIndex);
 const generatedWrites = [
   ...generatedBlogPages.map(({ outputPath, content }) => ({ targetPath: outputPath, content })),
   { targetPath: outputFile, content: generatedPostIndex },
   { targetPath: sitemapFile, content: generatedSitemap },
-  { targetPath: homepageFile, content: generatedHomepage }
+  { targetPath: homepageFile, content: generatedHomepage },
+  { targetPath: legacyPostFile, content: generatedLegacyPost }
 ];
 
 if (checkMode) {

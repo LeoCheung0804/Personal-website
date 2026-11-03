@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch(fetchUrl);
     if (!response.ok) throw new Error('Network response was not ok');
     const posts = await response.json();
+    if (!Array.isArray(posts)) throw new Error('Invalid blog index');
 
     loadedBlogPosts = posts;
     renderBlogPosts(loadedBlogPosts);

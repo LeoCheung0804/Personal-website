@@ -375,36 +375,50 @@
       }
 
       .rotation-dots {
-        position: absolute;
-        right: 18px;
-        bottom: 16px;
-        z-index: 4;
         display: flex;
         align-items: center;
-        gap: 8px;
-        padding: 7px 9px;
+        gap: 4px;
+        width: max-content;
+        max-width: 100%;
+        margin-inline: auto;
+        padding: 5px;
         border: 1px solid var(--jet);
         border-radius: 999px;
-        background: hsla(240, 2%, 12%, 0.82);
+        background: var(--eerie-black-2);
         box-shadow: var(--shadow-1);
       }
 
       .rotation-dot {
-        width: 8px;
-        height: 8px;
+        min-height: 44px;
+        padding: 8px 14px;
         border-radius: 999px;
-        background: var(--light-gray-70);
-        opacity: 0.58;
-        transition:
-          width var(--transition-1),
-          opacity var(--transition-1),
-          background var(--transition-1);
+        color: var(--light-gray);
+        font-size: 12px;
+        transition: background var(--transition-1), color var(--transition-1);
       }
 
       .rotation-dot.active {
-        width: 22px;
+        color: var(--smoky-black);
         background: var(--orange-yellow-crayola);
-        opacity: 1;
+      }
+
+      :root.light-theme .rotation-dot.active {
+        color: #fff;
+        background: var(--vegas-gold);
+      }
+
+      .rotation-dot:focus-visible {
+        outline: 2px solid var(--orange-yellow-crayola);
+        outline-offset: 2px;
+      }
+
+      .rotation-dot:not(.active):hover {
+        background: var(--jet);
+      }
+
+      .rotation-dot:disabled {
+        opacity: 0.6;
+        cursor: default;
       }
 
       .panel-header {
@@ -799,6 +813,13 @@
         font-family: "Noto Sans TC", var(--ff-poppins);
         font-size: clamp(28px, 3.4vw, 44px);
         line-height: 1;
+      }
+
+      .next-arrival .minutes.unavailable {
+        color: var(--light-gray);
+        font-size: clamp(14px, 2vw, 20px);
+        line-height: 1.3;
+        overflow-wrap: anywhere;
       }
 
       .next-arrival .unit {
@@ -1304,12 +1325,6 @@
         .source-row {
           display: none;
         }
-
-        .rotation-dots {
-          right: 12px;
-          bottom: 10px;
-          padding: 6px 8px;
-        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -1416,6 +1431,7 @@
           <div class="dashboard-flip-inner">
             <section
               class="panel dashboard-face dashboard-face-weather weather-panel"
+              id="weather-panel"
               aria-labelledby="weather-title"
               data-dashboard-face="weather"
             >
@@ -1472,8 +1488,10 @@
 
             <section
               class="panel dashboard-face dashboard-face-bus bus-panel"
+              id="bus-panel"
               aria-labelledby="bus-title"
               aria-hidden="true"
+              inert
               data-dashboard-face="bus"
             >
             <div class="panel-header">
@@ -1534,10 +1552,12 @@
             </section>
           </div>
 
-          <div class="rotation-dots" aria-hidden="true">
-            <span class="rotation-dot active" data-rotation-dot="weather"></span>
-            <span class="rotation-dot" data-rotation-dot="bus"></span>
-          </div>
+        </div>
+
+        <div class="rotation-dots" role="group" data-i18n-aria-label="rotation.controls" aria-label="Dashboard panels">
+          <button type="button" class="rotation-dot active" data-rotation-face="weather" aria-controls="weather-panel" aria-pressed="true" data-i18n="rotation.weather">Weather</button>
+          <button type="button" class="rotation-dot" data-rotation-face="bus" aria-controls="bus-panel" aria-pressed="false" data-i18n="rotation.bus">Buses</button>
+          <button type="button" class="rotation-dot" data-rotation-toggle><span data-i18n="rotation.pause">Pause</span></button>
         </div>
 
         <div class="source-row">
@@ -1554,6 +1574,7 @@
       </section>
     </main>
 
+    <script src="./assets/js/preferences.js?v=20261102-1"></script>
     <script>
       "use strict";
 
@@ -1581,6 +1602,12 @@
           "action.refresh": "Refresh",
           "action.detect": "Find my location",
           "language.toggle": "Switch language",
+          "rotation.controls": "Dashboard panels",
+          "rotation.weather": "Weather",
+          "rotation.bus": "Buses",
+          "rotation.pause": "Pause",
+          "rotation.resume": "Resume",
+          "rotation.off": "Auto off",
           "status.stop": "Stop",
           "status.stopValue": "Sheung Tak Bus Terminus, Tseung Kwan O",
           "status.myLocation": "My Location",
@@ -1613,6 +1640,8 @@
           "bus.minuteShort": "Min.",
           "bus.arrived": "Arrived",
           "bus.noServiceShort": "No service",
+          "bus.loading": "Loading",
+          "bus.unavailable": "Unavailable",
           "bus.waiting": "--",
           "bus.finalPassed": "Final bus",
           "bus.scheduled": "Scheduled",
@@ -1627,7 +1656,7 @@
           "source.live": "Live data will refresh automatically.",
           "source.refreshed": "Live data refreshed at",
           "source.partial":
-            "Some live data could not be loaded. The dashboard is keeping the latest available values.",
+            "Some live data could not be loaded. Unavailable bus arrivals are hidden; check the update times.",
           "source.sources": "Sources:",
         },
         zhHant: {
@@ -1638,6 +1667,12 @@
           "action.refresh": "更新",
           "action.detect": "定位",
           "language.toggle": "切換語言",
+          "rotation.controls": "儀表板面板",
+          "rotation.weather": "天氣",
+          "rotation.bus": "巴士",
+          "rotation.pause": "暫停",
+          "rotation.resume": "繼續",
+          "rotation.off": "自動切換已關閉",
           "status.stop": "車站",
           "status.stopValue": "尚德總站，將軍澳",
           "status.myLocation": "我的位置",
@@ -1670,6 +1705,8 @@
           "bus.minuteShort": "分",
           "bus.arrived": "已到站",
           "bus.noServiceShort": "暫無",
+          "bus.loading": "載入中",
+          "bus.unavailable": "未能取得",
           "bus.waiting": "--",
           "bus.finalPassed": "尾班已過",
           "bus.scheduled": "原定班次",
@@ -1683,7 +1720,7 @@
           "location.coordinates": "已取得座標",
           "source.live": "即時資料會自動更新。",
           "source.refreshed": "即時資料更新於",
-          "source.partial": "部分即時資料未能載入，儀表板會保留最近可用資料。",
+          "source.partial": "部分即時資料未能載入。未能更新的巴士到站時間已隱藏，請留意資料更新時間。",
           "source.sources": "資料來源：",
         },
       };
@@ -1740,29 +1777,27 @@
         },
       ];
 
-      const DEMO_ETA = {
-        "296A": [1, 8, 19],
-        "296C": [5, 25, 45],
-        "296D": [0, 20, 40],
-      };
-
       const state = {
         language: getInitialLanguage(),
         activeFace: "weather",
         lastUpdated: null,
         refreshTimer: null,
         rotationTimer: null,
+        rotationPaused: false,
+        rotationHovered: false,
+        refreshId: 0,
         userLocation: null,
         weatherPayload: null,
-        busRows: BUS_ROUTES.map((route) => createDemoBusRow(route)),
+        busRows: BUS_ROUTES.map((route) => createPendingBusRow(route)),
       };
+      const rotationMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
       const $ = (selector, root = document) => root.querySelector(selector);
       const $$ = (selector, root = document) =>
         Array.from(root.querySelectorAll(selector));
 
       function getInitialLanguage() {
-        const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+        const storedLanguage = readPreference(LANGUAGE_STORAGE_KEY);
         return SUPPORTED_LANGUAGES.includes(storedLanguage)
           ? storedLanguage
           : "en";
@@ -1882,10 +1917,10 @@
         return response.json();
       }
 
-      function hkoUrl(dataType) {
+      function hkoUrl(dataType, language) {
         const params = new URLSearchParams({
           dataType,
-          lang: HKO_LANGUAGE[state.language],
+          lang: HKO_LANGUAGE[language],
         });
         return `${HKO_ENDPOINT}?${params}`;
       }
@@ -1917,17 +1952,16 @@
         if (element) element.textContent = value;
       }
 
-      function createDemoBusRow(config) {
-        const values = DEMO_ETA[config.route] || [];
+      function createPendingBusRow(config) {
         return {
           ...config,
           destinationTc: config.destTc,
           destinationEn: config.destEn,
           remark: "",
-          minutes: values[0] ?? null,
-          following: values.slice(1),
+          minutes: null,
+          following: [],
           sourceTime: null,
-          isDemo: true,
+          loadState: "loading",
         };
       }
 
@@ -1964,7 +1998,7 @@
           following: following.filter((value) => value !== null),
           sourceTime:
             firstRow.data_timestamp || payload.generated_timestamp || null,
-          isDemo: false,
+          loadState: "ready",
         };
       }
 
@@ -1974,7 +2008,8 @@
 
         container.innerHTML = rows
           .map((row) => {
-            const followingItems = row.following.length
+            const ready = row.loadState === "ready";
+            const followingItems = ready && row.following.length
               ? row.following
                   .map((time) => {
                     return `<span class="following-time">${etaLabel(
@@ -1984,7 +2019,7 @@
                   })
                   .join("")
               : `<span class="following-time">${
-                  shortRemark(row.remark) || t("bus.waiting")
+                  (ready && shortRemark(row.remark)) || t("bus.waiting")
                 }</span>`;
 
             const isArrived = row.minutes !== null && row.minutes <= 0;
@@ -1995,13 +2030,15 @@
                 ? "minutes urgent"
                 : "minutes";
             const nextContent =
-              row.minutes === null
-                ? `<span class="minutes done">${
-                    shortRemark(row.remark) || t("bus.noServiceShort")
-                  }</span>`
-                : isArrived
-                  ? `<span class="${nextClass}">${t("bus.arrived")}</span>`
-                  : `<span class="${nextClass}">${row.minutes}</span><span class="unit">${t("bus.minuteShort")}</span>`;
+              !ready
+                ? `<span class="minutes unavailable">${t(row.loadState === "loading" ? "bus.loading" : "bus.unavailable")}</span>`
+                : row.minutes === null
+                  ? `<span class="minutes done">${
+                      shortRemark(row.remark) || t("bus.noServiceShort")
+                    }</span>`
+                  : isArrived
+                    ? `<span class="${nextClass}">${t("bus.arrived")}</span>`
+                    : `<span class="${nextClass}">${row.minutes}</span><span class="unit">${t("bus.minuteShort")}</span>`;
             const destination = isZh() ? row.destinationTc : row.destinationEn;
             const stopName = isZh() ? row.stopNameTc : row.stopNameEn;
             const stopSubtext = isZh()
@@ -2237,13 +2274,14 @@
         );
       }
 
-      async function updateWeather() {
+      async function updateWeather(requestId, language) {
         const [current, forecast, localForecast, warnings] = await Promise.all([
-          fetchJson(hkoUrl("rhrread")),
-          fetchJson(hkoUrl("fnd")),
-          fetchJson(hkoUrl("flw")),
-          fetchJson(hkoUrl("warnsum")),
+          fetchJson(hkoUrl("rhrread", language)),
+          fetchJson(hkoUrl("fnd", language)),
+          fetchJson(hkoUrl("flw", language)),
+          fetchJson(hkoUrl("warnsum", language)),
         ]);
+        if (requestId !== state.refreshId) return;
         state.weatherPayload = { current, forecast, localForecast, warnings };
         renderWeather(state.weatherPayload);
         setText(
@@ -2252,16 +2290,24 @@
         );
       }
 
-      async function updateBus() {
-        const rows = await Promise.all(
-          BUS_ROUTES.map(async (config) => {
-            const payload = await fetchJson(
-              `${KMB_BASE}/eta/${config.stop}/${config.route}/1`
-            );
-            return mapEtaRows(config, payload);
-          })
-        );
-
+      async function updateBus(requestId) {
+        let rows;
+        try {
+          rows = await Promise.all(
+            BUS_ROUTES.map(async (config) => {
+              const payload = await fetchJson(
+                `${KMB_BASE}/eta/${config.stop}/${config.route}/1`
+              );
+              return mapEtaRows(config, payload);
+            })
+          );
+        } catch (error) {
+          if (requestId !== state.refreshId) return;
+          state.busRows = state.busRows.map((row) => ({ ...row, loadState: "unavailable" }));
+          renderBusRows(state.busRows);
+          throw error;
+        }
+        if (requestId !== state.refreshId) return;
         state.busRows = rows;
         renderBusRows(rows);
         const latest = rows
@@ -2296,23 +2342,62 @@
 
         $$("[data-dashboard-face]").forEach((panel) => {
           const isActive = panel.dataset.dashboardFace === state.activeFace;
+          if (!isActive && panel.contains(document.activeElement)) {
+            $(`[data-rotation-face="${state.activeFace}"]`)?.focus();
+          }
           panel.setAttribute("aria-hidden", String(!isActive));
+          panel.inert = !isActive;
         });
 
-        $$("[data-rotation-dot]").forEach((dot) => {
-          dot.classList.toggle(
-            "active",
-            dot.dataset.rotationDot === state.activeFace
-          );
+        $$("[data-rotation-face]").forEach((button) => {
+          const active = button.dataset.rotationFace === state.activeFace;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", String(active));
         });
       }
 
-      function startDashboardRotation() {
+      function syncDashboardRotation() {
         window.clearInterval(state.rotationTimer);
-        setDashboardFace("weather");
+        const toggle = $("[data-rotation-toggle]");
+        const key = rotationMotion.matches ? "rotation.off" : state.rotationPaused ? "rotation.resume" : "rotation.pause";
+        toggle.disabled = rotationMotion.matches;
+        toggle.querySelector("span").dataset.i18n = key;
+        toggle.querySelector("span").textContent = t(key);
+        if (state.rotationPaused || rotationMotion.matches || state.rotationHovered
+          || document.hidden || $("[data-rotator]").contains(document.activeElement)) return;
         state.rotationTimer = window.setInterval(() => {
           setDashboardFace(state.activeFace === "weather" ? "bus" : "weather");
         }, ROTATION_MS);
+      }
+
+      function startDashboardRotation() {
+        const rotator = $("[data-rotator]");
+        $$("[data-rotation-face]").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.rotationPaused = true;
+            setDashboardFace(button.dataset.rotationFace);
+            syncDashboardRotation();
+          });
+        });
+        $("[data-rotation-toggle]").addEventListener("click", () => {
+          state.rotationPaused = !state.rotationPaused;
+          syncDashboardRotation();
+        });
+        rotator.addEventListener("focusin", syncDashboardRotation);
+        rotator.addEventListener("focusout", () => queueMicrotask(syncDashboardRotation));
+        rotator.addEventListener("pointerenter", (event) => {
+          if (event.pointerType !== "mouse") return;
+          state.rotationHovered = true;
+          syncDashboardRotation();
+        });
+        rotator.addEventListener("pointerleave", () => {
+          state.rotationHovered = false;
+          syncDashboardRotation();
+        });
+        rotationMotion.addEventListener("change", syncDashboardRotation);
+        document.addEventListener("visibilitychange", syncDashboardRotation);
+        setDashboardFace(state.activeFace);
+        syncDashboardRotation();
       }
 
       function updateLanguageButton() {
@@ -2340,6 +2425,7 @@
           $("[data-live-status]")?.dataset.statusKey || "status.connecting";
         setStatus(activeStatusKey, activeStatusKey === "status.partial");
         updateLanguageButton();
+        syncDashboardRotation();
         renderUserLocation();
         renderBusRows(state.busRows);
 
@@ -2354,7 +2440,7 @@
       function setLanguage(language) {
         if (!SUPPORTED_LANGUAGES.includes(language)) return;
         state.language = language;
-        localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+        writePreference(LANGUAGE_STORAGE_KEY, language);
         applyTranslations();
         refreshDashboard();
       }
@@ -2364,13 +2450,16 @@
       }
 
       async function refreshDashboard() {
+        const requestId = ++state.refreshId;
+        const language = state.language;
         const refreshButton = $("[data-refresh-btn]");
         const sourceStatus = $("[data-source-status]");
 
         refreshButton?.setAttribute("disabled", "true");
         setStatus("status.updating");
 
-        const results = await Promise.allSettled([updateWeather(), updateBus()]);
+        const results = await Promise.allSettled([updateWeather(requestId, language), updateBus(requestId)]);
+        if (requestId !== state.refreshId) return;
         const failed = results.filter((result) => result.status === "rejected");
 
         state.lastUpdated = new Date();
@@ -2402,7 +2491,7 @@
       }
 
       function initTheme() {
-        const isLightTheme = localStorage.getItem("theme") === "light";
+        const isLightTheme = readPreference("theme") === "light";
         const themeBtn = $("[data-theme-btn]");
         if (isLightTheme) document.documentElement.classList.add("light-theme");
         if (themeBtn && isLightTheme) {
@@ -2415,7 +2504,7 @@
           themeBtn
             .querySelector("ion-icon")
             ?.setAttribute("name", isLight ? "moon-outline" : "sunny-outline");
-          localStorage.setItem("theme", isLight ? "light" : "dark");
+          writePreference("theme", isLight ? "light" : "dark");
         });
       }
 

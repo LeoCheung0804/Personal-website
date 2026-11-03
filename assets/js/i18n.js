@@ -2,9 +2,9 @@
 
 const supportedLanguages = Object.keys(translations);
 const defaultLanguage = "en";
-const storedLanguage = localStorage.getItem("language");
+const storedLanguage = readPreference("language");
 let currentLanguage = supportedLanguages.includes(storedLanguage) ? storedLanguage : defaultLanguage;
-let loadedBlogPosts = [];
+let loadedBlogPosts = null;
 const projectMediaByContainer = new WeakMap();
 
 function getTranslation(key, language = currentLanguage) {
@@ -243,36 +243,46 @@ function formatPostDate(date) {
   return new Date(date).toLocaleDateString(locale, {
     month: "short",
     day: "2-digit",
-    year: "numeric"
+    year: "numeric",
+    timeZone: "UTC"
   });
+}
+
+function escapeBlogHtml(value = "") {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function renderBlogPosts(posts = loadedBlogPosts) {
   const blogList = document.getElementById('dynamic-blog-list');
-  if (!blogList) return;
+  if (!blogList || !Array.isArray(posts)) return;
 
   blogList.innerHTML = '';
 
   posts.forEach(post => {
-    const title = localizePostField(post, "title") || post.filename;
-    const category = localizePostField(post, "category");
-    const summary = localizePostField(post, "summary");
+    const title = escapeBlogHtml(localizePostField(post, "title") || post.filename);
+    const category = escapeBlogHtml(localizePostField(post, "category"));
+    const summary = escapeBlogHtml(localizePostField(post, "summary"));
     const dateStr = formatPostDate(post.date);
     const imageMedia = post.imageMedia;
     const imageAttributes = imageMedia
-      ? `src="${imageMedia.src}" srcset="${imageMedia.srcset}" sizes="${imageMedia.sizes}" width="${imageMedia.width}" height="${imageMedia.height}" data-media-source="${imageMedia.source}"`
-      : `src="${post.image}"`;
+      ? `src="${escapeBlogHtml(imageMedia.src)}" srcset="${escapeBlogHtml(imageMedia.srcset)}" sizes="${escapeBlogHtml(imageMedia.sizes)}" width="${escapeBlogHtml(imageMedia.width)}" height="${escapeBlogHtml(imageMedia.height)}" data-media-source="${escapeBlogHtml(imageMedia.source)}"`
+      : `src="${escapeBlogHtml(post.image)}"`;
 
     const li = document.createElement('li');
     li.className = 'blog-post-item ';
 
     li.innerHTML = `
-      <a href="${post.url || `blog-post.html?post=${post.filename}`}">
+      <a href="${escapeBlogHtml(post.url || `blog-post.html?post=${encodeURIComponent(post.filename)}`)}">
         ${post.image ? `<figure class="blog-banner-box"><img ${imageAttributes} alt="${title}" loading="lazy" decoding="async"></figure>` : ''}
         <div class="blog-content">
           <div class="blog-meta">
             ${category ? `<p class="blog-category">${category}</p><span class="dot"></span>` : ''}
-            ${post.date ? `<time datetime="${post.date}">${dateStr}</time>` : ''}
+            ${post.date ? `<time datetime="${escapeBlogHtml(post.date)}">${dateStr}</time>` : ''}
           </div>
           <h3 class="h3 blog-item-title">${title}</h3>
           <p class="blog-text">${summary}</p>
@@ -303,7 +313,7 @@ function syncSelectLabels() {
 
 function setLanguage(language) {
   currentLanguage = supportedLanguages.includes(language) ? language : defaultLanguage;
-  localStorage.setItem("language", currentLanguage);
+  writePreference("language", currentLanguage);
   applyTranslations(currentLanguage);
   updateLanguageButton();
   syncSelectLabels();

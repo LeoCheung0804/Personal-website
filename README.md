@@ -13,7 +13,7 @@ MIT
 
 ## Site Content Sources
 
-The site remains static HTML, CSS, and JavaScript, with no package installation or frontend build framework required.
+The site remains static HTML, CSS, and JavaScript, with no package installation or frontend build framework required to serve it. The optional npm development dependency is only for browser regression checks.
 
 Shared profile details, English and Traditional Chinese interface copy, and all bilingual project-detail content are maintained in `assets/js/site-data.js`. That file is consumed directly in the browser and by the Node.js content synchronizer, so it is the source of truth for those values.
 
@@ -41,7 +41,7 @@ retain lazy loading. Keep images shared across a project's language versions so
 each translated image can reuse its generated media metadata. The static audit
 checks this mapping for images in the media manifest.
 
-The generators update the shared profile shell and translated fallbacks on the homepage, project pages, the legacy blog page, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English project overviews and detail bodies aligned with the same project registry. Do not edit generated project `.project-intro-copy`, `.project-lead-media`, or `.project-content` blocks directly.
+The generators update the shared profile shell and translated fallbacks on the homepage, project pages, and generated blog pages. They also keep project URLs, sitemap entries, page and social metadata, JSON-LD catalog data, and English project overviews and detail bodies aligned with the same project registry. Do not edit generated project `.project-intro-copy`, `.project-lead-media`, or `.project-content` blocks directly.
 
 Project pages begin with a `.project-lead` containing the overview and existing
 gallery, or the first image figure/media grid extracted from canonical project
@@ -70,12 +70,47 @@ python scripts/optimize-images.py --check
 node generate-blog-index.js --check
 node generate-site-content.js --check
 node scripts/check-static-site.js
+node scripts/check-runtime.js
 ```
 
 The static-site audit verifies canonical and social metadata, JSON-LD, sitemap
 coverage and dates, case-sensitive local assets, internal links and fragments,
 unique IDs, heading structure, and the generated homepage blog fallback. The
 same audit runs in GitHub Actions before generated content can be committed.
+
+The dependency-free runtime checks cover denied preference storage, the checked-in
+blog fallback and legacy redirects, date-only publication dates, unavailable bus arrivals, dashboard
+rotation and overlapping refreshes. Both workflow jobs run these checks.
+Preferences are optional: `assets/js/preferences.js` loads before the portfolio
+language/theme scripts and the dashboard runtime so storage restrictions cannot
+block the page.
+
+The dashboard starts with loading placeholders and hides bus arrival values when
+a refresh fails. Weather/Buses buttons provide manual panel selection; Pause/Resume
+controls automatic switching. Reduced motion disables automatic switching, and
+hover, keyboard focus and a hidden browser tab pause it. Inactive panels are inert.
+Only the latest refresh may update weather, arrivals or refresh status.
+
+Browser regression checks use pinned Playwright/Chromium and Node.js 20 or newer:
+
+```powershell
+npm ci --ignore-scripts
+npx playwright install chromium
+npm run test:browser
+```
+
+The suite reads checked-in files through request interception; no local server is
+needed. It stubs all external services, including forms and analytics. It covers
+denied storage and quota errors, failed/pending/invalid blog data, literal metadata,
+publication dates in a time zone west of UTC, dashboard failure/recovery, keyboard
+focus, reduced motion, out-of-order weather responses, and old article redirects.
+Failures retain a screenshot and trace in the ignored `test-results` directory.
+
+Both workflow jobs run the Node runtime checks, CU-Brick geometry/kinematic checks
+and browser suite before accepting generated content. Changes anywhere under
+`scripts/` (including `profile-card.js`), browser tests/configuration, model assets,
+vendored modules, or the workflow itself trigger these checks on pushes to `main`
+and pull requests. CI uploads browser failure evidence for seven days.
 
 ## Visual System
 
@@ -264,3 +299,7 @@ Notes:
 - If you add or edit posts locally, run both generators before committing (or rely on the workflow to update the generated files after push).
 - The homepage contains checked-in blog cards for crawlers and no-JavaScript visitors, then refreshes them from `assets/data/posts.json` when JavaScript is available.
 - `404.html` provides a noindex recovery page for unknown GitHub Pages routes.
+- Older `blog-post.html?post=...` links redirect to generated articles through a
+  route map maintained by the blog generator. The redirect uses no remote parser
+  or data request. Unknown links and visitors without JavaScript retain a
+  bilingual link back to the blog. Do not edit the generated route map by hand.

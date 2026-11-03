@@ -199,6 +199,8 @@ body.portfolio-site > main.not-found-page {
 }
 
 .portfolio-site .not-found-actions .form-btn {
+  display: inline-flex;
+  margin: 0;
   width: auto;
 }
 

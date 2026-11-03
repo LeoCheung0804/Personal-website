@@ -8,10 +8,14 @@ on:
       - "posts/**/*.md"
       - "generate-blog-index.js"
       - "generate-site-content.js"
-      - "scripts/generation-transaction.js"
-      - "scripts/media-markup.js"
-      - "scripts/optimize-images.py"
-      - "scripts/check-static-site.js"
+      - "scripts/**"
+      - "tests/**"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.js"
+      - ".github/workflows/update-blog-index.yml"
+      - "assets/models/**"
+      - "assets/vendor/**"
       - "assets/js/site-data.js"
       - "assets/js/**/*.js"
       - "assets/css/**/*.css"
@@ -32,10 +36,14 @@ on:
       - "posts/**/*.md"
       - "generate-blog-index.js"
       - "generate-site-content.js"
-      - "scripts/generation-transaction.js"
-      - "scripts/media-markup.js"
-      - "scripts/optimize-images.py"
-      - "scripts/check-static-site.js"
+      - "scripts/**"
+      - "tests/**"
+      - "package.json"
+      - "package-lock.json"
+      - "playwright.config.js"
+      - ".github/workflows/update-blog-index.yml"
+      - "assets/models/**"
+      - "assets/vendor/**"
       - "assets/js/site-data.js"
       - "assets/js/**/*.js"
       - "assets/css/**/*.css"
@@ -99,6 +107,29 @@ jobs:
       - name: Audit static reliability and SEO
         run: node scripts/check-static-site.js
 
+      - name: Check browser runtime branches
+        run: node scripts/check-runtime.js
+
+      - name: Check CU-Brick model invariants
+        run: node --experimental-default-type=module scripts/check-cu-brick-model.mjs
+
+      - name: Install browser test dependencies
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+
+      - name: Check browser failure cases
+        run: npm run test:browser
+
+      - name: Upload browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failures
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Commit generated site content
         run: |
           mapfile -t generated_paths < <(node generate-site-content.js --list-files)
@@ -145,6 +176,29 @@ jobs:
 
       - name: Audit static reliability and SEO
         run: node scripts/check-static-site.js
+
+      - name: Check browser runtime branches
+        run: node scripts/check-runtime.js
+
+      - name: Check CU-Brick model invariants
+        run: node --experimental-default-type=module scripts/check-cu-brick-model.mjs
+
+      - name: Install browser test dependencies
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+
+      - name: Check browser failure cases
+        run: npm run test:browser
+
+      - name: Upload browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failures
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
 
       - name: Verify committed artifacts are current
         run: |

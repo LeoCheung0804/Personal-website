@@ -1,342 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog Post - Leo Cheung</title>
-    <meta
-      name="description"
-      content="Engineering notes from Leo Cheung on construction robotics, automation, field testing, conferences, and project milestones."
-    />
+    <title>Article Link | Cheung Man Loc</title>
+    <meta name="description" content="Open an older article link or return to Leo Cheung's blog." />
     <meta name="author" content="Cheung Man Loc" />
     <meta name="robots" content="noindex, follow" />
-
-    <!-- Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-LEBDJN7H6D"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-LEBDJN7H6D");
-    </script>
-
-    <link
-      rel="shortcut icon"
-      href="./assets/images/icon.ico"
-      type="image/x-icon"
-    />
+    <link rel="shortcut icon" href="./assets/images/icon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./assets/css/style.css?v=20261028-1" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261028-1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261103-1" />
   </head>
   <body class="portfolio-site">
-    <a class="skip-link" href="#content-start" data-i18n="accessibility.skipToContent">Skip to main content</a>
-    <main>
-      <aside class="sidebar" data-sidebar>
-        <div class="sidebar-info">
-          <figure class="avatar-box">
-            <img
-              src="./assets/images/optimized/profile-jpg-960.webp"
-              alt="Cheung Man Loc, known as Leo Cheung"
-              width="1188" data-media-source="assets/images/profile.jpg" height="1188" decoding="async" srcset="./assets/images/optimized/profile-jpg-240.webp 240w, ./assets/images/optimized/profile-jpg-480.webp 480w, ./assets/images/optimized/profile-jpg-960.webp 960w, ./assets/images/optimized/profile-jpg-1188.webp 1188w" sizes="(min-width: 1180px) 80px, (min-width: 621px) 72px, 48px" loading="eager"
-            />
-          </figure>
-          <div class="info-content">
-            <p class="name" title="Cheung Man Loc (Leo Cheung)">Leo Cheung<span class="full-name">Cheung Man Loc</span></p>
-            <p class="title">Robotics Engineer</p>
-          </div>
-          <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-controls="sidebar-contact-details" data-i18n-aria-label="sidebar.showContacts" aria-label="Show Contacts" type="button"><span data-i18n="sidebar.contacts">Contact</span><ion-icon name="chevron-down" aria-hidden="true"></ion-icon></button>
+    <main class="not-found-page">
+      <article class="not-found-card active" aria-labelledby="legacy-post-title">
+        <h1 class="h2 article-title" id="legacy-post-title">Article link</h1>
+        <p id="legacy-post-status" role="status">If this link does not open, choose an article from the blog.</p>
+        <p id="legacy-post-status-zh" lang="zh-Hant">如果此連結未能開啟，請到網誌選擇文章。</p>
+        <div class="not-found-actions">
+          <a class="form-btn" href="/#blog">Browse the blog / <span lang="zh-Hant">返回網誌</span></a>
         </div>
-        <div class="sidebar-info_more" id="sidebar-contact-details">
-          <div class="separator"></div>
-          <ul class="contacts-list">
-            <li class="contact-item contact-location" data-contact-id="location">
-              <span class="contact-title" data-i18n="contact.location">Location</span>
-              <ion-icon class="contact-icon" name="location-outline" aria-hidden="true"></ion-icon>
-              <address class="contact-value" data-i18n="contact.hongKong">Hong Kong</address>
-            </li>
-            <li class="contact-item contact-primary" data-contact-id="email">
-              <a class="contact-link" href="mailto:leocheung0804@gmail.com">
-                <ion-icon class="contact-icon" name="mail-outline" aria-hidden="true"></ion-icon>
-                <span class="contact-title" data-i18n="contact.email">Email</span>
-                <span class="contact-value">leocheung0804@gmail.com</span>
-              </a>
-            </li>
-            <li class="contact-item contact-affiliation" data-contact-id="employer">
-              <a class="contact-link" href="https://www.c3robotics.com.hk">
-                <ion-icon class="contact-icon" name="business-outline" aria-hidden="true"></ion-icon>
-                <span class="contact-title" data-i18n="contact.employer">Employer</span>
-                <span class="contact-value">C3 Construction Robotics Limited</span>
-              </a>
-            </li>
-            <li class="contact-item contact-affiliation" data-contact-id="organization">
-              <a class="contact-link" href="https://c3robolab.mae.cuhk.edu.hk/">
-                <ion-icon class="contact-icon" name="link-outline" aria-hidden="true"></ion-icon>
-                <span class="contact-title" data-i18n="contact.organization">Organization</span>
-                <span class="contact-value">C3 Robotics Lab</span>
-              </a>
-            </li>
-            <li class="contact-item contact-profile" data-contact-id="github">
-              <a class="contact-link" href="https://github.com/LeoCheung0804" aria-label="GitHub: LeoCheung0804">
-                <ion-icon class="contact-icon" name="logo-octocat" aria-hidden="true"></ion-icon>
-                <span class="contact-title">GitHub</span>
-                <span class="contact-value">LeoCheung0804</span>
-              </a>
-            </li>
-            <li class="contact-item contact-profile" data-contact-id="linkedin">
-              <a class="contact-link" href="https://www.linkedin.com/in/leocheung0804" aria-label="LinkedIn: leocheung0804">
-                <ion-icon class="contact-icon" name="logo-linkedin" aria-hidden="true"></ion-icon>
-                <span class="contact-title">LinkedIn</span>
-                <span class="contact-value">leocheung0804</span>
-              </a>
-            </li>
-            <li class="contact-item contact-profile" data-contact-id="orcid">
-              <a class="contact-link" href="https://orcid.org/0009-0003-1691-6603" aria-label="ORCID: 0009-0003-1691-6603">
-                <ion-icon class="contact-icon" name="book-outline" aria-hidden="true"></ion-icon>
-                <span class="contact-title">ORCID</span>
-                <span class="contact-value">0009-0003-1691-6603</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </aside>
-
-      <div class="main-content">
-        <nav class="navbar" data-mobile-nav="" data-i18n-aria-label="nav.primary" aria-label="Primary navigation">
-          <button
-            class="navbar-menu-btn"
-            type="button"
-            aria-expanded="false"
-            aria-controls="primary-navigation"
-            aria-label="Menu"
-            data-i18n-aria-label="nav.menu"
-            data-mobile-nav-btn=""
-          >
-            <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-            <span data-i18n="nav.menu">Menu</span>
-          </button>
-
-          <div class="navbar-scroll" id="primary-navigation" data-mobile-nav-panel="">
-            <ul class="navbar-list">
-            <li class="navbar-item">
-              <a href="/#about" class="navbar-link" data-nav-link data-i18n="nav.about">About</a>
-            </li>
-            <li class="navbar-item">
-              <a href="/#resume" class="navbar-link" data-nav-link data-i18n="nav.resume">Resume</a>
-            </li>
-            <li class="navbar-item">
-              <a href="/#portfolio" class="navbar-link" data-nav-link data-i18n="nav.projects">Projects</a>
-            </li>
-            <li class="navbar-item">
-              <a href="/#publications" class="navbar-link" data-nav-link data-i18n="nav.publications">Research</a>
-            </li>
-            <li class="navbar-item">
-              <a href="/#blog" class="navbar-link active" data-nav-link data-i18n="nav.blog">Blog</a>
-            </li>
-            <li class="navbar-item">
-              <a href="/#contact" class="navbar-link" data-nav-link data-i18n="nav.contact">Contact</a>
-            </li>
-            </ul>
-          </div>
-
-          <ul class="navbar-actions" aria-label="Language and appearance" data-i18n-aria-label="nav.preferences">
-            <li class="navbar-item navbar-action-item">
-              <button class="navbar-link lang-btn" aria-label="Switch language" data-i18n-aria-label="language.toggle" data-lang-btn>
-                <span data-lang-label>ZH</span>
-              </button>
-            </li>
-            <li class="navbar-item navbar-action-item">
-              <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
-                <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
-              </button>
-            </li>
-          </ul>
-        </nav>
-
-        <span class="content-start" id="content-start" tabindex="-1"></span>
-
-        <article class="blog-post-full active" data-page="blog-post">
-          <header>
-            <a href="/#blog" class="btn-back" data-i18n="blog.backToBlog">Back to Blog</a>
-            <h1 class="h2 article-title" id="blog-title"></h1>
-            <div class="blog-meta">
-              <p class="blog-category" id="blog-category"></p>
-              <span class="dot"></span>
-              <time datetime="" id="blog-date"></time>
-            </div>
-          </header>
-          <figure class="blog-banner-box">
-            <img src="" alt="" id="blog-image" width="1600" height="900" loading="lazy" />
-          </figure>
-          <div class="blog-content" id="blog-content">
-            <!-- Markdown content will be inserted here -->
-          </div>
-          <div id="blog-error" style="display:none; margin-top: 20px;">
-            <p data-i18n="blog.loadError">Could not load the blog post. Please try again later.</p>
-          </div>
-        </article>
-
-        <footer class="footer">
-          <p class="copyright">&copy; 2026 Cheung Man Loc (Leo Cheung)</p>
-          <a href="#" class="back-to-top">Back to Top</a>
-        </footer>
-
-      </div>
+      </article>
     </main>
-
-    <script src="./assets/js/site-data.js?v=20261027-2"></script>
-    <script src="./assets/js/i18n.js?v=20261028-1"></script>
-    <script src="./assets/js/theme.js?v=20261028-1"></script>
-    <script src="./assets/js/ui-interactions.js?v=20261028-1"></script>
-    <script src="./assets/js/filters.js?v=20261028-1"></script>
-    <script src="./assets/js/contact-form.js?v=20261023-1"></script>
-    <script src="./assets/js/navigation.js?v=20261028-1"></script>
-    <script src="./assets/js/app-init.js?v=20261028-1"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const post = urlParams.get("post");
-        const getLanguage = () =>
-          localStorage.getItem("language") === "zhHant" ? "zhHant" : "en";
-        const blogState = { attributes: {}, body: "" };
-
-        const localizeField = (field) => {
-          const language = getLanguage();
-          const camelKey = `${field}${language === "zhHant" ? "ZhHant" : "En"}`;
-          const snakeKey = `${field}_${language}`;
-
-          return (
-            blogState.attributes[camelKey] ||
-            blogState.attributes[snakeKey] ||
-            blogState.attributes[field] ||
-            ""
-          );
-        };
-
-        const renderBlogPost = () => {
-          if (!blogState.body) return;
-
-          const language = getLanguage();
-          document.documentElement.lang =
-            language === "zhHant" ? "zh-Hant" : "en";
-
-          const title = localizeField("title");
-          const category = localizeField("category");
-          const image = blogState.attributes.image || "";
-          const dateValue = blogState.attributes.date || "";
-          const dateLabel = dateValue
-            ? new Date(dateValue).toLocaleDateString(
-                language === "zhHant" ? "zh-HK" : "en-US",
-                {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                }
-              )
-            : "";
-
-          document.getElementById("blog-title").textContent = title;
-          document.getElementById("blog-category").textContent = category;
-
-          const blogDate = document.getElementById("blog-date");
-          blogDate.textContent = dateLabel;
-          blogDate.setAttribute("datetime", dateValue);
-
-          const blogImage = document.getElementById("blog-image");
-          blogImage.src = image;
-          blogImage.alt = title;
-
-          document.getElementById("blog-content").innerHTML = marked.parse(
-            blogState.body
-          );
-          document.getElementById("blog-error").style.display = "none";
-          document.title = title
-            ? `${title} | ${siteProfile.name}`
-            : `Blog Post - ${siteProfile.name}`;
-        };
-
-        if (post) {
-          // Legacy renderer for old shared links. New posts are generated as static pages.
-          const fetchUrl = `posts/${post}.md`;
-
-          fetch(fetchUrl)
-            .then((response) => {
-              if (!response.ok) {
-                console.error(
-                  "Fetch error:",
-                  response.status,
-                  response.statusText,
-                  "URL:",
-                  response.url
-                );
-                throw new Error(
-                  `Network response was not ok: ${response.status}`
-                );
-              }
-              return response.text();
-            })
-            .then((text) => {
-              const { attributes, body } = parseFrontMatter(text);
-              blogState.attributes = attributes;
-              blogState.body = body;
-              renderBlogPost();
-            })
-            .catch((error) => {
-              console.error("Error fetching blog post:", error);
-              document.getElementById("blog-error").style.display = "block";
-            });
-        }
-
-        window.addEventListener("site-language-change", renderBlogPost);
-      });
-
-      function parseFrontMatter(markdown) {
-        const frontMatterRegex = /^---\s*([\s\S]*?)\s*---/;
-        const match = frontMatterRegex.exec(markdown);
-
-        if (!match) {
-          return { attributes: {}, body: markdown };
-        }
-
-        const frontMatter = match[1];
-        const body = markdown.substring(match[0].length);
-        const attributes = {};
-
-        frontMatter.split("\n").forEach((line) => {
-          const parts = line.split(":");
-          if (parts.length >= 2) {
-            const key = parts[0].trim();
-            const value = parts
-              .slice(1)
-              .join(":")
-              .trim()
-              .replace(/^"(.*)"$/, "$1");
-            attributes[key] = value;
-          }
-        });
-
-        return { attributes, body };
-      }
+    <script type="application/json" id="legacy-post-routes">
+{
+  "OSH_2026": "./blog/osh-2026.html",
+  "2nd_runner_up": "./blog/2nd-runner-up.html",
+  "ypec-2025": "./blog/ypec-2025.html",
+  "cablecon-2025": "./blog/cablecon-2025.html"
+}
     </script>
-    <script
-      type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
-    <script
-      nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
+    <script id="legacy-post-redirect">
+      (() => {
+        try {
+          const routes = JSON.parse(document.getElementById("legacy-post-routes").textContent);
+          const requested = new URLSearchParams(window.location.search).get("post");
+          const target = routes[requested];
+          if (requested && typeof target === "string" && /^\.\/blog\/[a-z0-9-]+\.html$/.test(target)) {
+            window.location.replace(target + window.location.hash);
+            return;
+          }
+        } catch {
+          // The recovery link stays usable if the generated map cannot be read.
+        }
+        document.getElementById("legacy-post-title").textContent = "Article not found";
+        document.getElementById("legacy-post-status").textContent = "This link does not match an article. Choose a post from the blog.";
+        document.getElementById("legacy-post-status-zh").textContent = "找不到此連結對應的文章，請到網誌選擇文章。";
+      })();
+    </script>
   </body>
 </html>

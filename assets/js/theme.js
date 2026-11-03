@@ -20,7 +20,7 @@ function updateThemeIcons(isLight) {
 }
 
 // Theme initialization (run early to prevent flash of wrong theme and JS errors blocking it)
-const isLightTheme = localStorage.getItem("theme") === "light";
+const isLightTheme = readPreference("theme") === "light";
 if (isLightTheme) {
   document.documentElement.classList.add("light-theme");
   updateThemeIcons(true);
@@ -59,7 +59,7 @@ if (themeBtn) {
     updateThemeIcons(isLight);
     
     updateThemeButton(isLight);
-    localStorage.setItem("theme", isLight ? "light" : "dark");
+    writePreference("theme", isLight ? "light" : "dark");
   });
 
   window.addEventListener("site-language-change", function () {

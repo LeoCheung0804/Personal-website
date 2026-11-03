@@ -377,20 +377,21 @@ function syncSafeBlankLinks(html) {
 
 function syncAssetVersions(html) {
   const versionedAssets = {
+    'assets/js/preferences.js': '20261102-1',
     'assets/css/style.css': '20261028-1',
-    'assets/css/field-notes.css': '20261028-1',
+    'assets/css/field-notes.css': '20261103-1',
     'assets/css/custom_project_preview.css': '20261006-1',
     'assets/css/featured-robots.css': '20261005-5',
     'assets/js/robot-previews.js': '20261005-5',
-    'assets/js/site-data.js': '20261027-2',
+    'assets/js/site-data.js': '20261103-1',
     'assets/css/cu-brick-exploded.css': '20261005-1',
     'assets/js/cu-brick-exploded.js': '20261023-1',
     'assets/css/tapper-exploded.css': '20261001-2',
     'assets/js/tapper-exploded.js': '20260930-1',
-    'assets/js/i18n.js': '20261028-1',
+    'assets/js/i18n.js': '20261103-1',
     'assets/js/filters.js': '20261028-1',
-    'assets/js/theme.js': '20261028-1',
-    'assets/js/app-init.js': '20261028-1',
+    'assets/js/theme.js': '20261102-1',
+    'assets/js/app-init.js': '20261102-1',
     'assets/js/contact-form.js': '20261023-1',
     'assets/js/project-preview.js': '20261006-1',
     'assets/js/ui-interactions.js': '20261028-1',
@@ -518,7 +519,6 @@ function validateSecondaryPageStructure(html, fileLabel, pageType) {
     requiredKeys.push('projects.back', 'project.overview');
   } else if (pageType === 'blog') {
     requiredKeys.push('blog.backToBlog');
-    if (fileLabel === 'blog-post.html') requiredKeys.push('blog.loadError');
   }
 
   const keyCounts = {};
@@ -1399,7 +1399,6 @@ function getSharedPagePaths() {
 
   return [
     'index.html',
-    'blog-post.html',
     ...projectPages.map((project) => project.file),
     ...blogPages
   ];
@@ -1475,7 +1474,9 @@ if (listMode) {
     });
   }
 
-  updateFile('404.html', (html) => syncAssetVersions(html));
+  for (const file of ['404.html', 'blog-post.html']) {
+    updateFile(file, (html) => syncAssetVersions(html));
+  }
 
   if (!checkMode) {
     commitFileTransaction(pendingWrites.map(({ absolutePath, updated }) => ({
