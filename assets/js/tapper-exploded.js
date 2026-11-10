@@ -222,10 +222,24 @@ async function initialize() {
   let follow = !motion.matches;
   let frameRequest = 0;
   let failed = false;
+  let poseTransition = null, yawTransition = null;
+  const poseButtons = root.querySelectorAll('[data-explorer-pose]');
+  const resetButton = root.querySelector('[data-explorer-reset]');
   const smooth = value => { const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t); };
-  function render() {
+  function render(time) {
     frameRequest = 0;
     if (failed) return;
+    if (poseTransition) {
+      const fraction = Math.min(1, (time - poseTransition.start) / 260);
+      progress = THREE.MathUtils.lerp(poseTransition.from, poseTransition.to, smooth(fraction));
+      if (fraction === 1) poseTransition = null;
+    }
+    if (yawTransition) {
+      const fraction = Math.min(1, (time - yawTransition.start) / 220);
+      yaw = THREE.MathUtils.lerp(yawTransition.from, 0, smooth(fraction));
+      assembly.quaternion.setFromAxisAngle(yawAxis, yaw);
+      if (fraction === 1) yawTransition = null;
+    }
     if (follow) {
       const rect = root.getBoundingClientRect();
       const top = parseFloat(getComputedStyle(root.querySelector('.tapper-explorer__panel')).top) || 0;
@@ -267,6 +281,11 @@ async function initialize() {
     slider.value = String(Math.round(progress * 100));
     output.value = `${Math.round(progress * 100)}%`;
     followButton.setAttribute('aria-pressed', String(follow));
+    const targetPose = poseTransition?.to ?? progress;
+    poseButtons.forEach(button => {
+      button.setAttribute('aria-pressed', String(Math.abs(targetPose - Number(button.dataset.explorerPose)) < .001));
+    });
+    resetButton.setAttribute('aria-disabled', String(Math.abs(yaw) < .001 && !yawTransition));
     canvas.setAttribute('aria-label', window.getTranslation('explorer.canvas'));
     const key = progress < .05 ? 'assembledStatus' : progress > .96 ? 'explodedStatus' : 'movingStatus';
     status.textContent = window.getTranslation(`explorer.${follow ? key : 'manualStatus'}`);
@@ -275,6 +294,7 @@ async function initialize() {
     canvas.setAttribute('aria-valuenow', String(degrees));
     canvas.setAttribute('aria-valuetext', `ψ = ${degrees}°`);
     renderer.render(scene, camera);
+    if (poseTransition || yawTransition) requestRender();
   }
   function requestRender() { if (!frameRequest && !failed) frameRequest = requestAnimationFrame(render); }
   function resize() {
@@ -285,14 +305,17 @@ async function initialize() {
     updatePresentation();
     requestRender();
   }
-  slider.addEventListener('input', () => { follow = false; progress = Number(slider.value) / 100; requestRender(); });
-  root.querySelectorAll('[data-explorer-pose]').forEach(button => button.addEventListener('click', () => {
+  slider.addEventListener('input', () => { follow = false; poseTransition = null; progress = Number(slider.value) / 100; requestRender(); });
+  poseButtons.forEach(button => button.addEventListener('click', event => {
     follow = false;
-    progress = Number(button.dataset.explorerPose);
+    const to = Number(button.dataset.explorerPose);
+    if (motion.matches || event.detail === 0) { progress = to; poseTransition = null; }
+    else poseTransition = { from: progress, to, start: performance.now() };
     requestRender();
   }));
-  followButton.addEventListener('click', () => { follow = !follow; requestRender(); });
+  followButton.addEventListener('click', () => { poseTransition = null; follow = !follow; requestRender(); });
   function setYaw(value) {
+    yawTransition = null;
     yaw = THREE.MathUtils.euclideanModulo(value + Math.PI, Math.PI * 2) - Math.PI;
     assembly.quaternion.setFromAxisAngle(yawAxis, yaw);
     requestRender();
@@ -307,6 +330,7 @@ async function initialize() {
   let pointer = null;
   canvas.addEventListener('pointerdown', event => {
     if (event.button !== 0) return;
+    yawTransition = null;
     pointer = { id: event.pointerId, x: event.clientX, rotation: yaw };
     canvas.setPointerCapture(event.pointerId);
   });
@@ -320,12 +344,21 @@ async function initialize() {
   const endDrag = () => { pointer = null; };
   canvas.addEventListener('pointerup', endDrag);
   canvas.addEventListener('pointercancel', endDrag);
-  root.querySelector('[data-explorer-reset]').addEventListener('click', () => { setYaw(0); });
+  canvas.addEventListener('lostpointercapture', endDrag);
+  resetButton.addEventListener('click', event => {
+    if (resetButton.getAttribute('aria-disabled') === 'true') return;
+    if (motion.matches || event.detail === 0) setYaw(0);
+    else { yawTransition = { from: yaw, start: performance.now() }; requestRender(); }
+  });
   function updatePresentation() {
     // Actual panel height includes translated/wrapped text and browser zoom.
     // Keep controls reachable instead of pinning an oversized panel offscreen.
     const stickyTop = parseFloat(getComputedStyle(root).getPropertyValue('--explorer-sticky-top')) || 0;
     const manualOnly = motion.matches || compactScreen.matches;
+    if (motion.matches) {
+      if (poseTransition) { progress = poseTransition.to; poseTransition = null; }
+      if (yawTransition) setYaw(0);
+    }
     followButton.hidden = manualOnly;
     const canFollow = !manualOnly && panel.offsetHeight + stickyTop + 16 <= document.documentElement.clientHeight;
     root.classList.toggle('is-inline', !canFollow);

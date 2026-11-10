@@ -104,6 +104,8 @@ needed. It stubs all external services, including forms and analytics. It covers
 denied storage and quota errors, failed/pending/invalid blog data, literal metadata,
 publication dates in a time zone west of UTC, dashboard failure/recovery, keyboard
 focus, reduced motion, out-of-order weather responses, and old article redirects.
+It also exercises the actual Three.js previews, including hover intent,
+keyboard focus, zoom limits, late loads and photo fallback.
 Failures retain a screenshot and trace in the ignored `test-results` directory.
 
 Both workflow jobs run the Node runtime checks, CU-Brick geometry/kinematic checks
@@ -194,11 +196,12 @@ photo does not activate the preview. Touch and keyboard visitors can use **View
 3D model**, then **Show photo** or Escape to return. Geometry loads on the first
 activation and stays cached for later visits to the same photo.
 
-The previews reuse the Tapper finishes and CU-Brick site model,
-and renders on input, resize, or theme changes rather than running an animation
-loop. Keyboard controls are left/right arrows to rotate, +/− to zoom, and Home
-to reset. Horizontal touch gestures preserve vertical page scrolling. The
-project explorers retain the full component and mechanism controls.
+Both previews show rotate, zoom and reset buttons after activation. The toolbar
+fits in one row on wider cards and wraps on narrower screens. Three.js renders
+on demand for input, brief camera transitions, resize and theme changes. The
+left/right arrow keys rotate, +/− zoom, and Home resets the view. Keyboard
+actions and reduced motion use immediate camera updates. Horizontal touch
+gestures preserve vertical page scrolling.
 
 The original photos (`Robotapper_hero-1600.jpg` and `YES_preview-960.jpg`) and their
 responsive WebP variants also provide the asset/WebGL failure fallback. Hidden

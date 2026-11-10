@@ -36,6 +36,7 @@
 .portfolio-site .robot-preview { min-width: 0; }
 .portfolio-site .robot-preview__stage {
   position: relative;
+  container-type: inline-size;
   overflow: hidden;
   border: 1px solid var(--line-strong);
   border-radius: 14px;
@@ -83,6 +84,7 @@
   padding: 0 12px;
   color: var(--ink-soft);
   font: 500 var(--type-label)/1.4 var(--ff-mono);
+  flex-wrap: wrap;
 }
 .portfolio-site .robot-preview__toolbar button {
   display: inline-flex;
@@ -91,18 +93,58 @@
   gap: 8px;
   min-height: 44px;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   color: var(--ink);
   font: 600 var(--type-label)/1.4 var(--ff-mono);
   background: transparent;
 }
-.portfolio-site .robot-preview__toolbar button:is(:hover, :focus-visible) { color: var(--accent); }
-.portfolio-site .robot-preview__toolbar button[aria-disabled="true"] { cursor: wait; }
+.portfolio-site .robot-preview__toolbar button:focus-visible { color: var(--accent); }
+.portfolio-site .robot-preview__toolbar [data-preview-activate][aria-disabled="true"] { cursor: wait; }
 /* The activation button also makes the photo usable by touch and keyboard. */
 .portfolio-site .robot-preview__toolbar [data-preview-activate]::before { content: ''; position: absolute; inset: 0; z-index: 1; cursor: inherit; }
 .portfolio-site .robot-preview:not(.is-previewing) [data-preview-activate][aria-disabled="false"]::before { cursor: pointer; }
 .portfolio-site .robot-preview__toolbar [hidden] { display: none; }
 .portfolio-site .robot-preview__photo-toggle { margin-left: auto; }
-.portfolio-site .robot-preview__reset { flex: 0 0 44px; width: 44px; border: 1px solid var(--line-strong); border-radius: 50%; }
+.portfolio-site .robot-preview__controls {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 0 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--line);
+}
+.portfolio-site .robot-preview__control-pair { display: flex; align-items: center; }
+.portfolio-site .robot-preview__controls button {
+  width: 44px;
+  flex: 0 0 44px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: background-color var(--dur-feedback) ease, color var(--dur-feedback) ease, transform var(--dur-press) var(--ease-out);
+}
+.portfolio-site .robot-preview__controls button:focus-visible { border-color: var(--accent); }
+.portfolio-site .robot-preview__controls button:active:not([aria-disabled="true"], :focus-visible) { transform: scale(.96); background: var(--accent-soft); }
+.portfolio-site .robot-preview__controls button[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.portfolio-site .robot-preview__controls output { min-width: 4ch; text-align: center; font-variant-numeric: tabular-nums; color: var(--muted); }
+.portfolio-site .robot-preview__controls .robot-preview__reset { border-color: var(--line-strong); border-radius: 50%; }
+.portfolio-site .robot-preview[data-state="loading"] [data-preview-activate] > svg { animation: preview-loading 1s linear infinite; }
+@keyframes preview-loading { to { transform: rotate(360deg); } }
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-site .robot-preview__toolbar button:hover:not([aria-disabled="true"]) { color: var(--accent); }
+  .portfolio-site .robot-preview__controls button:hover:not([aria-disabled="true"]) { background: var(--accent-soft); }
+}
+@container (min-width: 380px) {
+  .portfolio-site .robot-preview__toolbar [data-preview-hint] { display: none; }
+  .portfolio-site .robot-preview__controls {
+    flex: 1 0 auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 0;
+    border: 0;
+  }
+  .portfolio-site .robot-preview__photo-toggle { white-space: nowrap; }
+}
 .portfolio-site .robot-preview svg { width: 18px; height: 18px; flex-shrink: 0; }
 .portfolio-site .robot-preview__caption { padding: 18px 2px 0; }
 .portfolio-site .robot-preview__title {
@@ -157,4 +199,7 @@
 @media (prefers-reduced-motion: reduce) {
   .portfolio-site .robot-preview__actions :is(a, svg) { transition: none; }
   .portfolio-site .robot-preview__visual :is(img, canvas) { transition: none; }
+  .portfolio-site .robot-preview__controls button { transition: none; }
+  .portfolio-site .robot-preview__controls button:active:not([aria-disabled="true"], :focus-visible) { transform: none; }
+  .portfolio-site .robot-preview[data-state="loading"] [data-preview-activate] > svg { animation: none; }
 }

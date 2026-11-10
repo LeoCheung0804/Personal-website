@@ -1,9 +1,13 @@
 /* Keep the chosen project photos until hover intent or explicit activation.
  * Cache CAD after the first request, and return to the photo on pointer leave.
- * There is no animation loop: render only for input, resize, or theme changes. */
+ * Render only for input, brief camera transitions, resize, or theme changes. */
 const t = key => window.getTranslation(`homepage.${key}`);
 const hoverDevice = matchMedia('(hover: hover) and (pointer: fine)');
 const HOVER_DELAY = 500;
+const CAMERA_DURATION = 220;
+const MIN_ZOOM = 0.75;
+const MAX_ZOOM = 1.3;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
 document.querySelectorAll('[data-robot-preview]').forEach(root => {
   const stage = root.querySelector('.robot-preview__stage');
@@ -11,9 +15,9 @@ document.querySelectorAll('[data-robot-preview]').forEach(root => {
   const photo = viewport.querySelector('img');
   const button = root.querySelector('[data-preview-activate]');
   const hint = root.querySelector('[data-preview-hint]');
-  const reset = root.querySelector('[data-preview-reset]');
   const back = root.querySelector('[data-preview-photo]');
   const status = root.querySelector('[data-preview-status]');
+  const controls = root.querySelector('[data-preview-controls]');
   let preview, loading, mode = null, timer = 0, pointerInside = false, anchor;
   root.dataset.state = 'poster';
 
@@ -21,7 +25,8 @@ document.querySelectorAll('[data-robot-preview]').forEach(root => {
   function paint() {
     const visible = Boolean(preview && mode && (mode !== 'hover' || pointerInside));
     const failed = root.dataset.state === 'fallback';
-    const focusModel = visible && mode === 'keyboard' && document.activeElement === button;
+    const focused = document.activeElement;
+    const focusModel = visible && mode === 'keyboard' && focused === button;
     root.classList.toggle('is-previewing', visible);
     photo.setAttribute('aria-hidden', String(visible));
     button.hidden = visible || failed;
@@ -31,21 +36,25 @@ document.querySelectorAll('[data-robot-preview]').forEach(root => {
     button.querySelector('span').dataset.i18n = `homepage.${label}`;
     button.querySelector('span').textContent = t(label);
     // Do not strand focus in an invisible canvas or toolbar control.
-    if (!visible && preview && [preview.canvas, reset, back].includes(document.activeElement)) {
-      if (failed) document.activeElement.blur();
-      else button.focus({ preventScroll: true });
+    if (!visible && preview && (focused === preview.canvas || focused === back || controls.contains(focused))) {
+      button.focus({ preventScroll: true });
     }
-    hint.hidden = reset.hidden = back.hidden = !visible;
+    hint.hidden = controls.hidden = back.hidden = !visible;
     status.hidden = !failed;
     preview?.setVisible(visible);
     if (focusModel) preview.canvas.focus({ preventScroll: true });
   }
   function showPhoto() { clearDwell(); mode = null; paint(); }
   function fallback() {
+    const hadFocus = stage.contains(document.activeElement);
     clearDwell(); mode = null; preview = null;
     root.dataset.state = 'fallback'; root.removeAttribute('aria-busy');
     status.dataset.i18n = 'homepage.fallback'; status.textContent = t('fallback');
     paint();
+    if (hadFocus) {
+      status.tabIndex = -1;
+      status.focus({ preventScroll: true });
+    }
   }
   async function activate(nextMode) {
     if (root.dataset.state === 'fallback') return;
@@ -119,6 +128,11 @@ async function initialize(root, onFailure) {
   const key = root.dataset.robotPreview;
   const viewport = root.querySelector('[data-preview-viewport]');
   const reset = root.querySelector('[data-preview-reset]');
+  const turnButtons = [...root.querySelectorAll('[data-preview-turn]')];
+  const zoomOut = root.querySelector('[data-preview-zoom="-1"]');
+  const zoomIn = root.querySelector('[data-preview-zoom="1"]');
+  const zoomButtons = [zoomOut, zoomIn];
+  const zoomValue = root.querySelector('[data-preview-zoom-value]');
   let renderer, environment;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -196,7 +210,7 @@ async function initialize(root, onFailure) {
     const target = bounds.getCenter(new THREE.Vector3());
     const radius = bounds.getSize(new THREE.Vector3()).length() * 2;
     const canvas = renderer.domElement;
-    let yaw = initialYaw, zoom = 1, frame = 0, drag = null, alive = true, visible = false, lastWidth = 0, lastHeight = 0;
+    let yaw = initialYaw, zoom = 1, frame = 0, drag = null, motion = null, alive = true, visible = false, lastWidth = 0, lastHeight = 0;
     const listeners = new AbortController();
     const on = (element, event, handler, options = {}) => element.addEventListener(event, handler, { ...options, signal: listeners.signal });
     const resizeObserver = new ResizeObserver(() => requestRender());
@@ -224,9 +238,16 @@ async function initialize(root, onFailure) {
     canvas.setAttribute('aria-describedby', `${key}-preview-instructions`);
     viewport.append(canvas);
 
-    function render() {
+    function render(time = performance.now()) {
       frame = 0;
       if (!alive || document.hidden || !viewport.clientWidth || !viewport.clientHeight) return;
+      if (motion) {
+        const progress = THREE.MathUtils.clamp((time - motion.start) / CAMERA_DURATION, 0, 1);
+        const fraction = 1 - (1 - progress) ** 3;
+        yaw = THREE.MathUtils.lerp(motion.fromYaw, motion.yaw, fraction);
+        zoom = THREE.MathUtils.lerp(motion.fromZoom, motion.zoom, fraction);
+        if (progress === 1) motion = null;
+      }
       const width = viewport.clientWidth, height = viewport.clientHeight;
       if (width !== lastWidth || height !== lastHeight) {
         renderer.setSize(width, height, false);
@@ -254,6 +275,12 @@ async function initialize(root, onFailure) {
       // Keep the accessible angle in its declared range through full revolutions.
       const degrees = (yaw - initialYaw) * 180 / Math.PI;
       canvas.setAttribute('aria-valuenow', String(Math.round(((degrees + 180) % 360 + 360) % 360 - 180)));
+      const zoomLabel = `${Math.round(zoom * 100)}%`;
+      if (zoomValue.value !== zoomLabel) zoomValue.value = zoomLabel;
+      const targetZoom = motion?.zoom ?? zoom;
+      zoomOut.setAttribute('aria-disabled', String(targetZoom <= MIN_ZOOM + .00001));
+      zoomIn.setAttribute('aria-disabled', String(targetZoom >= MAX_ZOOM - .00001));
+      if (motion) requestRender();
     }
     function requestRender() { if (alive && visible && !frame) frame = requestAnimationFrame(render); }
     function setVisible(value) {
@@ -266,9 +293,23 @@ async function initialize(root, onFailure) {
         drag = null;
       }
       if (visible) requestRender();
-      else { cancelAnimationFrame(frame); frame = 0; }
+      else {
+        if (motion) { yaw = motion.yaw; zoom = motion.zoom; motion = null; }
+        cancelAnimationFrame(frame); frame = 0;
+      }
     }
-    function resetView() { yaw = initialYaw; zoom = 1; requestRender(); }
+    function moveView(nextYaw, nextZoom, animate = false) {
+      nextZoom = THREE.MathUtils.clamp(nextZoom, MIN_ZOOM, MAX_ZOOM);
+      motion = animate && !reduceMotion.matches
+        ? { fromYaw: yaw, fromZoom: zoom, yaw: nextYaw, zoom: nextZoom, start: performance.now() } : null;
+      if (!motion) { yaw = nextYaw; zoom = nextZoom; }
+      requestRender();
+    }
+    function resetView(event) {
+      // Return by the shortest arc after any number of full revolutions.
+      const delta = THREE.MathUtils.euclideanModulo(initialYaw - yaw + Math.PI, Math.PI * 2) - Math.PI;
+      moveView(yaw + delta, 1, event?.detail > 0);
+    }
     function setTheme() { updateTheme(document.documentElement.classList.contains('light-theme')); requestRender(); }
     function dispose() {
       if (!alive) return;
@@ -286,7 +327,8 @@ async function initialize(root, onFailure) {
       environment.dispose(); renderer.dispose(); canvas.remove();
     }
     on(canvas, 'pointerdown', event => {
-      if (event.button !== 0) return;
+      if (!event.isPrimary || event.button !== 0) return;
+      motion = null;
       drag = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, moved: false };
     });
     on(canvas, 'pointermove', event => {
@@ -304,25 +346,40 @@ async function initialize(root, onFailure) {
     };
     on(canvas, 'pointerup', release); on(canvas, 'pointercancel', release); on(canvas, 'lostpointercapture', () => { drag = null; });
     on(canvas, 'keydown', event => {
-      if (event.key === 'ArrowLeft') yaw -= .15;
-      else if (event.key === 'ArrowRight') yaw += .15;
-      else if (event.key === '+' || event.key === '=') zoom = Math.min(1.3, zoom + .05);
-      else if (event.key === '-' || event.key === '−') zoom = Math.max(.75, zoom - .05);
+      if (event.key === 'ArrowLeft') moveView(yaw - .15, zoom);
+      else if (event.key === 'ArrowRight') moveView(yaw + .15, zoom);
+      else if (event.key === '+' || event.key === '=') moveView(yaw, zoom + .05);
+      else if (event.key === '-' || event.key === '−') moveView(yaw, zoom - .05);
       else if (event.key === 'Home') resetView();
       else return;
-      event.preventDefault(); requestRender();
+      event.preventDefault();
     });
     on(reset, 'click', resetView);
+    turnButtons.forEach(control => on(control, 'click', event => {
+      moveView((motion?.yaw ?? yaw) + Number(control.dataset.previewTurn) * Math.PI / 6, motion?.zoom ?? zoom, event.detail > 0);
+    }));
+    zoomButtons.forEach(control => on(control, 'click', event => {
+      if (control.getAttribute('aria-disabled') === 'true') return;
+      moveView(motion?.yaw ?? yaw, (motion?.zoom ?? zoom) + Number(control.dataset.previewZoom) * .1, event.detail > 0);
+    }));
+    on(reduceMotion, 'change', () => {
+      if (motion && reduceMotion.matches) moveView(motion.yaw, motion.zoom);
+    });
     on(document, 'visibilitychange', requestRender);
-    on(window, 'site-language-change', () => canvas.setAttribute('aria-label', t(`${key}Canvas`)));
+    function syncLabels() {
+      canvas.setAttribute('aria-label', t(`${key}Canvas`));
+      [...turnButtons, ...zoomButtons, reset].forEach(control => { control.title = control.getAttribute('aria-label'); });
+    }
+    on(window, 'site-language-change', syncLabels);
     on(canvas, 'webglcontextlost', event => {
-      event.preventDefault(); dispose(); onFailure();
+      event.preventDefault(); onFailure(); dispose();
     });
     // A BFCache navigation retains resources. A real unload releases them.
     on(window, 'pagehide', event => { if (!event.persisted) dispose(); });
     const themeObserver = new MutationObserver(setTheme);
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
     resizeObserver.observe(viewport);
+    syncLabels();
     setTheme(); render();
     return { canvas, setVisible };
   } catch (error) {

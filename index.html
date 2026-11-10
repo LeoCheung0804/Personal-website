@@ -392,9 +392,9 @@
     - custom css link
   -->
     <link rel="stylesheet" href="./assets/css/style.css?v=20261028-1" />
-    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261103-1" />
+    <link rel="stylesheet" href="./assets/css/field-notes.css?v=20261109-1" />
     <link rel="stylesheet" href="./assets/css/custom_project_preview.css?v=20261006-1" />
-    <link rel="stylesheet" href="./assets/css/featured-robots.css?v=20261005-5" />
+    <link rel="stylesheet" href="./assets/css/featured-robots.css?v=20261110-1" />
 
     <!--
     - google font link
@@ -642,10 +642,21 @@
                       <button type="button" data-preview-activate data-i18n-aria-label="homepage.tapperActivate" aria-label="View the RoBosun-Tapper 3D model" aria-controls="tapper-preview-viewport" aria-expanded="false" hidden>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3c2.2 0 4 4 4 9s-1.8 9-4 9-4-4-4-9 1.8-9 4-9Z"/></svg><span data-i18n="homepage.activate">View 3D model</span>
                       </button>
-                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
                       <span data-preview-status role="status" aria-live="polite" hidden></span>
+                      <div class="robot-preview__controls" data-preview-controls role="group" data-i18n-aria-label="homepage.controls" aria-label="Model controls" hidden>
+                        <div class="robot-preview__control-pair">
+                          <button type="button" data-preview-turn="-1" data-i18n-aria-label="homepage.turnLeft" aria-label="Rotate left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 8H3V3M3 8a9 9 0 1 1 0 8"/></svg></button>
+                          <button type="button" data-preview-turn="1" data-i18n-aria-label="homepage.turnRight" aria-label="Rotate right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8h5V3M21 8a9 9 0 1 0 0 8"/></svg></button>
+                        </div>
+                        <div class="robot-preview__control-pair">
+                          <button type="button" data-preview-zoom="-1" data-i18n-aria-label="homepage.zoomOut" aria-label="Zoom out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg></button>
+                          <output data-preview-zoom-value data-i18n-aria-label="homepage.zoom" aria-label="Zoom level" aria-live="off">100%</output>
+                          <button type="button" data-preview-zoom="1" data-i18n-aria-label="homepage.zoomIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14"/></svg></button>
+                        </div>
+                        <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.tapperReset" aria-label="Reset the RoBosun-Tapper view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5m0 8v5h-5M8 21H3v-5"/><circle cx="12" cy="12" r="2"/></svg></button>
+                      </div>
+                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
                       <button class="robot-preview__photo-toggle" type="button" data-preview-photo data-i18n="homepage.photo" hidden>Show photo</button>
-                      <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.tapperReset" aria-label="Reset the RoBosun-Tapper view" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 1-3-5.6M17 2v5h5"/></svg></button>
                     </div>
                   </div>
                   <figcaption class="robot-preview__caption">
@@ -659,7 +670,7 @@
                     </div>
                   </figcaption>
                 </figure>
-                <p class="robot-preview__instructions" id="tapper-preview-instructions" data-i18n="homepage.instructions">Pause the cursor over the photo, or activate the View 3D model button. Drag horizontally or use the left and right arrow keys to rotate. Use + and − to zoom; Home resets the view. Escape returns to the photo.</p>
+                <p class="robot-preview__instructions" id="tapper-preview-instructions" data-i18n="homepage.instructions">Pause over the photo or select View 3D model. Use the rotation and zoom buttons, or drag horizontally to rotate. Keyboard: left/right arrows rotate, +/− zoom, Home resets, and Escape returns to the photo.</p>
               </li>
               <li class="robot-preview" data-robot-preview="cuBrick">
                 <figure>
@@ -671,10 +682,21 @@
                       <button type="button" data-preview-activate data-i18n-aria-label="homepage.cuBrickActivate" aria-label="View the CU-Brick 3D model" aria-controls="cuBrick-preview-viewport" aria-expanded="false" hidden>
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><ellipse cx="12" cy="12" rx="9" ry="4"/><path d="M12 3c2.2 0 4 4 4 9s-1.8 9-4 9-4-4-4-9 1.8-9 4-9Z"/></svg><span data-i18n="homepage.activate">View 3D model</span>
                       </button>
-                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
                       <span data-preview-status role="status" aria-live="polite" hidden></span>
+                      <div class="robot-preview__controls" data-preview-controls role="group" data-i18n-aria-label="homepage.controls" aria-label="Model controls" hidden>
+                        <div class="robot-preview__control-pair">
+                          <button type="button" data-preview-turn="-1" data-i18n-aria-label="homepage.turnLeft" aria-label="Rotate left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 8H3V3M3 8a9 9 0 1 1 0 8"/></svg></button>
+                          <button type="button" data-preview-turn="1" data-i18n-aria-label="homepage.turnRight" aria-label="Rotate right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 8h5V3M21 8a9 9 0 1 0 0 8"/></svg></button>
+                        </div>
+                        <div class="robot-preview__control-pair">
+                          <button type="button" data-preview-zoom="-1" data-i18n-aria-label="homepage.zoomOut" aria-label="Zoom out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg></button>
+                          <output data-preview-zoom-value data-i18n-aria-label="homepage.zoom" aria-label="Zoom level" aria-live="off">100%</output>
+                          <button type="button" data-preview-zoom="1" data-i18n-aria-label="homepage.zoomIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14"/></svg></button>
+                        </div>
+                        <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.cuBrickReset" aria-label="Reset the CU-Brick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 3H3v5m13-5h5v5m0 8v5h-5M8 21H3v-5"/><circle cx="12" cy="12" r="2"/></svg></button>
+                      </div>
+                      <span data-preview-hint data-i18n="homepage.drag" hidden>Drag to rotate</span>
                       <button class="robot-preview__photo-toggle" type="button" data-preview-photo data-i18n="homepage.photo" hidden>Show photo</button>
-                      <button class="robot-preview__reset" type="button" data-preview-reset data-i18n-aria-label="homepage.cuBrickReset" aria-label="Reset the CU-Brick view" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 1 1-3-5.6M17 2v5h5"/></svg></button>
                     </div>
                   </div>
                   <figcaption class="robot-preview__caption">
@@ -688,7 +710,7 @@
                     </div>
                   </figcaption>
                 </figure>
-                <p class="robot-preview__instructions" id="cuBrick-preview-instructions" data-i18n="homepage.instructions">Pause the cursor over the photo, or activate the View 3D model button. Drag horizontally or use the left and right arrow keys to rotate. Use + and − to zoom; Home resets the view. Escape returns to the photo.</p>
+                <p class="robot-preview__instructions" id="cuBrick-preview-instructions" data-i18n="homepage.instructions">Pause over the photo or select View 3D model. Use the rotation and zoom buttons, or drag horizontally to rotate. Keyboard: left/right arrows rotate, +/− zoom, Home resets, and Escape returns to the photo.</p>
               </li>
             </ul>
           </section>
@@ -1728,7 +1750,7 @@
     <!--
     - custom js link
   -->
-    <script src="./assets/js/site-data.js?v=20261103-1"></script>
+    <script src="./assets/js/site-data.js?v=20261109-1"></script>
     <script src="./assets/js/preferences.js?v=20261102-1"></script>
     <script src="./assets/js/i18n.js?v=20261103-1"></script>
     <script src="./assets/js/theme.js?v=20261102-1"></script>
@@ -1738,7 +1760,7 @@
     <script src="./assets/js/navigation.js?v=20261028-1"></script>
     <script src="./assets/js/app-init.js?v=20261102-1"></script>
     <script src="./assets/js/project-preview.js?v=20261006-1"></script>
-    <script type="module" src="./assets/js/robot-previews.js?v=20261005-5"></script>
+    <script type="module" src="./assets/js/robot-previews.js?v=20261109-1"></script>
     <!--
     - ionicon link
   -->

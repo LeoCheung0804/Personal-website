@@ -492,7 +492,7 @@ body.portfolio-site > main {
   text-transform: uppercase;
 }
 
-.portfolio-site .navbar-menu-btn:is(:hover, :focus-visible),
+.portfolio-site .navbar-menu-btn:focus-visible,
 .portfolio-site .navbar-menu-btn[aria-expanded="true"] {
   color: var(--accent);
   background: var(--accent-soft);
@@ -587,7 +587,7 @@ body.portfolio-site > main {
   transition: transform 180ms ease;
 }
 
-.portfolio-site .navbar-link:is(:hover, :focus-visible) {
+.portfolio-site .navbar-link:focus-visible {
   color: var(--ink);
   background: var(--accent-soft);
 }
@@ -741,7 +741,7 @@ body.portfolio-site > main {
   text-decoration: none;
 }
 
-.portfolio-site .about-actions a:is(:hover, :focus-visible) {
+.portfolio-site .about-actions a:focus-visible {
   color: var(--accent-strong);
   border-bottom-color: var(--accent);
 }
@@ -914,7 +914,7 @@ body.portfolio-site > main {
 }
 
 .portfolio-site .select-item button {
-  min-height: 42px;
+  min-height: 44px;
   padding: 8px 10px;
   color: var(--ink-soft);
   border-radius: 7px;
@@ -923,7 +923,7 @@ body.portfolio-site > main {
   text-align: left;
 }
 
-.portfolio-site .select-item button:is(:hover, :focus-visible) {
+.portfolio-site .select-item button:focus-visible {
   color: var(--ink);
   background: var(--accent-soft);
 }
@@ -938,7 +938,7 @@ body.portfolio-site > main {
 
 .portfolio-site .filter-item button {
   position: relative;
-  min-height: 40px;
+  min-height: 44px;
   color: var(--muted);
   font-family: var(--ff-mono);
   font-size: var(--type-label);
@@ -947,7 +947,7 @@ body.portfolio-site > main {
   text-transform: uppercase;
 }
 
-.portfolio-site .filter-item button:is(:hover, :focus-visible),
+.portfolio-site .filter-item button:focus-visible,
 .portfolio-site .filter-item button.active {
   color: var(--accent);
 }
@@ -1198,7 +1198,7 @@ body.portfolio-site > main {
 .portfolio-site .btn-back {
   display: inline-flex;
   align-items: center;
-  min-height: 42px;
+  min-height: 44px;
   margin: -6px 0 22px;
   color: var(--accent);
   font-family: var(--ff-mono);
@@ -2472,32 +2472,84 @@ body.portfolio-site > main {
 /* Hallmark · interaction refinements · existing forest / amber
  * Hallmark · pre-emit critique: P5 H5 E5 S5 R5 V4
  */
-.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled) {
+.portfolio-site :is(.form-btn:not(.not-found-secondary), .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled, [aria-disabled="true"], [aria-busy="true"]) {
   color: var(--page-bg);
   background: var(--accent);
   border-color: var(--accent);
   transition: color var(--dur-feedback) var(--ease-out),
     background-color var(--dur-feedback) var(--ease-out),
     border-color var(--dur-feedback) var(--ease-out),
-    transform var(--dur-press) var(--ease-out);
+    transform var(--dur-feedback) var(--ease-out);
 }
 
-.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):focus-visible {
+.portfolio-site :is(.form-btn:not(.not-found-secondary), .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled, [aria-disabled="true"], [aria-busy="true"]):focus-visible {
   color: var(--page-bg);
   background: var(--accent-strong);
   border-color: var(--accent-strong);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):hover {
+  .portfolio-site :is(.form-btn:not(.not-found-secondary), .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled, [aria-disabled="true"], [aria-busy="true"]):hover {
     color: var(--page-bg);
     background: var(--accent-strong);
     border-color: var(--accent-strong);
   }
 }
 
-.portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):active {
-  transform: translateY(1px);
+/* Feedback belongs to controls; reading cards and their text stay still. */
+.portfolio-site :is(.navbar-menu-btn, .navbar-actions .navbar-link, .about-actions a,
+  .btn-back, .filter-select, .filter-item button, .select-item button,
+  .project-preview-controls button, .robot-preview__actions a:not(.robot-preview__explore), .not-found-secondary) {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--dur-feedback) var(--ease-out),
+    background-color var(--dur-feedback) var(--ease-out),
+    border-color var(--dur-feedback) var(--ease-out),
+    transform var(--dur-feedback) var(--ease-out);
+}
+
+.portfolio-site .not-found-actions .not-found-secondary {
+  color: var(--ink-soft);
+  border-color: var(--line-strong);
+  background: transparent;
+}
+
+.portfolio-site .not-found-actions .not-found-secondary:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portfolio-site :is(.navbar-menu-btn, .navbar-link, .select-item button):not(:disabled):hover {
+    color: var(--ink);
+    background: var(--accent-soft);
+  }
+
+  .portfolio-site .navbar-menu-btn[aria-expanded="true"]:hover,
+  .portfolio-site .navbar-link:is(.active, [aria-current="page"]):hover,
+  .portfolio-site .filter-item button:not(:disabled):hover {
+    color: var(--accent);
+  }
+
+  .portfolio-site .about-actions a:hover {
+    color: var(--accent-strong);
+    border-bottom-color: var(--accent);
+  }
+
+  .portfolio-site .not-found-actions .not-found-secondary:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions a,
+    .navbar-menu-btn, .navbar-actions .navbar-link, .about-actions a, .btn-back,
+    .filter-select, .filter-item button, .select-item button, .project-preview-controls button):not(:disabled, [aria-disabled="true"], [aria-busy="true"]):not(:focus-visible):active {
+    transform: scale(.97);
+  }
 }
 
 .portfolio-site .form-btn:disabled {
@@ -2548,10 +2600,4 @@ body.portfolio-site article[data-page][tabindex="-1"]:focus-visible {
 
 body.portfolio-site :is(a, button, input, textarea, select, [tabindex]):focus-visible {
   transition: none !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions .robot-preview__explore):not(:disabled):active {
-    transform: none;
-  }
 }

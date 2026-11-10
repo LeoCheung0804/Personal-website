@@ -79,11 +79,13 @@ async function initialize() {
   const actionBounds = new THREE.Box3(new THREE.Vector3(-.2, -.2, -2.8), new THREE.Vector3(8.8, 4.5, 4.2));
   const motionAnimations = { rotation: null, grip: null };
   let yaw = model.yaw, pitch = model.pitch, zoom = 1, selected = null, labels = true;
+  let focusAmount = 0, cameraMotion = null;
   let lightTheme = document.documentElement.classList.contains('light-theme');
   let frame = 0, animation = null, alive = true;
   let width = 1, height = 1, buttons = [];
   let annotation, leader, endpoint, hovered = null;
-  const bounds = new THREE.Box3(), viewBounds = new THREE.Box3(), corner = new THREE.Vector3(), projected = new THREE.Vector3();
+  const bounds = new THREE.Box3(), viewBounds = new THREE.Box3(), fullViewBounds = new THREE.Box3();
+  const corner = new THREE.Vector3(), projected = new THREE.Vector3();
   const raycaster = new THREE.Raycaster();
   const separationSlider = q('#brick-separation'), elevationSlider = q('#brick-elevation');
   const zoomSlider = q('#brick-zoom');
@@ -96,8 +98,12 @@ async function initialize() {
     if (!frame && alive) frame = requestAnimationFrame(render);
   }
   function fitCamera() {
-    const focused = view === 'site' && focusAction;
-    if (focused) bounds.copy(actionBounds); else bounds.setFromObject(model.object);
+    const focus = view === 'site' ? focusAmount : 0;
+    if (focus === 1) bounds.copy(actionBounds);
+    else {
+      bounds.setFromObject(model.object);
+      if (focus) { bounds.min.lerp(actionBounds.min, focus); bounds.max.lerp(actionBounds.max, focus); }
+    }
     const center = bounds.getCenter(new THREE.Vector3());
     camera.position.set(Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch))
       .multiplyScalar(35).add(center);
@@ -111,7 +117,7 @@ async function initialize() {
         viewBounds.expandByPoint(corner);
       }
     };
-    if (focused) includeBounds(actionBounds, model.object.matrixWorld);
+    if (focus === 1) includeBounds(actionBounds, model.object.matrixWorld);
     else model.object.traverse(node => {
       if (!node.geometry) return;
       const source = node.isInstancedMesh ? node : node.geometry;
@@ -119,6 +125,13 @@ async function initialize() {
       const box = source.boundingBox;
       includeBounds(box, node.matrixWorld);
     });
+    if (focus > 0 && focus < 1) {
+      fullViewBounds.copy(viewBounds);
+      viewBounds.makeEmpty();
+      includeBounds(actionBounds, model.object.matrixWorld);
+      viewBounds.min.lerpVectors(fullViewBounds.min, viewBounds.min, focus);
+      viewBounds.max.lerpVectors(fullViewBounds.max, viewBounds.max, focus);
+    }
     const extentX = (viewBounds.max.x - viewBounds.min.x) / 2, extentY = (viewBounds.max.y - viewBounds.min.y) / 2;
     const centerX = (viewBounds.max.x + viewBounds.min.x) / 2, centerY = (viewBounds.max.y + viewBounds.min.y) / 2;
     const aspect = width / height;
@@ -180,6 +193,15 @@ async function initialize() {
   function render(time) {
     frame = 0;
     if (!alive) return;
+    if (cameraMotion) {
+      const fraction = THREE.MathUtils.clamp((time - cameraMotion.start) / 240, 0, 1);
+      const eased = fraction * fraction * (3 - 2 * fraction);
+      yaw = THREE.MathUtils.lerp(cameraMotion.from.yaw, cameraMotion.to.yaw, eased);
+      pitch = THREE.MathUtils.lerp(cameraMotion.from.pitch, cameraMotion.to.pitch, eased);
+      zoom = THREE.MathUtils.lerp(cameraMotion.from.zoom, cameraMotion.to.zoom, eased);
+      focusAmount = THREE.MathUtils.lerp(cameraMotion.from.focusAmount, cameraMotion.to.focusAmount, eased);
+      if (fraction === 1) cameraMotion = null;
+    }
     if (cyclePlaying && view === 'site') {
       if (cycleLastTime !== null) cycleProgress = Math.min(1, cycleProgress + Math.min(time - cycleLastTime, 100) * 1.2 / 26000);
       cycleLastTime = time;
@@ -217,7 +239,7 @@ async function initialize() {
       }
     }
     updateControls(); renderer.render(scene, camera);
-    if (cyclePlaying || animation || Object.values(motionAnimations).some(Boolean)) requestRender();
+    if (cyclePlaying || animation || cameraMotion || Object.values(motionAnimations).some(Boolean)) requestRender();
   }
   function describe() {
     selectionTitle.textContent = t(selected ? `part.${selected}` : view === 'detail' ? 'functions' : 'choose');
@@ -273,6 +295,7 @@ async function initialize() {
     Object.entries(models).forEach(([key, item]) => { item.object.visible = key === view; });
     progress = 0; elevationSlider.value = String(Math.round(elevation * 100)); animation = null;
     motionAnimations.rotation = motionAnimations.grip = null;
+    cameraMotion = null; focusAmount = view === 'site' && focusAction ? 1 : 0;
     yaw = view === 'site' && focusAction ? -.58 : model.yaw; pitch = model.pitch; zoom = 1;
     q('[data-brick-elevation-control]').hidden = view !== 'site';
     q('[data-brick-zoom-control]').hidden = view !== 'site';
@@ -325,7 +348,19 @@ async function initialize() {
     else animation = { start: performance.now(), from: progress, to };
     requestRender();
   }
-  function setZoom(value) { zoom = THREE.MathUtils.clamp(value, .7, 2.2); requestRender(); }
+  function moveCamera(values, animate = false) {
+    const from = { yaw, pitch, zoom, focusAmount }, to = { ...from, ...cameraMotion?.to, ...values };
+    // Reset along the shortest arc even after several full turns.
+    to.yaw = yaw + Math.atan2(Math.sin(to.yaw - yaw), Math.cos(to.yaw - yaw));
+    if (animate && !reducedMotion.matches) cameraMotion = { from, to, start: performance.now() };
+    else { ({ yaw, pitch, zoom, focusAmount } = to); cameraMotion = null; }
+    requestRender();
+  }
+  function takeCameraControl() {
+    // Keep the last rendered frame so pressing a component doesn't move it.
+    cameraMotion = null;
+  }
+  function setZoom(value, animate = false) { moveCamera({ zoom: THREE.MathUtils.clamp(value, .7, 2.2) }, animate); }
   function setMotion(name, to) {
     if (view !== 'detail') return;
     if (reducedMotion.matches) {
@@ -334,18 +369,21 @@ async function initialize() {
     } else motionAnimations[name] = { start: performance.now(), from: name === 'rotation' ? rotation : grip, to };
     requestRender();
   }
-  function reset() { yaw = model.yaw; pitch = model.pitch; zoom = 1; if (view === 'site') focusAction = false; requestRender(); }
+  function reset(event) {
+    if (view === 'site') focusAction = false;
+    moveCamera({ yaw: model.yaw, pitch: model.pitch, zoom: 1, focusAmount: 0 }, event?.detail > 0);
+  }
   function seekCycle(value, userInitiated = true) {
     if (userInitiated) cycleUserPaused = true;
     cyclePlaying = false; cycleLastTime = null;
     cycleProgress = THREE.MathUtils.clamp(value, 0, 1); requestRender();
   }
-  function focusCycle() {
+  function focusCycle(animate = false) {
     // View from the open side so the pick-up mast does not hide the transfer arm.
-    if (!focusAction) { yaw = -.58; pitch = .55; zoom = 1; }
+    if (!focusAction) moveCamera({ yaw: -.58, pitch: .55, zoom: 1, focusAmount: 1 }, animate);
     focusAction = true;
   }
-  on(cyclePlay, 'click', () => {
+  on(cyclePlay, 'click', event => {
     if (view !== 'site') return;
     if (reducedMotion.matches) {
       focusCycle(); seekCycle(cycleStops.find(stop => stop > cycleProgress + .001) ?? 0); return;
@@ -353,14 +391,14 @@ async function initialize() {
     if (!cyclePlaying && cycleProgress === 1) cycleProgress = 0;
     cyclePlaying = !cyclePlaying; cycleLastTime = null;
     cycleUserPaused = !cyclePlaying;
-    if (cyclePlaying) focusCycle();
+    if (cyclePlaying) focusCycle(event.detail > 0);
     requestRender();
   });
   on(cycleSlider, 'input', () => seekCycle(Number(cycleSlider.value) / 1000));
   on(q('[data-brick-cycle-reset]'), 'click', () => seekCycle(0));
-  on(q('[data-brick-action-focus]'), 'click', () => {
-    if (focusAction) { focusAction = false; yaw = model.yaw; pitch = model.pitch; zoom = 1; }
-    else focusCycle();
+  on(q('[data-brick-action-focus]'), 'click', event => {
+    if (focusAction) reset(event);
+    else focusCycle(event.detail > 0);
     requestRender();
   });
   root.querySelectorAll('[data-brick-cycle-step]').forEach(button => on(button, 'click', () => seekCycle(Number(button.dataset.brickCycleStep))));
@@ -371,7 +409,7 @@ async function initialize() {
     if (view !== 'detail') return;
     animation = null; progress = Number(separationSlider.value) / 100; requestRender();
   });
-  on(zoomSlider, 'input', () => setZoom(Number(zoomSlider.value) / 100));
+  on(zoomSlider, 'input', () => { takeCameraControl(); setZoom(Number(zoomSlider.value) / 100); });
   on(rotationSlider, 'input', () => {
     if (view !== 'detail') return;
     motionAnimations.rotation = null; rotation = Number(rotationSlider.value); requestRender();
@@ -386,14 +424,15 @@ async function initialize() {
   on(q('[data-brick-reset]'), 'click', reset);
   on(picker, 'change', () => select(picker.value || null));
   on(q('[data-brick-inspect]'), 'click', () => { showView('detail'); q('[data-brick-view="detail"]').focus(); });
-  on(q('[data-brick-zoom="in"]'), 'click', () => setZoom(zoom * 1.2));
-  on(q('[data-brick-zoom="out"]'), 'click', () => setZoom(zoom / 1.2));
+  on(q('[data-brick-zoom="in"]'), 'click', event => setZoom((cameraMotion?.to.zoom ?? zoom) * 1.2, event.detail > 0));
+  on(q('[data-brick-zoom="out"]'), 'click', event => setZoom((cameraMotion?.to.zoom ?? zoom) / 1.2, event.detail > 0));
   on(q('[data-brick-labels]'), 'click', event => {
     labels = !labels; event.currentTarget.setAttribute('aria-pressed', String(labels)); requestRender();
   });
   let pointer = null;
   on(canvas, 'pointerdown', event => {
     if (!event.isPrimary || event.button !== 0) return;
+    takeCameraControl();
     pointer = { id: event.pointerId, x: event.clientX, y: event.clientY, yaw, pitch, moved: false };
     canvas.setPointerCapture(event.pointerId);
   });
@@ -427,12 +466,13 @@ async function initialize() {
       ArrowUp: () => { pitch = Math.min(1.25, pitch + .1); }, ArrowDown: () => { pitch = Math.max(-.15, pitch - .1); },
       '+': () => setZoom(zoom * 1.2), '=': () => setZoom(zoom * 1.2), '-': () => setZoom(zoom / 1.2), Home: reset
     };
-    if (actions[event.key]) { event.preventDefault(); actions[event.key](); requestRender(); }
+    if (actions[event.key]) { event.preventDefault(); takeCameraControl(); actions[event.key](); requestRender(); }
   });
   on(window, 'site-language-change', localize);
   on(reducedMotion, 'change', () => {
     if (reducedMotion.matches && animation) { progress = animation.to; animation = null; requestRender(); }
     if (reducedMotion.matches) {
+      if (cameraMotion) moveCamera(cameraMotion.to);
       cyclePlaying = false; cycleLastTime = null;
       for (const [name, motion] of Object.entries(motionAnimations)) {
         if (!motion) continue;
