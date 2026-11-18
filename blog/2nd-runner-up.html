@@ -97,8 +97,8 @@
     </script>
 
     <link rel="shortcut icon" href="../assets/images/icon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="../assets/css/style.css?v=20261028-1" />
-    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261109-1" />
+    <link rel="stylesheet" href="../assets/css/style.css?v=20261118-1" />
+    <link rel="stylesheet" href="../assets/css/field-notes.css?v=20261118-2" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -206,13 +206,21 @@
 
           <ul class="navbar-actions" aria-label="Language and appearance" data-i18n-aria-label="nav.preferences">
             <li class="navbar-item navbar-action-item">
-              <button class="navbar-link lang-btn" aria-label="Switch language" data-i18n-aria-label="language.toggle" data-lang-btn>
-                <span data-lang-label>ZH</span>
+              <button class="preference-switch" type="button" role="switch" aria-checked="false" aria-label="Traditional Chinese" data-i18n-aria-label="language.traditionalChinese" data-lang-btn>
+                <span class="preference-switch__track" aria-hidden="true">
+                  <span class="preference-switch__option" lang="en">EN</span>
+                  <span class="preference-switch__option" lang="zh-Hant">繁</span>
+                  <span class="preference-switch__ripple"></span>
+                </span>
               </button>
             </li>
             <li class="navbar-item navbar-action-item">
-              <button class="navbar-link theme-btn" aria-label="Toggle theme" data-theme-btn data-i18n-aria-label="theme.toggle" style="display:flex; justify-content:center; align-items:center;">
-                <ion-icon name="sunny-outline" class="light-icon"></ion-icon>
+              <button class="preference-switch" type="button" role="switch" aria-checked="false" aria-label="Light mode" data-i18n-aria-label="theme.lightMode" data-theme-btn>
+                <span class="preference-switch__track" aria-hidden="true">
+                  <span class="preference-switch__option">☾</span>
+                  <span class="preference-switch__option">☀︎</span>
+                  <span class="preference-switch__ripple"></span>
+                </span>
               </button>
             </li>
           </ul>
@@ -272,15 +280,15 @@
       </div>
     </main>
 
-    <script src="../assets/js/site-data.js?v=20261109-1"></script>
-    <script src="../assets/js/preferences.js?v=20261102-1"></script>
-    <script src="../assets/js/i18n.js?v=20261103-1"></script>
-    <script src="../assets/js/theme.js?v=20261102-1"></script>
+    <script src="../assets/js/site-data.js?v=20261118-2"></script>
+    <script src="../assets/js/preferences.js?v=20261118-1"></script>
+    <script src="../assets/js/i18n.js?v=20261118-1"></script>
+    <script src="../assets/js/theme.js?v=20261118-1"></script>
     <script src="../assets/js/ui-interactions.js?v=20261028-1"></script>
     <script src="../assets/js/filters.js?v=20261028-1"></script>
     <script src="../assets/js/contact-form.js?v=20261023-1"></script>
     <script src="../assets/js/navigation.js?v=20261028-1"></script>
-    <script src="../assets/js/app-init.js?v=20261102-1"></script>
+    <script src="../assets/js/app-init.js?v=20261118-1"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>

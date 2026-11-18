@@ -1,7 +1,27 @@
+# Local editor and agent settings
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
+/.agents/
+/.codex/
+
+# Operating system metadata
 .DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local Node and Python tooling
 node_modules/
+npm-debug.log*
+/.venv/
+__pycache__/
+
+# Playwright output
 test-results/
+/playwright-report/
+/blob-report/
+
+# Temporary files from the site generators
+.*.sitegen-*.tmp
+.*.sitegen-*.bak

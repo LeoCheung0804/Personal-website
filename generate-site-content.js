@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { commitFileTransaction } = require('./scripts/generation-transaction.js');
 const { renderProfileContacts } = require('./scripts/profile-card.js');
+const { renderPreferenceSwitch } = require('./scripts/preference-switch-markup.js');
 const { optimizeMediaMarkup } = require('./scripts/media-markup.js');
 const mediaManifest = require('./assets/data/media-manifest.json');
 const {
@@ -375,23 +376,36 @@ function syncSafeBlankLinks(html) {
   return output;
 }
 
+function syncPreferenceSwitches(html, fileLabel) {
+  const eol = html.match(/\r\n|\n/)?.[0] || '\n';
+  for (const kind of ['lang', 'theme']) {
+    const attribute = `data-${kind}-btn`;
+    const matches = findElements(html, (tag, name) => name.toLowerCase() === 'button' && hasAttribute(tag, attribute));
+    if (matches.length !== 1) throw new Error(`${fileLabel}: expected one ${attribute} button.`);
+    const [{ openStart, closeEnd }] = matches;
+    const button = renderPreferenceSwitch(kind, translations.en, lineIndentAt(html, openStart), eol);
+    html = html.slice(0, openStart) + button + html.slice(closeEnd);
+  }
+  return html;
+}
+
 function syncAssetVersions(html) {
   const versionedAssets = {
-    'assets/js/preferences.js': '20261102-1',
-    'assets/css/style.css': '20261028-1',
-    'assets/css/field-notes.css': '20261109-1',
+    'assets/js/preferences.js': '20261118-1',
+    'assets/css/style.css': '20261118-1',
+    'assets/css/field-notes.css': '20261118-2',
     'assets/css/custom_project_preview.css': '20261006-1',
     'assets/css/featured-robots.css': '20261110-1',
     'assets/js/robot-previews.js': '20261109-1',
-    'assets/js/site-data.js': '20261109-1',
+    'assets/js/site-data.js': '20261118-2',
     'assets/css/cu-brick-exploded.css': '20261109-1',
-    'assets/js/cu-brick-exploded.js': '20261110-1',
+    'assets/js/cu-brick-exploded.js': '20261118-2',
     'assets/css/tapper-exploded.css': '20261109-1',
-    'assets/js/tapper-exploded.js': '20261109-1',
-    'assets/js/i18n.js': '20261103-1',
+    'assets/js/tapper-exploded.js': '20261118-2',
+    'assets/js/i18n.js': '20261118-1',
     'assets/js/filters.js': '20261028-1',
-    'assets/js/theme.js': '20261102-1',
-    'assets/js/app-init.js': '20261102-1',
+    'assets/js/theme.js': '20261118-1',
+    'assets/js/app-init.js': '20261118-1',
     'assets/js/contact-form.js': '20261023-1',
     'assets/js/project-preview.js': '20261006-1',
     'assets/js/ui-interactions.js': '20261028-1',
@@ -488,8 +502,8 @@ function validateIndexTranslationStructure(html, fileLabel) {
       'nav.menu': 1,
       'nav.preferences': 1,
       'sidebar.showContacts': 1,
-      'language.toggle': 1,
-      'theme.toggle': 1
+      'language.traditionalChinese': 1,
+      'theme.lightMode': 1
     }
   };
 
@@ -534,7 +548,7 @@ function validateSecondaryPageStructure(html, fileLabel, pageType) {
     }
   });
 
-  for (const key of ['nav.primary', 'nav.menu', 'nav.preferences', 'sidebar.showContacts', 'language.toggle', 'theme.toggle']) {
+  for (const key of ['nav.primary', 'nav.menu', 'nav.preferences', 'sidebar.showContacts', 'language.traditionalChinese', 'theme.lightMode']) {
     const count = findOpeningTags(
       html,
       (openTag) => getAttribute(openTag, 'data-i18n-aria-label') === key
@@ -1429,6 +1443,7 @@ if (listMode) {
     updateFile(relativePath, (html, eol) => {
       let output = ensureAccessibleShell(html, relativePath, eol);
       output = syncSharedShell(output, relativePath);
+      output = syncPreferenceSwitches(output, relativePath);
 
       if (relativePath === 'index.html') {
         validateIndexTranslationStructure(output, relativePath);
@@ -1467,6 +1482,8 @@ if (listMode) {
   for (const page of Object.values(standalonePages)) {
     updateFile(page.file, (html, eol) => {
       let output = syncDashboardMetadata(html, page.file, eol);
+      output = syncPreferenceSwitches(output, page.file);
+      output = syncAssetVersions(output);
       output = syncCanonicalHomepageLinks(output);
       output = syncSafeBlankLinks(output);
       output = moveLateHeadMetadata(output, eol);

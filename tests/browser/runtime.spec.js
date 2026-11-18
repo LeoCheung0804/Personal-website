@@ -73,6 +73,72 @@ async function dashboardReady(page) {
   await expect(page.locator('[data-refresh-btn]')).toBeEnabled();
 }
 
+test('language and appearance switches keep saved states across page templates', async ({ page }) => {
+  await page.goto('/#about');
+  const language = page.getByRole('switch', { name: 'Traditional Chinese' });
+  const theme = page.locator('[data-theme-btn]');
+  await expect(language).not.toBeChecked();
+  await expect(theme).not.toBeChecked();
+  await language.press('Space');
+  await expect(page.getByRole('switch', { name: '繁體中文' })).toBeChecked();
+  await expect(theme).toHaveAccessibleName('淺色模式');
+  await theme.press('Enter');
+  await expect(theme).toBeChecked();
+
+  for (const route of ['/cdpr.html', '/blog/osh-2026.html', '/dashboard.html']) {
+    await page.goto(route);
+    await expect(page.getByRole('switch', { name: '繁體中文' })).toBeChecked();
+    await expect(page.getByRole('switch', { name: '淺色模式' })).toBeChecked();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'zh-Hant');
+    await expect(page.locator('html')).toHaveClass(/light-theme/);
+  }
+
+  await page.getByRole('switch', { name: '繁體中文' }).press('Enter');
+  await expect(language).not.toBeChecked();
+  await theme.press('Space');
+  await page.reload();
+  await expect(language).not.toBeChecked();
+  await expect(theme).not.toBeChecked();
+  await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+  await expect(page.locator('html')).not.toHaveClass(/light-theme/);
+});
+
+test('pointer ripples restart from the press and respect keyboard and reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.addInitScript(() => {
+    const animate = Element.prototype.animate;
+    Element.prototype.animate = function (...args) {
+      const animation = animate.apply(this, args);
+      if (this.classList.contains('preference-switch__ripple')) animation.pause();
+      return animation;
+    };
+  });
+  await page.goto('/#about');
+  const language = page.locator('[data-lang-btn]');
+  const theme = page.locator('[data-theme-btn]');
+  const ink = language.locator('.preference-switch__ripple');
+  const activeRipples = button => button.locator('.preference-switch__ripple').evaluate(el =>
+    el.getAnimations().filter(animation => !(animation instanceof CSSTransition)).length);
+
+  await language.click({ position: { x: 16, y: 20 } });
+  expect(await activeRipples(language)).toBe(1);
+  const firstOrigin = await ink.evaluate(el => parseFloat(el.style.left));
+  await language.click({ position: { x: 54, y: 20 } });
+  expect(await activeRipples(language)).toBe(1);
+  expect(await ink.evaluate(el => parseFloat(el.style.left))).toBeGreaterThan(firstOrigin);
+  await language.press('Space');
+  expect(await activeRipples(language)).toBe(0);
+  await expect(language).toBeFocused();
+
+  await theme.click();
+  expect(await activeRipples(theme)).toBe(1);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => activeRipples(theme)).toBe(0);
+  await theme.click();
+  expect(await activeRipples(theme)).toBe(0);
+  await expect(theme).not.toBeChecked();
+});
+
 test('denied storage keeps navigation, translations and themes working on desktop and mobile', async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(window, 'localStorage', {
     get() { throw new DOMException('Storage disabled', 'SecurityError'); }

@@ -538,9 +538,9 @@ body.portfolio-site > main {
   position: relative;
   z-index: 2;
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-end;
-  padding: 0;
+  padding-inline-start: 6px;
   border-left: 1px solid var(--line);
   background: var(--bg-nav);
 }
@@ -604,33 +604,6 @@ body.portfolio-site > main {
 .portfolio-site .navbar-link.active::after,
 .portfolio-site .navbar-link[aria-current="page"]::after {
   transform: scaleX(1);
-}
-
-.portfolio-site .navbar-action-item .navbar-link::after {
-  content: none;
-}
-
-.portfolio-site .navbar-actions .navbar-link {
-  width: 44px;
-  padding-inline: 0;
-}
-
-.portfolio-site .lang-btn span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-  height: auto;
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  color: currentColor;
-  background: transparent;
-  font: inherit;
-}
-
-.portfolio-site .theme-btn ion-icon {
-  font-size: 18px;
 }
 
 /* Content typography and section rhythm */
@@ -1194,6 +1167,51 @@ body.portfolio-site > main {
 }
 
 /* Project and blog detail surfaces */
+
+.portfolio-site .explorer-loading {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  align-items: center;
+  gap: 0.65rem;
+  width: max-content;
+  max-width: calc(100% - 2rem);
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font: 600 var(--type-label)/1.4 var(--ff-mono);
+  overflow-wrap: anywhere;
+  pointer-events: none;
+}
+
+.portfolio-site [data-state="loading"] .explorer-loading {
+  display: flex;
+}
+
+.portfolio-site .explorer-loading::before {
+  content: "";
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
+  border: 2px solid var(--line-strong);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .portfolio-site .explorer-loading::before {
+    animation: explorer-loading-spin 1s linear infinite;
+  }
+}
+
+@keyframes explorer-loading-spin {
+  to { transform: rotate(360deg); }
+}
 
 .portfolio-site .btn-back {
   display: inline-flex;
@@ -1979,10 +1997,6 @@ body.portfolio-site > main {
   .portfolio-site .navbar-link {
     padding-inline: 12px;
   }
-
-  .portfolio-site .navbar-actions .navbar-link {
-    padding-inline: 0;
-  }
 }
 
 @media (min-width: 1400px) {
@@ -2124,12 +2138,6 @@ body.portfolio-site > main {
     padding-inline: 8px;
     font-size: var(--type-label);
     letter-spacing: 0.02em;
-  }
-
-  .portfolio-site .navbar-actions .navbar-link {
-    width: 44px;
-    min-width: 44px;
-    padding-inline: 0;
   }
 }
 
@@ -2497,7 +2505,7 @@ body.portfolio-site > main {
 }
 
 /* Feedback belongs to controls; reading cards and their text stay still. */
-.portfolio-site :is(.navbar-menu-btn, .navbar-actions .navbar-link, .about-actions a,
+.portfolio-site :is(.navbar-menu-btn, .about-actions a,
   .btn-back, .filter-select, .filter-item button, .select-item button,
   .project-preview-controls button, .robot-preview__actions a:not(.robot-preview__explore), .not-found-secondary) {
   touch-action: manipulation;
@@ -2546,7 +2554,7 @@ body.portfolio-site > main {
 
 @media (prefers-reduced-motion: no-preference) {
   .portfolio-site :is(.form-btn, .project-content .btn, .robot-preview__actions a,
-    .navbar-menu-btn, .navbar-actions .navbar-link, .about-actions a, .btn-back,
+    .navbar-menu-btn, .about-actions a, .btn-back,
     .filter-select, .filter-item button, .select-item button, .project-preview-controls button):not(:disabled, [aria-disabled="true"], [aria-busy="true"]):not(:focus-visible):active {
     transform: scale(.97);
   }

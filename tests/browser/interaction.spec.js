@@ -159,6 +159,54 @@ test('failed model loads retain the photograph and a readable fallback', async (
   await expect(card).not.toHaveAttribute('aria-busy');
 });
 
+for (const { name, url, model } of [
+  { name: 'RoBosun-Tapper', url: '/tapper.html#robot-explorer', model: 'robosun-tapper.glb' },
+  { name: 'CU-Brick', url: '/yes.html#cu-brick-explorer', model: 'cu-brick-end-effector.glb' }
+]) {
+  test(`${name} shows a loading indicator until the model succeeds or fails`, async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    const modelRoute = `**/assets/models/${model}*`;
+    let release;
+    await page.route(modelRoute, route => {
+      release = () => route.fulfill({ path: path.join(root, 'assets/models', model), contentType: 'model/gltf-binary' });
+    });
+    await page.goto(url);
+    const viewer = page.locator('[data-tapper-explorer], [data-brick-explorer]');
+    const loader = viewer.locator('.explorer-loading');
+    const photo = viewer.locator('img');
+    const fallback = viewer.locator('[data-explorer-fallback], [data-brick-status]');
+    const animation = () => loader.evaluate(el => getComputedStyle(el, '::before').animationName);
+
+    await expect.poll(() => !!release).toBe(true);
+    await expect(loader).toHaveText('Loading 3D model…');
+    await expect(loader).toBeVisible();
+    await expect(photo).toBeVisible();
+    await expect(fallback).toBeHidden();
+    await expect(viewer.locator('canvas')).toHaveCount(0);
+    await expect.poll(animation).not.toBe('none');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await expect.poll(animation).toBe('none');
+    await page.locator('[data-lang-btn]').click();
+    await expect(loader).toHaveText('正在載入 3D 模型…');
+
+    await release();
+    await expect(viewer).toHaveAttribute('data-state', 'ready', { timeout: 15000 });
+    await expect(viewer.locator('canvas')).toBeVisible();
+    await expect(loader).toBeHidden();
+    await expect(photo).toBeHidden();
+
+    await page.unroute(modelRoute);
+    await page.route(modelRoute, route => route.fulfill({ status: 503, body: '' }));
+    await page.reload();
+    await viewer.scrollIntoViewIfNeeded();
+    await expect(viewer).toHaveAttribute('data-state', 'fallback', { timeout: 15000 });
+    await expect(viewer.locator('canvas')).toHaveCount(0);
+    await expect(loader).toBeHidden();
+    await expect(photo).toBeVisible();
+    await expect(fallback).toBeVisible();
+  });
+}
+
 test('Tapper presets announce their selected state and keyboard rotation can be reset', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/tapper.html#robot-explorer');

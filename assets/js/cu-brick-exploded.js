@@ -20,8 +20,7 @@ if (root) {
     if (!entries.some(entry => entry.isIntersecting)) return;
     observer.disconnect();
     root.dataset.state = 'loading';
-    q('[data-brick-status]').dataset.i18n = 'brick.loading';
-    q('[data-brick-status]').textContent = t('loading');
+    q('[data-brick-status]').hidden = true;
     initialize().catch(fallback);
   }, { rootMargin: '350px' });
   observer.observe(root);
@@ -47,7 +46,6 @@ async function initialize() {
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'img');
   canvas.setAttribute('aria-label', t('canvas'));
-  viewport.prepend(canvas);
   canvas.addEventListener('webglcontextlost', event => { event.preventDefault(); fallback(); });
   const scene = new THREE.Scene();
   const environmentScene = new RoomEnvironment();
@@ -508,9 +506,10 @@ async function initialize() {
     geometries.forEach(geometry => geometry.dispose()); materials.forEach(material => material.dispose());
     environment.dispose(); renderer.dispose();
   };
+  viewport.prepend(canvas);
   root.querySelectorAll('[data-brick-controls], [data-brick-description]').forEach(el => { el.hidden = false; });
-  q('[data-brick-status]').hidden = true;
-  root.classList.add('is-ready'); root.dataset.state = 'ready';
+  root.classList.add('is-ready');
   showView('site');
   syncTheme();
+  root.dataset.state = 'ready';
 }

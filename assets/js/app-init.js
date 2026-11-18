@@ -2,20 +2,12 @@
 
 window.addEventListener('DOMContentLoaded', () => {
   applyTranslations(currentLanguage);
-  updateLanguageButton();
   syncSelectLabels();
   filterFunc('all');
 });
 
 
-// Language Toggle logic
-const langBtn = document.querySelector("[data-lang-btn]");
-
-if (langBtn) {
-  langBtn.addEventListener("click", function () {
-    setLanguage(getNextLanguage());
-  });
-}
+bindPreferenceSwitch(document.querySelector("[data-lang-btn]"), () => setLanguage(getNextLanguage()));
 
 
 // --- Dynamic Blog Loading ---

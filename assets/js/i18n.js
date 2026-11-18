@@ -15,6 +15,7 @@ function applyTranslations(language = currentLanguage) {
   currentLanguage = supportedLanguages.includes(language) ? language : defaultLanguage;
 
   document.documentElement.lang = currentLanguage === "zhHant" ? "zh-Hant" : "en";
+  document.querySelector("[data-lang-btn]")?.setAttribute("aria-checked", String(currentLanguage === "zhHant"));
 
   document.querySelectorAll("[data-i18n]").forEach((element) => {
     element.innerHTML = getTranslation(element.dataset.i18n);
@@ -215,20 +216,6 @@ function getNextLanguage(language = currentLanguage) {
   return language === "en" ? "zhHant" : "en";
 }
 
-function updateLanguageButton() {
-  const langButton = document.querySelector("[data-lang-btn]");
-  const langLabel = document.querySelector("[data-lang-label]");
-  if (!langButton || !langLabel) return;
-
-  const isEnglish = currentLanguage === "en";
-  const labelKey = isEnglish ? "language.switchToZhHant" : "language.switchToEnglish";
-
-  langLabel.textContent = isEnglish ? "\u7e41" : "EN";
-  langLabel.setAttribute("lang", isEnglish ? "zh-Hant" : "en");
-  langButton.dataset.i18nAriaLabel = labelKey;
-  langButton.setAttribute("aria-label", getTranslation(labelKey));
-}
-
 function localizePostField(post, field) {
   const languageSuffix = currentLanguage === "zhHant" ? "ZhHant" : "En";
   const snakeSuffix = currentLanguage === "zhHant" ? "zhHant" : "en";
@@ -315,7 +302,6 @@ function setLanguage(language) {
   currentLanguage = supportedLanguages.includes(language) ? language : defaultLanguage;
   writePreference("language", currentLanguage);
   applyTranslations(currentLanguage);
-  updateLanguageButton();
   syncSelectLabels();
   renderBlogPosts();
   window.dispatchEvent(new CustomEvent("site-language-change", { detail: { language: currentLanguage } }));

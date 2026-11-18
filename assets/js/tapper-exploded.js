@@ -5,6 +5,8 @@ if (root) {
   const observer = new IntersectionObserver((entries) => {
     if (!entries.some(entry => entry.isIntersecting)) return;
     observer.disconnect();
+    root.dataset.state = 'loading';
+    root.querySelector('[data-explorer-fallback]').hidden = true;
     initialize().catch(() => showFallback());
   }, { rootMargin: '400px' });
   observer.observe(root);
@@ -12,6 +14,7 @@ if (root) {
 
 function showFallback() {
   root.classList.remove('is-ready');
+  root.dataset.state = 'fallback';
   root.querySelector('canvas')?.remove();
   root.querySelector('[data-explorer-controls]').hidden = true;
   root.querySelectorAll('[data-part-label]').forEach(label => label.hidden = true);
@@ -44,7 +47,6 @@ async function initialize() {
   canvas.setAttribute('aria-valuemax', '180');
   canvas.setAttribute('aria-label', window.getTranslation('explorer.canvas'));
   canvas.setAttribute('aria-describedby', 'explorer-interaction');
-  container.append(canvas);
 
   const scene = new THREE.Scene();
   const { RoomEnvironment } = await import('../vendor/three/addons/environments/RoomEnvironment.js');
@@ -384,8 +386,9 @@ async function initialize() {
     motion.removeEventListener('change', updatePresentation);
     showFallback();
   });
-  root.querySelector('[data-explorer-fallback]').hidden = true;
+  container.append(canvas);
   root.querySelector('[data-explorer-controls]').hidden = false;
   root.classList.add('is-ready');
   resize();
+  root.dataset.state = 'ready';
 }
